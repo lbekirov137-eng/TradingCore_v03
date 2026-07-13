@@ -11,9 +11,19 @@ from api.trade_plan import TradePlan
 class MarketAnalyzer:
 
     @staticmethod
-    def analyze():
+    def analyze(
+        symbol: str = "BTCUSDT",
+        interval: str = "5m",
+        limit: int = 300,
+        balance: float = 1000,
+        risk_percent: float = 0.1,
+    ):
 
-        market = DataEngine.load()
+        market = DataEngine.load(
+            symbol=symbol,
+            interval=interval,
+            limit=limit,
+        )
 
         closes = market["closes"]
         highs = market["highs"]
@@ -33,8 +43,8 @@ class MarketAnalyzer:
         )
 
         risk = RiskEngine.calculate(
-            balance=1000,
-            risk_percent=0.1,
+            balance=balance,
+            risk_percent=risk_percent,
             price=price,
             atr=atr["value"],
         )
@@ -46,7 +56,14 @@ class MarketAnalyzer:
         )
 
         return {
-            "step": "FULL ENGINE",
+            "symbol": symbol,
+            "interval": interval,
+            "price": round(price, 2),
+            "trend": ema["trend"],
+            "structure": structure,
+            "ema": ema,
+            "rsi": rsi,
+            "atr": atr,
             "signal": signal,
             "risk": risk,
             "trade_plan": trade_plan,
