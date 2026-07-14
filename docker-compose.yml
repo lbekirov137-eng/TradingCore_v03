@@ -1,0 +1,19 @@
+services:
+  tradingcore:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: tradingcore
+
+    working_dir: /app
+
+    volumes:
+      - .:/app
+
+    ports:
+      - "8000:8000"
+
+    command: uvicorn api.server:app --host 0.0.0.0 --port 8000
+
+    restart: unless-stopped
