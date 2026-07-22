@@ -24,6 +24,7 @@ class BinanceAPI:
 
         data = response.json()
 
+        timestamps = []
         opens = []
         highs = []
         lows = []
@@ -31,6 +32,9 @@ class BinanceAPI:
         volumes = []
 
         for candle in data:
+
+            timestamps.append(int(candle[0]))
+
             opens.append(float(candle[1]))
             highs.append(float(candle[2]))
             lows.append(float(candle[3]))
@@ -38,6 +42,7 @@ class BinanceAPI:
             volumes.append(float(candle[5]))
 
         return {
+            "timestamps": timestamps,
             "opens": opens,
             "highs": highs,
             "lows": lows,

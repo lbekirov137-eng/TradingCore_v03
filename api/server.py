@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from api.analyzer import MarketAnalyzer
 
 app = FastAPI(
