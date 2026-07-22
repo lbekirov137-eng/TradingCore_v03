@@ -1,4 +1,4 @@
-from api.core.engine import CoreEngine
+﻿from api.core.engine import CoreEngine
 
 from api.pipeline_v2.steps.indicator_step import IndicatorStep
 from api.market_intelligence_step import MarketIntelligenceStep
@@ -14,6 +14,9 @@ from api.pipeline_v2.steps.trade_plan_step import TradePlanStep
 from api.pipeline_v2.steps.decision_step import DecisionStep
 from api.pipeline_v2.steps.paper_execution_step import (
     PaperExecutionStep,
+)
+from api.pipeline_v2.steps.coordinator_decision_journal_step import (
+    CoordinatorDecisionJournalStep,
 )
 
 
@@ -67,6 +70,13 @@ class Bootstrap:
         engine.register(
             "paper_execution",
             PaperExecutionStep(),
+        )
+
+        # Observability only.
+        # Records the complete decision path after paper execution.
+        engine.register(
+            "coordinator_decision_journal",
+            CoordinatorDecisionJournalStep(),
         )
 
         return engine
