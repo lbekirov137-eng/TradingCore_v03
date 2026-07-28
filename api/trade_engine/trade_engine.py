@@ -3,6 +3,13 @@ import time
 from api.position_manager.position_manager import PositionManager
 from api.backtesting.trade_journal import TradeJournal
 from api.risk_engine import DailyRiskGuard
+from api.risk.guards import (
+    LossStreakGuard,
+    CooldownAfterLossGuard,
+    MaxDrawdownGuard,
+    MaxTradesPerSessionGuard,
+    DailyLossGuard,
+)
 from api.execution.order_state import OrderStatus, generate_client_order_id
 from api.execution.idempotency_store import IdempotencyStore
 from api.execution.order_reconciler import OrderReconciler
@@ -171,6 +178,7 @@ class TradeEngine:
 
         risk = decision.get("risk") or {}
         DailyRiskGuard.register_trade(risk.get("risk_amount", 0))
+        MaxTradesPerSessionGuard.register_trade(session_key)
 
         result = {**position, "status": "OPENED"}
 
@@ -201,6 +209,8 @@ class TradeEngine:
         idempotency_store.get_or_create(client_order_id, {"action": "close", "symbol": symbol, "reason": reason})
         idempotency_store.update_status(client_order_id, OrderStatus.SUBMITTED)
 
+        realized_pnl_before = broker.get_balance()["realized_pnl"]
+
         try:
             broker.place_order(client_order_id, {
                 "symbol": symbol, "side": "SELL", "type": "MARKET", "qty": qty, "price": close_price,
@@ -227,7 +237,24 @@ class TradeEngine:
 
         closed = PositionManager.close_position(reason)
 
-        result = {**closed, "status": "CLOSED", "reason": reason, "exit_price": order_state.get("avg_fill_price")}
+        balance_after = broker.get_balance()
+        trade_net_pnl = balance_after["realized_pnl"] - realized_pnl_before
+
+        # Регистрация исхода сделки во всех account-level guard'ах, которые
+        # DecisionEngine проверяет ПЕРЕД следующим входом (см.
+        # api/decision_engine/decision_engine.py). Это то, что делает
+        # LossStreakGuard/CooldownAfterLossGuard/MaxDrawdownGuard/
+        # DailyLossGuard реально подключёнными, а не мёртвым кодом.
+        LossStreakGuard.register_result(trade_net_pnl)
+        CooldownAfterLossGuard.register_result(trade_net_pnl)
+        DailyLossGuard.register_result(trade_net_pnl)
+        MaxDrawdownGuard.register_equity(balance_after["balance"])
+
+        result = {
+            **closed, "status": "CLOSED", "reason": reason,
+            "exit_price": order_state.get("avg_fill_price"),
+            "net_pnl": round(trade_net_pnl, 8),
+        }
 
         journal.add_trade(result)
 

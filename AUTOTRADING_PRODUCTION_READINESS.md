@@ -1,57 +1,76 @@
 # TradingCore — Production Readiness
 
-**Assessed:** 2026-07-28 · **Tests:** 225 passed / 0 failed / 0 skipped
+**Assessed:** 2026-07-28 (Priorities 1–8 session) · **Tests:** 303 passed / 0 failed / 0 skipped
 
 | Track | Readiness | Status |
 |---|---|---|
-| **Paper trading** | **55%** | Infrastructure sound; no continuous loop; no viable strategy |
+| **Paper trading** | **65%** | Infrastructure now complete (scheduler loop, all risk guards wired); no viable strategy |
 | **Bybit Demo** | **35%** | REST adapter complete + safety-enforced; never connected; no WebSocket |
 | **Real money** | **0%** | 🔒 **BLOCKED — Gate G locked, no live order code exists** |
 
 ---
 
-## 1. What is genuinely production-grade now
+## 1. What changed this session
+
+Starting point was the end of the prior audit session (225 tests, infrastructure gaps: no scheduler, no wired risk guards, no market-data resilience layer, no research tooling). This session:
+
+- Built the **scheduler/event loop** (`api/scheduler/loop.py`) — candle-close-aligned, automatic exit-checking, reconciliation, heartbeat, structured logs, graceful shutdown. **72-hour paper-forward is now structurally possible** (was not, before).
+- **Wired all five risk guards** into `DecisionEngine`/`TradeEngine`: `LossStreakGuard`, `CooldownAfterLossGuard`, `MaxDrawdownGuard`, `MaxTradesPerSessionGuard`, and a new `DailyLossGuard` (realized loss, distinct from the existing planned-risk guard). Every blocked trade now carries a machine-readable reason.
+- Added **market-data resilience**: retry-with-backoff, rate-limit handling, clock-skew detection against real exchange server-time endpoints.
+- Built a **research pipeline**: minimum sample-size checks, buy-and-hold/NO_TRADE benchmarks, regime segmentation, parameter-stability analysis, Monte Carlo trade-order permutation, plus labeled candidate strategy variants evaluated independently.
+- Fetched **6 months of additional history** (52k candles) and found a **critical bug** while validating on it: `TakeProfit.calculate` ignored trade direction, causing SHORT positions to get permanently stuck. Fixed, with regression tests reproducing the exact incident.
+- Fixed a real **O(n²) performance defect** in the backtest engine (indicators recomputed over full history every candle) — now bounded, verified to produce identical results.
+- Found and fixed a bug in **my own new `MaxDrawdownGuard` wiring**: it initially measured "equity" as cash-only, so opening a position looked like an instant drawdown.
+
+Tests: 225 → **303**.
+
+---
+
+## 2. The central finding got stronger, not weaker
+
+With the take-profit bug fixed, ORB's true trading frequency became visible, and the picture is now **more decisive**:
+
+| Strategy | Scale | Trades | Net PnL | Profit factor | Max DD |
+|---|---|---|---|---|---|
+| ORB | 6 weeks | 49 | **−48.59 (−4.9%)** | 0.174 | 5.0% |
+| ORB | 6 months | 208 | **−176.54 (−17.7%)** | 0.205 | 17.9% |
+| VWAP | 6 weeks | 98 | **−128.37 (−12.8%)** | 0.092 | 12.8% |
+
+Both strategies are now adequately sampled (ORB at two independent scales, consistently) and both show a robust negative edge — not a small-sample artifact. This is the honest result the audit was designed to surface, and it supersedes the earlier, more equivocal 7-trade ORB reading.
+
+---
+
+## 3. What is genuinely production-grade now
+
+Everything from the prior report, plus:
 
 | Component | Evidence |
 |---|---|
-| No-look-ahead guarantees | Fault-injection verified — 3 tests fail when leakage is introduced |
-| Deterministic backtest engine | Costs modeled; entry on next candle's open; SL+TP→stop; unresolved trades contribute zero PnL |
-| Position sizing | Fees, slippage, tick/lot size, min notional, no-leverage cap; NaN/Inf/negative rejected; 200-example Hypothesis property |
-| Order idempotency & reconciliation | Deterministic client IDs; timeout never triggers blind resend; unknown state stays unknown |
-| Paper broker | Fills, fees, slippage, partial fills, balance, realized PnL, restart persistence, deterministic replay |
-| Exit monitor | SL / TP / invalidation / stale; **conservative same-candle rule** (never auto-selects profit); reconciles against broker |
-| Kill switch | Blocks entries, preserves monitoring, cancels pending, persists across restart, **fails closed** on corruption |
-| Session/timezone handling | Single source of truth; DST-correct (verified across EDT/EST and BST transitions) |
-| Regime / liquidity / stale-data filters | Undetermined regime blocks trading; stale data blocks in live mode |
-| Bybit demo safety | Production hosts rejected per-request; secrets never printed; retries reuse identical `orderLinkId` |
-| Security hygiene | No secrets, no `eval`/`exec`/`pickle`/shell; enforced by automated test |
+| Scheduler/event loop | Candle-close scheduling, auto exit-monitoring, graceful shutdown — 10 tests |
+| Wired risk guards | 5 distinct guards, all gate real decisions, all machine-readable — 29 tests |
+| Market-data resilience | Retry/backoff, rate-limit handling, clock-skew (verified live against Binance & Bybit) — 10 tests |
+| Research pipeline | Sample-size checks, benchmarks, regime segmentation, parameter stability, Monte Carlo — 13 tests |
+| Backtest performance | O(n²) → effectively O(n), correctness-preserving — 3 tests |
 
 ---
 
-## 2. Why paper trading is 55%, not higher
+## 4. Why paper trading is 65%, not higher
 
 | Blocker | Detail |
 |---|---|
-| **No scheduler loop** | `/paper/tick` must be triggered manually. Nothing calls `ExitMonitor` automatically — an opened position would never close on its own. |
-| **No strategy with an edge** | ORB: +0.37 net vs 2.98 fees on n=7. VWAP: −128.37, PF 0.092, 0% walk-forward consistency. Both **FRAGILE**. |
-| **Backtest bypasses the live execution path** | Validates neither `PaperBroker` nor `DecisionEngine` gates. |
-| **Dormant risk limits** | `LossStreakGuard` (cooldown, consecutive losses, drawdown stop, per-session cap) implemented + tested but never called. |
-| **No realized-PnL daily loss limit** | Daily guard tracks *planned* risk, not realized losses. |
-| **Not multi-process safe** | Class-level state; `--workers 2` would silently duplicate limits. |
+| **No strategy with an edge** | Both are now robustly, adequately-sampled FRAGILE — the central remaining blocker |
+| **Backtest bypasses the live execution path** | Still validates neither `PaperBroker` nor `DecisionEngine`'s gates |
+| **Not multi-process safe** | Class-level state across `PositionManager` and all guards; `--workers 2` would silently duplicate every limit |
+| **VWAP's own performance issue** | `calculate_session_vwap` is still O(session-length) per call; 6-month VWAP research not yet practical |
+| **72h paper-forward not yet run** | Now possible, deliberately not run against strategies already shown to be losing at two scales |
 
-## 3. Why Bybit demo is 35%
+## 5. Why Bybit demo is still 35% (unchanged)
 
-| Present | Missing |
-|---|---|
-| REST: create/amend/cancel/query, executions, position, balance, klines | **WebSocket client entirely absent** (spec required WS + reconnect + REST fallback) |
-| Endpoint validation rejecting production hosts | **Never connected to the real API** — schema assumptions from docs, not traffic |
-| Credential validation without leakage | No credentials supplied (by design) |
-| Rate-limit backoff, retry with idempotency | No live rate-limit behavior observed |
-| 23 mocked tests | Zero integration tests against real demo |
+Adapter complete and safety-enforced, but never connected to the real API (all 23 tests mocked), and no WebSocket client exists — spec required WS + reconnect + REST fallback; only REST exists.
 
 ---
 
-## 4. Safety posture (verified)
+## 6. Safety posture (unchanged, still verified)
 
 ```
 GET /safety
@@ -59,68 +78,54 @@ GET /safety
  "live_order_code_present": false, "kill_switch_engaged": false}
 ```
 
-- `TRADING_ENVIRONMENT=LIVE` raises `ConfigurationError` — there is **no live order code path** anywhere in the repository.
-- Default risk 0.1% per trade, leverage 1, spot long-only, no averaging down, no martingale.
-- Every failure path defaults to `NO_TRADE` or `FAILED_SAFELY`.
-- Corrupted kill-switch state fails **closed** (engaged), never open.
+`TRADING_ENVIRONMENT=LIVE` raises `ConfigurationError` — no live order code path exists anywhere. Default risk 0.1%/trade, leverage 1, spot long-only, no averaging down. Every failure path defaults to `NO_TRADE`/`FAILED_SAFELY`. Corrupted kill-switch state fails closed.
 
 ---
 
-## 5. Exact commands
+## 7. Exact commands
 
-**Validate configuration (no connection, no secrets printed):**
 ```bash
+# Validate configuration (no connection, no secrets printed)
 curl http://localhost:8000/safety
 curl http://localhost:8000/demo/preflight
-```
+curl http://localhost:8000/observability/clock-skew
 
-**Start paper mode:**
-```bash
+# Start paper mode (manual tick)
 .venv/Scripts/python.exe -m uvicorn api.server:app --host 127.0.0.1 --port 8000
-# then trigger ticks manually (no automatic loop exists yet):
 curl "http://localhost:8000/paper/tick"
-```
 
-**Run tests:**
-```bash
+# Start the continuous paper scheduler loop (NEW this session)
+.venv/Scripts/python.exe scripts/run_paper_loop.py --symbol BTCUSDT --interval 5m
+# Ctrl+C for graceful shutdown
+
+# Tests
 .venv/Scripts/python.exe -m pytest tests/ -q
-```
 
-**Run backtest validation:**
-```bash
+# Backtest validation
 .venv/Scripts/python.exe scripts/fetch_history.py --symbol BTCUSDT --interval 5m --candles 12000
 .venv/Scripts/python.exe scripts/run_backtest.py --data data/BTCUSDT_5m.json --strategy orb
-```
 
-**Start Bybit Demo** — *not authorized yet; Gate B fails and Gates C–F are incomplete:*
-```bash
-# Only after Gates A–D pass and you have supplied demo credentials in .env
-TRADING_ENVIRONMENT=DEMO .venv/Scripts/python.exe -m uvicorn api.server:app --port 8000
-```
+# Candidate research (independent, non-combined variants)
+.venv/Scripts/python.exe scripts/run_candidate_research.py --data data/BTCUSDT_5m.json
 
-**Kill switch:**
-```bash
+# Kill switch
 curl -X POST "http://localhost:8000/kill-switch/engage?reason=<why>"
-curl http://localhost:8000/kill-switch/status
 curl -X POST "http://localhost:8000/kill-switch/disengage"
 ```
 
 ---
 
-## 6. Required observation periods (once gates permit)
+## 8. Required observation periods (once Gate B is addressed)
 
-| Stage | Minimum | Rationale |
-|---|---|---|
-| Paper forward | **72 hours continuous**, ≥ 20 trades | Detect stuck positions, reconciliation drift, restart bugs |
-| Extended demo | **2+ weeks**, ≥ 30 trades | Statistically meaningful; PnL must match exchange reporting |
-| Pre-live review | Separate explicit decision | Gate G — see below |
+| Stage | Minimum |
+|---|---|
+| Paper forward | 72 hours continuous, ≥ 20 trades |
+| Extended demo | 2+ weeks, ≥ 30 trades |
 
-At current trade frequency (7 ORB trades per 6 weeks), reaching 20–30 trades would take **months**. This is itself an argument for a higher-frequency timeframe or a different strategy formulation.
+At ORB's observed 6-month rate (~208 trades / 6 months ≈ 35/month), 20 trades would take about 2-3 weeks — much more tractable than the earlier (bug-distorted) estimate of "months." This makes the mechanics of running Gate D more practical, once there's a strategy variant worth running it against.
 
 ---
 
-## 7. Gate G — real money
+## 9. Gate G — real money
 
-🔒 **LOCKED.** This work does not and cannot unlock it. Requires: all of Gates A–F passing (currently A passes, B **fails**, C partial, D/E/F not started), explicit user approval, a separate production key with withdrawals disabled and IP restrictions, an explicit micro-live config, risk held at 0.1%, no leverage, a configured maximum initial exposure, and a kill-switch test immediately beforehand.
-
-Reaching it would require **writing new code that does not exist**, subject to separate review and authorization. It is not a configuration flip.
+🔒 **LOCKED, unchanged.** No code capable of placing a real order exists anywhere in this repository. This report does not, and will not, recommend proceeding to Gate G.

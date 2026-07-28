@@ -77,7 +77,7 @@ class ORBStrategy:
                 metadata={"opening_range": opening_range},
             )
 
-        take_profit = TakeProfit.calculate(entry["entry"], stop)
+        take_profit = TakeProfit.calculate(entry["entry"], stop, direction=breakout["direction"])
 
         return {
             "approved": True,

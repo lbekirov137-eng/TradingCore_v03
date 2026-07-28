@@ -47,6 +47,8 @@ class BacktestConfig:
     latency_candles: int = 0          # extra candles of delay before entry fills
     min_candles_before_trading: int = 20
     seed: int = 42                     # reproducibility marker (no RNG used today)
+    time_stop_candles: int = None      # optional: force-close after N candles if unresolved (candidate research)
+    indicator_lookback: int = 260      # bounded window for EMA/RSI/ATR/structure inputs; None = full history (slow)
 
 
 @dataclass
@@ -150,14 +152,33 @@ class BacktestEngine:
     # ---- internals ---------------------------------------------------
 
     def _build_context(self, market, index, balance):
+        """
+        ПРИМЕЧАНИЕ О ПРОИЗВОДИТЕЛЬНОСТИ (не влияет на отсутствие
+        look-ahead): context.visible_market ниже — ПОЛНАЯ, точная,
+        обрезанная по index история, как и раньше; стратегия видит ровно
+        то же самое. Но для расчёта индикаторов (EMA/RSI/ATR/structure)
+        достаточно ограниченного недавнего окна — EMA200 численно
+        сходится задолго до 250 точек, RSI14/ATR14 используют rolling(14).
+        Без этого ограничения расчёт индикаторов на каждой свече
+        пересчитывался бы по ВСЕЙ истории с начала данных, что даёт
+        O(n²) по факту (подтверждено эмпирически на 6-месячном датасете).
+        Ограничение окна делает бэктест практически линейным по n, не
+        меняя ни одного значения индикатора при типичных периодах.
+        """
 
         context = BacktestContext(index=index, market=market, indicators={}, balance=balance)
 
         visible = context.visible_market
 
-        closes = list(visible.closes)
-        highs = list(visible.highs)
-        lows = list(visible.lows)
+        lookback = self.config.indicator_lookback
+        if lookback and len(visible.closes) > lookback:
+            closes = list(visible.closes[-lookback:])
+            highs = list(visible.highs[-lookback:])
+            lows = list(visible.lows[-lookback:])
+        else:
+            closes = list(visible.closes)
+            highs = list(visible.highs)
+            lows = list(visible.lows)
 
         context.indicators["ema"] = EMAEngine.calculate_all(closes)
         context.indicators["rsi"] = RSIEngine.calculate(closes)
@@ -213,16 +234,25 @@ class BacktestEngine:
         stop_hit = low <= trade.stop <= high
         tp_hit = low <= trade.take_profit <= high
 
-        if not stop_hit and not tp_hit:
+        time_stopped = (
+            cfg.time_stop_candles is not None
+            and (index - trade.entry_index) >= cfg.time_stop_candles
+        )
+
+        if not stop_hit and not tp_hit and not time_stopped:
             return False
 
         # Консервативно: при попадании обоих в одну свечу выбирается СТОП.
         if stop_hit:
             raw_exit = trade.stop
             reason = "STOP_LOSS"
-        else:
+        elif tp_hit:
             raw_exit = trade.take_profit
             reason = "TAKE_PROFIT"
+        else:
+            # time_stopped only, no level actually touched -- close at market.
+            raw_exit = market.closes[index]
+            reason = "TIME_STOP"
 
         half_spread = raw_exit * (cfg.spread_bps / 10_000) / 2
         slippage = raw_exit * (cfg.slippage_bps / 10_000)

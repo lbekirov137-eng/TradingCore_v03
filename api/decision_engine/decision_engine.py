@@ -6,6 +6,14 @@ from api.position_manager.position_manager import PositionManager
 from api.risk_engine import DailyRiskGuard
 from api.execution.position_sizing import PositionSizer
 from api.execution.kill_switch import KillSwitch
+from api.risk.guards import (
+    LossStreakGuard,
+    CooldownAfterLossGuard,
+    MaxDrawdownGuard,
+    MaxTradesPerSessionGuard,
+    DailyLossGuard,
+    MaxOpenPositionsGuard,
+)
 
 from config.settings import (
     DEFAULT_BALANCE,
@@ -19,6 +27,11 @@ from config.settings import (
     DEFAULT_LOT_SIZE,
     DEFAULT_MIN_NOTIONAL,
     MAX_POSITION_PERCENT_OF_BALANCE,
+    MAX_CONSECUTIVE_LOSSES,
+    MAX_DRAWDOWN_PERCENT,
+    MAX_DAILY_LOSS_PERCENT,
+    COOLDOWN_AFTER_LOSS_SECONDS,
+    MAX_TRADES_PER_SESSION,
 )
 
 
@@ -74,10 +87,28 @@ class DecisionEngine:
         signal = approved[0]
         strategy_name = signal.get("strategy")
 
-        if PositionManager.has_open_position():
+        open_position_check = MaxOpenPositionsGuard.check()
+        if not open_position_check["allowed"]:
             return DecisionEngine._no_trade(
-                context, exchange, symbol, "Уже есть открытая позиция.", strategy_name
+                context, exchange, symbol, open_position_check["reason"], strategy_name
             )
+
+        # Account-level guards: checked BEFORE parsing the trade plan, so a
+        # paused account (losing streak, cooldown, drawdown, daily loss)
+        # never depends on the specifics of the current signal.
+        current_equity = DecisionEngine._current_equity(symbol=symbol)
+        MaxDrawdownGuard.register_equity(current_equity)
+
+        for guard_check in (
+            LossStreakGuard.check(max_consecutive_losses=MAX_CONSECUTIVE_LOSSES),
+            CooldownAfterLossGuard.check(cooldown_seconds=COOLDOWN_AFTER_LOSS_SECONDS),
+            MaxDrawdownGuard.check(equity=current_equity, max_drawdown_percent=MAX_DRAWDOWN_PERCENT),
+            DailyLossGuard.check(balance=DEFAULT_BALANCE, max_daily_loss_percent=MAX_DAILY_LOSS_PERCENT),
+        ):
+            if not guard_check["allowed"]:
+                return DecisionEngine._no_trade(
+                    context, exchange, symbol, guard_check["reason"], strategy_name
+                )
 
         trade_plan = signal.get("trade_plan") or {}
         entry = trade_plan.get("entry")
@@ -171,6 +202,14 @@ class DecisionEngine:
                 strategy_name,
             )
 
+        session_count_check = MaxTradesPerSessionGuard.check(
+            session_key, max_trades_per_session=MAX_TRADES_PER_SESSION
+        )
+        if not session_count_check["allowed"]:
+            return DecisionEngine._no_trade(
+                context, exchange, symbol, session_count_check["reason"], strategy_name
+            )
+
         signature = (exchange, symbol, signal.get("direction"), entry, stop)
 
         if PositionManager.is_duplicate_signature(signature):
@@ -198,6 +237,44 @@ class DecisionEngine:
         context.decision = decision
 
         return decision
+
+    @staticmethod
+    def _current_equity(symbol=None):
+        """
+        Equity по себестоимости: денежный баланс + стоимость открытой
+        позиции ПО ЦЕНЕ ВХОДА (не по текущей рыночной цене).
+
+        КРИТИЧНО #1: если считать equity как один только денежный баланс,
+        само ОТКРЫТИЕ позиции (конвертация кэша в актив равной стоимости)
+        выглядело бы как мгновенная просадка — подтверждённый баг, найден
+        тестом test_h2 (после первой сделки MaxDrawdownGuard ложно сообщал
+        "просадка 12.70%", хотя реального убытка не было).
+
+        КРИТИЧНО #2: положение позиции запрашивается напрямую у БРОКЕРА
+        (источник истины), а не у PositionManager — тест на восстановление
+        после рестарта (test_h2) специально очищает PositionManager, чтобы
+        смоделировать потерю локального состояния, пока у брокера позиция
+        всё ещё существует. Если бы equity опирался на PositionManager,
+        он был бы слеп именно в тот момент, когда сверка нужнее всего.
+
+        Оценка по себестоимости, а не по рынку — задокументированное
+        упрощение: полноценный mark-to-market потребовал бы live-цену на
+        каждом шаге принятия решения, которая здесь не гарантированно
+        доступна. Реальные убытки (после закрытия сделки) корректно
+        уменьшают денежный баланс и поэтому корректно отражаются здесь.
+        """
+        try:
+            from api.trade_engine import trade_engine as te
+
+            balance = te.broker.get_balance()["balance"]
+
+            if symbol is not None:
+                broker_position = te.broker.get_position(symbol)
+                balance += broker_position.get("qty", 0.0) * broker_position.get("avg_entry", 0.0)
+
+            return balance
+        except Exception:
+            return None
 
     @staticmethod
     def _no_trade(context, exchange, symbol, reason, strategy=None):

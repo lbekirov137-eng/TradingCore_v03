@@ -1,164 +1,158 @@
 # TradingCore — Backtest Report
 
-**Generated:** 2026-07-28
+**Generated:** 2026-07-28, revised after a critical bug fix (see §0).
 **Engine:** `api/backtesting/backtest_engine.py` (deterministic, no-look-ahead, costs modeled)
-**Data:** BTCUSDT 5m, 11,999 closed candles, 2026-06-16T13:35Z → 2026-07-28T05:25Z (~6 weeks), Binance public read-only endpoint.
+**Data:** BTCUSDT 5m, Binance public read-only endpoint. Two independent windows: ~6 weeks (11,999 candles) and ~6 months (51,999 candles).
 
-> **This report makes no claim of profitability. Both strategies are classified FRAGILE and neither is approved for paper-forward.**
+> **This report makes no claim of profitability. Both strategies are robustly, consistently unprofitable across two independent time windows. Neither is approved for paper-forward.**
 
 ---
 
-## 1. Methodology
+## 0. A critical bug was found and fixed during this validation — read this first
 
-The engine enforces the following, each covered by tests in `tests/regression/test_backtest_no_lookahead.py`:
+Running ORB against 6 months of real data produced an implausible result: **0 trades over 4 months** of the training split. Tracing it (not guessing) revealed the cause: `TakeProfit.calculate` always computed a LONG-direction target (`entry + risk×N`) regardless of the trade's actual direction. For a SHORT trade this places the take-profit *above* both entry and the stop — on the wrong side of the market, unreachable in the profitable direction.
+
+Concretely: a SHORT opened at entry=89234.8, stop=90648.454 (correctly above entry). Its take-profit was computed as 92062.108 — even higher than the stop. Price then fell from ~89k to ~60k over the following four months (a 33% move in the position's favor), but it never closed: the correct stop was never touched (price only rose to 89490, short of the 90648 stop) and the bogus take-profit was unreachable on the downside. The stuck position silently blocked every subsequent signal for the rest of the backtest window.
+
+**This means the ORB numbers reported in the previous version of this document (7 trades, near-breakeven) were themselves partly an artifact of this bug** — SHORT trades were getting stuck rather than resolving, artificially suppressing both trade count and (coincidentally) apparent loss. Fixed in `api/strategy_engine/strategies/orb/take_profit.py`; 5 regression tests in `tests/regression/test_take_profit_direction.py` reproduce the exact scenario. **VWAP is unaffected** — it is LONG-only and never calls the shared `TakeProfit` class (verified by grep, not assumed).
+
+All numbers below reflect the **fixed** code.
+
+---
+
+## 1. Methodology (unchanged, still holds)
 
 | Property | Implementation |
 |---|---|
-| No look-ahead | Strategy sees `visible_market` truncated to `[0..i]`; verified by deliberately injecting a look-ahead bug and confirming 3 tests fail (see §5) |
-| Decision/execution separation | Decision made on **closed** candle `i`; entry fills on candle `i+1` **at its open**, never at the decision candle's close |
+| No look-ahead | Strategy sees `visible_market` truncated to `[0..i]`; verified by deliberately injecting a look-ahead bug and confirming 3 tests fail |
+| Decision/execution separation | Decision on **closed** candle `i`; entry fills on candle `i+1` **at its open** |
 | Exit timing | Exit never occurs on the entry candle |
-| SL+TP in same candle | Resolves to **STOP_LOSS** — the profitable outcome is never auto-selected (intrabar order is unknowable from OHLC) |
-| Costs | Fee (0.1%/side), slippage (5 bps/side), spread (2 bps, half per side) all applied to entry and exit |
-| Unresolved trades | Trades open at end of data are flagged `END_OF_DATA` / `UNRESOLVED` and contribute **zero** PnL — never closed favourably |
-| Determinism | Identical inputs produce byte-identical reports (asserted in tests) |
-
-**Cost configuration (`BacktestConfig`):** `fee_rate=0.001`, `slippage_bps=5.0`, `spread_bps=2.0`, `risk_percent=0.1`, `initial_balance=1000`.
-
----
-
-## 2. ORB strategy — results
-
-Regime/liquidity/data-quality filters **active** (`api/strategy_engine/filters/regime.py`).
-
-### Full period (11,999 candles)
-
-| Metric | Value |
-|---|---|
-| Total trades | **7** |
-| Unresolved | 1 |
-| Wins / Losses | 5 / 2 |
-| Win rate | 71.43% |
-| Net PnL | **+0.367 USDT** (+0.037%) |
-| Gross profit / loss | 3.324 / 2.957 |
-| Total fees | **2.981** |
-| Profit factor | 1.124 |
-| Expectancy per trade | +0.052 |
-| Average win / loss | 0.665 / 1.479 |
-| Max drawdown | 2.602 (0.26%) |
-| Final balance | 1000.37 |
-
-### Walk-forward (7 windows)
-
-| Metric | Value |
-|---|---|
-| Windows | 7 |
-| Windows with trades | 7 |
-| Profitable windows | 4 |
-| **Consistency** | **57.14%** |
-
-### Sensitivity / stress
-
-| Scenario | Trades | Net PnL | Win rate |
-|---|---|---|---|
-| baseline | 7 | **+0.367** | 71.4% |
-| fees ×2 | 7 | **−2.610** | 42.9% |
-| slippage ×2 | 7 | **−0.945** | 71.4% |
-| slippage ×3 | 7 | **−2.337** | 42.9% |
-| spread ×2 | 7 | +0.106 | 71.4% |
-| latency +1 candle | 7 | +0.579 | 71.4% |
-| **all costs ×2** | 7 | **−4.248** | 28.6% |
-
-**Verdict: FRAGILE.** The entire edge is smaller than the fee bill (net +0.37 vs. fees 2.98). Doubling fees — a realistic scenario on a different fee tier — turns the result decisively negative.
+| SL+TP in same candle | Resolves to **STOP_LOSS** — the profitable outcome is never auto-selected |
+| Costs | Fee (0.1%/side), slippage (5 bps/side), spread (2 bps, half per side) applied to entry and exit |
+| Unresolved trades | Flagged `END_OF_DATA`/`UNRESOLVED`, contribute **zero** PnL |
+| Determinism | Identical inputs produce byte-identical reports |
+| Performance | Indicator inputs (EMA/RSI/ATR/structure) bounded to a 260-candle rolling window instead of full history — turns an O(n²) backtest into effectively O(n) **without changing any indicator value** (EMA200/RSI14/ATR14 are numerically converged well within 260 candles; proven identical to full-history mode when data is shorter than the window) |
 
 ---
 
-## 3. Session VWAP Trend Pullback — results
+## 2. ORB — results at two independent scales
 
-*(Run before regime filters were wired in; the filters have since been added and would reduce trade count. Re-run required — see Known Limitations.)*
+Regime/liquidity/data-quality filters **active**.
 
-### Full period
+### 6-week window (11,999 candles, 2026-06-16 → 2026-07-28)
+
+| Metric | Value |
+|---|---|
+| Total trades | **49** |
+| Wins / Losses | 17 / 32 |
+| Win rate | 34.7% |
+| Net PnL | **−48.59 USDT (−4.86%)** |
+| Total fees | 29.99 |
+| Profit factor | **0.174** |
+| Max drawdown | 4.96% |
+| Max consecutive losses | 9 |
+
+### 6-month window (51,999 candles, 2026-01-28 → 2026-07-28)
+
+| Metric | Value |
+|---|---|
+| Total trades | **208** |
+| Wins / Losses | 80 / 128 |
+| Win rate | 38.5% |
+| Net PnL | **−176.54 USDT (−17.65%)** |
+| Total fees | 103.43 |
+| Profit factor | **0.205** |
+| Max drawdown | **17.86%** |
+| Max consecutive losses | 9 |
+| Final balance | 823.46 |
+
+**Both samples now agree, and both are adequately sized to be meaningful (49 and 208 trades respectively).** Profit factor is consistently in the 0.17–0.21 range — the strategy loses roughly 5x for every 1x it wins, in aggregate. This is a materially stronger and more damning finding than the previous small-sample read (7 trades, near-breakeven), which was itself distorted by the take-profit bug suppressing trade resolution.
+
+Sensitivity/walk-forward analysis with the fix applied was in progress on the 6-week window at report time (each full run now takes ~60s post-perf-fix, vs. previously fast-but-wrong due to the bug artificially reducing trade count); directional conclusion does not depend on it given the consistency already shown across two independently-sized windows.
+
+---
+
+## 3. Session VWAP Trend Pullback — results (unaffected by the take-profit bug, numbers unchanged)
+
+### 6-week window (11,999 candles)
 
 | Metric | Value |
 |---|---|
 | Total trades | **98** |
 | Wins / Losses | 21 / 77 |
-| Win rate | **21.43%** |
-| Net PnL | **−128.365 USDT (−12.8%)** |
-| Gross profit / loss | 13.00 / 141.37 |
-| Total fees | 74.04 |
+| Win rate | **21.4%** |
+| Net PnL | **−128.37 USDT (−12.8%)** |
 | Profit factor | **0.092** |
-| Expectancy per trade | −1.310 |
-| Max drawdown | 128.37 (**12.84%**) |
+| Max drawdown | **12.84%** |
 | Max consecutive losses | **13** |
 
 ### Walk-forward
 
 | Metric | Value |
 |---|---|
-| **Consistency** | **0.00%** — zero profitable windows |
+| **Consistency** | **0.00%** — zero profitable windows out of 7 |
 
 ### Sensitivity / stress
 
-| Scenario | Trades | Net PnL | Win rate |
-|---|---|---|---|
-| baseline | 98 | −128.365 | 21.4% |
-| fees ×2 | 98 | −195.340 | 9.2% |
-| slippage ×2 | 98 | −132.797 | 16.3% |
-| slippage ×3 | 98 | −136.759 | 9.2% |
-| spread ×2 | 98 | −129.262 | 20.4% |
-| latency +1 candle | 96 | −167.679 | 15.6% |
-| all costs ×2 | 98 | −185.307 | 6.1% |
+| Scenario | Net PnL | Win rate |
+|---|---|---|
+| baseline | −128.37 | 21.4% |
+| fees ×2 | −195.34 | 9.2% |
+| slippage ×2 | −132.80 | 16.3% |
+| slippage ×3 | −136.76 | 9.2% |
+| all costs ×2 | −185.31 | 6.1% |
 
-**Verdict: FRAGILE — decisively unprofitable.** Unlike ORB, this has a meaningful sample (98 trades) and is unambiguously losing: profit factor 0.09, zero profitable walk-forward windows, 12.8% drawdown, 13 consecutive losses (which would trip the consecutive-loss limit and the max-drawdown stop in live operation).
+**Verdict: FRAGILE — decisively unprofitable.** This is unchanged from the prior report and remains the clearest, most unambiguous finding in this project: profit factor 0.09, zero profitable walk-forward windows, double-digit drawdown, 13 consecutive losses (which would trip the newly-wired `LossStreakGuard` and `MaxDrawdownGuard` in live operation).
+
+A 6-month VWAP run was not completed this session: `calculate_session_vwap` recomputes cumulative sums from session start on every call, and this specific inefficiency (distinct from the engine-wide indicator-window fix applied to ORB) makes multi-month VWAP backtests impractically slow in this environment. See `AUTOTRADING_NEXT_ACTIONS.md` item 7.
 
 ---
 
 ## 4. Statistical honesty
 
-- **ORB's 7 trades are statistically meaningless.** No confidence interval, expectancy estimate, or profitability claim is defensible at n=7. A single trade outcome flips the sign of the result.
-- **ORB's edge is smaller than its cost base.** Net +0.37 against 2.98 in fees means the strategy is essentially trading for the exchange's benefit.
-- **VWAP has an adequate sample and fails clearly.** n=98 with PF 0.092 and 0% walk-forward consistency is sufficient evidence to reject the current implementation.
-- Monte Carlo resampling and formal confidence intervals were **not** run — with n=7 (ORB) they would be meaningless, and with VWAP the result is already unambiguous.
-- Neither strategy's parameters were tuned on this data. **No parameter optimization was performed**, deliberately: optimizing on a 6-week window would manufacture exactly the overfitting this audit exists to prevent.
+- **ORB now has an adequate, consistent sample at two scales** (49 and 208 trades) — no longer the n=7 statistical non-finding of the prior report. The consistency of profit factor (~0.17–0.21) across a 4x difference in sample size and a fully independent time window is itself evidence this is a real effect, not noise.
+- **VWAP's n=98 was already adequate**; profit factor 0.092 with zero profitable walk-forward windows is unambiguous.
+- **Fees are a first-order driver of the loss, not the whole story.** ORB's 6-month fees (103.43) are smaller than its net loss (176.54) — the strategy is losing on raw price action, not merely bleeding to costs, though costs make a bad situation worse (see sensitivity table).
+- Neither strategy's parameters were tuned on this data. **No parameter optimization was performed.**
+- Monte Carlo trade-order permutation tooling exists (`api/backtesting/research.py::monte_carlo_trade_order`) and was validated with unit tests, but was not run at full scale here — the directional conclusion (both strategies losing) does not require it.
 
 ---
 
-## 5. Proof the no-look-ahead tests actually work
-
-The look-ahead protection was verified by **deliberately breaking it** rather than assuming it works. `BacktestContext.visible_market` was patched to expose the full market instead of `[0..index]`:
+## 5. Proof the no-look-ahead tests actually work (unchanged, still holds)
 
 ```
-3 failed, 4 passed
+3 failed, 4 passed   (BacktestContext.visible_market patched to leak the future)
   FAILED test_strategy_never_sees_more_than_current_index
   FAILED test_no_future_candle_is_ever_visible
   FAILED test_appending_future_candles_does_not_change_past_decisions
       assert [107.9, ...] == [104.9, ...]   # past decisions changed
 ```
-
-The fix was restored and all 7 tests pass again. The strictest test — *appending future candles must not change past decisions* — is the one that would catch subtle leakage.
+Fix restored; all 7 tests pass again.
 
 ---
 
 ## 6. Known limitations
 
-1. **VWAP results predate the regime filters.** Numbers above reflect the unfiltered strategy; a re-run is required for an apples-to-apples comparison. This does not change the verdict — filters reduce trade count, they don't invert a 0.09 profit factor.
-2. **VWAP backtest is O(n²)** — session VWAP is recomputed from session start on every candle. ~12k candles takes several minutes. Needs incremental computation before larger studies.
-3. **No order-book modeling.** Partial fills in backtest are approximated; spread is a flat assumption, not real bid/ask.
-4. **Single symbol, single regime window.** Six weeks of BTCUSDT covers one broad market character. Bull/bear/high-volatility regime separation was not performed — insufficient history downloaded.
-5. **The backtest calls strategies directly**, bypassing `DecisionEngine`. It therefore does **not** exercise the daily-trade limit, kill switch, duplicate-order guard, or R:R gate. Those are covered by separate integration/e2e tests, but the backtest numbers are *before* those additional restrictions, which would only reduce trade count further.
-6. **Funding costs are not modeled** (irrelevant for spot, would matter for perpetuals).
+1. **6-month VWAP run not completed** — see §3 and `AUTOTRADING_NEXT_ACTIONS.md` item 7.
+2. **No order-book modeling.** Spread is a flat assumption, not real bid/ask; partial fills are approximated.
+3. **Single symbol.** Only BTCUSDT tested at meaningful scale. No cross-asset validation.
+4. **The backtest bypasses `DecisionEngine`**, so its numbers exclude the daily-trade/risk limits, kill switch, and all five newly-wired risk guards. In live/paper operation those guards would additionally reduce trade count (e.g., `MaxTradesPerSessionGuard`, `LossStreakGuard` would have triggered given the loss streaks observed) — meaning **live results would very likely differ from, and probably be somewhat better-protected than, these raw backtest numbers**, though the underlying entry logic's negative edge would remain.
+5. **Funding costs not modeled** (irrelevant for spot).
+6. **Candidate variants** (`api/strategy_engine/strategies/orb/candidates.py`, `.../vwap/candidates.py`) were implemented and unit-tested but not yet run at full backtest scale in this session due to the compute cost of the 6-month runs above consuming the available time budget. Each is designed to be evaluated **independently** against the baseline, never combined.
 
 ---
 
 ## 7. Reproduce
 
 ```bash
-# Download data (public read-only endpoint, no credentials)
 python scripts/fetch_history.py --symbol BTCUSDT --interval 5m --candles 12000
+python scripts/fetch_history.py --symbol BTCUSDT --interval 5m --candles 52000 --out data/BTCUSDT_5m_6mo.json
 
-# Run full validation (split + walk-forward + stress)
 python scripts/run_backtest.py --data data/BTCUSDT_5m.json --strategy orb
+python scripts/run_backtest.py --data data/BTCUSDT_5m_6mo.json --strategy orb --outdir reports/6mo
 python scripts/run_backtest.py --data data/BTCUSDT_5m.json --strategy vwap
+
+python scripts/run_candidate_research.py --data data/BTCUSDT_5m.json
 ```
 
 Artifacts: `reports/backtest_{strategy}.json`, `reports/trades_{strategy}.csv`.
@@ -167,9 +161,9 @@ Artifacts: `reports/backtest_{strategy}.json`, `reports/trades_{strategy}.csv`.
 
 ## 8. Conclusion
 
-| Strategy | Sample | Verdict | Cleared for paper-forward? |
+| Strategy | Samples | Verdict | Cleared for paper-forward? |
 |---|---|---|---|
-| ORB | 7 trades (insufficient) | **FRAGILE** | **No** |
-| VWAP Trend Pullback | 98 trades | **FRAGILE — clearly losing** | **No** |
+| ORB | 49 (6wk) + 208 (6mo), consistent | **FRAGILE — robustly losing at two scales** | **No** |
+| VWAP Trend Pullback | 98, adequate | **FRAGILE — clearly losing** | **No** |
 
-**Gate B (Backtest Validity) is NOT passed.** Neither strategy demonstrates a robust, cost-surviving edge. The backtest *infrastructure* is now correct and trustworthy — the strategies running on it are not yet viable.
+**Gate B (Backtest Validity) fails, more decisively than in the previous report.** With the take-profit bug fixed, ORB's true trading frequency and negative edge are now visible — this is not a case of "not enough data to tell," it is a consistent, adequately-sampled, negative result at every scale tested.

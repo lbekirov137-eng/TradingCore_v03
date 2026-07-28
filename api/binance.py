@@ -1,9 +1,23 @@
 import requests
 
+from api.market_data.resilience import retry_with_backoff
+
 
 class BinanceAPI:
 
     BASE_URL = "https://api.binance.com"
+
+    @staticmethod
+    def get_server_time() -> int:
+        url = f"{BinanceAPI.BASE_URL}/api/v3/time"
+
+        def _call():
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            return response
+
+        response = retry_with_backoff(_call)
+        return int(response.json()["serverTime"])
 
     @staticmethod
     def get_klines(
@@ -19,8 +33,12 @@ class BinanceAPI:
             f"&limit={limit}"
         )
 
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
+        def _call():
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            return response
+
+        response = retry_with_backoff(_call)
 
         data = response.json()
 

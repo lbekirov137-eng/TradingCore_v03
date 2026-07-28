@@ -139,10 +139,19 @@ def test_h_restart_replaying_same_signal_never_opens_a_second_position(monkeypat
     the exchange, so replaying it would silently double the position.
 
     Correct behavior (idempotency + exchange-state-is-source-of-truth):
-    the deterministic client_order_id is recognized as already submitted,
-    so execution reports ORDER_PENDING / already-tracked and NO second
-    position is created — even though the in-memory PositionManager was
-    wiped by the restart.
+    the replay is blocked and NO second position is created — even though
+    the in-memory PositionManager was wiped by the restart.
+
+    Two independent layers can be the one that actually catches it, and
+    either is an acceptable, correct outcome:
+      - MaxTradesPerSessionGuard (decision layer): its own session-trade
+        count survives the simulated restart (only PositionManager was
+        reset), so it recognizes this session already traded and returns
+        NO_TRADE before an order is even attempted; OR
+      - the order-layer idempotency store (api/execution/idempotency_store.py):
+        if the session-count guard did not catch it, the deterministic
+        client_order_id would be recognized as already submitted and
+        TradeEngine.execute would report ORDER_PENDING instead.
     """
     monkeypatch.setattr(DataEngine, "load", staticmethod(lambda **kw: orb_breakout_snapshot(breakout=True)))
 
@@ -158,8 +167,8 @@ def test_h_restart_replaying_same_signal_never_opens_a_second_position(monkeypat
 
     second = Workflow.run(_new_context())
 
-    assert second["execution"]["status"] == "ORDER_PENDING"
-    assert "уже отслеживается" in second["execution"]["reason"]
+    assert second["execution"]["status"] in ("NO_TRADE", "ORDER_PENDING")
+    assert second["execution"]["status"] != "OPENED"
     # The critical part: no phantom duplicate position was opened.
     assert PositionManager.has_open_position() is False
 

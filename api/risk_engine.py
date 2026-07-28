@@ -145,80 +145,10 @@ class DailyRiskGuard:
         cls._risk_committed_today = 0.0
 
 
-class LossStreakGuard:
-    """
-    Отслеживает серию убытков, просадку и cooldown после убытка.
-
-    Все лимиты fail-closed: при достижении любого из них новые входы
-    блокируются до явного сброса оператором (или до следующего дня для
-    дневных лимитов).
-    """
-
-    _consecutive_losses = 0
-    _last_loss_at = None
-    _peak_equity = None
-    _session_trades = {}   # session_key -> count
-
-    @classmethod
-    def register_result(cls, net_pnl: float, equity: float = None, session_key=None):
-        import time
-
-        if net_pnl < 0:
-            cls._consecutive_losses += 1
-            cls._last_loss_at = time.time()
-        elif net_pnl > 0:
-            cls._consecutive_losses = 0
-
-        if equity is not None:
-            if cls._peak_equity is None or equity > cls._peak_equity:
-                cls._peak_equity = equity
-
-        if session_key is not None:
-            cls._session_trades[session_key] = cls._session_trades.get(session_key, 0) + 1
-
-    @classmethod
-    def check(cls, equity: float = None, session_key=None,
-              max_consecutive_losses: int = 3, max_drawdown_percent: float = 5.0,
-              cooldown_seconds: float = 3600, max_trades_per_session: int = 1):
-        import time
-
-        if cls._consecutive_losses >= max_consecutive_losses:
-            return {
-                "allowed": False,
-                "reason": f"Достигнут лимит серии убытков ({cls._consecutive_losses}). Требуется вмешательство оператора.",
-            }
-
-        if cls._last_loss_at is not None:
-            elapsed = time.time() - cls._last_loss_at
-            if elapsed < cooldown_seconds:
-                remaining = int(cooldown_seconds - elapsed)
-                return {
-                    "allowed": False,
-                    "reason": f"Пауза после убыточной сделки: осталось {remaining} с.",
-                }
-
-        if equity is not None and cls._peak_equity:
-            drawdown_percent = (cls._peak_equity - equity) / cls._peak_equity * 100
-            if drawdown_percent >= max_drawdown_percent:
-                return {
-                    "allowed": False,
-                    "reason": f"Просадка {drawdown_percent:.2f}% достигла лимита {max_drawdown_percent}%.",
-                }
-
-        if session_key is not None:
-            traded = cls._session_trades.get(session_key, 0)
-            if traded >= max_trades_per_session:
-                return {
-                    "allowed": False,
-                    "reason": f"В этой сессии уже совершено {traded} сделок (лимит {max_trades_per_session}).",
-                }
-
-        return {"allowed": True, "reason": None}
-
-    @classmethod
-    def reset(cls):
-        """Только для тестов и явного сброса оператором."""
-        cls._consecutive_losses = 0
-        cls._last_loss_at = None
-        cls._peak_equity = None
-        cls._session_trades = {}
+# NOTE: the combined LossStreakGuard (consecutive losses + cooldown + drawdown
+# + per-session cap) that used to live here has been split into distinct,
+# separately-testable guard classes in api/risk/guards.py:
+# LossStreakGuard, CooldownAfterLossGuard, MaxDrawdownGuard,
+# MaxTradesPerSessionGuard, plus the new DailyLossGuard (realized-loss based,
+# distinct from DailyRiskGuard above which tracks planned risk). See
+# api/decision_engine/decision_engine.py for how they're wired together.

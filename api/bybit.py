@@ -1,9 +1,24 @@
 import requests
 
+from api.market_data.resilience import retry_with_backoff
+
 
 class BybitAPI:
 
     BASE_URL = "https://api.bybit.com"
+
+    @staticmethod
+    def get_server_time() -> int:
+        url = f"{BybitAPI.BASE_URL}/v5/market/time"
+
+        def _call():
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            return response
+
+        response = retry_with_backoff(_call)
+        result = response.json()["result"]
+        return int(result["timeSecond"]) * 1000
 
     @staticmethod
     def get_klines(
@@ -33,8 +48,12 @@ class BybitAPI:
             f"&limit={limit}"
         )
 
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
+        def _call():
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            return response
+
+        response = retry_with_backoff(_call)
 
         data = response.json()["result"]["list"]
 

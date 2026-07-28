@@ -147,6 +147,20 @@ def observability_support_bundle():
     return build_support_bundle()
 
 
+@app.get("/observability/clock-skew")
+def observability_clock_skew(exchange: str = "binance"):
+    """Сравнивает время сервера биржи с локальными часами хоста."""
+    from api.binance import BinanceAPI
+    from api.bybit import BybitAPI
+    from api.market_data.resilience import ClockSkewChecker
+
+    try:
+        server_time = BinanceAPI.get_server_time() if exchange == "binance" else BybitAPI.get_server_time()
+        return {"exchange": exchange, **ClockSkewChecker.check(server_time)}
+    except Exception as error:
+        return {"exchange": exchange, "error": f"{type(error).__name__}: {error}"}
+
+
 @app.get("/demo/preflight")
 def demo_preflight():
     """

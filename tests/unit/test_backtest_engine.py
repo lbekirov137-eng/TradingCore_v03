@@ -196,3 +196,63 @@ class TestWalkForwardAndSplits:
         market = _flat_market(n=200)
         result = sensitivity_analysis(NoTradeStrategy(), market, BacktestConfig())
         assert result["verdict"] == "INSUFFICIENT_DATA"
+
+
+class TestTimeStop:
+
+    def test_time_stop_force_closes_unresolved_trade(self):
+        # TP/stop set impossibly far so only the time-stop can close it.
+        strategy = SingleTradeStrategy(at_index=30, stop_pct=0.01, tp_pct=100.0)
+        config = BacktestConfig(time_stop_candles=10)
+
+        report = BacktestEngine(strategy, config).run(_trending_market(n=100))
+
+        time_stopped = [t for t in report["trades"] if t["exit_reason"] == "TIME_STOP"]
+        assert len(time_stopped) == 1
+        # Exit must occur exactly time_stop_candles after entry, not later.
+        trade = time_stopped[0]
+        assert trade["exit_index"] - trade["entry_index"] == 10
+
+    def test_no_time_stop_by_default(self):
+        strategy = SingleTradeStrategy(at_index=30, stop_pct=0.01, tp_pct=100.0)
+        config = BacktestConfig()  # time_stop_candles=None
+
+        report = BacktestEngine(strategy, config).run(_trending_market(n=100))
+
+        assert all(t["exit_reason"] != "TIME_STOP" for t in report["trades"])
+
+
+class TestIndicatorLookback:
+    """
+    Bounding the indicator computation window (EMA/RSI/ATR/structure) is a
+    performance fix, not a behavior change: it must produce IDENTICAL
+    results whenever the dataset is smaller than the lookback window, and
+    must never affect context.visible_market (still full, exact history --
+    no look-ahead implication either way).
+    """
+
+    def test_identical_results_when_data_shorter_than_lookback(self):
+        market = _trending_market(n=150)
+
+        report_full = BacktestEngine(SingleTradeStrategy(), BacktestConfig(indicator_lookback=None)).run(market)
+        report_bounded = BacktestEngine(SingleTradeStrategy(), BacktestConfig(indicator_lookback=260)).run(market)
+
+        assert report_full["summary"] == report_bounded["summary"]
+        assert report_full["trades"] == report_bounded["trades"]
+
+    def test_lookback_bounds_the_indicator_input_length(self):
+        market = _trending_market(n=400)
+        engine = BacktestEngine(SingleTradeStrategy(at_index=350), BacktestConfig(indicator_lookback=260))
+
+        context = engine._build_context(market, index=350, balance=1000.0)
+
+        # visible_market is untouched (still full precise history) --
+        # only the indicator inputs are bounded.
+        assert len(context.visible_market.closes) == 351
+        ema = context.indicators["ema"]
+        assert ema is not None  # computed successfully off the bounded window
+
+    def test_disabling_lookback_still_works_on_larger_data(self):
+        market = _trending_market(n=300)
+        report = BacktestEngine(SingleTradeStrategy(at_index=280), BacktestConfig(indicator_lookback=None)).run(market)
+        assert report["summary"]["total_trades"] >= 0  # must not crash on full-history mode

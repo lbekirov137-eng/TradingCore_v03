@@ -10,6 +10,7 @@ from api.market_data.market_snapshot import MarketSnapshot
 from api.position_manager.position_manager import PositionManager
 from api.risk_engine import DailyRiskGuard
 from api.decision_engine.decision_engine import kill_switch
+from api.risk import guards as risk_guards
 from config.settings import DEFAULT_BALANCE
 
 
@@ -65,11 +66,13 @@ def _reset_global_state():
     PositionManager.reset()
     DailyRiskGuard.reset()
     kill_switch.reset()
+    risk_guards.reset_all()
     _reset_execution_singletons()
     yield
     PositionManager.reset()
     DailyRiskGuard.reset()
     kill_switch.reset()
+    risk_guards.reset_all()
     _reset_execution_singletons()
 
 
