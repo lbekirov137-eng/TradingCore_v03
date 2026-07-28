@@ -4,6 +4,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from api.paper_trading.cost_model import (
+    TradingCostConfig,
+    compute_trade_costs,
+)
+
 
 class PaperPositionManager:
     """
@@ -29,11 +34,21 @@ class PaperPositionManager:
     def __init__(
         self,
         state_file: str | Path | None = None,
+        cost_config: TradingCostConfig | None = None,
     ) -> None:
         self.state_file = Path(
             state_file
             if state_file is not None
             else self.DEFAULT_STATE_FILE
+        )
+
+        # Издержки по умолчанию берутся из окружения с консервативными
+        # значениями. Явно нулевую модель нужно передать осознанно —
+        # случайно остаться без комиссий нельзя.
+        self.cost_config = (
+            cost_config
+            if cost_config is not None
+            else TradingCostConfig.from_env()
         )
 
     def has_open_position(self) -> bool:
@@ -369,9 +384,15 @@ class PaperPositionManager:
         entry = float(position["entry"])
         quantity = float(position["quantity"])
 
-        realized_pnl = round(
-            (exit_price - entry) * quantity,
-            8,
+        # Издержки считаются ОДИН раз, в момент закрытия, и раскладываются
+        # на составляющие. gross_pnl — идеальный результат по сырым ценам,
+        # net_pnl — после проскальзывания и обеих комиссий.
+        costs = compute_trade_costs(
+            entry_price=entry,
+            exit_price=exit_price,
+            quantity=quantity,
+            side=str(position.get("side", "LONG")).upper(),
+            config=self.cost_config,
         )
 
         position["status"] = "CLOSED"
@@ -383,7 +404,25 @@ class PaperPositionManager:
         position["exit_price"] = exit_price
         position["exit_reason"] = exit_reason
         position["unrealized_pnl"] = 0.0
-        position["realized_pnl"] = realized_pnl
+
+        # realized_pnl — ФАКТИЧЕСКИЙ результат, то есть net.
+        # Идеальный результат без трения остаётся доступен как gross_pnl,
+        # чтобы разницу можно было увидеть и проверить.
+        position["realized_pnl"] = costs["net_pnl"]
+
+        position["entry_price_raw"] = costs["entry_price_raw"]
+        position["entry_price_effective"] = costs["entry_price_effective"]
+        position["exit_price_raw"] = costs["exit_price_raw"]
+        position["exit_price_effective"] = costs["exit_price_effective"]
+        position["gross_pnl"] = costs["gross_pnl"]
+        position["entry_fee"] = costs["entry_fee"]
+        position["exit_fee"] = costs["exit_fee"]
+        position["total_fees"] = costs["total_fees"]
+        position["slippage_cost"] = costs["slippage_cost"]
+        position["net_pnl"] = costs["net_pnl"]
+        position["fee_model_version"] = costs["fee_model_version"]
+        position["cost_config"] = costs["cost_config"]
+
         position["real_order_sent"] = False
 
         self.reset_position()
@@ -392,7 +431,13 @@ class PaperPositionManager:
             "event": "POSITION_CLOSED",
             "exit_reason": exit_reason,
             "exit_price": exit_price,
-            "realized_pnl": realized_pnl,
+            # realized_pnl == net_pnl: фактический результат после издержек.
+            "realized_pnl": costs["net_pnl"],
+            "gross_pnl": costs["gross_pnl"],
+            "net_pnl": costs["net_pnl"],
+            "total_fees": costs["total_fees"],
+            "slippage_cost": costs["slippage_cost"],
+            "fee_model_version": costs["fee_model_version"],
             "position": position,
             "real_order_sent": False,
         }

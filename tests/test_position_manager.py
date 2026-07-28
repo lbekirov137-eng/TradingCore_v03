@@ -156,7 +156,19 @@ def test_take_profit_2_closes_position(
     assert result["event"] == "POSITION_CLOSED"
     assert result["exit_reason"] == "TAKE_PROFIT_2"
     assert result["exit_price"] == 130.0
-    assert result["realized_pnl"] == 3.0
+
+    # gross — идеальный результат по сырым ценам (значение не изменилось).
+    # realized_pnl теперь равен NET, то есть после проскальзывания и обеих
+    # комиссий. Ожидание посчитано вручную, не скопировано из вывода:
+    #   entry_eff = 100 * 1.0005 = 100.05
+    #   exit_eff  = 130 * 0.9995 = 129.935
+    #   slippage  = (0.05 + 0.065) * 0.1            = 0.0115
+    #   fees      = (100.05 + 129.935) * 0.1 * 0.001 = 0.0229985
+    #   net       = 3.0 - 0.0115 - 0.0229985        = 2.9655015
+    assert result["gross_pnl"] == pytest.approx(3.0)
+    assert result["net_pnl"] == pytest.approx(2.9655015)
+    assert result["realized_pnl"] == result["net_pnl"]
+    assert result["net_pnl"] < result["gross_pnl"]
     assert result["real_order_sent"] is False
 
     position = result["position"]
@@ -185,7 +197,17 @@ def test_stop_loss_closes_position(
     assert result["event"] == "POSITION_CLOSED"
     assert result["exit_reason"] == "STOP_LOSS"
     assert result["exit_price"] == 90.0
-    assert result["realized_pnl"] == -1.0
+
+    # Издержки УВЕЛИЧИВАЮТ убыток:
+    #   exit_eff = 90 * 0.9995 = 89.955
+    #   slippage = (0.05 + 0.045) * 0.1             = 0.0095
+    #   fees     = (100.05 + 89.955) * 0.1 * 0.001  = 0.0190005
+    #   net      = -1.0 - 0.0095 - 0.0190005        = -1.0285005
+    assert result["gross_pnl"] == pytest.approx(-1.0)
+    assert result["net_pnl"] == pytest.approx(-1.0285005)
+    assert result["realized_pnl"] == result["net_pnl"]
+    assert result["net_pnl"] < result["gross_pnl"]
+
     assert result["real_order_sent"] is False
 
     assert result["position"]["status"] == "CLOSED"
@@ -210,7 +232,9 @@ def test_stop_has_priority_when_same_candle_hits_both(
     assert result["event"] == "POSITION_CLOSED"
     assert result["exit_reason"] == "STOP_LOSS"
     assert result["exit_price"] == 90.0
-    assert result["realized_pnl"] == -1.0
+    assert result["gross_pnl"] == pytest.approx(-1.0)
+    assert result["net_pnl"] == pytest.approx(-1.0285005)
+    assert result["realized_pnl"] == result["net_pnl"]
     assert result["real_order_sent"] is False
 
 

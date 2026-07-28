@@ -1,3 +1,5 @@
+import pytest
+
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -240,7 +242,11 @@ def test_stop_closes_existing_position_without_reentry(
     )
 
     assert position_event["exit_price"] == 90.0
-    assert position_event["realized_pnl"] == -1.0
+
+    # realized_pnl теперь NET (после издержек), gross сохранён отдельно.
+    assert position_event["gross_pnl"] == pytest.approx(-1.0)
+    assert position_event["net_pnl"] == pytest.approx(-1.0285005)
+    assert position_event["realized_pnl"] == position_event["net_pnl"]
     assert position_event["real_order_sent"] is False
 
     assert pipeline_data is None

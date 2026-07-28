@@ -58,9 +58,60 @@ def _positive_int_from_env(
     return value
 
 
+def _positive_float_from_env(
+    name: str,
+    default: float,
+) -> float:
+    raw = os.getenv(name)
+
+    if raw is None or raw.strip() == "":
+        return default
+
+    try:
+        value = float(raw.strip())
+    except ValueError:
+        print(
+            f"PAPER LOOP: {name}={raw!r} не является числом; "
+            f"используется значение по умолчанию {default}",
+            flush=True,
+        )
+        return default
+
+    if not (value > 0) or value != value or value in (float("inf"),):
+        print(
+            f"PAPER LOOP: {name}={value} должно быть конечным и > 0; "
+            f"используется значение по умолчанию {default}",
+            flush=True,
+        )
+        return default
+
+    return value
+
+
 POLL_INTERVAL_SECONDS = _positive_int_from_env(
     "PAPER_MONITOR_POLL_SECONDS",
     30,
+)
+
+# --- ограничитель повторной обработки одной свечи -------------------------
+#
+# Транзиентную ошибку (сеть, кратковременный сбой биржи) повторять нужно.
+# Постоянную — бессмысленно: цикл перестаёт продвигаться и бесконечно
+# перемалывает одну и ту же свечу, засоряя журнал.
+MAX_ATTEMPTS_PER_CANDLE = _positive_int_from_env(
+    "PAPER_MAX_ATTEMPTS_PER_CANDLE",
+    3,
+)
+
+RETRY_DELAY_SECONDS = _positive_float_from_env(
+    "PAPER_RETRY_DELAY_SECONDS",
+    5.0,
+)
+
+# Множитель экспоненциальной задержки между попытками по одной свече.
+RETRY_BACKOFF = _positive_float_from_env(
+    "PAPER_RETRY_BACKOFF",
+    2.0,
 )
 
 HEARTBEAT_INTERVAL_SECONDS = 60 * 60
@@ -1256,11 +1307,25 @@ def main(
     last_heartbeat_monotonic = 0.0
     last_daily_report_date_utc: str | None = None
 
+    # Состояние ограничителя повторов. Привязано к КОНКРЕТНОЙ свече:
+    # новая свеча всегда начинает счёт заново.
+    failing_close_time_ms: int | None = None
+    candle_attempts = 0
+
     try:
         while (
             stop_event is None
             or not stop_event.is_set()
         ):
+            # Сбрасывается на КАЖДОЙ итерации: если исключение произойдёт
+            # до чтения снимка (например, сеть недоступна), обработчик
+            # ошибки не должен приписать сбой предыдущей свече.
+            current_close_time_ms = None
+
+            # None => обычный интервал опроса. Значение => пауза перед
+            # повторной попыткой по той же свече (с backoff).
+            retry_wait_seconds: float | None = None
+
             try:
                 context = build_live_context()
 
@@ -1430,18 +1495,100 @@ def main(
                     current_close_time_ms
                 )
 
+                # Свеча обработана успешно — счётчик попыток снимается.
+                failing_close_time_ms = None
+                candle_attempts = 0
+
             except Exception as error:
+                # ОГРАНИЧИТЕЛЬ ПОВТОРОВ.
+                #
+                # Раньше last_processed_close_time_ms обновлялся только в
+                # конце try, поэтому любая ошибка оставляла его прежним и
+                # та же свеча бралась в работу снова на каждом опросе —
+                # бесконечно. При постоянной ошибке (а такой была
+                # контрактная ошибка PaperPositionManager) цикл не
+                # продвигался вообще: измерено 33 попытки за 0.5 с при
+                # опросе 0.01 с и 39 повторов одной свечи в тесте.
+                #
+                # Транзиентные сбои по-прежнему повторяются — это полезно.
+                # Ограничивается только число попыток для ОДНОЙ свечи.
+                if (
+                    current_close_time_ms is not None
+                    and current_close_time_ms == failing_close_time_ms
+                ):
+                    candle_attempts += 1
+                else:
+                    failing_close_time_ms = current_close_time_ms
+                    candle_attempts = 1
+
+                limit_reached = (
+                    current_close_time_ms is not None
+                    and candle_attempts >= MAX_ATTEMPTS_PER_CANDLE
+                )
+
                 error_record = {
                     "recorded_at_utc": utc_now(),
-                    "status": "FAILED_SAFELY",
+                    "status": (
+                        "CANDLE_PROCESSING_FAILED_SAFELY"
+                        if limit_reached
+                        else "FAILED_SAFELY"
+                    ),
                     "error_type": (
                         type(error).__name__
                     ),
                     "error": str(error),
+                    "candle_close_time_ms": current_close_time_ms,
+                    "attempts": candle_attempts,
+                    "max_attempts_per_candle": MAX_ATTEMPTS_PER_CANDLE,
+                    "trade_created": False,
                     "real_order_sent": False,
                 }
 
                 append_journal(error_record)
+
+                if limit_reached:
+                    # Свеча ПРОПУСКАЕТСЯ, но не считается успешно
+                    # обработанной: сделка не создаётся, сигнал не
+                    # помечается использованным. Отметка о продвижении
+                    # нужна только чтобы перейти к ожиданию следующей
+                    # новой свечи вместо вечного повтора этой.
+                    last_processed_close_time_ms = (
+                        current_close_time_ms
+                    )
+
+                    save_runtime_state(
+                        current_close_time_ms,
+                        used_signal_id=used_signal_id,
+                    )
+
+                    failing_close_time_ms = None
+                    candle_attempts = 0
+
+                    print(
+                        "CANDLE_PROCESSING_FAILED_SAFELY: "
+                        f"close_time_ms={current_close_time_ms} "
+                        f"attempts={error_record['attempts']} "
+                        f"error={error_record['error_type']}: "
+                        f"{error_record['error'][:120]} "
+                        "trade_created=False",
+                        flush=True,
+                    )
+
+                else:
+                    # Повтор по той же свече: экспоненциальная задержка,
+                    # чтобы не долбить биржу на полной скорости опроса.
+                    retry_wait_seconds = RETRY_DELAY_SECONDS * (
+                        RETRY_BACKOFF ** (candle_attempts - 1)
+                    )
+
+                    print(
+                        "CANDLE_RETRY_SCHEDULED: "
+                        f"close_time_ms={current_close_time_ms} "
+                        f"attempt={candle_attempts}/"
+                        f"{MAX_ATTEMPTS_PER_CANDLE} "
+                        f"retry_in={retry_wait_seconds:.1f}s",
+                        flush=True,
+                    )
 
                 telegram_error_sent = (
                     TELEGRAM_NOTIFIER.notify_error(
@@ -1475,7 +1622,9 @@ def main(
                 print("-" * 70, flush=True)
 
             if wait_or_stop(
-                POLL_INTERVAL_SECONDS,
+                retry_wait_seconds
+                if retry_wait_seconds is not None
+                else POLL_INTERVAL_SECONDS,
                 stop_event,
             ):
                 break
