@@ -377,7 +377,34 @@ class PaperPositionManager:
                 "a real order"
             )
 
-        if paper_order.get("side") != "BUY":
+        # Контракт paper_order изменился, а эта проверка отстала.
+        #
+        # Было (старый контракт): "side" переиспользовалось под значение
+        # ТОРГОВОГО СИГНАЛА и содержало "BUY"/"SELL".
+        # Стало (текущий контракт pipeline_v2): поля разделены —
+        #   signal = "BUY"/"SELL"   (торговый сигнал)
+        #   side   = "LONG"/"SHORT" (направление позиции,
+        #                            PaperExecutionStep._side)
+        #
+        # Из-за этого условие `side != "BUY"` отвергало КАЖДЫЙ валидный
+        # длинный ордер (side == "LONG"), и paper-цикл не мог открыть ни
+        # одной позиции: любая свеча с решением TRADE заканчивалась
+        # ValueError и записью FAILED_SAFELY.
+        #
+        # Принимаем оба контракта: приоритет у signal, fallback на side.
+        # Это сохраняет совместимость с уже существующими вызовами и
+        # записями, где side == "BUY". Торговая семантика не меняется:
+        # как и раньше, допускается только вход в лонг (SPOT_LONG_ONLY),
+        # SELL/SHORT по-прежнему отвергается.
+        entry_direction = paper_order.get("signal")
+
+        if entry_direction is None:
+            entry_direction = paper_order.get("side")
+
+        if str(entry_direction).upper() not in (
+            "BUY",
+            "LONG",
+        ):
             raise ValueError(
                 "Only BUY paper orders are supported"
             )
