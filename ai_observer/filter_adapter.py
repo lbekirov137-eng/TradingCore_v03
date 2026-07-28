@@ -52,21 +52,30 @@ class AIFilterAdapter:
             else resolve_output_file()
         )
 
-        self.provider = (
-            provider
-            if provider is not None
-            else OpenAIProvider()
-        )
-
+        # Платный AI-слой теперь OPT-IN, а не opt-out. Раньше значение по
+        # умолчанию было "true", то есть платный OpenAI API вызывался бы
+        # в облачном PAPER-запуске автоматически, без явного решения.
+        # Для первого PAPER-запуска действует правило: платные AI API не
+        # подключаются и не вызываются, поэтому по умолчанию — выключено.
         self.openai_shadow_enabled = (
             os.getenv(
                 "AI_OPENAI_SHADOW_ENABLED",
-                "true",
+                "false",
             )
             .strip()
             .lower()
             in {"1", "true", "yes", "on"}
         )
+
+        # Провайдер создаётся ЛЕНИВО: если shadow-режим выключен, объект
+        # OpenAIProvider вообще не создаётся, поэтому ни ключ, ни платный
+        # пакет не требуются для работы paper-контура.
+        if provider is not None:
+            self.provider = provider
+        elif self.openai_shadow_enabled:
+            self.provider = OpenAIProvider()
+        else:
+            self.provider = None
 
     @staticmethod
     def _safe_dict(value: Any) -> dict[str, Any]:

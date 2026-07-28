@@ -4,4 +4,11 @@ requests
 pandas
 numpy
 python-dotenv
-openai
+
+# `openai` намеренно НЕ входит в обязательные зависимости.
+# Для первого облачного PAPER-запуска платные AI API не подключаются и не
+# вызываются (AI_OPENAI_SHADOW_ENABLED по умолчанию false, провайдер не
+# создаётся). Импорт `openai` в ai_core/openai_provider.py сделан ленивым,
+# поэтому весь paper-контур работает без этого пакета.
+# Если AI shadow-слой понадобится позже — это отдельное явное решение:
+# установить `openai` и выставить AI_OPENAI_SHADOW_ENABLED=true.

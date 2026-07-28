@@ -5,8 +5,6 @@ import os
 import time
 from typing import Any
 
-from openai import OpenAI
-
 from ai_core.provider_contracts import (
     AIDecision,
     AIRequest,
@@ -45,11 +43,25 @@ class OpenAIProvider:
             "",
         ).strip()
 
-        self._client = (
-            OpenAI(api_key=self._api_key)
-            if self._api_key
-            else None
-        )
+        # Импорт `openai` сделан ЛЕНИВЫМ намеренно. Раньше он стоял на
+        # верхнем уровне модуля, из-за чего:
+        #   1) весь paper-контур (paper_live_loop -> filter_adapter ->
+        #      этот модуль) падал с ModuleNotFoundError, если пакет не
+        #      установлен — включая сбор тестов;
+        #   2) платная зависимость была обязательной для запуска даже
+        #      тогда, когда AI-слой вообще не используется.
+        # Теперь клиент создаётся только при фактически заданном
+        # OPENAI_API_KEY, а отсутствие пакета деградирует безопасно
+        # (клиента нет -> is_configured() False -> AI-слой не вызывается).
+        self._client = None
+
+        if self._api_key:
+            try:
+                from openai import OpenAI
+            except ImportError:
+                self._client = None
+            else:
+                self._client = OpenAI(api_key=self._api_key)
 
     @property
     def provider_name(self) -> str:
