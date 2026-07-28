@@ -25,6 +25,27 @@ def build_context() -> MarketContext:
         for close in closes
     ]
 
+    # VladORBObserverStep передаёт context.market напрямую как
+    # market_snapshot, а vlad_orb требует полный набор полей
+    # (interval, open_times_ms, opens, highs, lows, closes) с рядами
+    # одинаковой длины. Без них dry-run обрывался на
+    # "market_snapshot is missing fields: interval, open_times_ms, opens" —
+    # то есть синтетический контекст не соответствовал реальному
+    # контракту пайплайна.
+    #   - opens[i] = closes[i-1] (открытие = закрытие предыдущей свечи),
+    #     opens[0] = closes[0];
+    #   - open_times_ms — монотонная сетка с шагом 5 минут, что
+    #     соответствует timeframe "5m".
+    FIVE_MINUTES_MS = 5 * 60 * 1000
+    BASE_OPEN_TIME_MS = 1_700_000_000_000
+
+    opens = [closes[0]] + closes[:-1]
+
+    open_times_ms = [
+        BASE_OPEN_TIME_MS + index * FIVE_MINUTES_MS
+        for index in range(len(closes))
+    ]
+
     context = MarketContext()
 
     context.exchange = "binance"
@@ -33,6 +54,9 @@ def build_context() -> MarketContext:
 
     context.market = {
         "price": closes[-1],
+        "interval": "5m",
+        "open_times_ms": open_times_ms,
+        "opens": opens,
         "closes": closes,
         "highs": highs,
         "lows": lows,
