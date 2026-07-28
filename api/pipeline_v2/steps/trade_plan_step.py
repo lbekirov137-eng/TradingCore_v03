@@ -11,6 +11,7 @@ class TradePlanStep(BaseStep):
     VERSION = "4.1.0"
 
     ALLOWED_SIGNALS = {"BUY", "SELL", "NO TRADE"}
+    PAPER_LONG_SHORT_MODE = "PAPER_LONG_SHORT"
     REQUIRED_PLAN_FIELDS = (
         "entry",
         "stop",
@@ -53,6 +54,67 @@ class TradePlanStep(BaseStep):
         allowed = context.risk.get("allowed")
         if not isinstance(allowed, bool):
             raise TypeError("TradePlanStep risk allowed must be bool")
+
+        # Защита в глубину для SPOT_LONG_ONLY.
+        #
+        # RiskStep уже блокирует SELL вне PAPER_LONG_SHORT, поэтому в
+        # рабочем конвейере такая пара не встречается. Но полагаться на
+        # единственную проверку нельзя: если риск окажется одобрен по
+        # ошибке или в обход, шаг не должен строить короткий план в
+        # режиме, где шорт запрещён.
+        if (
+            allowed
+            and selected_trade.get("signal") == "SELL"
+            and context.risk.get("execution_mode")
+            != self.PAPER_LONG_SHORT_MODE
+        ):
+            raise ValueError(
+                "TradePlanStep approved risk requires BUY signal outside "
+                f"{self.PAPER_LONG_SHORT_MODE} mode"
+            )
+
+        # Рыночная цена и ATR проверяются ЗДЕСЬ, а не при использовании.
+        #
+        # Раньше отсутствие цены доходило до `float(context.market["price"])`
+        # и вылетало голым KeyError — то есть шаг не отказывал, а падал.
+        # Нулевой ATR ловился лишь косвенно, через несогласованные уровни
+        # плана, и сообщение не указывало на настоящую причину.
+        #
+        # Цена нужна обеим веткам: ATR-плану для расчёта уровней и
+        # VLAD_ORB-плану для проверки актуальности входа.
+        if not isinstance(context.market, dict):
+            raise TypeError("TradePlanStep expected context.market to be dict")
+
+        price = context.market.get("price")
+        if not self._is_positive_number(price):
+            raise ValueError(
+                "TradePlanStep market price is missing or not a positive "
+                f"finite number: {price!r}"
+            )
+
+        if not isinstance(context.indicators, dict):
+            raise TypeError(
+                "TradePlanStep expected context.indicators to be dict"
+            )
+
+        atr_indicator = context.indicators.get("atr")
+        if not isinstance(atr_indicator, dict):
+            raise TypeError("TradePlanStep ATR indicator must be dict")
+
+        atr = atr_indicator.get("value")
+        if not self._is_positive_number(atr):
+            raise ValueError(
+                f"TradePlanStep ATR must be greater than zero: {atr!r}"
+            )
+
+    @staticmethod
+    def _is_positive_number(value: Any) -> bool:
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            return False
+
+        number = float(value)
+
+        return math.isfinite(number) and number > 0
 
     def process(self, context: MarketContext) -> MarketContext:
         selected_trade = context.strategy["selected_trade"]

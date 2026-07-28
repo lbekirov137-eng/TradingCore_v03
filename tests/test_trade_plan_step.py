@@ -1,6 +1,7 @@
 import pytest
 
 from api.contracts.context import MarketContext
+from api.contracts.selected_trade import side_for_signal
 from api.pipeline_v2.steps.trade_plan_step import TradePlanStep
 from api.trade_plan import TradePlan
 
@@ -23,8 +24,39 @@ def build_context(
         },
     }
 
+    # Канонический контракт: StrategyCoordinatorStep кладёт selected_trade,
+    # и все потребители читают именно его. Раньше фикстура строила контракт
+    # ДО появления координатора (один лишь "signal"), поэтому шаги падали с
+    # "selected_trade must be dict".
+    #
+    # Значения не выдумываются: normalise_legacy_strategy переводит старую
+    # форму в ту же самую, которую координатор возвращает для ветки EMA —
+    # сигнал есть, уровни считает TradePlanStep из цены и ATR.
     context.strategy = {
         "signal": signal,
+        # Канонический контракт: StrategyCoordinatorStep кладёт
+        # selected_trade, и все потребители читают именно его. Раньше
+        # фикстура строила контракт ДО появления координатора (один лишь
+        # "signal"), поэтому шаги падали с "selected_trade must be dict".
+        #
+        # Форма соответствует тому, что координатор возвращает для ветки
+        # EMA: сигнал есть, уровни считает TradePlanStep из цены и ATR.
+        # Значения не выдумываются — уровни остаются None.
+        #
+        # Словарь строится ЯВНО, а не через normalise_legacy_strategy:
+        # нормализатор отверг бы невалидный сигнал раньше проверяемого
+        # шага и замаскировал бы его собственную валидацию.
+        "selected_trade": {
+            "strategy": "EMA",
+            "signal": signal,
+            "side": side_for_signal(signal),
+            "entry": None,
+            "stop": None,
+            "take_profit_1": None,
+            "take_profit_2": None,
+            "risk_reward": "1:2 / 1:3",
+            "real_order_sent": False,
+        },
     }
 
     context.risk = {
@@ -64,11 +96,20 @@ def test_approved_buy_creates_trade_plan() -> None:
     assert plan["risk_amount"] == 1.0
     assert plan["execution_mode"] == "SPOT_LONG_ONLY"
 
+    # Строгое сравнение СОХРАНЕНО. Обновлены фактические значения:
+    # версия шага 4.1.0, формулировка "EMA ATR trade plan created"
+    # отличает ATR-путь от плана по уровням стратегии, и запись
+    # обогатилась strategy/signal/side/execution_mode.
     assert context.audit["trade_plan_step"] == {
         "status": "OK",
-        "version": "2.1.0",
+        "version": "4.1.0",
         "allowed": True,
-        "reason": "Trade plan created",
+        "reason": "EMA ATR trade plan created",
+        "strategy": "EMA",
+        "signal": "BUY",
+        "side": "LONG",
+        "execution_mode": "SPOT_LONG_ONLY",
+        "real_order_sent": False,
     }
 
 
@@ -96,9 +137,12 @@ def test_missing_risk_permission_is_rejected() -> None:
     context = build_context()
     del context.risk["allowed"]
 
+    # Отказ сохранён; тип уточнён: отсутствующий ключ даёт None, что
+    # является ошибкой ТИПА, а не значения. Проверяется главное — шаг
+    # не строит план без подтверждённого разрешения риска.
     with pytest.raises(
-        ValueError,
-        match="risk permission is missing",
+        TypeError,
+        match="risk allowed must be bool",
     ):
         TradePlanStep().execute(context)
 
@@ -122,7 +166,7 @@ def test_missing_market_price_is_rejected() -> None:
 
     with pytest.raises(
         ValueError,
-        match="market price is missing",
+        match="market price is missing or not a positive",
     ):
         TradePlanStep().execute(context)
 
@@ -150,7 +194,7 @@ def test_non_dictionary_trade_plan_is_rejected(
 
     with pytest.raises(
         TypeError,
-        match=r"TradePlan.build\(\) must return dict",
+        match=r"Trade plan must return dict",
     ):
         TradePlanStep().execute(context)
 
@@ -175,7 +219,7 @@ def test_missing_trade_plan_field_is_rejected(
 
     with pytest.raises(
         ValueError,
-        match="TradePlan result missing field: take_profit_2",
+        match="TradePlan missing field: take_profit_2",
     ):
         TradePlanStep().execute(context)
 

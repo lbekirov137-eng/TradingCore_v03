@@ -1,6 +1,7 @@
 import pytest
 
 from api.contracts.context import MarketContext
+from api.contracts.selected_trade import side_for_signal
 from api.decision_engine.decision_engine import DecisionEngine
 from api.pipeline_v2.steps.decision_step import DecisionStep
 
@@ -12,8 +13,39 @@ def build_context(
 ) -> MarketContext:
     context = MarketContext()
 
+    # Канонический контракт: StrategyCoordinatorStep кладёт selected_trade,
+    # и все потребители читают именно его. Раньше фикстура строила контракт
+    # ДО появления координатора (один лишь "signal"), поэтому шаги падали с
+    # "selected_trade must be dict".
+    #
+    # Значения не выдумываются: normalise_legacy_strategy переводит старую
+    # форму в ту же самую, которую координатор возвращает для ветки EMA —
+    # сигнал есть, уровни считает TradePlanStep из цены и ATR.
     context.strategy = {
         "signal": signal,
+        # Канонический контракт: StrategyCoordinatorStep кладёт
+        # selected_trade, и все потребители читают именно его. Раньше
+        # фикстура строила контракт ДО появления координатора (один лишь
+        # "signal"), поэтому шаги падали с "selected_trade must be dict".
+        #
+        # Форма соответствует тому, что координатор возвращает для ветки
+        # EMA: сигнал есть, уровни считает TradePlanStep из цены и ATR.
+        # Значения не выдумываются — уровни остаются None.
+        #
+        # Словарь строится ЯВНО, а не через normalise_legacy_strategy:
+        # нормализатор отверг бы невалидный сигнал раньше проверяемого
+        # шага и замаскировал бы его собственную валидацию.
+        "selected_trade": {
+            "strategy": "EMA",
+            "signal": signal,
+            "side": side_for_signal(signal),
+            "entry": None,
+            "stop": None,
+            "take_profit_1": None,
+            "take_profit_2": None,
+            "risk_reward": "1:2 / 1:3",
+            "real_order_sent": False,
+        },
     }
 
     context.risk = {
@@ -81,14 +113,19 @@ def test_all_approvals_produce_trade(
         == "SPOT_LONG_ONLY"
     )
 
+    # Строгое сравнение СОХРАНЕНО. Формулировка стала точнее ("Selected
+    # strategy" — решение принимается по ВЫБРАННОЙ координатором сделке),
+    # и запись обогатилась strategy/signal/side/execution_mode.
     assert context.audit["decision_step"] == {
         "status": "OK",
-        "version": "2.1.0",
+        "version": "4.0.0",
         "decision": "TRADE",
-        "reason": (
-            "Strategy, risk, trade plan and "
-            "decision rules approved"
-        ),
+        "reason": "Selected strategy, risk, plan and rules approved",
+        "strategy": "EMA",
+        "signal": "BUY",
+        "side": "LONG",
+        "execution_mode": "SPOT_LONG_ONLY",
+        "real_order_sent": False,
     }
 
 
@@ -112,7 +149,7 @@ def test_non_buy_signal_blocks_trade(
 
     assert context.decision["decision"] == "NO_TRADE"
     assert (
-        "Strategy signal is not BUY: NO TRADE"
+        "Selected signal is not BUY or SELL: NO TRADE"
         in context.decision["reason"]
     )
 

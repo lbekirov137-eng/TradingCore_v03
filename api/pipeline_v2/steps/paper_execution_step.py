@@ -56,6 +56,29 @@ class PaperExecutionStep(BaseStep):
             if not self._positive(value):
                 raise ValueError(f"Paper plan field {field} must be positive")
 
+        # Согласованность уровней — защита в глубину.
+        #
+        # TradePlanStep уже проверяет порядок stop < entry < tp1 < tp2, но
+        # исполняющий шаг не должен полагаться на это как на единственную
+        # гарантию: план мог быть собран в обход конвейера или изменён
+        # между шагами. Ордер с перевёрнутыми уровнями означал бы стоп
+        # выше входа, то есть немедленный убыток при открытии.
+        entry = float(plan["entry"])
+        stop = float(plan["stop"])
+        take_profit_1 = float(plan["take_profit_1"])
+        take_profit_2 = float(plan["take_profit_2"])
+
+        consistent = (
+            stop < entry < take_profit_1 < take_profit_2
+            if signal == "BUY"
+            else take_profit_2 < take_profit_1 < entry < stop
+        )
+
+        if not consistent:
+            raise ValueError(
+                f"PaperExecutionStep {signal} levels are inconsistent"
+            )
+
     def process(self, context: MarketContext) -> MarketContext:
         final_decision = context.decision["decision"]
         selected_trade = context.strategy.get("selected_trade", {})

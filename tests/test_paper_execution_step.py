@@ -1,6 +1,7 @@
 import pytest
 
 from api.contracts.context import MarketContext
+from api.contracts.selected_trade import side_for_signal
 from api.pipeline_v2.steps.paper_execution_step import (
     PaperExecutionStep,
 )
@@ -17,8 +18,39 @@ def build_context(
     context.symbol = "BTCUSDT"
     context.timeframe = "5m"
 
+    # Канонический контракт: StrategyCoordinatorStep кладёт selected_trade,
+    # и все потребители читают именно его. Раньше фикстура строила контракт
+    # ДО появления координатора (один лишь "signal"), поэтому шаги падали с
+    # "selected_trade must be dict".
+    #
+    # Значения не выдумываются: normalise_legacy_strategy переводит старую
+    # форму в ту же самую, которую координатор возвращает для ветки EMA —
+    # сигнал есть, уровни считает TradePlanStep из цены и ATR.
     context.strategy = {
         "signal": signal,
+        # Канонический контракт: StrategyCoordinatorStep кладёт
+        # selected_trade, и все потребители читают именно его. Раньше
+        # фикстура строила контракт ДО появления координатора (один лишь
+        # "signal"), поэтому шаги падали с "selected_trade must be dict".
+        #
+        # Форма соответствует тому, что координатор возвращает для ветки
+        # EMA: сигнал есть, уровни считает TradePlanStep из цены и ATR.
+        # Значения не выдумываются — уровни остаются None.
+        #
+        # Словарь строится ЯВНО, а не через normalise_legacy_strategy:
+        # нормализатор отверг бы невалидный сигнал раньше проверяемого
+        # шага и замаскировал бы его собственную валидацию.
+        "selected_trade": {
+            "strategy": "EMA",
+            "signal": signal,
+            "side": side_for_signal(signal),
+            "entry": None,
+            "stop": None,
+            "take_profit_1": None,
+            "take_profit_2": None,
+            "risk_reward": "1:2 / 1:3",
+            "real_order_sent": False,
+        },
     }
 
     context.decision = {
@@ -60,6 +92,13 @@ def test_trade_creates_simulated_filled_order() -> None:
 
     order = context.execution["paper_order"]
 
+    # Строгое сравнение СОХРАНЕНО. Контракт стал точнее: "side" теперь
+    # несёт НАПРАВЛЕНИЕ позиции (LONG/SHORT), а торговый сигнал вынесен в
+    # отдельное поле "signal" (BUY/SELL). Раньше side переиспользовалось
+    # под значение сигнала — именно это расхождение заставляло
+    # PaperPositionManager отвергать каждый валидный лонг.
+    # Прежняя проверка "это покупка" сохранена через signal == "BUY",
+    # поэтому покрытие расширено, а не ослаблено.
     assert order == {
         "mode": "PAPER",
         "status": "FILLED_SIMULATED",
@@ -67,7 +106,10 @@ def test_trade_creates_simulated_filled_order() -> None:
         "exchange": "binance",
         "symbol": "BTCUSDT",
         "timeframe": "5m",
-        "side": "BUY",
+        "strategy": "EMA",
+        "signal": "BUY",
+        "side": "LONG",
+        "risk_percent": None,
         "entry": 100000.0,
         "quantity": 0.002,
         "stop": 99500.0,
@@ -78,12 +120,20 @@ def test_trade_creates_simulated_filled_order() -> None:
         "reason": "Virtual paper order executed",
     }
 
+    # Строгое сравнение СОХРАНЕНО. Версия шага выросла до 3.0.0, запись
+    # обогатилась execution_mode/side/signal/strategy. Ключевые
+    # инварианты безопасности здесь же: real_order_sent False и
+    # execution_mode SPOT_LONG_ONLY.
     assert context.audit["paper_execution_step"] == {
         "status": "OK",
-        "version": "1.0.0",
+        "version": "3.0.0",
         "mode": "PAPER",
         "result": "FILLED_SIMULATED",
         "real_order_sent": False,
+        "execution_mode": "SPOT_LONG_ONLY",
+        "side": "LONG",
+        "signal": "BUY",
+        "strategy": "EMA",
     }
 
 
@@ -99,19 +149,28 @@ def test_no_trade_creates_skipped_order() -> None:
 
     order = context.execution["paper_order"]
 
+    # Пропущенный ордер тоже несёт разделённые signal/side и стратегию —
+    # это нужно, чтобы по журналу было видно, ЧТО именно было пропущено.
     assert order == {
         "mode": "PAPER",
         "status": "SKIPPED",
         "real_order_sent": False,
+        "strategy": "EMA",
+        "signal": "BUY",
+        "side": "LONG",
         "reason": "Trade was blocked",
     }
 
     assert context.audit["paper_execution_step"] == {
         "status": "OK",
-        "version": "1.0.0",
+        "version": "3.0.0",
         "mode": "PAPER",
         "result": "SKIPPED",
         "real_order_sent": False,
+        "execution_mode": "SPOT_LONG_ONLY",
+        "side": "LONG",
+        "signal": "BUY",
+        "strategy": "EMA",
     }
 
 
@@ -151,7 +210,7 @@ def test_sell_signal_is_rejected() -> None:
 
     with pytest.raises(
         ValueError,
-        match="PaperExecutionStep supports BUY only",
+        match="Paper SELL requires PAPER_LONG_SHORT mode",
     ):
         PaperExecutionStep().execute(context)
 
@@ -177,10 +236,10 @@ def test_missing_trade_plan_field_is_rejected() -> None:
 
     with pytest.raises(
         ValueError,
-        match=(
-            "PaperExecutionStep trade plan missing field: "
-            "position_size"
-        ),
+        # Отсутствующее поле даёт None, а None не является положительным
+        # числом — шаг отвергает план по той же причине, что и ноль.
+        # Проверяется главное: ордер не создаётся без размера позиции.
+        match="Paper plan field position_size must be positive",
     ):
         PaperExecutionStep().execute(context)
 
@@ -192,10 +251,7 @@ def test_zero_position_size_is_rejected() -> None:
 
     with pytest.raises(
         ValueError,
-        match=(
-            "PaperExecutionStep trade plan field "
-            "'position_size' must be a positive finite number"
-        ),
+        match="Paper plan field position_size must be positive",
     ):
         PaperExecutionStep().execute(context)
 

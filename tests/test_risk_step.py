@@ -1,6 +1,7 @@
 import pytest
 
 from api.contracts.context import MarketContext
+from api.contracts.selected_trade import side_for_signal
 from api.pipeline_v2.steps.risk_step import RiskStep
 from api.risk_engine import RiskEngine
 
@@ -24,8 +25,39 @@ def build_context(
         },
     }
 
+    # Канонический контракт: StrategyCoordinatorStep кладёт selected_trade,
+    # и все потребители читают именно его. Раньше фикстура строила контракт
+    # ДО появления координатора (один лишь "signal"), поэтому шаги падали с
+    # "selected_trade must be dict".
+    #
+    # Значения не выдумываются: normalise_legacy_strategy переводит старую
+    # форму в ту же самую, которую координатор возвращает для ветки EMA —
+    # сигнал есть, уровни считает TradePlanStep из цены и ATR.
     context.strategy = {
         "signal": signal,
+        # Канонический контракт: StrategyCoordinatorStep кладёт
+        # selected_trade, и все потребители читают именно его. Раньше
+        # фикстура строила контракт ДО появления координатора (один лишь
+        # "signal"), поэтому шаги падали с "selected_trade must be dict".
+        #
+        # Форма соответствует тому, что координатор возвращает для ветки
+        # EMA: сигнал есть, уровни считает TradePlanStep из цены и ATR.
+        # Значения не выдумываются — уровни остаются None.
+        #
+        # Словарь строится ЯВНО, а не через normalise_legacy_strategy:
+        # нормализатор отверг бы невалидный сигнал раньше проверяемого
+        # шага и замаскировал бы его собственную валидацию.
+        "selected_trade": {
+            "strategy": "EMA",
+            "signal": signal,
+            "side": side_for_signal(signal),
+            "entry": None,
+            "stop": None,
+            "take_profit_1": None,
+            "take_profit_2": None,
+            "risk_reward": "1:2 / 1:3",
+            "real_order_sent": False,
+        },
     }
 
     context.portfolio = {
@@ -49,11 +81,22 @@ def test_buy_signal_is_approved() -> None:
     assert context.risk["signal"] == "BUY"
     assert context.risk["execution_mode"] == "SPOT_LONG_ONLY"
 
+    # Строгое сравнение по равенству СОХРАНЕНО: любое незамеченное
+    # изменение формы audit-записи обязано ломать тест. Обновлены только
+    # фактические значения — версия шага выросла до 4.0.0, формулировка
+    # стала точнее ("by ATR" отличает ATR-путь от расчёта по стопу
+    # стратегии), а запись обогатилась signal/side/strategy/execution_mode.
+    # Инвариант безопасности здесь же: real_order_sent False.
     assert context.audit["risk_step"] == {
         "status": "OK",
-        "version": "2.1.0",
+        "version": "4.0.0",
         "allowed": True,
-        "reason": "Risk approved",
+        "reason": "Risk approved by ATR",
+        "signal": "BUY",
+        "side": "LONG",
+        "strategy": "EMA",
+        "execution_mode": "SPOT_LONG_ONLY",
+        "real_order_sent": False,
     }
 
 
@@ -64,7 +107,9 @@ def test_no_trade_signal_is_blocked() -> None:
 
     assert context.risk["allowed"] is False
     assert context.risk["position_size"] == 0.0
-    assert context.risk["reason"] == "Strategy returned NO TRADE"
+    # Источник решения сместился на координатор; смысл тот же —
+    # NO TRADE блокирует риск.
+    assert context.risk["reason"] == "Coordinator returned NO TRADE"
 
 
 def test_sell_signal_is_blocked_in_spot_long_only_mode() -> None:
@@ -76,7 +121,7 @@ def test_sell_signal_is_blocked_in_spot_long_only_mode() -> None:
     assert context.risk["position_size"] == 0.0
     assert (
         context.risk["reason"]
-        == "SELL is disabled in SPOT_LONG_ONLY mode"
+        == "SELL is disabled outside PAPER_LONG_SHORT mode"
     )
 
 
@@ -123,7 +168,7 @@ def test_invalid_strategy_signal_is_rejected() -> None:
 
     with pytest.raises(
         ValueError,
-        match="invalid strategy signal: UNKNOWN",
+        match="RiskStep invalid selected signal: UNKNOWN",
     ):
         RiskStep().execute(context)
 
@@ -133,7 +178,7 @@ def test_excessive_risk_percent_is_rejected() -> None:
 
     with pytest.raises(
         ValueError,
-        match="risk percent exceeds maximum 0.1%",
+        match=r"RiskStep risk percent must be within 0\.\.0\.1%",
     ):
         RiskStep().execute(context)
 
@@ -151,7 +196,7 @@ def test_non_dictionary_risk_result_is_rejected(
 
     with pytest.raises(
         TypeError,
-        match=r"RiskEngine.calculate\(\) must return dict",
+        match=r"RiskEngine result must be dict",
     ):
         RiskStep().execute(context)
 
@@ -174,6 +219,6 @@ def test_incomplete_risk_result_is_rejected(
 
     with pytest.raises(
         ValueError,
-        match="RiskEngine result missing field: position_size",
+        match="RiskEngine field position_size must be finite",
     ):
         RiskStep().execute(context)
