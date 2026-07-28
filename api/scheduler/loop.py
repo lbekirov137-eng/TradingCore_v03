@@ -71,7 +71,26 @@ class SchedulerLoop:
         return remaining + self.poll_buffer_seconds
 
     def run_once(self) -> dict:
-        """Один тик цикла. Безопасен к любой ошибке внутри — не бросает наружу."""
+        """
+        Один тик цикла. Безопасен к любой ошибке внутри — не бросает наружу.
+
+        Правило: если рантайм-проверка конфигурации (config/startup_safety.py)
+        обнаруживает попытку live-режима или нераспознанную конфигурацию —
+        цикл немедленно останавливается как FAILED_SAFELY, а не продолжает
+        тикать. Это отдельная, повторная проверка поверх той, что уже
+        выполняется один раз при импорте api/server.py.
+        """
+
+        from config.startup_safety import runtime_safety_check
+
+        safety = runtime_safety_check()
+        if not safety["safe"]:
+            message = f"Небезопасная конфигурация обнаружена в рантайме: {safety['reason']}"
+            logger.log(SystemState.FAILED_SAFELY, message)
+            health.record_error(message)
+            self.stop()  # цикл останавливается, процесс/HTTP-сервер продолжает работать
+            return {"decision": None, "execution": None, "exit": None,
+                     "reconciliation": None, "error": message, "failed_safely": True}
 
         try:
             context = LiveContext(

@@ -92,3 +92,19 @@ def assert_safe_startup() -> dict:
         )
 
     return build_startup_summary(environment)
+
+
+def runtime_safety_check() -> dict:
+    """
+    Повторная (не только при старте) проверка конфигурации. Правило:
+    если сервис в рантайме обнаруживает попытку включить live-режим
+    (например, переменные окружения изменены без пересоздания процесса)
+    или нераспознанный режим — это трактуется как FAILED_SAFELY, а не
+    игнорируется. Никогда не бросает исключение — вызывающий код решает,
+    что делать с результатом (остановить цикл, вернуть 503 и т.п.).
+    """
+    try:
+        assert_safe_startup()
+        return {"safe": True, "reason": None}
+    except StartupSafetyError as error:
+        return {"safe": False, "reason": str(error)}

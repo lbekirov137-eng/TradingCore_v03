@@ -170,6 +170,50 @@ def health_check():
     }
 
 
+@app.get("/ready")
+def readiness_check():
+    """
+    Готовность к работе (Railway readiness probe). В отличие от /health
+    (который просто отражает состояние), /ready активно ПЕРЕПРОВЕРЯЕТ
+    конфигурацию и возвращает FAILED_SAFELY (HTTP 503) при обнаружении:
+      - попытки live-режима или нераспознанной конфигурации в рантайме;
+      - устаревших рыночных данных;
+      - повреждённого состояния (kill switch не смог прочитать свой файл
+        состояния и поэтому находится в fail-closed режиме).
+
+    Секреты никогда не включаются в ответ.
+    """
+    from fastapi.responses import JSONResponse
+    from config.startup_safety import runtime_safety_check
+    from config.settings import MAX_DATA_AGE_SECONDS
+    from api.observability.states import health
+
+    reasons = []
+
+    runtime_safety = runtime_safety_check()
+    if not runtime_safety["safe"]:
+        reasons.append(f"unsafe_configuration: {runtime_safety['reason']}")
+
+    health_status = health.status()
+    data_age = health_status.get("market_data_age_seconds")
+    if data_age is not None and data_age > MAX_DATA_AGE_SECONDS:
+        reasons.append(f"stale_market_data: {data_age:.0f}s old (limit {MAX_DATA_AGE_SECONDS}s)")
+
+    kill_switch_state = kill_switch.status()
+    if "повреждено" in (kill_switch_state.get("reason") or ""):
+        reasons.append("corrupted_state: kill switch state file could not be read (fail-closed)")
+
+    ready = len(reasons) == 0
+
+    body = {
+        "ready": ready,
+        "status": "READY" if ready else "FAILED_SAFELY",
+        "reasons": reasons,
+    }
+
+    return JSONResponse(status_code=200 if ready else 503, content=body)
+
+
 @app.get("/kill-switch/status")
 def kill_switch_status():
     return kill_switch.status()

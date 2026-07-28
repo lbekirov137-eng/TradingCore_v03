@@ -54,12 +54,14 @@ def _isolate_runtime_state(tmp_path_factory):
 
 
 def _reset_execution_singletons():
-    """Обнуляет paper-брокер, журнал и хранилище идемпотентности между тестами."""
+    """Обнуляет paper-брокер, журнал, хранилище идемпотентности и health-трекер между тестами."""
     from api.trade_engine import trade_engine as te
+    from api.observability.states import health
 
     te.broker.reset(initial_balance=DEFAULT_BALANCE)
     te.idempotency_store.reset()
     te.journal.trades.clear()
+    health.reset()
 
 
 @pytest.fixture(autouse=True)

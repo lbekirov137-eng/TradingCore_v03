@@ -102,6 +102,14 @@ class HealthTracker:
     def record_error(self, message: str):
         self.last_error = {"message": message, "at": time.time()}
 
+    def reset(self):
+        """Только для тестов: обнуляет состояние глобального health-трекера."""
+        self.started_at = time.time()
+        self.last_heartbeat = None
+        self.last_market_data_timestamp = None
+        self.last_successful_reconciliation = None
+        self.last_error = None
+
     def status(self) -> dict:
         now = time.time()
 
