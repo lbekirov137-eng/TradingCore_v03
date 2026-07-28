@@ -8,7 +8,7 @@ from api.trade_plan import TradePlan
 
 class TradePlanStep(BaseStep):
     NAME = "Trade Plan Step"
-    VERSION = "4.0.0"
+    VERSION = "4.1.0"
 
     ALLOWED_SIGNALS = {"BUY", "SELL", "NO TRADE"}
     REQUIRED_PLAN_FIELDS = (
@@ -18,6 +18,23 @@ class TradePlanStep(BaseStep):
         "take_profit_2",
         "risk_reward",
     )
+
+    # Максимальное расхождение между уровнем входа стратегии и текущей
+    # рыночной ценой, выраженное в долях риска на единицу (R = |entry - stop|).
+    #
+    # Зачем нужен этот порог. Уровни VLAD_ORB вычисляются один раз за сессию
+    # из ИСТОРИЧЕСКОЙ свечи ретеста (orb_candidate_generator: entry =
+    # retest["close"]) и дальше не пересчитываются. Раньше план принимал их
+    # без всякой сверки с рынком, поэтому вход исполнялся по цене, которой
+    # на рынке давно нет: наблюдалось расхождение +273...+581 пункта при
+    # риске 69.94 на единицу, то есть до 8R. Так как take_profit_2 = entry +
+    # 3R, рынок оказывался уже ВЫШЕ цели, и позиция закрывалась мгновенно с
+    # предопределённым результатом +3R на каждой свече.
+    #
+    # 0.5R выбрано как заведомо безопасное значение: оно допускает обычное
+    # проскальзывание около уровня, но отсекает вход, при котором цель уже
+    # достигнута рынком (для этого нужно >= 3R).
+    ENTRY_DRIFT_TOLERANCE_R = 0.5
 
     def validate(self, context: MarketContext) -> None:
         super().validate(context)
@@ -42,6 +59,12 @@ class TradePlanStep(BaseStep):
         strategy = selected_trade.get("strategy", "NONE")
         signal = selected_trade["signal"]
 
+        drift_reason = (
+            self._entry_drift_reason(context, selected_trade)
+            if strategy in {"VLAD_ORB", "EMA_AND_VLAD_ORB"}
+            else None
+        )
+
         if not context.risk["allowed"]:
             plan = {
                 "strategy": strategy,
@@ -49,6 +72,33 @@ class TradePlanStep(BaseStep):
                 "side": self._side(signal),
                 "allowed": False,
                 "reason": context.risk.get("reason", "Risk was not approved"),
+                "entry": None,
+                "stop": None,
+                "take_profit_1": None,
+                "take_profit_2": None,
+                "risk_reward": "NO TRADE",
+                "position_size": 0.0,
+                "risk_amount": 0.0,
+                "execution_mode": context.risk.get(
+                    "execution_mode",
+                    "SPOT_LONG_ONLY",
+                ),
+                "real_order_sent": False,
+            }
+        elif (
+            strategy in {"VLAD_ORB", "EMA_AND_VLAD_ORB"}
+            and drift_reason is not None
+        ):
+            # Уровень входа устарел относительно рынка — торговать нельзя.
+            # Отказ оформляется как обычный неразрешённый план (allowed=False),
+            # а не как исключение: устаревший сигнал это штатная рыночная
+            # ситуация, а не сбой пайплайна.
+            plan = {
+                "strategy": strategy,
+                "signal": signal,
+                "side": self._side(signal),
+                "allowed": False,
+                "reason": drift_reason,
                 "entry": None,
                 "stop": None,
                 "take_profit_1": None,
@@ -118,6 +168,66 @@ class TradePlanStep(BaseStep):
             "real_order_sent": False,
         }
         return context
+
+    def _entry_drift_reason(
+        self,
+        context: MarketContext,
+        selected_trade: Any,
+    ) -> str | None:
+        """
+        Проверяет, что уровень входа ещё актуален для текущего рынка.
+
+        Возвращает None, если вход допустим, иначе — причину отказа.
+
+        Fail-closed: если цену или уровни невозможно прочитать как конечные
+        числа, вход запрещается. Неизвестное состояние не считается
+        безопасным — молча торговать по непроверяемому уровню хуже, чем
+        пропустить сделку.
+        """
+        if not isinstance(selected_trade, dict):
+            return "ENTRY_LEVEL_UNVERIFIABLE: selected_trade is not a dict"
+
+        entry = self._finite(selected_trade.get("entry"))
+        stop = self._finite(selected_trade.get("stop"))
+
+        if entry is None or stop is None:
+            return (
+                "ENTRY_LEVEL_UNVERIFIABLE: entry/stop are not finite numbers"
+            )
+
+        market = context.market if isinstance(context.market, dict) else {}
+        price = self._finite(market.get("price"))
+
+        if price is None:
+            return "ENTRY_LEVEL_UNVERIFIABLE: market price is not a finite number"
+
+        risk_per_unit = abs(entry - stop)
+
+        if risk_per_unit <= 0:
+            return "ENTRY_LEVEL_UNVERIFIABLE: entry and stop coincide"
+
+        drift = abs(price - entry)
+        tolerance = self.ENTRY_DRIFT_TOLERANCE_R * risk_per_unit
+
+        if drift > tolerance:
+            return (
+                "ENTRY_LEVEL_NO_LONGER_VALID: market price "
+                f"{price} deviates from entry {entry} by {drift:.2f} "
+                f"({drift / risk_per_unit:.2f}R), which exceeds the allowed "
+                f"{self.ENTRY_DRIFT_TOLERANCE_R}R"
+            )
+
+        return None
+
+    @staticmethod
+    def _finite(value: Any) -> float | None:
+        """Число, пригодное для сравнения цен, иначе None (bool отвергается)."""
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            return None
+
+        number = float(value)
+
+        return number if math.isfinite(number) else None
 
     def _validate_plan(self, plan: Any, signal: str) -> None:
         if not isinstance(plan, dict):

@@ -44,7 +44,14 @@ def loop_module(monkeypatch, tmp_path):
 
     monkeypatch.setattr(loop, "build_live_context", lambda: DummyContext())
     monkeypatch.setattr(loop, "append_journal", lambda record: None)
-    monkeypatch.setattr(loop, "save_runtime_state", lambda value: None)
+    # Сигнатура повторяет боевую: цикл передаёт ещё и used_signal_id.
+    # Узкий стаб на один аргумент давал TypeError внутри итерации, цикл
+    # уходил в FAILED_SAFELY и переобрабатывал ту же свечу бесконечно.
+    monkeypatch.setattr(
+        loop,
+        "save_runtime_state",
+        lambda value, used_signal_id=None: None,
+    )
     monkeypatch.setattr(loop, "load_runtime_state", lambda: {})
     monkeypatch.setattr(loop, "print_result", lambda record: None)
     monkeypatch.setattr(loop, "log_decision_line", lambda record: None)

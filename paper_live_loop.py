@@ -498,6 +498,7 @@ def load_runtime_state() -> dict[str, Any]:
 
 def save_runtime_state(
     close_time_ms: int,
+    used_signal_id: str | None = None,
 ) -> None:
     DATA_DIRECTORY.mkdir(
         parents=True,
@@ -508,6 +509,10 @@ def save_runtime_state(
         "last_processed_close_time_ms": (
             close_time_ms
         ),
+        # Сигнал, по которому уже открывалась позиция. Сохраняется, чтобы
+        # рестарт или редеплой не «забыл» об этом и не открыл повторный
+        # вход по тому же устаревшему пробою.
+        "used_signal_id": used_signal_id,
         "updated_at_utc": utc_now(),
         "real_order_sent": False,
     }
@@ -618,6 +623,49 @@ def build_pipeline_data(
             "paper_order"
         ),
     }
+
+
+def extract_signal_id(
+    pipeline_data: dict[str, Any] | None,
+) -> str | None:
+    """
+    Устойчивый идентификатор конкретного торгового сигнала VLAD_ORB.
+
+    Уровни ORB считаются один раз за сессию из фиксированных свечей
+    пробоя и ретеста, поэтому пара (session_date, retest.time) однозначно
+    определяет сигнал и не меняется, пока сигнал тот же. Именно это
+    позволяет отличить «новый сигнал» от «того же самого сигнала на
+    следующей свече».
+
+    Возвращает None, если идентификатор собрать не из чего — тогда
+    вызывающий код не применяет дедупликацию по сигналу и полагается на
+    остальные проверки.
+    """
+    if not isinstance(pipeline_data, dict):
+        return None
+
+    strategy = pipeline_data.get("strategy")
+
+    if not isinstance(strategy, dict):
+        return None
+
+    candidate = strategy.get("vlad_orb_candidate")
+
+    if not isinstance(candidate, dict):
+        return None
+
+    session_date = candidate.get("session_date")
+    retest = candidate.get("retest")
+
+    if not isinstance(retest, dict):
+        return None
+
+    retest_time = retest.get("time")
+
+    if not session_date or not retest_time:
+        return None
+
+    return f"{session_date}:{retest_time}"
 
 
 def build_journal_record(
@@ -817,6 +865,7 @@ def process_closed_candle(
     position_manager: PaperPositionManager,
     context: Any,
     snapshot: dict[str, Any],
+    used_signal_id: str | None = None,
 ) -> tuple[
     dict[str, Any],
     dict[str, Any] | None,
@@ -924,6 +973,29 @@ def process_closed_candle(
             "position": (
                 position_manager.get_position()
             ),
+            "real_order_sent": False,
+        }
+
+        return position_event, pipeline_data
+
+    # Один и тот же сигнал не должен открывать позицию повторно.
+    #
+    # Уровни VLAD_ORB фиксированы на всю сессию, поэтому после закрытия
+    # позиции следующая свеча приносила ТОТ ЖЕ сигнал и цикл открывал
+    # по нему новый вход — и так до конца дня. Дедупликация по свече
+    # (last_processed_close_time_ms) от этого не спасает: свеча каждый
+    # раз действительно новая, устаревшим является сигнал.
+    signal_id = extract_signal_id(pipeline_data)
+
+    if signal_id is not None and signal_id == used_signal_id:
+        position_event = {
+            "event": "NO_POSITION_OPENED",
+            "reason": (
+                "SIGNAL_ALREADY_USED: position was already opened for "
+                f"signal {signal_id}; waiting for a new breakout/retest"
+            ),
+            "position": position_manager.get_position(),
+            "signal_id": signal_id,
             "real_order_sent": False,
         }
 
@@ -1104,8 +1176,17 @@ def process_closed_candle(
         position_manager.open_position(
             paper_order=paper_order,
             opened_at_utc=utc_now(),
+            # Фактическая рыночная цена закрытой свечи. Менеджер обязан
+            # отвергнуть вход по уровню, до которого рынок уже не
+            # дотягивается: филл по несуществующей цене давал фиктивный
+            # предопределённый результат +3R на каждой свече.
+            market_price=snapshot["price"],
         )
     )
+
+    # Идентификатор возвращается наверх, чтобы цикл запомнил отработанный
+    # сигнал и не открывал по нему позицию повторно на следующей свече.
+    position_event["signal_id"] = signal_id
 
     return position_event, pipeline_data
 
@@ -1166,6 +1247,10 @@ def main(
         )
     )
 
+    used_signal_id = runtime_state.get(
+        "used_signal_id"
+    )
+
     # ???? ????????: ????????? ?????? heartbeat
     # ????? ?????? ??????? ???????????? ?????.
     last_heartbeat_monotonic = 0.0
@@ -1207,7 +1292,24 @@ def main(
                     position_manager=position_manager,
                     context=context,
                     snapshot=snapshot,
+                    used_signal_id=used_signal_id,
                 )
+
+                # Запоминаем сигнал ТОЛЬКО после фактического открытия
+                # позиции. Если вход отклонён (устаревший уровень, тот же
+                # сигнал, отсутствие кандидата), сигнал не считается
+                # отработанным и остаётся доступным, когда рынок вернётся
+                # к уровню.
+                if (
+                    position_event.get("event")
+                    == "POSITION_OPENED"
+                ):
+                    opened_signal_id = (
+                        position_event.get("signal_id")
+                    )
+
+                    if opened_signal_id is not None:
+                        used_signal_id = opened_signal_id
 
                 record = build_journal_record(
                     context=context,
@@ -1320,7 +1422,8 @@ def main(
                         )
 
                 save_runtime_state(
-                    current_close_time_ms
+                    current_close_time_ms,
+                    used_signal_id=used_signal_id,
                 )
 
                 last_processed_close_time_ms = (

@@ -1,77 +1,26 @@
-import math
-
 import pytest
 
 from api.contracts.context import MarketContext
 from api.core.bootstrap import Bootstrap
 from api.decision_engine.decision_engine import DecisionEngine
+from dry_run import build_context
 
 
 def build_market_context() -> MarketContext:
-    closes = [
-        100.0
-        + index * 0.2
-        + 2.0 * math.sin(index * 0.7)
-        for index in range(250)
-    ]
+    """
+    Единый реалистичный сетап ORB из dry_run.
 
-    # Последняя свеча должна подтвердить восходящую структуру.
-    closes[-1] = closes[-2] + 0.3
+    Здесь раньше лежала СВОЯ копия синтетического ряда
+    (100 + i*0.2 + 2*sin(i*0.7)), страдавшая тем же дефектом, что и
+    фикстура dry_run: монотонный рост уводил цену на ~4.7R от уровня
+    входа, который vlad_orb берёт из свечи ретеста. Иными словами, тест
+    проверял пайплайн на УСТАРЕВШЕМ сигнале и проходил только потому,
+    что проверки актуальности входа тогда не существовало.
 
-    highs = [
-        close + 1.0
-        for close in closes
-    ]
-
-    lows = [
-        close - 1.0
-        for close in closes
-    ]
-
-    # opens/open_times_ms/interval добавлены потому, что VladORBObserverStep
-    # передаёт context.market напрямую как market_snapshot, а vlad_orb
-    # требует полный набор полей (interval, open_times_ms, opens, highs,
-    # lows, closes) и одинаковую длину всех рядов.
-    # Ряды строятся согласованно с уже существующими closes:
-    #   - opens[i] = closes[i-1] (открытие свечи = закрытие предыдущей),
-    #     opens[0] = closes[0];
-    #   - open_times_ms — монотонная сетка с шагом 5 минут, что
-    #     соответствует context.timeframe = "5m".
-    # Assertions тестов не менялись — добавлены только недостающие
-    # входные данные, которых требует продакшн-контракт.
-    FIVE_MINUTES_MS = 5 * 60 * 1000
-    BASE_OPEN_TIME_MS = 1_700_000_000_000
-
-    opens = [closes[0]] + closes[:-1]
-
-    open_times_ms = [
-        BASE_OPEN_TIME_MS + index * FIVE_MINUTES_MS
-        for index in range(len(closes))
-    ]
-
-    context = MarketContext()
-
-    context.exchange = "binance"
-    context.symbol = "BTCUSDT"
-    context.timeframe = "5m"
-
-    context.market = {
-        "price": closes[-1],
-        "interval": "5m",
-        "open_times_ms": open_times_ms,
-        "opens": opens,
-        "closes": closes,
-        "highs": highs,
-        "lows": lows,
-        "volume": 5000,
-    }
-
-    context.portfolio = {
-        "balance": 1000.0,
-        "risk_percent": 0.1,
-    }
-
-    return context
+    Дублирование убрано: обе фикстуры описывали один и тот же сценарий и
+    расходились бы при любой правке. Ассерты тестов не менялись.
+    """
+    return build_context()
 
 
 def approve_decision(

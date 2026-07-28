@@ -74,11 +74,28 @@ class PaperPositionManager:
 
         return position
 
+    # Тот же порог, что и в TradePlanStep. Дублируется намеренно: это
+    # защита в глубину, а не единственная проверка. Менеджер позиций не
+    # должен принимать недостижимый филл даже если выше по конвейеру
+    # проверку обошли, отключили или забыли применить к новой стратегии.
+    ENTRY_DRIFT_TOLERANCE_R = 0.5
+
     def open_position(
         self,
         paper_order: dict[str, Any],
         opened_at_utc: str | None = None,
+        market_price: float | None = None,
     ) -> dict[str, Any]:
+        """
+        Открывает виртуальную позицию.
+
+        market_price — фактическая рыночная цена на момент входа. Если она
+        передана, вход по недостижимому уровню отвергается: филл по цене,
+        которой на рынке уже нет, порождает фиктивную прибыль (наблюдался
+        предопределённый результат +3R на каждой свече). Параметр
+        необязательный ради обратной совместимости с существующими
+        вызовами и записями, но рабочий цикл обязан его передавать.
+        """
         if self.has_open_position():
             return {
                 "event": "POSITION_ALREADY_OPEN",
@@ -87,6 +104,19 @@ class PaperPositionManager:
             }
 
         self._validate_paper_order(paper_order)
+
+        drift_reason = self._entry_drift_reason(
+            paper_order=paper_order,
+            market_price=market_price,
+        )
+
+        if drift_reason is not None:
+            return {
+                "event": "NO_POSITION_OPENED",
+                "reason": drift_reason,
+                "position": None,
+                "real_order_sent": False,
+            }
 
         timestamp = (
             opened_at_utc
@@ -271,6 +301,63 @@ class PaperPositionManager:
             "previous_position": previous_position,
             "real_order_sent": False,
         }
+
+    def _entry_drift_reason(
+        self,
+        *,
+        paper_order: dict[str, Any],
+        market_price: float | None,
+    ) -> str | None:
+        """
+        Отвергает вход по уровню, до которого рынок уже не дотягивается.
+
+        Если market_price не передан, проверка пропускается — иначе
+        сломались бы существующие вызовы, не знающие про этот параметр.
+        Но когда цена передана, отказ строгий и fail-closed.
+        """
+        if market_price is None:
+            return None
+
+        price = self._finite(market_price)
+
+        if price is None:
+            return (
+                "ENTRY_LEVEL_UNVERIFIABLE: market price is not a finite number"
+            )
+
+        entry = self._finite(paper_order.get("entry"))
+        stop = self._finite(paper_order.get("stop"))
+
+        if entry is None or stop is None:
+            return (
+                "ENTRY_LEVEL_UNVERIFIABLE: entry/stop are not finite numbers"
+            )
+
+        risk_per_unit = abs(entry - stop)
+
+        if risk_per_unit <= 0:
+            return "ENTRY_LEVEL_UNVERIFIABLE: entry and stop coincide"
+
+        drift = abs(price - entry)
+
+        if drift > self.ENTRY_DRIFT_TOLERANCE_R * risk_per_unit:
+            return (
+                "ENTRY_LEVEL_NO_LONGER_VALID: market price "
+                f"{price} deviates from entry {entry} by {drift:.2f} "
+                f"({drift / risk_per_unit:.2f}R), which exceeds the allowed "
+                f"{self.ENTRY_DRIFT_TOLERANCE_R}R"
+            )
+
+        return None
+
+    @staticmethod
+    def _finite(value: Any) -> float | None:
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            return None
+
+        number = float(value)
+
+        return number if math.isfinite(number) else None
 
     def _close_position(
         self,
