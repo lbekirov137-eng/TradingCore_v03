@@ -1,4 +1,22 @@
+import os
+import sys
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
+
+from config.startup_safety import assert_safe_startup, StartupSafetyError
+
+# ---------------------------------------------------------------------
+# STARTUP SAFETY GATE — must run before anything else in this module.
+# Небезопасная или нераспознанная конфигурация -> процесс не запускается.
+# Значения секретов здесь никогда не читаются и не печатаются.
+# ---------------------------------------------------------------------
+try:
+    _STARTUP_SUMMARY = assert_safe_startup()
+    print(f"[STARTUP SAFETY] OK: {_STARTUP_SUMMARY}", file=sys.stderr, flush=True)
+except StartupSafetyError as _startup_error:
+    print(f"[STARTUP SAFETY] REFUSED TO START: {_startup_error}", file=sys.stderr, flush=True)
+    raise
 
 from api.analyzer import MarketAnalyzer
 from api.contracts.context import LiveContext
@@ -12,9 +30,33 @@ from config.settings import (
     LIVE_TRADING,
 )
 
+@asynccontextmanager
+async def _lifespan(_app: FastAPI):
+    """
+    Запускает фоновый cloud paper monitor ТОЛЬКО если явно включён через
+    ENABLE_CLOUD_MONITOR=true. По умолчанию выключен — это важно для
+    тестов (TestClient не должен незаметно запускать поток, стучащийся
+    в реальные биржевые эндпоинты на каждый прогон pytest) и для
+    локального использования только через ручной GET /paper/tick.
+
+    Для облачного (Railway) paper-forward запуска ENABLE_CLOUD_MONITOR=true
+    обязателен — иначе процесс просто отвечает на HTTP и не ведёт
+    никакого автономного наблюдения.
+    """
+    if os.getenv("ENABLE_CLOUD_MONITOR", "").strip().lower() in ("1", "true", "yes", "on"):
+        from api.cloud_monitor import monitor
+        monitor.start()
+
+    yield
+
+    from api.cloud_monitor import monitor
+    monitor.stop()
+
+
 app = FastAPI(
     title="TradingCore API",
-    version="0.1"
+    version="0.1",
+    lifespan=_lifespan,
 )
 
 
@@ -67,11 +109,64 @@ def paper_tick(
 def safety_summary():
     """Сводка безопасности запуска. Значения секретов никогда не выводятся."""
 
+    from config.settings import DEMO_ONLY
+
     return {
         "paper_trading": PAPER_TRADING,
         "live_trading": LIVE_TRADING,
+        "demo_only": DEMO_ONLY,
         "live_order_code_present": False,
         "kill_switch_engaged": kill_switch.is_engaged(),
+    }
+
+
+@app.get("/health")
+def health_check():
+    """
+    Health endpoint для облачного/оркестрационного мониторинга (Railway и т.п.).
+
+    Никогда не включает значения секретов — только флаги режима,
+    временные метки и агрегированные счётчики.
+    """
+    from api.observability.states import health
+    from api.position_manager.position_manager import PositionManager
+    from api.cloud_monitor import monitor
+    from config.settings import MAX_DATA_AGE_SECONDS, DEMO_ONLY
+    import time
+
+    health_status = health.status()
+
+    data_age = health_status.get("market_data_age_seconds")
+
+    if data_age is None:
+        feed_state = "UNKNOWN"
+    elif data_age > MAX_DATA_AGE_SECONDS:
+        feed_state = "STALE"
+    else:
+        feed_state = "OK"
+
+    seconds_since_heartbeat = health_status.get("seconds_since_heartbeat")
+
+    if seconds_since_heartbeat is None:
+        app_status = "STARTING"
+    elif seconds_since_heartbeat > MAX_DATA_AGE_SECONDS:
+        app_status = "DEGRADED"
+    else:
+        app_status = "HEALTHY"
+
+    return {
+        "status": app_status,
+        "mode": "PAPER",
+        "paper_trading": PAPER_TRADING,
+        "live_trading": LIVE_TRADING,
+        "demo_only": DEMO_ONLY,
+        "monitor_running": monitor.is_running(),
+        "last_candle_timestamp_ms": health_status.get("last_market_data_timestamp"),
+        "data_feed_state": feed_state,
+        "open_virtual_positions": 1 if PositionManager.has_open_position() else 0,
+        "last_cycle_timestamp": health_status.get("last_heartbeat"),
+        "uptime_seconds": health_status.get("uptime_seconds"),
+        "server_time": time.time(),
     }
 
 
@@ -159,6 +254,34 @@ def observability_clock_skew(exchange: str = "binance"):
         return {"exchange": exchange, **ClockSkewChecker.check(server_time)}
     except Exception as error:
         return {"exchange": exchange, "error": f"{type(error).__name__}: {error}"}
+
+
+@app.get("/paper-forward/journal")
+def paper_forward_journal_export(limit: int = 500):
+    """Экспорт paper-forward журнала (JSON). Секретов в записях нет."""
+    from api.observability.paper_forward_journal import journal
+    entries = journal.read_all()
+    return {"count": len(entries), "entries": entries[-limit:]}
+
+
+@app.get("/strategies/status")
+def strategies_status():
+    """
+    Явный статус исследовательских стратегий. Обе НЕ одобрены для
+    продакшн/demo-торговли — только для paper-forward наблюдения.
+    См. AUTOTRADING_BACKTEST_REPORT.md.
+    """
+    from api.strategy_engine.strategies.orb.orb_strategy import ORBStrategy
+    from api.strategy_engine.strategies.vwap.vwap_strategy import VWAPTrendPullbackStrategy
+
+    return {
+        strategy.NAME: {
+            "version": strategy.VERSION,
+            "status": strategy.STATUS,
+            "production_approved": strategy.PRODUCTION_APPROVED,
+        }
+        for strategy in (ORBStrategy, VWAPTrendPullbackStrategy)
+    }
 
 
 @app.get("/demo/preflight")

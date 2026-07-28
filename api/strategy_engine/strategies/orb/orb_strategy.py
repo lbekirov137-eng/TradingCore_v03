@@ -10,8 +10,22 @@ from api.strategy_engine.filters.regime import evaluate_all
 
 
 class ORBStrategy:
+    """
+    СТАТУС: RESEARCH_ONLY / NOT_PRODUCTION_APPROVED.
+
+    Независимо провалидирована на реальных данных BTCUSDT 5m: 49 сделок
+    (6 недель, net −48.59, PF 0.174) и 208 сделок (6 месяцев, net −176.54,
+    −17.7%, PF 0.205), walk-forward consistency 0.0% (0 из 7 окон
+    прибыльны). Решение: не изменять пороги ради красивого бэктеста —
+    см. AUTOTRADING_BACKTEST_REPORT.md. Стратегия используется только
+    для paper-forward наблюдения и последующего пересмотра, НЕ для
+    реальной или demo-торговли.
+    """
 
     NAME = "ORB"
+    VERSION = "1.0.0"
+    STATUS = "RESEARCH_ONLY"
+    PRODUCTION_APPROVED = False
 
     # Фильтры режима/ликвидности можно отключить только явно (например,
     # в юнит-тестах отдельных компонентов) — по умолчанию они активны.

@@ -26,7 +26,11 @@ class Workflow:
 
         execution = TradeEngine.execute(decision)
 
+        from api.observability.paper_forward_journal import journal
+        journal_entry = journal.record(context, decision, execution)
+
         return {
             "decision": decision,
             "execution": execution,
+            "journal_entry": journal_entry,
         }

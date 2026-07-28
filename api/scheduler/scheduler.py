@@ -19,7 +19,14 @@ class Scheduler:
         обязана заканчиваться безопасным NO_TRADE, а не необработанным
         исключением — иначе вызывающий код (API/n8n/Telegram) получит
         падение вместо предсказуемого ответа.
+
+        Обновляет health-трекер (heartbeat + timestamp последней свечи)
+        независимо от того, кто вызвал tick — ручной /paper/tick или
+        автоматический SchedulerLoop, — чтобы /health отражал ЛЮБОЙ
+        реально выполненный цикл, а не только автоматические.
         """
+
+        from api.observability.states import health
 
         try:
             market = DataEngine.load(
@@ -30,6 +37,11 @@ class Scheduler:
             )
 
             context.market = market
+
+            if len(market.timestamps) > 0:
+                health.record_market_data(market.timestamps[-1])
+            else:
+                health.heartbeat()
 
             # Для детерминированного replay «сейчас» задаётся временем
             # последней свечи; в живом режиме now_ms остаётся None и
@@ -47,6 +59,7 @@ class Scheduler:
             return decision
 
         except StaleMarketDataError as error:
+            health.heartbeat()
             return Scheduler._safe_stop(context, f"Данные биржи не прошли проверку: {error}")
 
         except Exception as error:
@@ -54,6 +67,7 @@ class Scheduler:
             # внешним миром (биржа/сеть/время) и торговым решением.
             # Любая непредвиденная ошибка обязана давать NO_TRADE, а не
             # приводить к падению процесса или неопределённому состоянию.
+            health.heartbeat()
             return Scheduler._safe_stop(
                 context, f"Безопасная остановка: {type(error).__name__}: {error}"
             )

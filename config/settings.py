@@ -93,8 +93,14 @@ MAX_TRADES_PER_SESSION = 1
 # Режим работы
 # ==========================
 
-PAPER_TRADING = True
-LIVE_TRADING = False
+from config.startup_safety import get_paper_trading_flag, get_live_trading_flag, get_demo_only_flag
+
+# Значения по умолчанию (True/False) сохранены как безопасный fallback;
+# переменные окружения могут их переопределить (для облачного запуска),
+# но никогда не могут включить LIVE_TRADING без явного "true" в окружении.
+PAPER_TRADING = get_paper_trading_flag()
+LIVE_TRADING = get_live_trading_flag()
+DEMO_ONLY = get_demo_only_flag()
 
 # ==========================
 # Exchange Router

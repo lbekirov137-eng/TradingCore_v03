@@ -39,6 +39,7 @@ def _isolate_runtime_state(tmp_path_factory):
     from api.trade_engine import trade_engine as te
     from api.decision_engine.decision_engine import kill_switch
     from api.position_manager.position_manager import PositionManager as PM
+    from api.observability.paper_forward_journal import journal as pfj
 
     root = tmp_path_factory.mktemp("tradingcore_state")
 
@@ -47,6 +48,7 @@ def _isolate_runtime_state(tmp_path_factory):
     os.makedirs(te.idempotency_store.state_dir, exist_ok=True)
     kill_switch.state_path = str(root / "kill_switch.json")
     PM._state_path = str(root / "position_manager.json")
+    pfj.path = str(root / "paper_forward_journal.jsonl")
 
     yield
 

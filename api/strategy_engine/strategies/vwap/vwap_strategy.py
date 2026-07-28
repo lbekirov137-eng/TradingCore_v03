@@ -27,8 +27,22 @@ from config.settings import MIN_RISK_REWARD
 
 
 class VWAPTrendPullbackStrategy:
+    """
+    СТАТУС: RESEARCH_ONLY / NOT_PRODUCTION_APPROVED.
+
+    Независимо провалидирована на реальных данных BTCUSDT 5m, 6 недель:
+    98 сделок, net −128.37 (−12.8%), profit factor 0.092, walk-forward
+    consistency 0.0% (0 из 7 окон прибыльны), max drawdown 12.84%,
+    13 подряд убыточных сделок. Решение: не изменять пороги ради
+    красивого бэктеста — см. AUTOTRADING_BACKTEST_REPORT.md. Стратегия
+    используется только для paper-forward наблюдения и последующего
+    пересмотра, НЕ для реальной или demo-торговли.
+    """
 
     NAME = "VWAP_TREND_PULLBACK"
+    VERSION = "1.0.0"
+    STATUS = "RESEARCH_ONLY"
+    PRODUCTION_APPROVED = False
 
     APPLY_FILTERS = True
 
