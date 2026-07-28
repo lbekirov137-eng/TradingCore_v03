@@ -68,7 +68,40 @@ Regime/liquidity/data-quality filters **active**.
 
 **Both samples now agree, and both are adequately sized to be meaningful (49 and 208 trades respectively).** Profit factor is consistently in the 0.17–0.21 range — the strategy loses roughly 5x for every 1x it wins, in aggregate. This is a materially stronger and more damning finding than the previous small-sample read (7 trades, near-breakeven), which was itself distorted by the take-profit bug suppressing trade resolution.
 
-Sensitivity/walk-forward analysis with the fix applied was in progress on the 6-week window at report time (each full run now takes ~60s post-perf-fix, vs. previously fast-but-wrong due to the bug artificially reducing trade count); directional conclusion does not depend on it given the consistency already shown across two independently-sized windows.
+### 6-week window — train/validation/test split (with fix applied)
+
+| Split | Candles | Trades | Net PnL | Profit factor | Win rate |
+|---|---|---|---|---|---|
+| Train | 7,199 | 32 | −37.60 | 0.113 | 28.1% |
+| Validation | 2,400 | 14 | −22.32 | 0.049 | 28.6% |
+| Test (held out) | 2,400 | 8 | −1.71 | 0.630 | 37.5% |
+
+Every split is negative. The held-out test split's profit factor (0.63) is closer to breakeven than train/validation, but still net-negative and on only 8 trades — not evidence of a hidden edge, just smaller-sample noise on an already-losing strategy.
+
+### 6-week window — walk-forward (with fix applied)
+
+| Metric | Value |
+|---|---|
+| Windows | 7 |
+| Windows with trades | 7 |
+| Profitable windows | **0** |
+| **Consistency** | **0.0%** |
+
+This is a significant change from the pre-fix report, which showed 57.1% consistency — itself an artifact of the take-profit bug distorting which windows had resolved trades at all. **With the fix applied, ORB's walk-forward consistency is 0.0%, identical in kind to VWAP's.** Zero of seven independent time windows were profitable.
+
+### 6-week window — sensitivity / stress (with fix applied)
+
+| Scenario | Net PnL | Win rate |
+|---|---|---|
+| baseline | −48.59 | 34.7% |
+| fees ×2 | −77.54 | 20.4% |
+| slippage ×2 | −84.68 | 28.6% |
+| slippage ×3 | −87.27 | 20.4% |
+| spread ×2 | −52.06 | 34.7% |
+| latency +1 candle | −57.04 | 32.6% |
+| all costs ×2 | **−555.84** | 8.2% |
+
+**Verdict: FRAGILE.** Every single stress scenario is worse than baseline, and baseline is already negative. The "all costs ×2" figure is a large jump from the individual ×2 scenarios — plausible as a compounding effect of three simultaneously-worsened cost dimensions across 49 sequential trades, but flagged here for transparency rather than smoothed over; it does not change the directional conclusion, which is already unambiguous from every other row.
 
 ---
 
@@ -161,9 +194,9 @@ Artifacts: `reports/backtest_{strategy}.json`, `reports/trades_{strategy}.csv`.
 
 ## 8. Conclusion
 
-| Strategy | Samples | Verdict | Cleared for paper-forward? |
-|---|---|---|---|
-| ORB | 49 (6wk) + 208 (6mo), consistent | **FRAGILE — robustly losing at two scales** | **No** |
-| VWAP Trend Pullback | 98, adequate | **FRAGILE — clearly losing** | **No** |
+| Strategy | Samples | Walk-forward consistency | Verdict | Cleared for paper-forward? |
+|---|---|---|---|---|
+| ORB | 49 (6wk) + 208 (6mo), consistent | **0.0%** | **FRAGILE — robustly losing at two scales, zero consistent windows** | **No** |
+| VWAP Trend Pullback | 98, adequate | **0.0%** | **FRAGILE — clearly losing** | **No** |
 
-**Gate B (Backtest Validity) fails, more decisively than in the previous report.** With the take-profit bug fixed, ORB's true trading frequency and negative edge are now visible — this is not a case of "not enough data to tell," it is a consistent, adequately-sampled, negative result at every scale tested.
+**Gate B (Backtest Validity) fails, more decisively than in the previous report.** With the take-profit bug fixed, ORB's true trading frequency and negative edge are now fully visible: every train/validation/test split is negative, every one of 7 walk-forward windows is unprofitable, and every stress scenario is worse than an already-negative baseline. This is not a case of "not enough data to tell" — it is a consistent, adequately-sampled, negative result at every scale and every split tested, for both strategies.

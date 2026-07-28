@@ -65,7 +65,7 @@ Two more real bugs were caught **by the tests themselves failing**, not by inspe
 3. Class-level state (`PositionManager`, all guards, broker singletons) is not multi-process safe.
 4. Bybit demo adapter has never contacted the real API; no WebSocket client exists.
 5. VWAP's own session-VWAP calculation has a separate performance issue (not fixed by the backtest-engine perf fix) that made a 6-month VWAP run impractical this session.
-6. Several exploratory backtest jobs (train/validation/test split + walk-forward + sensitivity, re-run with the take-profit fix on top of the larger dataset) were still executing in the background when this report was written, due to genuine compute cost plus contention from multiple concurrent jobs in this environment. The **core, decisive full-period numbers** (below) completed and are solid; the supplementary walk-forward/sensitivity granularity on the 6-month scale specifically did not finish in time and is not included as a result — only what actually completed is reported.
+6. The 6-week train/validation/test split, walk-forward, and sensitivity analysis (re-run with the take-profit fix) completed after this report was first drafted and has now been folded in below — it strengthens the finding further (see §5). The equivalent walk-forward/sensitivity granularity at 6-month scale did not complete in this environment due to compute cost and did not run; only the 6-month full-period number is reported, and it agrees directionally with everything else.
 
 ---
 
@@ -75,15 +75,15 @@ Two more real bugs were caught **by the tests themselves failing**, not by inspe
 
 **With the fix applied, the picture is more decisive, not less:**
 
-| Strategy | Scale | Trades | Net PnL | Profit factor | Win rate | Max DD |
-|---|---|---|---|---|---|---|
-| ORB | 6 weeks | 49 | **−48.59 (−4.9%)** | 0.174 | 34.7% | 5.0% |
-| ORB | 6 months | 208 | **−176.54 (−17.7%)** | 0.205 | 38.5% | 17.9% |
-| VWAP | 6 weeks | 98 | **−128.37 (−12.8%)** | 0.092 | 21.4% | 12.8% |
+| Strategy | Scale | Trades | Net PnL | Profit factor | Win rate | Max DD | Walk-forward |
+|---|---|---|---|---|---|---|---|
+| ORB | 6 weeks | 49 | **−48.59 (−4.9%)** | 0.174 | 34.7% | 5.0% | **0.0%** (0/7) |
+| ORB | 6 months | 208 | **−176.54 (−17.7%)** | 0.205 | 38.5% | 17.9% | — |
+| VWAP | 6 weeks | 98 | **−128.37 (−12.8%)** | 0.092 | 21.4% | 12.8% | **0.0%** (0/7) |
 
-VWAP's numbers are unchanged from the prior report — it is LONG-only and never called the buggy `TakeProfit` class (confirmed by direct code inspection, not assumed). ORB's numbers are new: the previous report's 7-trade, near-breakeven reading was itself partly an artifact of the same bug suppressing trade resolution.
+VWAP's numbers are unchanged from the prior report — it is LONG-only and never called the buggy `TakeProfit` class (confirmed by direct code inspection, not assumed). ORB's numbers are new: the previous report's 7-trade, near-breakeven reading was itself partly an artifact of the same bug suppressing trade resolution. **ORB's train/validation/held-out-test split is also negative in all three segments** (−37.60 / −22.32 / −1.71), and every stress scenario (2× fees, 2×/3× slippage, 2× spread, +1 candle latency, all costs ×2) is worse than an already-negative baseline.
 
-**No profitability claim is made.** Both strategies are now adequately sampled and both show a consistent, robust negative edge across independent time windows. This is a stronger and more useful finding than "not enough data" — it is a clear "these specific formulations don't work at 5-minute granularity with realistic costs."
+**No profitability claim is made.** Both strategies are now adequately sampled, both show a consistent, robust negative edge across independent time windows, and both have **identical (zero) walk-forward consistency** — 0 of 7 windows profitable, for each. This is a stronger and more useful finding than "not enough data" — it is a clear "these specific formulations don't work at 5-minute granularity with realistic costs," corroborated at every level of analysis (full-period, split, window, and stress test).
 
 ---
 

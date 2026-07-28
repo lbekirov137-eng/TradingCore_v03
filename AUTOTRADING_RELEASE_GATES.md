@@ -40,13 +40,15 @@ TEST_RESULTS.md for the exact count at report time).
 
 **With the fix applied, ORB's true trade frequency and edge became visible — and it is decisively negative, not merely under-sampled:**
 
-| Strategy | Scale | Trades | Net PnL | Profit factor |
-|---|---|---|---|---|
-| ORB | 6 weeks | 49 | −48.59 | 0.174 |
-| ORB | 6 months | 208 | −176.54 (−17.65%) | 0.205 |
-| VWAP | 6 weeks | 98 | −128.37 (−12.8%) | 0.092 |
+| Strategy | Scale | Trades | Net PnL | Profit factor | Walk-forward consistency |
+|---|---|---|---|---|---|
+| ORB | 6 weeks | 49 | −48.59 | 0.174 | **0.0%** (0/7 windows) |
+| ORB | 6 months | 208 | −176.54 (−17.65%) | 0.205 | — |
+| VWAP | 6 weeks | 98 | −128.37 (−12.8%) | 0.092 | **0.0%** (0/7 windows) |
 
-Gate B **fails decisively**: both strategies are now adequately sampled (at least one, in ORB's case, at two independent scales with consistent results) and both show a robust negative edge, not merely "not enough data to tell." See `AUTOTRADING_BACKTEST_REPORT.md` for full numbers and methodology.
+Every train/validation/test split for ORB (6-week) is also negative (train −37.60, validation −22.32, held-out test −1.71), and every sensitivity/stress scenario is worse than an already-negative baseline.
+
+Gate B **fails decisively**: both strategies are now adequately sampled (ORB at two independent scales with consistent results), both show a robust negative edge, and both have identical (zero) walk-forward consistency. This is not "not enough data to tell" at any level of the analysis. See `AUTOTRADING_BACKTEST_REPORT.md` for full numbers and methodology.
 
 ---
 
