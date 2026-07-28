@@ -10,7 +10,23 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
+# startCommand выполняется Railway НАПРЯМУЮ, без оболочки, поэтому "$PORT"
+# не раскрывался и uvicorn получал литеральную строку:
+#   Error: Invalid value for '--port': '$PORT' is not a valid integer.
+# Обёртка в `sh -c` даёт раскрытие переменной окружения.
+# `exec` обязателен: без него PID 1 остаётся у sh, который не пересылает
+# SIGTERM в uvicorn, и контейнер убивается SIGKILL по таймауту (ExitCode=137)
+# вместо штатного завершения — это уже было подтверждено локально.
 startCommand = "sh -c 'exec uvicorn api.server:app --host 0.0.0.0 --port \"$PORT\"'"
+# Фоновый PAPER-монитор живёт ВНУТРИ этого же процесса uvicorn (FastAPI
+# lifespan -> api/paper_monitor.py), поэтому отдельный процесс/сервис не
+# нужен и uvicorn остаётся PID 1 для корректного SIGTERM.
+#
+# Монитор выключен по умолчанию. Чтобы включить наблюдательный цикл,
+# задайте в Railway Variables:
+#     PAPER_MONITOR_ENABLED=true
+# Состояние: GET /monitor/status. Решения — в Deploy Logs по префиксу
+# "PAPER_DECISION". Реальные ордера невозможны ни при каком значении.
 healthcheckPath = "/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"

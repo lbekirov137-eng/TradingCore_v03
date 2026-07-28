@@ -1,4 +1,6 @@
 import json
+import os
+import threading
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,11 +22,61 @@ from ai_observer.telegram_notifier import TelegramNotifier
 from live_paper_run import build_live_context
 
 
-POLL_INTERVAL_SECONDS = 30
+def _positive_int_from_env(
+    name: str,
+    default: int,
+) -> int:
+    """
+    Читает положительное целое из окружения. Любое некорректное значение
+    (не число, ноль, отрицательное) НЕ приводит к падению цикла — берётся
+    безопасный default, а факт подмены печатается в лог. Значения секретов
+    здесь не читаются: только операционные параметры.
+    """
+    raw = os.getenv(name)
+
+    if raw is None or raw.strip() == "":
+        return default
+
+    try:
+        value = int(raw.strip())
+    except ValueError:
+        print(
+            f"PAPER LOOP: {name}={raw!r} не является целым числом; "
+            f"используется значение по умолчанию {default}",
+            flush=True,
+        )
+        return default
+
+    if value <= 0:
+        print(
+            f"PAPER LOOP: {name}={value} должно быть > 0; "
+            f"используется значение по умолчанию {default}",
+            flush=True,
+        )
+        return default
+
+    return value
+
+
+POLL_INTERVAL_SECONDS = _positive_int_from_env(
+    "PAPER_MONITOR_POLL_SECONDS",
+    30,
+)
+
 HEARTBEAT_INTERVAL_SECONDS = 60 * 60
 PAPER_CAPITAL_USD = 1000.0
 
-DATA_DIRECTORY = Path("data")
+# Каталог состояния настраивается через окружение, потому что в контейнере
+# `data/` попадает под .dockerignore и файловая система эфемерна: журнал в
+# файле переживает рестарт только при подключённом volume. Основным
+# durable-журналом в облаке считается stdout (Railway Deploy Logs).
+DATA_DIRECTORY = Path(
+    os.getenv(
+        "PAPER_DATA_DIR",
+        "data",
+    )
+)
+
 JOURNAL_FILE = DATA_DIRECTORY / "paper_runs.jsonl"
 RUNTIME_STATE_FILE = (
     DATA_DIRECTORY / "paper_runtime_state.json"
@@ -37,6 +89,100 @@ def utc_now() -> str:
     return datetime.now(
         timezone.utc
     ).isoformat()
+
+
+def wait_or_stop(
+    seconds: float,
+    stop_event: threading.Event | None,
+) -> bool:
+    """
+    Прерываемая пауза. Возвращает True, если пора останавливаться.
+
+    Обычный time.sleep(30) означал бы, что на SIGTERM контейнер ждёт до
+    30 секунд; Railway/Docker убивают процесс раньше (SIGKILL), обрывая
+    запись журнала. Event.wait() просыпается немедленно при set().
+    """
+    if stop_event is None:
+        time.sleep(seconds)
+        return False
+
+    return stop_event.wait(seconds)
+
+
+def log_decision_line(
+    record: dict[str, Any],
+) -> None:
+    """
+    Однострочная сводка в stdout для Railway Deploy Logs.
+
+    Отдельно от print_result (многострочный человекочитаемый блок):
+    одна строка с устойчивым префиксом PAPER_DECISION грепается и
+    парсится, а многострочный блок — нет. Именно эта строка отвечает на
+    вопрос «идут ли решения NO_TRADE/TRADE в облаке».
+    """
+    pipeline = record.get("pipeline")
+
+    decision = "UNKNOWN"
+    strategy_signal = "UNKNOWN"
+    side = "NONE"
+
+    if isinstance(pipeline, dict):
+        decision = pipeline.get(
+            "decision",
+            {},
+        ).get(
+            "decision",
+            "UNKNOWN",
+        )
+
+        # ВАЖНО, какой именно signal логировать.
+        #
+        # pipeline["strategy"]["signal"] — сигнал НАСЛЕДУЕМОЙ EMA-стратегии.
+        # Он может быть "NO TRADE", когда торговое решение принято
+        # координатором по vlad_orb. Логирование именно его давало строки
+        # вида "signal=NO TRADE decision=TRADE", то есть лог противоречил
+        # сам себе и вводил в заблуждение.
+        #
+        # Авторитетный источник — исполненный paper_order (а при его
+        # отсутствии — выбранный координатором selected_trade).
+        strategy = pipeline.get("strategy") or {}
+        paper_order = pipeline.get("paper_order") or {}
+        selected_trade = strategy.get("selected_trade") or {}
+
+        strategy_signal = (
+            paper_order.get("signal")
+            or selected_trade.get("signal")
+            or strategy.get("signal")
+            or "NONE"
+        )
+
+        side = (
+            paper_order.get("side")
+            or selected_trade.get("side")
+            or "NONE"
+        )
+
+    position_event = record.get(
+        "position_event",
+        {},
+    ).get(
+        "event",
+        "NONE",
+    )
+
+    print(
+        "PAPER_DECISION "
+        f"utc={record.get('recorded_at_utc')} "
+        f"symbol={record.get('symbol')} "
+        f"tf={record.get('timeframe')} "
+        f"price={record.get('market_price')} "
+        f"signal={strategy_signal} "
+        f"side={side} "
+        f"decision={decision} "
+        f"event={position_event} "
+        "real_order_sent=False",
+        flush=True,
+    )
 
 
 def append_journal(
@@ -963,7 +1109,22 @@ def process_closed_candle(
 
     return position_event, pipeline_data
 
-def main() -> None:
+POSITION_STATE_FILE = (
+    DATA_DIRECTORY / "paper_position.json"
+)
+
+
+def main(
+    stop_event: threading.Event | None = None,
+) -> None:
+    """
+    Бесконечный paper-цикл.
+
+    stop_event=None — прежнее поведение автономного процесса (остановка
+    по Ctrl+C). Если событие передано, цикл становится кооперативно
+    останавливаемым: это обязательное условие для запуска внутри
+    FastAPI-процесса, где SIGTERM обрабатывает uvicorn, а не мы.
+    """
     print("=" * 70)
     print(
         "TRADING CORE - LIVE PAPER POSITION MODE"
@@ -978,16 +1139,24 @@ def main() -> None:
     print(
         f"JOURNAL: {JOURNAL_FILE}"
     )
+    # Печатаем ФАКТИЧЕСКИЙ путь состояния. Раньше здесь была захардкожена
+    # строка "/app/data/paper_position.json", которая расходилась с
+    # реальным путём при любом другом каталоге запуска.
     print(
-        "POSITION STATE: "
-        "/app/data/paper_position.json"
+        f"POSITION STATE: {POSITION_STATE_FILE}"
     )
-    print("PRESS CTRL+C TO STOP SAFELY")
-    print("=" * 70)
+    print(
+        "STOP: cooperative stop_event"
+        if stop_event is not None
+        else "PRESS CTRL+C TO STOP SAFELY"
+    )
+    print("=" * 70, flush=True)
 
     engine = Bootstrap.build()
 
-    position_manager = PaperPositionManager()
+    position_manager = PaperPositionManager(
+        state_file=POSITION_STATE_FILE,
+    )
 
     runtime_state = load_runtime_state()
 
@@ -1003,7 +1172,10 @@ def main() -> None:
     last_daily_report_date_utc: str | None = None
 
     try:
-        while True:
+        while (
+            stop_event is None
+            or not stop_event.is_set()
+        ):
             try:
                 context = build_live_context()
 
@@ -1019,9 +1191,12 @@ def main() -> None:
                     current_close_time_ms
                     == last_processed_close_time_ms
                 ):
-                    time.sleep(
-                        POLL_INTERVAL_SECONDS
-                    )
+                    if wait_or_stop(
+                        POLL_INTERVAL_SECONDS,
+                        stop_event,
+                    ):
+                        break
+
                     continue
 
                 (
@@ -1043,6 +1218,7 @@ def main() -> None:
 
                 append_journal(record)
                 print_result(record)
+                log_decision_line(record)
 
                 telegram_sent = (
                     send_event_notification(
@@ -1193,11 +1369,18 @@ def main() -> None:
                     error_record["error"],
                 )
                 print("NO REAL ORDER WAS SENT")
-                print("-" * 70)
+                print("-" * 70, flush=True)
 
-            time.sleep(
-                POLL_INTERVAL_SECONDS
-            )
+            if wait_or_stop(
+                POLL_INTERVAL_SECONDS,
+                stop_event,
+            ):
+                break
+
+        print("=" * 70)
+        print("PAPER MONITOR STOPPED SAFELY")
+        print("NO REAL ORDER WAS SENT")
+        print("=" * 70, flush=True)
 
     except KeyboardInterrupt:
         print()

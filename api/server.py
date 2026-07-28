@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -26,10 +27,49 @@ except StartupSafetyError as _startup_error:
     raise
 
 from api.analyzer import MarketAnalyzer
+from api.paper_monitor import paper_monitor
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    """
+    Управляет фоновым PAPER-монитором вместе с жизненным циклом сервера.
+
+    Монитор выключен по умолчанию (PAPER_MONITOR_ENABLED); при выключенном
+    флаге start() лишь фиксирует статус DISABLED и ничего не запускает.
+
+    Отказ монитора намеренно НЕ роняет сервер: healthcheck Railway смотрит
+    на /health, и потеря наблюдательного цикла не должна приводить к
+    рестарт-петле всего сервиса. Реальное состояние видно в /monitor/status.
+    """
+    try:
+        paper_monitor.start()
+    except Exception as error:  # pragma: no cover - защитный барьер
+        print(
+            f"[PAPER MONITOR] failed to start: "
+            f"{type(error).__name__}: {error}",
+            file=sys.stderr,
+            flush=True,
+        )
+
+    try:
+        yield
+    finally:
+        try:
+            paper_monitor.stop()
+        except Exception as error:  # pragma: no cover - защитный барьер
+            print(
+                f"[PAPER MONITOR] failed to stop cleanly: "
+                f"{type(error).__name__}: {error}",
+                file=sys.stderr,
+                flush=True,
+            )
+
 
 app = FastAPI(
     title="TradingCore API",
     version="0.1",
+    lifespan=lifespan,
 )
 
 
@@ -135,6 +175,18 @@ def readiness_check():
             "reasons": reasons,
         },
     )
+
+
+@app.get("/monitor/status")
+def monitor_status():
+    """
+    Состояние фонового PAPER-монитора.
+
+    Отвечает на вопрос «идёт ли наблюдательный цикл в облаке»: включён ли
+    он, работает ли поток, сколько было перезапусков и какая последняя
+    ошибка. Секретов не содержит; real_orders_enabled всегда False.
+    """
+    return paper_monitor.status()
 
 
 @app.get("/strategies/status")
