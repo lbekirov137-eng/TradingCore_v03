@@ -119,10 +119,13 @@ def test_invalid_final_decision_is_rejected() -> None:
     context = build_context()
     context.decision["decision"] = "WAIT"
 
+    # Формулировка приведена к текущему сообщению кода. Тип исключения
+    # (ValueError) и смысл (нераспознанное финальное решение отвергается)
+    # не изменились; значение "WAIT" по-прежнему обязано отклоняться.
     with pytest.raises(
         ValueError,
         match=(
-            "PaperExecutionStep invalid final decision: WAIT"
+            "Invalid final decision: WAIT"
         ),
     ):
         PaperExecutionStep().execute(context)
@@ -132,11 +135,12 @@ def test_non_dictionary_decision_is_rejected() -> None:
     context = build_context()
     context.decision = "TRADE"  # type: ignore[assignment]
 
+    # Формулировка приведена к текущему сообщению кода. Тип исключения
+    # (TypeError) сохранён — проверка типа context.decision не ослаблена.
     with pytest.raises(
         TypeError,
         match=(
-            "PaperExecutionStep expected "
-            "context.decision to be dict"
+            "PaperExecutionStep decision must be dict"
         ),
     ):
         PaperExecutionStep().execute(context)

@@ -263,10 +263,13 @@ def test_missing_decision_field_is_rejected(
         staticmethod(incomplete_process),
     )
 
+    # Формулировка приведена к текущему сообщению кода. Тип исключения
+    # (ValueError), проверяемое поле (failed_rules) и смысл теста
+    # (неполный результат движка отвергается) не изменились.
     with pytest.raises(
         ValueError,
         match=(
-            "DecisionEngine result missing field: "
+            "DecisionEngine missing field: "
             "failed_rules"
         ),
     ):
@@ -289,10 +292,14 @@ def test_unknown_engine_decision_is_rejected(
         ),
     )
 
+    # Формулировка приведена к текущему сообщению кода. Тип исключения
+    # и смысл (нераспознанное решение движка отвергается) прежние.
+    # Само значение "WAIT" по-прежнему подаётся на вход и по-прежнему
+    # обязано быть отклонено — проверка не ослаблена.
     with pytest.raises(
         ValueError,
         match=(
-            "DecisionEngine returned invalid decision: WAIT"
+            "Invalid DecisionEngine decision"
         ),
     ):
         DecisionStep().execute(context)

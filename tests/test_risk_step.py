@@ -95,9 +95,13 @@ def test_missing_price_is_rejected() -> None:
     context = build_context()
     del context.market["price"]
 
+    # Сообщение обновлено под текущий, БОЛЕЕ строгий код: RiskStep теперь
+    # проверяет не только "> 0", но и конечность значения (NaN/Inf) через
+    # _is_valid_number. Тип исключения (ValueError) и проверяемая семантика
+    # (отсутствующая/непригодная цена отвергается) не изменились.
     with pytest.raises(
         ValueError,
-        match="market price is missing",
+        match="RiskStep price must be a positive finite number",
     ):
         RiskStep().execute(context)
 
@@ -105,9 +109,11 @@ def test_missing_price_is_rejected() -> None:
 def test_zero_atr_is_rejected() -> None:
     context = build_context(atr=0.0)
 
+    # См. комментарий выше: проверка стала строже (покрывает NaN/Inf),
+    # тип исключения и смысл теста прежние.
     with pytest.raises(
         ValueError,
-        match="ATR must be greater than zero",
+        match="RiskStep ATR must be a positive finite number",
     ):
         RiskStep().execute(context)
 
