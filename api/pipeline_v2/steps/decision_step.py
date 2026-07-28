@@ -94,3 +94,39 @@ class DecisionStep(BaseStep):
 
         if decision["decision"] not in self.ALLOWED_ENGINE_DECISIONS:
             raise ValueError("Invalid DecisionEngine decision")
+
+        self._validate_confidence(decision["confidence"])
+
+    @staticmethod
+    def _validate_confidence(confidence: Any) -> None:
+        """
+        Confidence обязана быть конечным числом в диапазоне [0.0, 1.0].
+
+        Ранее проверялось только НАЛИЧИЕ поля, поэтому значения вида 1.5,
+        -3, NaN или Inf проходили молча и попадали в скоринг решения и в
+        paper-статистику. Это подтверждённый дефект (Category B в
+        PRE_EXISTING_FAILURES_TRIAGE.md, #34): тест был прав, код — нет.
+
+        bool исключён намеренно: в Python True/False являются int, и
+        confidence=True тихо интерпретировалось бы как 1.0, скрывая
+        ошибку в вызывающем коде.
+        """
+        import math
+
+        if isinstance(confidence, bool) or not isinstance(confidence, (int, float)):
+            raise ValueError(
+                "DecisionEngine confidence must be between 0 and 1: "
+                f"got non-numeric value {confidence!r}"
+            )
+
+        if math.isnan(confidence) or math.isinf(confidence):
+            raise ValueError(
+                "DecisionEngine confidence must be between 0 and 1: "
+                f"got non-finite value {confidence!r}"
+            )
+
+        if not (0.0 <= confidence <= 1.0):
+            raise ValueError(
+                "DecisionEngine confidence must be between 0 and 1: "
+                f"got {confidence!r}"
+            )
