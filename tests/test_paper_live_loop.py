@@ -29,7 +29,22 @@ def build_paper_order() -> dict:
 def build_pipeline_result(
     paper_order: dict | None,
 ) -> SimpleNamespace:
+    # market / indicators / regime присутствуют здесь потому, что
+    # build_pipeline_data() в paper_live_loop.py читает их безусловно,
+    # и реальный MarketContext (api/contracts/context.py) всегда их
+    # содержит — это поля с field(default_factory=dict).
+    # Раньше их не было в этом моке, и тест падал с
+    # AttributeError: 'SimpleNamespace' object has no attribute 'market'.
+    # Дефект был не виден, так как весь модуль не собирался (openai
+    # импортировался на верхнем уровне и отсутствовал в окружении).
+    # Мок приведён в соответствие с реальным контрактом, а
+    # production-код намеренно НЕ ослаблялся до getattr(...) с
+    # значениями по умолчанию: отсутствие поля в реальном контексте
+    # должно падать явно, а не маскироваться.
     return SimpleNamespace(
+        market={},
+        indicators={},
+        regime={},
         strategy={
             "signal": (
                 "BUY"
