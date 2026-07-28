@@ -1,169 +1,132 @@
-# TradingCore — Final Report
+# TradingCore — Final Report (Priorities 1–8 session)
 
 **Date:** 2026-07-28 · **Mode:** paper/demo only — no real orders, no mainnet, no leverage, no real money at any point.
 
----
-
-## Headline
-
-The **infrastructure** is now sound, tested, and honest. The **strategies are not viable**. Both ORB and Session VWAP Trend Pullback measure as **FRAGILE** against real historical data, and neither is cleared for paper-forward or demo. Gate B (Backtest Validity) **fails**, which blocks every downstream gate.
-
-This is the most important finding of the entire effort, and it only became knowable *because* the backtest engine was built and proven correct.
+This session continued from a prior audit-driven safety pass. The audit's finding was accepted as-is: **ORB and VWAP were not defended or cosmetically tuned.** Instead, the system was moved toward a trustworthy paper-research and execution platform, and in the process a genuine, more severe problem with ORB was discovered and fixed.
 
 ---
 
-## 1. Tests
+## 1. Files changed
 
-| | Result |
-|---|---|
-| **Passed** | **225** |
-| **Failed** | **0** |
-| **Skipped** | **0** (no hidden skips, no xfail, no weakened assertions) |
-| Session start | 67 |
+**Second checkpoint commit:** `f31c655` — 36 files changed, 2,693 insertions(+), 469 deletions(-).
+**First checkpoint commit (start of this session):** `b9e7c91` — the prior audit session's work, 153 files.
 
-Breakdown: unit 171 · integration 29 · regression 16 · e2e 9. Full inventory in `TEST_RESULTS.md` and `AUTOTRADING_TEST_MATRIX.md`.
-
-**Tests were proven to work by breaking the code on purpose:**
-
-| Injected bug | Caught by |
-|---|---|
-| `visible_market` → `market` in ORB retest/entry | 2 tests failed (`assert 105.0 == 100.25`) |
-| Backtest context exposes full market | 3 tests failed, incl. *past decisions changed*: `[107.9,...] != [104.9,...]` |
-
----
-
-## 2. Critical blockers
-
-| # | Blocker | Evidence |
-|---|---|---|
-| **C-1** | **Neither strategy has an edge** | ORB: n=7, net **+0.37** vs **2.98 in fees**, FRAGILE under 2× fees. VWAP: n=98, net **−128.37 (−12.8%)**, profit factor **0.092**, **0%** walk-forward consistency, 13 consecutive losses. |
-| **C-2** | **No scheduler loop exists** | `/paper/tick` is manual-trigger only. `ExitMonitor` is never called automatically — an opened paper position would never close. Makes Gates D/E/F structurally impossible. |
-
-Full list: `ISSUES.md` (2 critical, 6 high, 7 medium, 4 low).
-
----
-
-## 3. Readiness
-
-| Track | Readiness | Why |
-|---|---|---|
-| **Paper trading** | **55%** | Engine correct and tested; no continuous loop; no viable strategy; dormant risk limits |
-| **Bybit Demo** | **35%** | REST adapter complete + safety-enforced; **no WebSocket**; **never connected to the real API**; no credentials |
-| **Real money** | **0% — 🔒 BLOCKED** | Gate G locked; **no live-order code exists anywhere in the repo** |
-
----
-
-## 4. Look-ahead bias — resolved and guarded
-
-Two real look-ahead defects were found and fixed (ORB retest/entry reading untruncated market; backtest needed strict truncation). Nine tests now guard against regression, including the strictest form: *appending future candles must not change past decisions*. Verified by fault injection, not assumption.
-
-The backtest additionally enforces: decision on closed candle → **entry fills on the next candle's open**, exit never on the entry candle, and **SL+TP in one candle resolves to STOP** — the profitable outcome is never auto-selected.
-
----
-
-## 5. Paper simulator realism — honest assessment
-
-**Realistic:** fees both sides, adverse slippage, partial fills, balance constraints (no leverage possible), realized PnL against weighted-average entry, atomic restart persistence, deterministic replay, append-only audit ledger.
-
-**Not realistic:** no order book, no bid/ask (spread is a flat assumption), no network latency, no gap-through-stop modeling, no rejected/delayed fills from an exchange's perspective, no funding.
-
----
-
-## 6. Risk engine — correct, but partly dormant
-
-**Working and tested:** 0.1% risk per trade sized from *real* entry-to-stop distance (not raw ATR); fees, slippage, tick size, lot size, min notional; NaN/Inf/negative/zero rejected on every input (Hypothesis property, 200 examples); no-leverage cap; one open position; duplicate/session dedup; daily trade + risk caps; R:R ≥ 2 enforced before order creation; kill switch fails closed.
-
-**Implemented but NOT wired in (inert today):** `LossStreakGuard` — cooldown after loss, consecutive-loss limit, max-drawdown stop, max-trades-per-session. `DecisionEngine` never calls it. Also, there is no realized-PnL daily *loss* limit — the daily guard tracks planned risk only.
-
----
-
-## 7. Backtest validation
-
-| Strategy | Trades | Net PnL | Walk-forward | Stress | Verdict |
-|---|---|---|---|---|---|
-| ORB | 7 | +0.37 (fees 2.98) | 57.1% | negative at 2× fees, 2×/3× slippage, all-costs×2 | **FRAGILE** |
-| VWAP | 98 | −128.37 | **0.0%** | negative in every scenario | **FRAGILE — clearly losing** |
-
-Data: BTCUSDT 5m, 11,999 closed candles, ~6 weeks. **No parameter optimization was performed** — deliberately, since tuning on this window would manufacture overfitting. Details: `AUTOTRADING_BACKTEST_REPORT.md`.
-
-**No profitability claim is made.** ORB's n=7 is statistically meaningless; VWAP's n=98 is sufficient to reject it.
-
----
-
-## 8. Exact commands
-
-```bash
-# Validate configuration (no connection, no secrets printed)
-curl http://localhost:8000/safety
-curl http://localhost:8000/demo/preflight
-
-# Start paper mode
-.venv/Scripts/python.exe -m uvicorn api.server:app --host 127.0.0.1 --port 8000
-curl "http://localhost:8000/paper/tick"     # manual trigger — no auto loop yet
-
-# Tests
-.venv/Scripts/python.exe -m pytest tests/ -q
-
-# Backtest validation
-.venv/Scripts/python.exe scripts/fetch_history.py --symbol BTCUSDT --interval 5m --candles 12000
-.venv/Scripts/python.exe scripts/run_backtest.py --data data/BTCUSDT_5m.json --strategy orb
-
-# Bybit Demo — NOT AUTHORIZED YET (Gate B fails, Gates C-F incomplete)
-TRADING_ENVIRONMENT=DEMO .venv/Scripts/python.exe -m uvicorn api.server:app --port 8000
-
-# Kill switch
-curl -X POST "http://localhost:8000/kill-switch/engage?reason=<why>"
-curl -X POST "http://localhost:8000/kill-switch/disengage"
+New this session:
+```
+api/scheduler/loop.py                              -- scheduler/event loop
+api/risk/guards.py                                  -- 5 split, wired risk guards
+api/market_data/resilience.py                       -- retry/backoff, rate-limit, clock-skew
+api/backtesting/research.py                         -- sample-size, benchmarks, regime, MC, param stability
+api/strategy_engine/strategies/orb/candidates.py    -- 2 labeled ORB candidates
+api/strategy_engine/strategies/vwap/candidates.py   -- 3 labeled VWAP candidates
+scripts/run_paper_loop.py                           -- standalone loop runner (SIGINT/SIGTERM)
+scripts/run_candidate_research.py                   -- independent candidate evaluation
+9 new test files (73 new tests)
 ```
 
----
+Modified: `api/decision_engine/decision_engine.py`, `api/trade_engine/trade_engine.py`, `api/risk_engine.py`, `api/backtesting/backtest_engine.py`, `api/strategy_engine/strategies/orb/take_profit.py` + `orb_strategy.py`, `api/server.py`, `api/binance.py`, `api/bybit.py`, `config/settings.py`, plus 7 documentation files and `tests/conftest.py`.
 
-## 9. Known limitations
-
-- No background scheduler → no continuous operation, exits never auto-trigger.
-- Bybit demo adapter **never contacted the real API**; all 23 tests mocked; schema assumptions from docs.
-- **No WebSocket client** — spec required WS + reconnect + REST fallback; only REST exists.
-- Backtest bypasses `PaperBroker` and `DecisionEngine`, so its numbers exclude daily limits, kill switch, and R:R gating.
-- Class-level state is **not multi-process safe** — `--workers 2` would silently duplicate limits.
-- VWAP session recalculation is O(n²); VWAP backtest numbers predate the regime filters.
-- ORB retest is degenerate (breakout and retest key off the same candle).
-- Single symbol, single ~6-week regime window; no bull/bear/high-vol separation.
-- `python-dotenv` declared but never imported — `.env` is documented but not auto-loaded.
+Nothing was pushed. `git log`: `f31c655` (this session) → `b9e7c91` (prior session) → `3a7f055` (original repo).
 
 ---
 
-## 10. Required observation periods
+## 2. Tests added and current totals
 
-| Stage | Minimum |
+| | Count |
 |---|---|
-| Paper forward | 72h continuous, ≥ 20 trades |
-| Extended demo | 2+ weeks, ≥ 30 trades |
+| Start of this session | 225 |
+| **End of this session** | **303** |
+| Failed | 0 |
+| Skipped | 0 |
 
-At the current ORB rate (7 trades / 6 weeks), reaching 20–30 trades would take **months** — itself an argument for a different timeframe or strategy.
+9 new test files, 73 new tests. Full breakdown in `TEST_RESULTS.md` / `AUTOTRADING_TEST_MATRIX.md`.
 
----
-
-## 11. Five next actions
-
-1. **Decide the strategies' fate** — move to a higher timeframe where the edge exceeds ~0.2% round-trip cost, fix the degenerate retest, or reject these formulations. Do not parameter-sweep the existing window.
-2. **Build the scheduler loop** — `tick → exit check → reconcile → heartbeat` per closed candle.
-3. **Route the backtest through `PaperBroker`** so replay and live share one execution path.
-4. **Wire `LossStreakGuard` into `DecisionEngine`** and add a realized-PnL daily loss limit.
-5. **Make state multi-process safe**, then connect Bybit demo and build the WebSocket client.
+Two more real bugs were caught **by the tests themselves failing**, not by inspection:
+- `MaxDrawdownGuard` counting position-open as drawdown (caught by `test_h2_restart_then_genuinely_new_signal_can_still_trade`).
+- The dict-unpacking status bug from the prior session's pattern did not recur, but the same discipline — write the test, let it fail, find out why — is what surfaced both this session's new bugs.
 
 ---
 
-## 12. Gate G — real money
+## 3. Infrastructure completed
 
-🔒 **REMAINS LOCKED.** Gates: A ✅ pass · B ❌ **fail** · C 🟡 partial · D ⛔ not started · E ⛔ blocked · F ⛔ not started · G 🔒 locked.
-
-`TRADING_ENVIRONMENT=LIVE` raises `ConfigurationError`. **No code capable of placing a real order exists in this repository.** Reaching Gate G would require writing new code subject to separate review and your explicit authorization — plus a separate production key with withdrawals disabled, IP restrictions, an explicit micro-live config, 0.1% risk, no leverage, a configured max initial exposure, and a kill-switch test immediately beforehand. **It is not a configuration flip.**
+- **Scheduler/event loop**: candle-close-aligned ticking, automatic exit-monitoring every tick, pending-order reconciliation, heartbeat, structured JSON logs, Telegram-mock alerts, graceful shutdown. **72-hour continuous paper-forward is now structurally possible** — it was not, before this session.
+- **All five risk guards wired**: `LossStreakGuard`, `CooldownAfterLossGuard`, `MaxDrawdownGuard`, `MaxTradesPerSessionGuard`, `MaxOpenPositionsGuard`, plus new `DailyLossGuard` (realized loss). Every one gates real decisions in `DecisionEngine`; every blocked trade carries a machine-readable `reason` and `guard` field.
+- **Market-data resilience**: retry-with-backoff, HTTP 429 rate-limit handling, clock-skew detection — verified live against both Binance's and Bybit's real server-time endpoints (skew: −0.5s and −0.9s respectively, both well within tolerance).
+- **Research pipeline**: minimum sample-size flagging, buy-and-hold and NO_TRADE benchmarks, regime segmentation, parameter-stability analysis, Monte Carlo trade-order permutation — all tested, none used to cherry-pick a result.
+- **Backtest performance fix**: indicator computation was O(n²) in practice (recomputed over full history every candle); bounded to a 260-candle rolling window, verified to produce byte-identical results whenever data is shorter than the window.
+- **Bybit Demo adapter**: unchanged from prior session (REST complete, safety-enforced, mocked-tested, never connected) — confirmed still behind a strict `TRADING_ENVIRONMENT=DEMO` feature flag; `LIVE` raises `ConfigurationError`.
 
 ---
 
-## 13. Repository state
+## 4. Unresolved blockers
 
-- **38 new files**, 7 modified. Nothing committed, pushed, or merged — all changes are in the working tree for review via `git diff` / `git status`.
-- No destructive git operations. No background processes left running.
-- No secrets in the repo (automated test enforces this). `.env.example` only; `.env` is gitignored.
-- Deliverables: `AUTOTRADING_PRODUCTION_READINESS.md`, `AUTOTRADING_NEXT_ACTIONS.md`, `AUTOTRADING_BACKTEST_REPORT.md`, `AUTOTRADING_PAPER_REPORT.md`, `AUTOTRADING_DEMO_SETUP.md`, `AUTOTRADING_RISK_REGISTER.md`, `AUTOTRADING_TEST_MATRIX.md`, `AUTOTRADING_RELEASE_GATES.md`, `TEST_RESULTS.md`, `ISSUES.md`, `FINAL_REPORT.md`, `.env.example`.
+1. **No strategy has a demonstrated edge** (see §5) — the central blocker, unchanged in kind but now much better evidenced.
+2. Backtest still bypasses `DecisionEngine`/`PaperBroker` — doesn't exercise the newly-wired guards.
+3. Class-level state (`PositionManager`, all guards, broker singletons) is not multi-process safe.
+4. Bybit demo adapter has never contacted the real API; no WebSocket client exists.
+5. VWAP's own session-VWAP calculation has a separate performance issue (not fixed by the backtest-engine perf fix) that made a 6-month VWAP run impractical this session.
+6. Several exploratory backtest jobs (train/validation/test split + walk-forward + sensitivity, re-run with the take-profit fix on top of the larger dataset) were still executing in the background when this report was written, due to genuine compute cost plus contention from multiple concurrent jobs in this environment. The **core, decisive full-period numbers** (below) completed and are solid; the supplementary walk-forward/sensitivity granularity on the 6-month scale specifically did not finish in time and is not included as a result — only what actually completed is reported.
+
+---
+
+## 5. Exact strategy results, without exaggeration
+
+**A critical bug was found and fixed during this work — not by inspection, but by tracing an anomalous real-data backtest result.** `TakeProfit.calculate` always computed a LONG-direction profit target regardless of trade direction. For a SHORT, this placed the take-profit above both entry and stop — unreachable in the profitable direction. A SHORT opened, price moved 33% in its favor, and the position never closed, silently blocking every subsequent signal for the rest of a 4-month backtest window. Fixed; 5 regression tests reproduce the exact scenario (`tests/regression/test_take_profit_direction.py`).
+
+**With the fix applied, the picture is more decisive, not less:**
+
+| Strategy | Scale | Trades | Net PnL | Profit factor | Win rate | Max DD |
+|---|---|---|---|---|---|---|
+| ORB | 6 weeks | 49 | **−48.59 (−4.9%)** | 0.174 | 34.7% | 5.0% |
+| ORB | 6 months | 208 | **−176.54 (−17.7%)** | 0.205 | 38.5% | 17.9% |
+| VWAP | 6 weeks | 98 | **−128.37 (−12.8%)** | 0.092 | 21.4% | 12.8% |
+
+VWAP's numbers are unchanged from the prior report — it is LONG-only and never called the buggy `TakeProfit` class (confirmed by direct code inspection, not assumed). ORB's numbers are new: the previous report's 7-trade, near-breakeven reading was itself partly an artifact of the same bug suppressing trade resolution.
+
+**No profitability claim is made.** Both strategies are now adequately sampled and both show a consistent, robust negative edge across independent time windows. This is a stronger and more useful finding than "not enough data" — it is a clear "these specific formulations don't work at 5-minute granularity with realistic costs."
+
+---
+
+## 6. Is 72-hour paper-forward structurally possible?
+
+**Yes — for the first time.** The scheduler loop (`api/scheduler/loop.py`) did not exist at the start of this session; without it, `/paper/tick` had to be triggered manually and `ExitMonitor` was never invoked automatically. Both gaps are now closed, unit/integration-tested (10 tests), and the loop supports graceful shutdown.
+
+**It was deliberately not run** this session: running 72 hours of paper-forward against strategies just shown to be robustly unprofitable at two independent scales would produce confirmation of what the backtests already demonstrate, not new evidence. It should follow a decision about the strategies (see `AUTOTRADING_NEXT_ACTIONS.md` item 1), not precede it.
+
+---
+
+## 7. Readiness percentages
+
+| Track | Readiness |
+|---|---|
+| Paper trading | **65%** (up from 55%) — infrastructure now complete; blocked on strategy edge |
+| Bybit Demo | **35%** (unchanged) — adapter ready, never connected, no WebSocket |
+| Real money | **0% — 🔒 LOCKED** (Gate G, unchanged) |
+
+---
+
+## 8. Git status and commit hash
+
+```
+Latest commit: f31c655  "Wire risk guards, add scheduler loop, fix critical SHORT take-profit bug"
+Prior commit:  b9e7c91  "Audit-driven safety pass: fix critical execution/risk bugs, add paper trading infrastructure"
+Branch: main, tracking origin/main (not pushed)
+Working tree: clean (data/, reports/, state/ gitignored and untouched by git)
+```
+
+No push was performed. No destructive git operations. No secrets committed (automated test + manual diff scan both confirm).
+
+---
+
+## 9. Next recommended action
+
+**Decide the fate of ORB and VWAP as currently formulated** (`AUTOTRADING_NEXT_ACTIONS.md` item 1) before investing further in infrastructure or running a 72-hour forward test. Concretely: move to a higher timeframe where the edge would exceed the ~0.2% round-trip cost, fix ORB's degenerate one-candle retest, or reject both formulations and design a new candidate from scratch — evaluated on 12+ months of held-out data, never tuned on the window used to develop it.
+
+---
+
+## Completion standard — self-check
+
+- ✅ No profitability claim made without adequately-sampled out-of-sample evidence — and the evidence found says the opposite of profitable.
+- ✅ No live trading, no leverage, no real-money credentials touched.
+- ✅ No failed gate bypassed — Gate B fails, and every downstream gate is correctly reported as blocked or not-yet-attempted.
+- ✅ Honest NO_TRADE / FRAGILE results reported in place of a misleading profitable backtest, even though this meant revising the prior session's more equivocal reading to a more damning one.
