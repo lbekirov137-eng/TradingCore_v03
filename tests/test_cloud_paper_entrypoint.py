@@ -104,12 +104,35 @@ class TestSafetySummary:
 class TestStrategiesAreResearchOnly:
 
     def test_no_strategy_is_production_approved(self):
+        """
+        Форма ответа расширена супервизором (реестр кандидатов + статус),
+        но само требование НЕ ослаблено: ни одна стратегия — ни
+        наследуемая, ни зарегистрированный кандидат — не одобрена для
+        реальных денег.
+        """
         body = client.get("/strategies/status").json()
 
-        assert body, "expected at least one strategy reported"
-        for name, info in body.items():
+        research_only = body["research_only"]
+
+        assert research_only, "expected at least one strategy reported"
+
+        for name, info in research_only.items():
             assert info["status"] == "RESEARCH_ONLY", name
             assert info["production_approved"] is False, name
+
+        registry = body["registry"]
+
+        assert registry, "expected the supervisor registry to be reported"
+
+        for entry in registry:
+            assert entry["production_approved"] is False, entry["strategy_id"]
+
+    def test_supervisor_never_reports_live_capability(self):
+        body = client.get("/strategies/status").json()
+
+        assert body["mode"] == "PAPER"
+        assert body["real_orders_enabled"] is False
+        assert body["automatic_switching"] == "PAPER_ONLY"
 
 
 class TestStartupGateRefusesUnsafeConfig:

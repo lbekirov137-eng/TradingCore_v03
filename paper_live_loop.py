@@ -11,6 +11,18 @@ from api.paper_trading.position_manager import (
     PaperPositionManager,
 )
 from api.leverage_risk_engine import LeverageRiskEngine
+from api.paper_analytics import (
+    build_observation,
+    build_report,
+    load_records,
+    render_report_text,
+)
+from api.strategy_supervisor import (
+    DEFAULT_STRATEGY_ID,
+    StrategyRegistryError,
+    render_supervisor_section,
+    supervisor_status,
+)
 from api.unified_market_context import build_unified_market_context
 
 from ai_observer.filter_adapter import run_shadow_filter
@@ -234,6 +246,110 @@ def log_decision_line(
         "real_order_sent=False",
         flush=True,
     )
+
+
+def utc_date_of(record: dict[str, Any]) -> str | None:
+    """Календарная UTC-дата записи (YYYY-MM-DD) без разбора времени."""
+    stamp = record.get("recorded_at_utc")
+
+    if not isinstance(stamp, str) or len(stamp) < 10:
+        return None
+
+    return stamp[:10]
+
+
+def emit_daily_report(
+    reported_date: str | None,
+    record: dict[str, Any],
+) -> str | None:
+    """
+    Печатает DAILY PAPER REPORT при смене UTC-суток.
+
+    Возвращает дату, за которую отчёт уже напечатан, — вызывающий хранит
+    её между итерациями. Первая же обработанная свеча печатает отчёт
+    сразу: после рестарта полезно увидеть накопленное состояние, не
+    дожидаясь полуночи.
+
+    Печать НИКОГДА не мешает торговому циклу: любая ошибка отчёта
+    подавляется и превращается в строку в логе. Наблюдение не имеет права
+    останавливать наблюдаемое.
+    """
+    current_date = utc_date_of(record)
+
+    if current_date is None or current_date == reported_date:
+        return reported_date
+
+    try:
+        records = load_records(JOURNAL_FILE)
+        report = build_report(records)
+
+        print(
+            render_report_text(
+                report,
+                title=f"DAILY PAPER REPORT {current_date}",
+            ),
+            flush=True,
+        )
+
+        # Блок супервизора. Champion берётся из окружения и обязан быть
+        # ЗАРЕГИСТРИРОВАННЫМ; неизвестное имя не подставляется молча, а
+        # приводит к сообщению — иначе отчёт описывал бы стратегию,
+        # которой не существует.
+        champion_id = os.getenv(
+            "PAPER_CHAMPION_STRATEGY",
+            DEFAULT_STRATEGY_ID,
+        )
+
+        observations = [
+            build_observation(item)
+            for item in records
+            if isinstance(item, dict) and not item.get("__unreadable__")
+        ]
+
+        try:
+            status = supervisor_status(
+                champion_id=champion_id,
+                observations=observations,
+            )
+
+            print(
+                render_supervisor_section(status),
+                flush=True,
+            )
+
+        except StrategyRegistryError as error:
+            print(
+                f"[STRATEGY SUPERVISOR] {error}",
+                flush=True,
+            )
+
+        # Отдельная однострочная сводка с устойчивым префиксом: её можно
+        # грепать и парсить, в отличие от многострочного блока выше.
+        sample = report["sample"]
+        trades = report["trades"]
+
+        print(
+            "PAPER_REPORT "
+            f"utc_date={current_date} "
+            f"status={report['safety_status']} "
+            f"cycles={report['cycles']['total']} "
+            f"closed={trades['closed']} "
+            f"net_pnl={trades['net_pnl']} "
+            f"win_rate={trades['win_rate_percent']} "
+            f"profit_factor={trades['profit_factor']} "
+            f"sample={'OK' if sample['sufficient'] else 'INSUFFICIENT_SAMPLE'} "
+            "real_order_sent=False",
+            flush=True,
+        )
+
+    except Exception as error:
+        print(
+            "[PAPER REPORT] skipped: "
+            f"{type(error).__name__}: {error}",
+            flush=True,
+        )
+
+    return current_date
 
 
 def append_journal(
@@ -725,7 +841,7 @@ def build_journal_record(
     position_event: dict[str, Any],
     pipeline_data: dict[str, Any] | None,
 ) -> dict[str, Any]:
-    return {
+    record = {
         "recorded_at_utc": utc_now(),
         "exchange": context.exchange,
         "symbol": context.symbol,
@@ -750,6 +866,18 @@ def build_journal_record(
         ),
         "real_order_sent": False,
     }
+
+    # Плоский срез цикла для наблюдения и отчётности.
+    #
+    # Пишется ДОПОЛНИТЕЛЬНО к вложенным блокам, а не вместо них: старые
+    # записи и все существующие потребители продолжают читать pipeline и
+    # position_event как раньше. Отчёт умеет восстанавливать наблюдение и
+    # из записи без этого ключа, поэтому журнал остаётся совместим в обе
+    # стороны. На торговое решение ключ не влияет — он вычисляется ПОСЛЕ
+    # того, как решение уже принято и позиция уже обработана.
+    record["observation"] = build_observation(record)
+
+    return record
 
 
 def print_result(
@@ -1307,6 +1435,12 @@ def main(
     last_heartbeat_monotonic = 0.0
     last_daily_report_date_utc: str | None = None
 
+    # Отдельное состояние от last_daily_report_date_utc НАМЕРЕННО: тот
+    # флаг продвигается только при успешной отправке в Telegram, поэтому
+    # при недоступном Telegram отчёт в Deploy Logs печатался бы на каждой
+    # свече. Логи и мессенджер — разные каналы с разной надёжностью.
+    last_paper_report_date_utc: str | None = None
+
     # Состояние ограничителя повторов. Привязано к КОНКРЕТНОЙ свече:
     # новая свеча всегда начинает счёт заново.
     failing_close_time_ms: int | None = None
@@ -1386,6 +1520,13 @@ def main(
                 append_journal(record)
                 print_result(record)
                 log_decision_line(record)
+
+                # Отчёт строится ПОСЛЕ записи в журнал, чтобы текущая
+                # свеча уже входила в выборку.
+                last_paper_report_date_utc = emit_daily_report(
+                    last_paper_report_date_utc,
+                    record,
+                )
 
                 telegram_sent = (
                     send_event_notification(
