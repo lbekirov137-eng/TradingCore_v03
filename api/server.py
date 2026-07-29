@@ -34,6 +34,8 @@ from api.paper_analytics import (
     render_report_text,
 )
 
+from api.paper_storage import data_health
+
 # Супервизор так же лёгок: чистые функции и литеральный реестр, без
 # сети, диска и Bootstrap.
 from api.strategy_supervisor import (
@@ -113,6 +115,20 @@ def performance(
 
 
 
+
+
+@app.get("/performance/data-health")
+def performance_data_health():
+    """
+    Здоровье хранилища: переживут ли данные рестарт и целы ли они.
+
+    Существует ровно затем, чтобы «монитор работал, сделок не было» и
+    «история потеряна при redeploy» нельзя было перепутать: в отчёте о
+    результатах оба случая выглядят как ноль сделок.
+
+    Только чтение.
+    """
+    return data_health()
 
 
 def _supervisor_observations(limit: int = 0):
