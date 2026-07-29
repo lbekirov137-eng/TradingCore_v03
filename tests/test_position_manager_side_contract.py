@@ -180,6 +180,128 @@ class TestShortIsStillRefused:
             build_manager(tmp_path).open_position(order)
 
 
+class TestSignalOnlyOrderIsFullySupported:
+    """
+    Вторая половина той же миграции контракта.
+
+    Валидация признаёт ордер валидным по одному лишь `signal` — "side"
+    объявлен НЕОБЯЗАТЕЛЬНЫМ fallback. Но сборка позиции читала
+    paper_order["side"] напрямую, поэтому ордер, только что прошедший
+    валидацию, падал с KeyError('side').
+
+    Это хуже обычного отказа: KeyError — не тот контролируемый ValueError,
+    который цикл ожидает и записывает как честное решение, а
+    необработанное исключение. Тесты фиксируют, что форма, объявленная
+    допустимой, действительно работает от валидации до записи состояния.
+    """
+
+    def test_signal_only_order_opens_position(
+        self, tmp_path: Path
+    ) -> None:
+        """До исправления здесь падало KeyError('side')."""
+        order = build_current_contract_order()
+        order.pop("side")
+
+        result = build_manager(tmp_path).open_position(
+            order,
+            opened_at_utc="2026-07-28T12:00:00+00:00",
+        )
+
+        assert result["event"] == "POSITION_OPENED"
+        assert result["real_order_sent"] is False
+        # Направление выводится из signal=BUY, а не выдумывается.
+        assert result["position"]["side"] == "LONG"
+
+    def test_signal_only_order_survives_a_full_round_trip(
+        self, tmp_path: Path
+    ) -> None:
+        """
+        Записанная позиция обязана быть пригодной для закрытия: если бы
+        side уехал в None, normalise_side в cost_model всё равно вернул
+        бы LONG, но знак результата стоит проверить явно.
+        """
+        order = build_current_contract_order()
+        order.pop("side")
+
+        manager = build_manager(tmp_path)
+        manager.open_position(
+            order,
+            opened_at_utc="2026-07-28T12:00:00+00:00",
+        )
+
+        closed = manager.evaluate_position(
+            market_price=130.0,
+            candle_high=130.0,
+            candle_low=125.0,
+            observed_at_utc="2026-07-28T12:05:00+00:00",
+        )
+
+        assert closed["event"] == "POSITION_CLOSED"
+        assert closed["exit_reason"] == "TAKE_PROFIT_2"
+        # Лонг, закрытый выше входа, обязан дать положительный gross.
+        assert closed["gross_pnl"] > 0
+        assert closed["position"]["side"] == "LONG"
+
+    def test_explicit_side_is_never_rewritten(
+        self, tmp_path: Path
+    ) -> None:
+        """
+        Правка только читает side, а не выводит его заново: устаревшее
+        "BUY" сохраняется как есть, чтобы не переписывать задним числом
+        уже существующие позиции и записи журнала.
+        """
+        legacy_order = build_current_contract_order()
+        legacy_order.pop("signal")
+        legacy_order["side"] = "BUY"
+
+        result = build_manager(tmp_path).open_position(
+            legacy_order,
+            opened_at_utc="2026-07-28T12:00:00+00:00",
+        )
+
+        assert result["position"]["side"] == "BUY"
+
+    def test_blank_side_falls_back_instead_of_storing_junk(
+        self, tmp_path: Path
+    ) -> None:
+        """
+        signal задаёт направление, а side пустой/None. Валидация такой
+        ордер пропускает (приоритет у signal), поэтому в состояние обязано
+        попасть осмысленное направление, а не None или пустая строка.
+        """
+        # Отдельный каталог на случай, чтобы позиции не мешали друг другу.
+        # Имя — индекс, а не само значение: пустая строка и пробелы не
+        # являются корректными именами файлов в Windows.
+        for index, blank in enumerate((None, "", "   ")):
+            order = build_current_contract_order()
+            order["side"] = blank
+
+            manager = build_manager(tmp_path / f"case_{index}")
+
+            result = manager.open_position(
+                order,
+                opened_at_utc="2026-07-28T12:00:00+00:00",
+            )
+
+            assert result["position"]["side"] == "LONG", (
+                f"side={blank!r} должен был дать LONG"
+            )
+
+    def test_signal_only_short_is_still_refused(
+        self, tmp_path: Path
+    ) -> None:
+        """
+        Умолчание "LONG" не должно превратить SELL-ордер без side в лонг:
+        он обязан быть отвергнут ВАЛИДАЦИЕЙ, до записи направления.
+        """
+        order = build_current_contract_order()
+        order.pop("side")
+        order["signal"] = "SELL"
+
+        with pytest.raises(ValueError, match="Only BUY paper orders"):
+            build_manager(tmp_path).open_position(order)
+
+
 class TestRealOrdersRemainImpossible:
 
     def test_order_claiming_a_real_order_is_refused(

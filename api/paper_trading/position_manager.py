@@ -147,7 +147,7 @@ class PaperPositionManager:
             "exchange": paper_order["exchange"],
             "symbol": paper_order["symbol"],
             "timeframe": paper_order["timeframe"],
-            "side": paper_order["side"],
+            "side": self._position_side(paper_order),
             "execution_mode": paper_order.get(
                 "execution_mode",
                 "SPOT_LONG_ONLY",
@@ -364,6 +364,36 @@ class PaperPositionManager:
             )
 
         return None
+
+    @staticmethod
+    def _position_side(
+        paper_order: dict[str, Any],
+    ) -> str:
+        """
+        Направление позиции для записи в состояние.
+
+        Вторая половина той же миграции контракта, что описана в
+        _validate_paper_order. Валидация уже признаёт ордер валидным по
+        одному лишь `signal` ("side" — необязательный fallback), но
+        сборка позиции по-прежнему читала paper_order["side"] напрямую.
+        Форма, объявленная допустимой, падала с KeyError('side') сразу
+        после успешной валидации — то есть отказ уезжал из честного
+        ValueError в необработанное исключение на уровне цикла.
+
+        Здесь `side` только читается, а не выводится заново: если поле
+        есть, сохраняется КАК ЕСТЬ (включая устаревшее "BUY"), чтобы уже
+        записанные позиции и журналы не переписывались задним числом.
+        Умолчание "LONG" безопасно: валидация пропускает лишь BUY/LONG
+        (режим SPOT_LONG_ONLY), поэтому другого направления здесь быть
+        не может, а normalise_side в cost_model трактует "BUY" как LONG —
+        знак результата не меняется ни в одной из веток.
+        """
+        side = paper_order.get("side")
+
+        if isinstance(side, str) and side.strip():
+            return side
+
+        return "LONG"
 
     @staticmethod
     def _finite(value: Any) -> float | None:
