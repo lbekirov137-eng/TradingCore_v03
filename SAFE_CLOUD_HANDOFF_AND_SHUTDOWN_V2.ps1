@@ -2,11 +2,21 @@
 <#
 Bootstrap V2 for SAFE_CLOUD_HANDOFF_AND_SHUTDOWN.ps1.
 
-The caller updates the trusted repository once before launching this file.
-V2 deliberately performs NO second git pull. It validates that the required
-cloud-handoff files are present, creates a temporary copy of the audited
-orchestrator with its redundant internal git-update block disabled, and runs
-that copy. All original fail-closed shutdown behavior remains intact.
+The caller refreshes only the required handoff files from origin before
+launching this bootstrap. V2 performs NO second git pull. It creates a temporary
+runtime copy of the audited orchestrator and applies narrowly-scoped safety and
+current-Railway-CLI compatibility repairs before syntax-validating and running
+it.
+
+Repairs applied in the temporary runtime copy only:
+1) remove the redundant second git pull;
+2) make native command exit-code capture reliable on Windows PowerShell 5.1;
+3) create the volume using the already-linked service, avoiding service-name vs
+   service-ID ambiguity in `railway volume add`;
+4) use `railway up --detach` without `--json` because current Railway docs state
+   that --json implies CI mode.
+
+All fail-closed cloud-verification and shutdown gates remain intact.
 #>
 
 $ErrorActionPreference = "Stop"
@@ -29,7 +39,7 @@ Write-Host ""
 Write-Host "==================================================" -ForegroundColor Cyan
 Write-Host " SAFE CLOUD HANDOFF BOOTSTRAP V2" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
-Write-Host "Repository was already updated by the outer command."
+Write-Host "Required files were refreshed from origin by the outer command."
 Write-Host "No second git pull will be performed."
 Write-Host ""
 
@@ -47,7 +57,8 @@ foreach ($Name in $Required) {
     }
 }
 
-# Verify that the cloud supervisor is the current Docker entrypoint.
+# Verify that the cloud supervisor is the Docker entrypoint before touching the
+# original orchestrator text.
 $Docker = Get-Content (Join-Path $Repo "Dockerfile.collector_b") -Raw
 if ($Docker -notmatch 'collector_b_cloud_supervisor\.py') {
     Write-Host "CLOUD SUPERVISOR IS NOT IN DOCKERFILE - NO SHUTDOWN" -ForegroundColor Red
@@ -55,25 +66,93 @@ if ($Docker -notmatch 'collector_b_cloud_supervisor\.py') {
 }
 
 $Text = Get-Content $Original -Raw
+$Patched = $Text
 
-# Remove exactly the redundant inner git-update section. The outer command has
-# already performed the ff-only update and will refuse to run this V2 on failure.
-$Pattern = '(?ms)^\s*# ------------------------------------------------------------------\r?\n\s*# 1\. Update trusted source\.\r?\n\s*# ------------------------------------------------------------------\r?\n\s*\$git = Run-Cmd "git" @\("-C", \$Repo, "pull", "--ff-only", "origin", \$Branch\) \$true\r?\n\s*if \(\$git\.Code -ne 0\) \{\r?\n\s*Fail-Safe "Git update failed; local projects left running\."\r?\n\s*\}\r?\n'
+# ---------------------------------------------------------------------------
+# Repair A: robust native-command execution for Windows PowerShell 5.1.
+# Capture $LASTEXITCODE immediately after the native command and before any
+# PowerShell formatting pipeline. Temporarily use Continue so native stderr
+# (git progress, CLI notices) doesn't become a terminating PS error.
+# ---------------------------------------------------------------------------
+$RunCmdPattern = '(?ms)^function Run-Cmd\(\[string\]\$Exe, \[string\[\]\]\$Args, \[bool\]\$AllowFail = \$false\) \{.*?^\}\r?\n\r?\nfunction Railway'
+$RunCmdReplacement = @'
+function Run-Cmd([string]$Exe, [string[]]$Args, [bool]$AllowFail = $false) {
+    Log ("RUN: {0} {1}" -f $Exe, ($Args -join " "))
 
-$Replacement = @'
+    $previousEap = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "Continue"
+        $outputLines = @(& $Exe @Args 2>&1)
+        $code = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $previousEap
+    }
+
+    $output = ($outputLines | Out-String)
+    if ($output) {
+        $output.TrimEnd() | Add-Content $MasterLog
+    }
+
+    if (-not $AllowFail -and $code -ne 0) {
+        throw "$Exe failed with exit code $code"
+    }
+
+    return [pscustomobject]@{ Code = $code; Output = $output }
+}
+
+function Railway
+'@
+
+$Next = [regex]::Replace($Patched, $RunCmdPattern, $RunCmdReplacement, 1)
+if ($Next -eq $Patched) {
+    Write-Host "COULD NOT PATCH NATIVE COMMAND RUNNER - NO SHUTDOWN" -ForegroundColor Red
+    exit 1
+}
+$Patched = $Next
+
+# ---------------------------------------------------------------------------
+# Repair B: remove exactly the redundant internal git update. The outer command
+# refreshes the required files using fetch + checkout from origin.
+# ---------------------------------------------------------------------------
+$GitPattern = '(?ms)^\s*# ------------------------------------------------------------------\r?\n\s*# 1\. Update trusted source\.\r?\n\s*# ------------------------------------------------------------------\r?\n\s*\$git = Run-Cmd "git" @\("-C", \$Repo, "pull", "--ff-only", "origin", \$Branch\) \$true\r?\n\s*if \(\$git\.Code -ne 0\) \{\r?\n\s*Fail-Safe "Git update failed; local projects left running\."\r?\n\s*\}\r?\n'
+$GitReplacement = @'
     # ------------------------------------------------------------------
-    # 1. Trusted source already updated by SAFE bootstrap V2.
+    # 1. Trusted source already refreshed by SAFE bootstrap V2.
     # ------------------------------------------------------------------
-    Log "Trusted repository update already verified by outer bootstrap V2."
+    Log "Required handoff files already refreshed from origin by bootstrap V2."
 
 '@
 
-$Patched = [regex]::Replace($Text, $Pattern, $Replacement, 1)
-
-if ($Patched -eq $Text) {
-    Write-Host "COULD NOT SAFELY PATCH REDUNDANT GIT STEP - NO SHUTDOWN" -ForegroundColor Red
+$Next = [regex]::Replace($Patched, $GitPattern, $GitReplacement, 1)
+if ($Next -eq $Patched) {
+    Write-Host "COULD NOT SAFELY REMOVE REDUNDANT GIT STEP - NO SHUTDOWN" -ForegroundColor Red
     exit 1
 }
+$Patched = $Next
+
+# ---------------------------------------------------------------------------
+# Repair C: current Railway CLI volume add can target the linked service. This
+# avoids ambiguity because `railway volume` documents --service as a service ID.
+# ---------------------------------------------------------------------------
+$OldVolumeAdd = '$volumeAdd = Railway @("volume", "add", "--service", $ServiceName, "--mount-path", "/data", "--json") $true'
+$NewVolumeAdd = '$volumeAdd = Railway @("volume", "add", "--mount-path", "/data", "--json") $true'
+if (-not $Patched.Contains($OldVolumeAdd)) {
+    Write-Host "VOLUME COMMAND SIGNATURE NOT FOUND - NO SHUTDOWN" -ForegroundColor Red
+    exit 1
+}
+$Patched = $Patched.Replace($OldVolumeAdd, $NewVolumeAdd)
+
+# ---------------------------------------------------------------------------
+# Repair D: current Railway docs state --json implies CI mode. Detached upload
+# should use --detach without --json, then deployment list is polled as JSON.
+# ---------------------------------------------------------------------------
+$OldUp = '$up = Railway @("up", "--service", $ServiceName, "--environment", $EnvironmentName, "--detach", "--json") $true'
+$NewUp = '$up = Railway @("up", "--service", $ServiceName, "--environment", $EnvironmentName, "--detach") $true'
+if (-not $Patched.Contains($OldUp)) {
+    Write-Host "RAILWAY UP SIGNATURE NOT FOUND - NO SHUTDOWN" -ForegroundColor Red
+    exit 1
+}
+$Patched = $Patched.Replace($OldUp, $NewUp)
 
 Set-Content $Temp -Value $Patched -Encoding UTF8
 
