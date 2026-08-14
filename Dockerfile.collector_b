@@ -6,7 +6,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     LIVE_TRADING=false \
     PAPER_TRADING=true \
     DEMO_ONLY=true \
-    COLLECTOR_B_DATA_DIR=/app/data
+    COLLECTOR_B_DATA_DIR=/data \
+    COLLECTOR_B_AUDIT_INTERVAL_SECONDS=3600 \
+    COLLECTOR_B_AUDIT_INITIAL_DELAY_SECONDS=60
 
 WORKDIR /app
 
@@ -15,8 +17,10 @@ RUN pip install --no-cache-dir -r /app/collector_b_requirements.txt
 
 COPY collector_b_bybit.py /app/collector_b_bybit.py
 COPY collector_b_selftest.py /app/collector_b_selftest.py
+COPY collector_b_g2_g3_audit.py /app/collector_b_g2_g3_audit.py
+COPY collector_b_cloud_supervisor.py /app/collector_b_cloud_supervisor.py
 COPY config /app/config
 
 RUN python /app/collector_b_selftest.py
 
-CMD ["python", "/app/collector_b_bybit.py"]
+CMD ["python", "/app/collector_b_cloud_supervisor.py"]
