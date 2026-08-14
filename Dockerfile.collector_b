@@ -1,0 +1,22 @@
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    TRADING_ENVIRONMENT=PAPER \
+    LIVE_TRADING=false \
+    PAPER_TRADING=true \
+    DEMO_ONLY=true \
+    COLLECTOR_B_DATA_DIR=/app/data
+
+WORKDIR /app
+
+COPY collector_b_requirements.txt /app/collector_b_requirements.txt
+RUN pip install --no-cache-dir -r /app/collector_b_requirements.txt
+
+COPY collector_b_bybit.py /app/collector_b_bybit.py
+COPY collector_b_selftest.py /app/collector_b_selftest.py
+COPY config /app/config
+
+RUN python /app/collector_b_selftest.py
+
+CMD ["python", "/app/collector_b_bybit.py"]
