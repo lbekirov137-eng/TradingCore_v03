@@ -48,10 +48,13 @@ REFERENCE_CAPITAL_USD = 1_000.0
 MAX_LEVERAGE = 1.0
 
 # Data-readiness for outcome research. These are stronger than preliminary G3.
-# They are evidence-volume gates, not profitability gates.
+# They are evidence-volume gates, not profitability gates. 300 primary clusters
+# is intentionally conservative: after the fixed bullish-stabilisation and 1x
+# geometry filters it materially reduces the risk of opening the one-time final
+# holdout with fewer than the required 30 OOS trades.
 MIN_VALID_EVENTS_FOR_RESEARCH = 1_000
 MIN_OBSERVATION_SPAN_HOURS = 72.0
-MIN_PRIMARY_CLUSTERS_FOR_RESEARCH = 100
+MIN_PRIMARY_CLUSTERS_FOR_RESEARCH = 300
 
 # Cross-threshold robustness: same frozen rule must be profitable in at least
 # two of the three predeclared notional cohorts before promotion can pass.
