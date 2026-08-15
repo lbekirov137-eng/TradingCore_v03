@@ -30,6 +30,8 @@ MIN_OBSERVATION_SPAN_HOURS=72.0
 MIN_PRIMARY_CLUSTERS_FOR_RESEARCH=300
 MIN_PRIMARY_SYMBOLS_REPRESENTED=10
 MIN_PROFITABLE_THRESHOLD_COHORTS=2
+MIN_OOS_TRADES_PER_SYMBOL=3
+MIN_EVALUABLE_SYMBOLS_OOS=5
 MIN_PROFITABLE_SYMBOL_RATIO=0.60
 FORWARD_PAPER_MIN_CLOSED_TRADES=30
 
@@ -50,6 +52,8 @@ def protocol_dict()->dict[str,Any]:
         "min_primary_clusters_for_research":MIN_PRIMARY_CLUSTERS_FOR_RESEARCH,
         "min_primary_symbols_represented":MIN_PRIMARY_SYMBOLS_REPRESENTED,
         "min_profitable_threshold_cohorts":MIN_PROFITABLE_THRESHOLD_COHORTS,
+        "min_oos_trades_per_symbol":MIN_OOS_TRADES_PER_SYMBOL,
+        "min_evaluable_symbols_oos":MIN_EVALUABLE_SYMBOLS_OOS,
         "min_profitable_symbol_ratio":MIN_PROFITABLE_SYMBOL_RATIO,
         "forward_paper_min_closed_trades":FORWARD_PAPER_MIN_CLOSED_TRADES,
         "entry_rule":("Aggregate same-symbol LONG-liquidations in fixed 60s chains. Divide cluster USDT quote-notional by the symbol's frozen 24h turnover snapshot and convert to bps. If >= frozen threshold, wait for exactly one fully closed bullish 1m SPOT candle after cluster end, then enter PAPER LONG at next spot 1m open."),
