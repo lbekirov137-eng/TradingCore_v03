@@ -1,0 +1,92 @@
+name: TradingCore Fast PAPER Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-fast-paper.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
+
+jobs:
+  fast-paper:
+    name: 36-lane Fast PAPER
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout frozen TradingCore code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Compile and safety self-test
+        working-directory: code
+        env:
+          TRADING_ENVIRONMENT: PAPER
+          LIVE_TRADING: "false"
+          PAPER_TRADING: "true"
+          DEMO_ONLY: "true"
+        run: |
+          python3 -m py_compile fast_paper_protocol.py fast_paper_strategies.py fast_paper_cloud_once.py fast_paper_selftest.py
+          python3 fast_paper_selftest.py
+
+      - name: Run Fast PAPER cycle
+        working-directory: code
+        env:
+          TRADING_ENVIRONMENT: PAPER
+          LIVE_TRADING: "false"
+          PAPER_TRADING: "true"
+          DEMO_ONLY: "true"
+        run: |
+          python3 fast_paper_cloud_once.py --state-dir "$GITHUB_WORKSPACE/state/fast_paper_runtime"
+
+      - name: Persist Fast PAPER state
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Fast PAPER"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f fast_paper_runtime
+          if git diff --cached --quiet; then
+            echo "No Fast PAPER state changes to commit."
+          else
+            git commit -m "fast-paper: update 36-lane forward state"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## TradingCore Fast PAPER Lab" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/fast_paper_runtime/FAST_PAPER_STATUS.json" ]; then
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+import json, os
+p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','fast_paper_runtime','FAST_PAPER_STATUS.json')
+d=json.load(open(p,encoding='utf-8'))
+print(f"- lanes: {d.get('lane_count')}")
+print(f"- total closed lane observations: {d.get('total_closed_trade_observations_across_independent_lanes')}")
+print(f"- lanes >=30: {d.get('lanes_with_30_or_more')}")
+print(f"- promising lanes: {d.get('promising_lanes')}")
+print("- LIVE / real orders: DISABLED")
+PY
+          else
+            echo "FAST_PAPER_STATUS.json missing; inspect the failed step." >> "$GITHUB_STEP_SUMMARY"
+          fi
