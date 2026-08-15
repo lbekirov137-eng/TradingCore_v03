@@ -4,26 +4,32 @@
 Purpose: get a fast reliability answer without inventing another strategy.
 The strategy logic is imported from btc_1h_forward_shadow.py and is not tuned here.
 The confirmation sample is Bybit public BTCUSDT spot 1H history cached by the
-Historical Accelerator. All loaded history is treated as independent OOS for
-this frozen candidate. No private API, no order client, no LIVE path.
+Historical Accelerator. All loaded history is treated as independent cross-venue
+confirmation for this frozen candidate. No private API, no order client, no LIVE path.
+
+This module is intentionally self-contained with respect to research orchestration:
+it does NOT import strategy_lab_orchestrator / strategy_lab_deep_dive and therefore
+does not require the optional requests package. Its backtest runner and cached 4H
+context helper mirror the existing TradingCore implementations directly.
 """
 from __future__ import annotations
 
+import bisect
 import gzip
 import json
 import math
+import types
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from api.paper_trading.cost_model import TradingCostConfig, compute_trade_costs
 from api.strategy_engine.strategies.contracts import Candle
 from api.strategy_supervisor.gates import promotion_gates
-from api.strategy_supervisor.stats import build_stats
+from api.strategy_supervisor.stats import ClosedTrade, build_stats
 from api.strategy_supervisor.validation import build_walk_forward_windows, robustness_ratio
 from btc_1h_forward_shadow import make_frozen_strategy
 from config.startup_safety import assert_safe_startup
-from strategy_lab_deep_dive import install_cached_context
-import strategy_lab_orchestrator as broad
 
 SCHEMA = "TRADINGCORE_BTC_1H_BYBIT_CONFIRMATORY_V1"
 CACHE = Path("C:/TradingCore_Historical_Accelerator/cache/BTCUSDT.json.gz")
@@ -42,6 +48,10 @@ STRICT_MIN_ROBUSTNESS = 0.60
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def utc_iso(open_time_ms: int) -> str:
+    return datetime.fromtimestamp(open_time_ms / 1000.0, tz=timezone.utc).isoformat()
 
 
 def atomic(path: Path, payload: dict[str, Any]) -> None:
@@ -100,6 +110,158 @@ def aggregate_4h(rows: list[Candle]) -> list[Candle]:
     return result
 
 
+def ema_prefix(values: list[float], period: int) -> list[float | None]:
+    """Exact prefix EMA equivalent to TradingCore contracts.ema(), computed once."""
+    result: list[float | None] = [None] * len(values)
+    if period <= 0 or len(values) < period:
+        return result
+    current = sum(values[:period]) / period
+    result[period - 1] = current
+    multiplier = 2.0 / (period + 1.0)
+    for index in range(period, len(values)):
+        current = (values[index] - current) * multiplier + current
+        result[index] = current
+    return result
+
+
+def install_cached_context(strategy: Any, context_candles: list[Candle]) -> None:
+    """Install the same closed-4H context cache used by Strategy Lab, locally."""
+    closes = [float(candle.close) for candle in context_candles]
+    fast_prefix = ema_prefix(closes, 20)
+    slow_prefix = ema_prefix(closes, 50)
+    available_at = [int(candle.open_time_ms) + FOUR_HOUR_MS for candle in context_candles]
+
+    def cached_context_is_bullish(self, window, _context_candles):
+        deadline = int(window.current.open_time_ms)
+        index = bisect.bisect_right(available_at, deadline) - 1
+        if index < 0:
+            return False, {"context": "UNAVAILABLE"}
+        fast = fast_prefix[index]
+        slow = slow_prefix[index]
+        if fast is None or slow is None:
+            return False, {"context": "INSUFFICIENT_CONTEXT_HISTORY"}
+        latest = context_candles[index]
+        return fast > slow, {
+            "context_close": round(float(latest.close), 2),
+            "context_fast_ema": round(float(fast), 2),
+            "context_slow_ema": round(float(slow), 2),
+            "context_open_time_ms": latest.open_time_ms,
+        }
+
+    strategy.context_is_bullish = types.MethodType(cached_context_is_bullish, strategy)
+
+
+def regime_for(atr_percent: float | None) -> str:
+    if atr_percent is None:
+        return "UNKNOWN"
+    if atr_percent < 0.8:
+        return "RANGE"
+    if atr_percent > 1.5:
+        return "VOLATILE"
+    return "TREND"
+
+
+def run_context_backtest(
+    strategy: Any,
+    candles: list[Candle],
+    context_candles: list[Candle],
+    *,
+    max_bars_in_trade: int = 24,
+) -> dict[str, Any]:
+    """Dependency-free mirror of TradingCore's conservative LONG-only runner."""
+    cost_config = TradingCostConfig()
+    trades: list[ClosedTrade] = []
+    reason_counts: dict[str, int] = {}
+    signals = 0
+    open_trade: dict[str, Any] | None = None
+
+    for index, candle in enumerate(candles):
+        if open_trade is not None:
+            stop = open_trade["stop"]
+            target = open_trade["target"]
+            exit_price = None
+
+            # Conservative ambiguous-bar ordering: stop before target.
+            if candle.low <= stop:
+                exit_price = stop
+            elif candle.high >= target:
+                exit_price = target
+            elif index - open_trade["entry_index"] >= max_bars_in_trade:
+                exit_price = candle.close
+
+            if exit_price is not None:
+                costs = compute_trade_costs(
+                    entry_price=open_trade["entry"],
+                    exit_price=exit_price,
+                    quantity=open_trade["quantity"],
+                    side="LONG",
+                    config=cost_config,
+                )
+                risk = open_trade["risk_amount"]
+                trades.append(ClosedTrade(
+                    strategy_id=strategy.strategy_key,
+                    closed_at_utc=utc_iso(candle.open_time_ms),
+                    regime=open_trade["regime"],
+                    net_pnl=costs["net_pnl"],
+                    r_multiple=(costs["net_pnl"] / risk if risk and risk > 0 else None),
+                ))
+                open_trade = None
+
+            if open_trade is not None:
+                continue
+
+        decision = strategy.evaluate_with_context(candles, index, context_candles)
+        reason_counts[decision.reason_code] = reason_counts.get(decision.reason_code, 0) + 1
+        if not decision.is_trade:
+            continue
+
+        signals += 1
+        entry = float(decision.entry)
+        stop = float(decision.stop)
+        target = float(decision.take_profit_2)
+        if not (stop < entry < target):
+            continue
+
+        diagnostics = decision.diagnostics or {}
+        stop_distance = entry - stop
+        try:
+            quantity = float(diagnostics.get("quantity"))
+        except (TypeError, ValueError):
+            quantity = 1.0 / stop_distance
+        if not math.isfinite(quantity) or quantity <= 0:
+            continue
+
+        try:
+            risk_amount = float(diagnostics.get("actual_risk_usd"))
+        except (TypeError, ValueError):
+            risk_amount = 1.0
+        if not math.isfinite(risk_amount) or risk_amount <= 0:
+            risk_amount = 1.0
+
+        open_trade = {
+            "entry": entry,
+            "stop": stop,
+            "target": target,
+            "quantity": quantity,
+            "risk_amount": risk_amount,
+            "entry_index": index,
+            "regime": regime_for(diagnostics.get("atr_percent")),
+        }
+
+    return {
+        "strategy_key": strategy.strategy_key,
+        "version": strategy.version,
+        "parameter_fingerprint": strategy.config.fingerprint(),
+        "candles": len(candles),
+        "signals": signals,
+        "closed_trades": len(trades),
+        "still_open_at_end": open_trade is not None,
+        "trades": trades,
+        "reason_counts": dict(sorted(reason_counts.items(), key=lambda pair: -pair[1])[:12]),
+        "cost_config": cost_config.snapshot(),
+    }
+
+
 def main() -> int:
     safety = assert_safe_startup()
     one_h = load_1h()
@@ -113,7 +275,7 @@ def main() -> int:
 
     strategy = make_frozen_strategy()
     install_cached_context(strategy, four_h)
-    bt = broad.run_context_backtest(strategy, one_h, four_h, max_bars_in_trade=24)
+    bt = run_context_backtest(strategy, one_h, four_h, max_bars_in_trade=24)
     trades = list(bt["trades"])
     stats = build_stats(trades)
     windows = build_walk_forward_windows(trades, window_count=6)
