@@ -1,0 +1,3920 @@
+{
+  "schema": "TRADINGCORE_RAPID_REPLAY_V1",
+  "generated_at_utc": "2026-08-15T12:13:48.136872+00:00",
+  "state": "NO_RAPID_CANDIDATE",
+  "protocol": {
+    "protocol_version": "RAPID_REPLAY_V1_TWO_VENUE_FOUR_SEGMENT",
+    "history_days": 365,
+    "venues": [
+      "BINANCE",
+      "BYBIT"
+    ],
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "BNBUSDT",
+      "LTCUSDT",
+      "SOLUSDT",
+      "BCHUSDT"
+    ],
+    "timeframes": {
+      "15m": {
+        "interval_ms": 900000,
+        "max_bars_in_trade": 96
+      },
+      "30m": {
+        "interval_ms": 1800000,
+        "max_bars_in_trade": 48
+      }
+    },
+    "hypotheses": [
+      "MR_VWAP_OVERSHOOT_RECLAIM",
+      "MR_ATR_FLUSH_REVERSAL",
+      "MR_EMA20_BAND_REENTRY"
+    ],
+    "gates": {
+      "min_trades_per_venue": 50,
+      "min_trades_per_half": 20,
+      "min_full_pf": 1.2,
+      "min_full_expectancy_r": 0.05,
+      "max_full_dd_r": 10.0,
+      "min_half_pf": 1.05,
+      "min_half_expectancy_r": 0.0,
+      "min_segment_robustness": 0.5
+    },
+    "selection_rule": "NO_TUNING; lane must pass Binance full+halves AND Bybit full+halves",
+    "safety": {
+      "paper_research_only": true,
+      "spot_long_only": true,
+      "max_leverage": 1.0,
+      "private_api": false,
+      "real_orders": false,
+      "live_permission": false,
+      "stable_champion_modified": false
+    },
+    "fingerprint": "e439ac32c5fef484ba2a4d0a3373b9091e9c62861113c9faab3ea27dfaf13935"
+  },
+  "data_failures": {
+    "BYBIT:BTCUSDT:15m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:BTCUSDT:30m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:ETHUSDT:15m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:ETHUSDT:30m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:BNBUSDT:15m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:BNBUSDT:30m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:LTCUSDT:15m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:LTCUSDT:30m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:SOLUSDT:15m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:SOLUSDT:30m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:BCHUSDT:15m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden",
+    "BYBIT:BCHUSDT:30m": "RuntimeError: public market data request failed: HTTP Error 403: Forbidden"
+  },
+  "lane_count": 36,
+  "passing_lane_count": 0,
+  "candidate": null,
+  "passing_lanes": [],
+  "lanes": [
+    {
+      "lane_id": "BTCUSDT:15m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BTCUSDT:15m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 6,
+              "wins": 4,
+              "losses": 2,
+              "win_rate_percent": 66.67,
+              "net_pnl": 3.47077317,
+              "profit_factor": 2.427,
+              "expectancy_r": 0.5785,
+              "average_r": 0.5785,
+              "max_drawdown_r": 2.4322,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 6,
+              "rolling_expectancy_r": null,
+              "trading_days": 6,
+              "trading_day_list": [
+                "2025-10-30",
+                "2025-11-13",
+                "2026-02-28",
+                "2026-04-01",
+                "2026-06-26",
+                "2026-07-21"
+              ],
+              "regimes_observed": [
+                "BTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 2,
+              "wins": 0,
+              "losses": 2,
+              "win_rate_percent": 0.0,
+              "net_pnl": -2.4322479,
+              "profit_factor": 0.0,
+              "expectancy_r": -1.2161,
+              "average_r": -1.2161,
+              "max_drawdown_r": 2.4322,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 2,
+              "rolling_expectancy_r": null,
+              "trading_days": 2,
+              "trading_day_list": [
+                "2025-10-30",
+                "2025-11-13"
+              ],
+              "regimes_observed": [
+                "BTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 4,
+              "wins": 4,
+              "losses": 0,
+              "win_rate_percent": 100.0,
+              "net_pnl": 5.90302107,
+              "profit_factor": null,
+              "expectancy_r": 1.4758,
+              "average_r": 1.4758,
+              "max_drawdown_r": 0.0,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 4,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2026-02-28",
+                "2026-04-01",
+                "2026-06-26",
+                "2026-07-21"
+              ],
+              "regimes_observed": [
+                "BTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": true,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": true,
+            "second_half_net_positive": true
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BTCUSDT:15m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BTCUSDT:30m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BTCUSDT:30m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 5,
+              "wins": 2,
+              "losses": 3,
+              "win_rate_percent": 40.0,
+              "net_pnl": -1.82463966,
+              "profit_factor": 0.479,
+              "expectancy_r": -0.3649,
+              "average_r": -0.3649,
+              "max_drawdown_r": 2.3553,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 5,
+              "rolling_expectancy_r": null,
+              "trading_days": 5,
+              "trading_day_list": [
+                "2025-08-25",
+                "2026-02-03",
+                "2026-02-11",
+                "2026-03-06",
+                "2026-03-30"
+              ],
+              "regimes_observed": [
+                "BTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 3,
+              "wins": 1,
+              "losses": 2,
+              "win_rate_percent": 33.33,
+              "net_pnl": -1.07664338,
+              "profit_factor": 0.529,
+              "expectancy_r": -0.3589,
+              "average_r": -0.3589,
+              "max_drawdown_r": 1.1475,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 3,
+              "rolling_expectancy_r": null,
+              "trading_days": 3,
+              "trading_day_list": [
+                "2025-08-25",
+                "2026-02-03",
+                "2026-02-11"
+              ],
+              "regimes_observed": [
+                "BTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 2,
+              "wins": 1,
+              "losses": 1,
+              "win_rate_percent": 50.0,
+              "net_pnl": -0.74799628,
+              "profit_factor": 0.386,
+              "expectancy_r": -0.374,
+              "average_r": -0.374,
+              "max_drawdown_r": 1.2186,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 2,
+              "rolling_expectancy_r": null,
+              "trading_days": 2,
+              "trading_day_list": [
+                "2026-03-06",
+                "2026-03-30"
+              ],
+              "regimes_observed": [
+                "BTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BTCUSDT:30m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "ETHUSDT:15m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "ETHUSDT:15m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 17,
+              "wins": 4,
+              "losses": 13,
+              "win_rate_percent": 23.53,
+              "net_pnl": -8.88162979,
+              "profit_factor": 0.432,
+              "expectancy_r": -0.5224,
+              "average_r": -0.5224,
+              "max_drawdown_r": 9.9735,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 17,
+              "rolling_expectancy_r": null,
+              "trading_days": 16,
+              "trading_day_list": [
+                "2025-09-12",
+                "2025-09-25",
+                "2025-10-21",
+                "2025-10-30",
+                "2025-11-19",
+                "2025-11-20",
+                "2025-12-03",
+                "2025-12-04",
+                "2026-01-23",
+                "2026-01-30",
+                "2026-01-31",
+                "2026-02-28",
+                "2026-03-04",
+                "2026-03-08",
+                "2026-04-01",
+                "2026-04-23"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 12,
+              "wins": 2,
+              "losses": 10,
+              "win_rate_percent": 16.67,
+              "net_pnl": -8.5974074,
+              "profit_factor": 0.283,
+              "expectancy_r": -0.7165,
+              "average_r": -0.7165,
+              "max_drawdown_r": 9.6893,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 12,
+              "rolling_expectancy_r": null,
+              "trading_days": 11,
+              "trading_day_list": [
+                "2025-09-12",
+                "2025-09-25",
+                "2025-10-21",
+                "2025-10-30",
+                "2025-11-19",
+                "2025-11-20",
+                "2025-12-03",
+                "2025-12-04",
+                "2026-01-23",
+                "2026-01-30",
+                "2026-01-31"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 5,
+              "wins": 2,
+              "losses": 3,
+              "win_rate_percent": 40.0,
+              "net_pnl": -0.28422239,
+              "profit_factor": 0.922,
+              "expectancy_r": -0.0568,
+              "average_r": -0.0568,
+              "max_drawdown_r": 2.592,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 5,
+              "rolling_expectancy_r": null,
+              "trading_days": 5,
+              "trading_day_list": [
+                "2026-02-28",
+                "2026-03-04",
+                "2026-03-08",
+                "2026-04-01",
+                "2026-04-23"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.0,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "ETHUSDT:15m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "ETHUSDT:30m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 1,
+              "wins": 1,
+              "losses": 0,
+              "win_rate_percent": 100.0,
+              "net_pnl": 0.2428487,
+              "profit_factor": null,
+              "expectancy_r": 0.2428,
+              "average_r": 0.2428,
+              "max_drawdown_r": 0.0,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 1,
+              "rolling_expectancy_r": null,
+              "trading_days": 1,
+              "trading_day_list": [
+                "2025-12-13"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 1,
+              "wins": 1,
+              "losses": 0,
+              "win_rate_percent": 100.0,
+              "net_pnl": 0.2428487,
+              "profit_factor": null,
+              "expectancy_r": 0.2428,
+              "average_r": 0.2428,
+              "max_drawdown_r": 0.0,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 1,
+              "rolling_expectancy_r": null,
+              "trading_days": 1,
+              "trading_day_list": [
+                "2025-12-13"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": true,
+            "first_half_net_positive": true,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "ETHUSDT:30m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 21,
+              "wins": 11,
+              "losses": 10,
+              "win_rate_percent": 52.38,
+              "net_pnl": 2.11635113,
+              "profit_factor": 1.178,
+              "expectancy_r": 0.1008,
+              "average_r": 0.1008,
+              "max_drawdown_r": 7.6721,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 20,
+              "rolling_expectancy_r": 0.1677,
+              "trading_days": 19,
+              "trading_day_list": [
+                "2025-08-18",
+                "2025-08-31",
+                "2025-09-18",
+                "2025-10-03",
+                "2025-10-22",
+                "2025-10-30",
+                "2025-11-19",
+                "2025-12-05",
+                "2025-12-12",
+                "2026-01-09",
+                "2026-01-13",
+                "2026-01-23",
+                "2026-02-03",
+                "2026-02-21",
+                "2026-03-09",
+                "2026-03-30",
+                "2026-04-22",
+                "2026-05-25",
+                "2026-05-30"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 15,
+              "wins": 5,
+              "losses": 10,
+              "win_rate_percent": 33.33,
+              "net_pnl": -4.74613068,
+              "profit_factor": 0.6,
+              "expectancy_r": -0.3164,
+              "average_r": -0.3164,
+              "max_drawdown_r": 7.6721,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 15,
+              "rolling_expectancy_r": null,
+              "trading_days": 13,
+              "trading_day_list": [
+                "2025-08-18",
+                "2025-08-31",
+                "2025-09-18",
+                "2025-10-03",
+                "2025-10-22",
+                "2025-10-30",
+                "2025-11-19",
+                "2025-12-05",
+                "2025-12-12",
+                "2026-01-09",
+                "2026-01-13",
+                "2026-01-23",
+                "2026-02-03"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 6,
+              "wins": 6,
+              "losses": 0,
+              "win_rate_percent": 100.0,
+              "net_pnl": 6.86248181,
+              "profit_factor": null,
+              "expectancy_r": 1.1437,
+              "average_r": 1.1437,
+              "max_drawdown_r": 0.0,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 6,
+              "rolling_expectancy_r": null,
+              "trading_days": 6,
+              "trading_day_list": [
+                "2026-02-21",
+                "2026-03-09",
+                "2026-03-30",
+                "2026-04-22",
+                "2026-05-25",
+                "2026-05-30"
+              ],
+              "regimes_observed": [
+                "ETHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.5,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": true,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": true,
+            "second_half_net_positive": true
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "ETHUSDT:30m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BNBUSDT:15m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 1,
+              "wins": 0,
+              "losses": 1,
+              "win_rate_percent": 0.0,
+              "net_pnl": -1.2010094,
+              "profit_factor": 0.0,
+              "expectancy_r": -1.201,
+              "average_r": -1.201,
+              "max_drawdown_r": 1.201,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 1,
+              "rolling_expectancy_r": null,
+              "trading_days": 1,
+              "trading_day_list": [
+                "2025-10-17"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 1,
+              "wins": 0,
+              "losses": 1,
+              "win_rate_percent": 0.0,
+              "net_pnl": -1.2010094,
+              "profit_factor": 0.0,
+              "expectancy_r": -1.201,
+              "average_r": -1.201,
+              "max_drawdown_r": 1.201,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 1,
+              "rolling_expectancy_r": null,
+              "trading_days": 1,
+              "trading_day_list": [
+                "2025-10-17"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BNBUSDT:15m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 16,
+              "wins": 4,
+              "losses": 12,
+              "win_rate_percent": 25.0,
+              "net_pnl": -7.90704098,
+              "profit_factor": 0.442,
+              "expectancy_r": -0.4942,
+              "average_r": -0.4942,
+              "max_drawdown_r": 10.543,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 16,
+              "rolling_expectancy_r": null,
+              "trading_days": 16,
+              "trading_day_list": [
+                "2025-10-03",
+                "2025-10-13",
+                "2025-10-15",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-13",
+                "2025-11-14",
+                "2025-11-15",
+                "2025-11-18",
+                "2025-12-02",
+                "2026-01-31",
+                "2026-02-05",
+                "2026-02-24",
+                "2026-05-18",
+                "2026-06-05",
+                "2026-06-26"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 12,
+              "wins": 3,
+              "losses": 9,
+              "win_rate_percent": 25.0,
+              "net_pnl": -4.68139173,
+              "profit_factor": 0.556,
+              "expectancy_r": -0.3901,
+              "average_r": -0.3901,
+              "max_drawdown_r": 7.0569,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 12,
+              "rolling_expectancy_r": null,
+              "trading_days": 12,
+              "trading_day_list": [
+                "2025-10-03",
+                "2025-10-13",
+                "2025-10-15",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-13",
+                "2025-11-14",
+                "2025-11-15",
+                "2025-11-18",
+                "2025-12-02",
+                "2026-01-31",
+                "2026-02-05"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 4,
+              "wins": 1,
+              "losses": 3,
+              "win_rate_percent": 25.0,
+              "net_pnl": -3.22564925,
+              "profit_factor": 0.105,
+              "expectancy_r": -0.8064,
+              "average_r": -0.8064,
+              "max_drawdown_r": 3.6034,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 4,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2026-02-24",
+                "2026-05-18",
+                "2026-06-05",
+                "2026-06-26"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.0,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BNBUSDT:15m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BNBUSDT:30m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 2,
+              "wins": 1,
+              "losses": 1,
+              "win_rate_percent": 50.0,
+              "net_pnl": 1.2469285,
+              "profit_factor": 2.031,
+              "expectancy_r": 0.6235,
+              "average_r": 0.6235,
+              "max_drawdown_r": 1.209,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 2,
+              "rolling_expectancy_r": null,
+              "trading_days": 2,
+              "trading_day_list": [
+                "2025-10-14",
+                "2025-10-17"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 2,
+              "wins": 1,
+              "losses": 1,
+              "win_rate_percent": 50.0,
+              "net_pnl": 1.2469285,
+              "profit_factor": 2.031,
+              "expectancy_r": 0.6235,
+              "average_r": 0.6235,
+              "max_drawdown_r": 1.209,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 2,
+              "rolling_expectancy_r": null,
+              "trading_days": 2,
+              "trading_day_list": [
+                "2025-10-14",
+                "2025-10-17"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": true,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": true,
+            "first_half_expectancy": true,
+            "first_half_net_positive": true,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BNBUSDT:30m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 8,
+              "wins": 2,
+              "losses": 6,
+              "win_rate_percent": 25.0,
+              "net_pnl": -6.64937396,
+              "profit_factor": 0.071,
+              "expectancy_r": -0.8312,
+              "average_r": -0.8312,
+              "max_drawdown_r": 6.6494,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 8,
+              "rolling_expectancy_r": null,
+              "trading_days": 8,
+              "trading_day_list": [
+                "2025-08-25",
+                "2025-10-09",
+                "2025-10-22",
+                "2026-01-20",
+                "2026-01-31",
+                "2026-02-11",
+                "2026-03-30",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 6,
+              "wins": 1,
+              "losses": 5,
+              "win_rate_percent": 16.67,
+              "net_pnl": -5.54511226,
+              "profit_factor": 0.069,
+              "expectancy_r": -0.9242,
+              "average_r": -0.9242,
+              "max_drawdown_r": 5.5451,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 6,
+              "rolling_expectancy_r": null,
+              "trading_days": 6,
+              "trading_day_list": [
+                "2025-08-25",
+                "2025-10-09",
+                "2025-10-22",
+                "2026-01-20",
+                "2026-01-31",
+                "2026-02-11"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 2,
+              "wins": 1,
+              "losses": 1,
+              "win_rate_percent": 50.0,
+              "net_pnl": -1.1042617,
+              "profit_factor": 0.079,
+              "expectancy_r": -0.5521,
+              "average_r": -0.5521,
+              "max_drawdown_r": 1.1992,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 2,
+              "rolling_expectancy_r": null,
+              "trading_days": 2,
+              "trading_day_list": [
+                "2026-03-30",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "BNBUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.0,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BNBUSDT:30m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "LTCUSDT:15m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 3,
+              "wins": 1,
+              "losses": 2,
+              "win_rate_percent": 33.33,
+              "net_pnl": -0.42927089,
+              "profit_factor": 0.826,
+              "expectancy_r": -0.1431,
+              "average_r": -0.1431,
+              "max_drawdown_r": 2.467,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 3,
+              "rolling_expectancy_r": null,
+              "trading_days": 3,
+              "trading_day_list": [
+                "2025-11-09",
+                "2025-11-11",
+                "2025-12-19"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 3,
+              "wins": 1,
+              "losses": 2,
+              "win_rate_percent": 33.33,
+              "net_pnl": -0.42927089,
+              "profit_factor": 0.826,
+              "expectancy_r": -0.1431,
+              "average_r": -0.1431,
+              "max_drawdown_r": 2.467,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 3,
+              "rolling_expectancy_r": null,
+              "trading_days": 3,
+              "trading_day_list": [
+                "2025-11-09",
+                "2025-11-11",
+                "2025-12-19"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "LTCUSDT:15m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 23,
+              "wins": 7,
+              "losses": 16,
+              "win_rate_percent": 30.43,
+              "net_pnl": -4.40182575,
+              "profit_factor": 0.737,
+              "expectancy_r": -0.1914,
+              "average_r": -0.1914,
+              "max_drawdown_r": 6.0731,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 20,
+              "rolling_expectancy_r": -0.0464,
+              "trading_days": 22,
+              "trading_day_list": [
+                "2025-09-13",
+                "2025-09-25",
+                "2025-10-10",
+                "2025-10-13",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-07",
+                "2025-11-10",
+                "2025-11-13",
+                "2025-11-15",
+                "2025-12-02",
+                "2025-12-04",
+                "2025-12-08",
+                "2026-01-07",
+                "2026-01-14",
+                "2026-01-23",
+                "2026-01-31",
+                "2026-02-24",
+                "2026-02-28",
+                "2026-03-31",
+                "2026-06-26",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 18,
+              "wins": 6,
+              "losses": 12,
+              "win_rate_percent": 33.33,
+              "net_pnl": -1.43213701,
+              "profit_factor": 0.89,
+              "expectancy_r": -0.0796,
+              "average_r": -0.0796,
+              "max_drawdown_r": 4.598,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 18,
+              "rolling_expectancy_r": null,
+              "trading_days": 17,
+              "trading_day_list": [
+                "2025-09-13",
+                "2025-09-25",
+                "2025-10-10",
+                "2025-10-13",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-07",
+                "2025-11-10",
+                "2025-11-13",
+                "2025-11-15",
+                "2025-12-02",
+                "2025-12-04",
+                "2025-12-08",
+                "2026-01-07",
+                "2026-01-14",
+                "2026-01-23",
+                "2026-01-31"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 5,
+              "wins": 1,
+              "losses": 4,
+              "win_rate_percent": 20.0,
+              "net_pnl": -2.96968874,
+              "profit_factor": 0.192,
+              "expectancy_r": -0.5939,
+              "average_r": -0.5939,
+              "max_drawdown_r": 2.9697,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 5,
+              "rolling_expectancy_r": null,
+              "trading_days": 5,
+              "trading_day_list": [
+                "2026-02-24",
+                "2026-02-28",
+                "2026-03-31",
+                "2026-06-26",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.25,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "LTCUSDT:15m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "LTCUSDT:30m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 5,
+              "wins": 2,
+              "losses": 3,
+              "win_rate_percent": 40.0,
+              "net_pnl": 1.63836633,
+              "profit_factor": 1.462,
+              "expectancy_r": 0.3277,
+              "average_r": 0.3277,
+              "max_drawdown_r": 2.3492,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 5,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2025-11-09",
+                "2025-11-12",
+                "2025-11-14",
+                "2026-01-26"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 5,
+              "wins": 2,
+              "losses": 3,
+              "win_rate_percent": 40.0,
+              "net_pnl": 1.63836633,
+              "profit_factor": 1.462,
+              "expectancy_r": 0.3277,
+              "average_r": 0.3277,
+              "max_drawdown_r": 2.3492,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 5,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2025-11-09",
+                "2025-11-12",
+                "2025-11-14",
+                "2026-01-26"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": true,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": true,
+            "first_half_expectancy": true,
+            "first_half_net_positive": true,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "LTCUSDT:30m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 13,
+              "wins": 3,
+              "losses": 10,
+              "win_rate_percent": 23.08,
+              "net_pnl": -7.49147286,
+              "profit_factor": 0.288,
+              "expectancy_r": -0.5763,
+              "average_r": -0.5763,
+              "max_drawdown_r": 8.5332,
+              "max_loss_streak": 4,
+              "rolling_window": 20,
+              "rolling_trades": 13,
+              "rolling_expectancy_r": null,
+              "trading_days": 12,
+              "trading_day_list": [
+                "2025-09-14",
+                "2025-10-09",
+                "2025-10-22",
+                "2025-10-28",
+                "2025-12-05",
+                "2026-01-07",
+                "2026-02-03",
+                "2026-02-09",
+                "2026-03-30",
+                "2026-05-25",
+                "2026-06-04",
+                "2026-06-25"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 9,
+              "wins": 2,
+              "losses": 7,
+              "win_rate_percent": 22.22,
+              "net_pnl": -4.89576298,
+              "profit_factor": 0.382,
+              "expectancy_r": -0.544,
+              "average_r": -0.544,
+              "max_drawdown_r": 5.9375,
+              "max_loss_streak": 4,
+              "rolling_window": 20,
+              "rolling_trades": 9,
+              "rolling_expectancy_r": null,
+              "trading_days": 8,
+              "trading_day_list": [
+                "2025-09-14",
+                "2025-10-09",
+                "2025-10-22",
+                "2025-10-28",
+                "2025-12-05",
+                "2026-01-07",
+                "2026-02-03",
+                "2026-02-09"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 4,
+              "wins": 1,
+              "losses": 3,
+              "win_rate_percent": 25.0,
+              "net_pnl": -2.59570988,
+              "profit_factor": 0.0,
+              "expectancy_r": -0.6489,
+              "average_r": -0.6489,
+              "max_drawdown_r": 2.596,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 4,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2026-03-30",
+                "2026-05-25",
+                "2026-06-04",
+                "2026-06-25"
+              ],
+              "regimes_observed": [
+                "LTCUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.0,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "LTCUSDT:30m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "SOLUSDT:15m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 3,
+              "wins": 0,
+              "losses": 3,
+              "win_rate_percent": 0.0,
+              "net_pnl": -3.64173308,
+              "profit_factor": 0.0,
+              "expectancy_r": -1.2139,
+              "average_r": -1.2139,
+              "max_drawdown_r": 3.6417,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 3,
+              "rolling_expectancy_r": null,
+              "trading_days": 3,
+              "trading_day_list": [
+                "2025-10-10",
+                "2025-11-17",
+                "2025-12-17"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 3,
+              "wins": 0,
+              "losses": 3,
+              "win_rate_percent": 0.0,
+              "net_pnl": -3.64173308,
+              "profit_factor": 0.0,
+              "expectancy_r": -1.2139,
+              "average_r": -1.2139,
+              "max_drawdown_r": 3.6417,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 3,
+              "rolling_expectancy_r": null,
+              "trading_days": 3,
+              "trading_day_list": [
+                "2025-10-10",
+                "2025-11-17",
+                "2025-12-17"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "SOLUSDT:15m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 20,
+              "wins": 9,
+              "losses": 11,
+              "win_rate_percent": 45.0,
+              "net_pnl": 8.4764217,
+              "profit_factor": 1.766,
+              "expectancy_r": 0.4238,
+              "average_r": 0.4238,
+              "max_drawdown_r": 5.129,
+              "max_loss_streak": 5,
+              "rolling_window": 20,
+              "rolling_trades": 20,
+              "rolling_expectancy_r": 0.4238,
+              "trading_days": 20,
+              "trading_day_list": [
+                "2025-10-08",
+                "2025-10-13",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-20",
+                "2025-12-04",
+                "2025-12-08",
+                "2026-01-20",
+                "2026-01-30",
+                "2026-01-31",
+                "2026-02-04",
+                "2026-02-11",
+                "2026-02-28",
+                "2026-03-05",
+                "2026-03-08",
+                "2026-03-09",
+                "2026-04-01",
+                "2026-05-19",
+                "2026-06-26",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 12,
+              "wins": 4,
+              "losses": 8,
+              "win_rate_percent": 33.33,
+              "net_pnl": 0.55724489,
+              "profit_factor": 1.065,
+              "expectancy_r": 0.0464,
+              "average_r": 0.0464,
+              "max_drawdown_r": 5.0557,
+              "max_loss_streak": 5,
+              "rolling_window": 20,
+              "rolling_trades": 12,
+              "rolling_expectancy_r": null,
+              "trading_days": 12,
+              "trading_day_list": [
+                "2025-10-08",
+                "2025-10-13",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-20",
+                "2025-12-04",
+                "2025-12-08",
+                "2026-01-20",
+                "2026-01-30",
+                "2026-01-31",
+                "2026-02-04",
+                "2026-02-11"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 8,
+              "wins": 5,
+              "losses": 3,
+              "win_rate_percent": 62.5,
+              "net_pnl": 7.91917681,
+              "profit_factor": 4.198,
+              "expectancy_r": 0.9899,
+              "average_r": 0.9899,
+              "max_drawdown_r": 2.4123,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 8,
+              "rolling_expectancy_r": null,
+              "trading_days": 8,
+              "trading_day_list": [
+                "2026-02-28",
+                "2026-03-05",
+                "2026-03-08",
+                "2026-03-09",
+                "2026-04-01",
+                "2026-05-19",
+                "2026-06-26",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.75,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": true,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": true,
+            "first_half_trades": false,
+            "first_half_pf": true,
+            "first_half_expectancy": true,
+            "first_half_net_positive": true,
+            "second_half_trades": false,
+            "second_half_pf": true,
+            "second_half_expectancy": true,
+            "second_half_net_positive": true
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "SOLUSDT:15m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "SOLUSDT:30m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 5,
+              "wins": 2,
+              "losses": 3,
+              "win_rate_percent": 40.0,
+              "net_pnl": 0.6629761,
+              "profit_factor": 1.182,
+              "expectancy_r": 0.1326,
+              "average_r": 0.1326,
+              "max_drawdown_r": 3.6442,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 5,
+              "rolling_expectancy_r": null,
+              "trading_days": 5,
+              "trading_day_list": [
+                "2025-10-10",
+                "2025-10-14",
+                "2025-11-21",
+                "2025-12-19",
+                "2026-03-02"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 4,
+              "wins": 1,
+              "losses": 3,
+              "win_rate_percent": 25.0,
+              "net_pnl": -1.55056111,
+              "profit_factor": 0.575,
+              "expectancy_r": -0.3876,
+              "average_r": -0.3876,
+              "max_drawdown_r": 3.6442,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 4,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2025-10-10",
+                "2025-10-14",
+                "2025-11-21",
+                "2025-12-19"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 1,
+              "wins": 1,
+              "losses": 0,
+              "win_rate_percent": 100.0,
+              "net_pnl": 2.21353721,
+              "profit_factor": null,
+              "expectancy_r": 2.2135,
+              "average_r": 2.2135,
+              "max_drawdown_r": 0.0,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 1,
+              "rolling_expectancy_r": null,
+              "trading_days": 1,
+              "trading_day_list": [
+                "2026-03-02"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": true,
+            "second_half_net_positive": true
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "SOLUSDT:30m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 15,
+              "wins": 8,
+              "losses": 7,
+              "win_rate_percent": 53.33,
+              "net_pnl": 1.23271282,
+              "profit_factor": 1.148,
+              "expectancy_r": 0.0822,
+              "average_r": 0.0822,
+              "max_drawdown_r": 6.085,
+              "max_loss_streak": 3,
+              "rolling_window": 20,
+              "rolling_trades": 15,
+              "rolling_expectancy_r": null,
+              "trading_days": 15,
+              "trading_day_list": [
+                "2025-09-13",
+                "2025-09-18",
+                "2025-10-01",
+                "2025-10-22",
+                "2025-11-07",
+                "2025-11-10",
+                "2025-12-05",
+                "2025-12-17",
+                "2026-01-15",
+                "2026-02-03",
+                "2026-02-26",
+                "2026-03-09",
+                "2026-03-30",
+                "2026-05-11",
+                "2026-07-18"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 10,
+              "wins": 4,
+              "losses": 6,
+              "win_rate_percent": 40.0,
+              "net_pnl": -1.47366881,
+              "profit_factor": 0.794,
+              "expectancy_r": -0.1474,
+              "average_r": -0.1474,
+              "max_drawdown_r": 4.9049,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 10,
+              "rolling_expectancy_r": null,
+              "trading_days": 10,
+              "trading_day_list": [
+                "2025-09-13",
+                "2025-09-18",
+                "2025-10-01",
+                "2025-10-22",
+                "2025-11-07",
+                "2025-11-10",
+                "2025-12-05",
+                "2025-12-17",
+                "2026-01-15",
+                "2026-02-03"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 5,
+              "wins": 4,
+              "losses": 1,
+              "win_rate_percent": 80.0,
+              "net_pnl": 2.70638163,
+              "profit_factor": 3.293,
+              "expectancy_r": 0.5413,
+              "average_r": 0.5413,
+              "max_drawdown_r": 1.1801,
+              "max_loss_streak": 1,
+              "rolling_window": 20,
+              "rolling_trades": 5,
+              "rolling_expectancy_r": null,
+              "trading_days": 5,
+              "trading_day_list": [
+                "2026-02-26",
+                "2026-03-09",
+                "2026-03-30",
+                "2026-05-11",
+                "2026-07-18"
+              ],
+              "regimes_observed": [
+                "SOLUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.5,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": true,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": true,
+            "second_half_expectancy": true,
+            "second_half_net_positive": true
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "SOLUSDT:30m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BCHUSDT:15m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BCHUSDT:15m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 20,
+              "wins": 5,
+              "losses": 15,
+              "win_rate_percent": 25.0,
+              "net_pnl": -7.05551881,
+              "profit_factor": 0.551,
+              "expectancy_r": -0.3528,
+              "average_r": -0.3528,
+              "max_drawdown_r": 12.9132,
+              "max_loss_streak": 7,
+              "rolling_window": 20,
+              "rolling_trades": 20,
+              "rolling_expectancy_r": -0.3528,
+              "trading_days": 20,
+              "trading_day_list": [
+                "2025-09-01",
+                "2025-09-04",
+                "2025-09-23",
+                "2025-09-25",
+                "2025-09-27",
+                "2025-10-14",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-14",
+                "2025-12-01",
+                "2025-12-08",
+                "2026-01-07",
+                "2026-02-01",
+                "2026-05-29",
+                "2026-06-04",
+                "2026-06-10",
+                "2026-06-17",
+                "2026-06-26",
+                "2026-06-29",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 13,
+              "wins": 2,
+              "losses": 11,
+              "win_rate_percent": 15.38,
+              "net_pnl": -8.13303582,
+              "profit_factor": 0.256,
+              "expectancy_r": -0.6256,
+              "average_r": -0.6256,
+              "max_drawdown_r": 10.3923,
+              "max_loss_streak": 7,
+              "rolling_window": 20,
+              "rolling_trades": 13,
+              "rolling_expectancy_r": null,
+              "trading_days": 13,
+              "trading_day_list": [
+                "2025-09-01",
+                "2025-09-04",
+                "2025-09-23",
+                "2025-09-25",
+                "2025-09-27",
+                "2025-10-14",
+                "2025-10-30",
+                "2025-11-04",
+                "2025-11-14",
+                "2025-12-01",
+                "2025-12-08",
+                "2026-01-07",
+                "2026-02-01"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 7,
+              "wins": 3,
+              "losses": 4,
+              "win_rate_percent": 42.86,
+              "net_pnl": 1.07751701,
+              "profit_factor": 1.225,
+              "expectancy_r": 0.1539,
+              "average_r": 0.1539,
+              "max_drawdown_r": 4.7802,
+              "max_loss_streak": 4,
+              "rolling_window": 20,
+              "rolling_trades": 7,
+              "rolling_expectancy_r": null,
+              "trading_days": 7,
+              "trading_day_list": [
+                "2026-05-29",
+                "2026-06-04",
+                "2026-06-10",
+                "2026-06-17",
+                "2026-06-26",
+                "2026-06-29",
+                "2026-07-01"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.25,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": true,
+            "second_half_expectancy": true,
+            "second_half_net_positive": true
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BCHUSDT:15m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BCHUSDT:30m:MR_VWAP_OVERSHOOT_RECLAIM",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 4,
+              "wins": 2,
+              "losses": 2,
+              "win_rate_percent": 50.0,
+              "net_pnl": 2.07681207,
+              "profit_factor": 1.875,
+              "expectancy_r": 0.5192,
+              "average_r": 0.5192,
+              "max_drawdown_r": 2.3735,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 4,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2025-10-10",
+                "2025-10-30",
+                "2025-11-13",
+                "2026-01-16"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 4,
+              "wins": 2,
+              "losses": 2,
+              "win_rate_percent": 50.0,
+              "net_pnl": 2.07681207,
+              "profit_factor": 1.875,
+              "expectancy_r": 0.5192,
+              "average_r": 0.5192,
+              "max_drawdown_r": 2.3735,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 4,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2025-10-10",
+                "2025-10-30",
+                "2025-11-13",
+                "2026-01-16"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": true,
+            "full_expectancy": true,
+            "full_net_positive": true,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": true,
+            "first_half_expectancy": true,
+            "first_half_net_positive": true,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BCHUSDT:30m:MR_ATR_FLUSH_REVERSAL",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 18,
+              "wins": 6,
+              "losses": 12,
+              "win_rate_percent": 33.33,
+              "net_pnl": -4.9970023,
+              "profit_factor": 0.611,
+              "expectancy_r": -0.2776,
+              "average_r": -0.2776,
+              "max_drawdown_r": 5.676,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 18,
+              "rolling_expectancy_r": null,
+              "trading_days": 16,
+              "trading_day_list": [
+                "2025-10-14",
+                "2025-10-30",
+                "2025-11-07",
+                "2025-11-18",
+                "2025-12-13",
+                "2025-12-17",
+                "2025-12-26",
+                "2025-12-29",
+                "2026-01-07",
+                "2026-01-20",
+                "2026-01-31",
+                "2026-02-03",
+                "2026-05-05",
+                "2026-05-25",
+                "2026-06-02",
+                "2026-06-23"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "first_half": {
+              "closed_trades": 14,
+              "wins": 4,
+              "losses": 10,
+              "win_rate_percent": 28.57,
+              "net_pnl": -5.15031341,
+              "profit_factor": 0.507,
+              "expectancy_r": -0.3679,
+              "average_r": -0.3679,
+              "max_drawdown_r": 5.676,
+              "max_loss_streak": 6,
+              "rolling_window": 20,
+              "rolling_trades": 14,
+              "rolling_expectancy_r": null,
+              "trading_days": 12,
+              "trading_day_list": [
+                "2025-10-14",
+                "2025-10-30",
+                "2025-11-07",
+                "2025-11-18",
+                "2025-12-13",
+                "2025-12-17",
+                "2025-12-26",
+                "2025-12-29",
+                "2026-01-07",
+                "2026-01-20",
+                "2026-01-31",
+                "2026-02-03"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "second_half": {
+              "closed_trades": 4,
+              "wins": 2,
+              "losses": 2,
+              "win_rate_percent": 50.0,
+              "net_pnl": 0.15331111,
+              "profit_factor": 1.063,
+              "expectancy_r": 0.0383,
+              "average_r": 0.0383,
+              "max_drawdown_r": 2.4224,
+              "max_loss_streak": 2,
+              "rolling_window": 20,
+              "rolling_trades": 4,
+              "rolling_expectancy_r": null,
+              "trading_days": 4,
+              "trading_day_list": [
+                "2026-05-05",
+                "2026-05-25",
+                "2026-06-02",
+                "2026-06-23"
+              ],
+              "regimes_observed": [
+                "BCHUSDT"
+              ],
+              "regime_count": 1
+            },
+            "segment_robustness": 0.25,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": true,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": true,
+            "second_half_expectancy": true,
+            "second_half_net_positive": true
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    },
+    {
+      "lane_id": "BCHUSDT:30m:MR_EMA20_BAND_REENTRY",
+      "state": "RAPID_EVIDENCE_REJECT",
+      "venues": {
+        "BINANCE": {
+          "stats": {
+            "full": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "first_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "second_half": {
+              "closed_trades": 0,
+              "wins": 0,
+              "losses": 0,
+              "win_rate_percent": null,
+              "net_pnl": null,
+              "profit_factor": null,
+              "expectancy_r": null,
+              "average_r": null,
+              "max_drawdown_r": null,
+              "max_loss_streak": 0,
+              "rolling_window": 20,
+              "rolling_trades": 0,
+              "rolling_expectancy_r": null,
+              "trading_days": 0,
+              "trading_day_list": [],
+              "regimes_observed": [],
+              "regime_count": 0
+            },
+            "segment_robustness": null,
+            "midpoint_utc": "2026-02-13T23:59:59.999000+00:00"
+          },
+          "checks": {
+            "full_trades": false,
+            "full_pf": false,
+            "full_expectancy": false,
+            "full_net_positive": false,
+            "full_drawdown": false,
+            "segment_robustness": false,
+            "first_half_trades": false,
+            "first_half_pf": false,
+            "first_half_expectancy": false,
+            "first_half_net_positive": false,
+            "second_half_trades": false,
+            "second_half_pf": false,
+            "second_half_expectancy": false,
+            "second_half_net_positive": false
+          },
+          "passed": false
+        },
+        "BYBIT": {
+          "error": "INSUFFICIENT_DATA",
+          "checks": {},
+          "passed": false
+        }
+      }
+    }
+  ],
+  "safety": {
+    "trading_environment": "PAPER",
+    "live_trading": false,
+    "paper_trading": true,
+    "demo_only": true,
+    "leverage": 1,
+    "live_order_code_present": false
+  },
+  "private_api_used": false,
+  "real_orders_enabled": false,
+  "live_permission": false,
+  "note": "Rapid historical robustness screen only. A pass is evidence for a micro-live review, not permission or a profit guarantee."
+}
