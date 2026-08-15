@@ -1,0 +1,106 @@
+name: TradingCore Strategy Atlas Parallel
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-strategy-atlas-parallel.yml"
+
+permissions:
+  contents: write
+
+env:
+  TRADING_ENVIRONMENT: PAPER
+  LIVE_TRADING: "false"
+  PAPER_TRADING: "true"
+  DEMO_ONLY: "true"
+
+jobs:
+  relative:
+    name: Relative value / stat-arb
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+      - run: python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_price_v2.py strategy_atlas_relative.py
+      - run: python3 strategy_atlas_relative.py --output strategy_atlas_relative_runtime
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-relative
+          path: strategy_atlas_relative_runtime
+          retention-days: 1
+
+  derivatives:
+    name: Funding / basis / carry
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+      - run: python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_derivatives.py
+      - run: python3 strategy_atlas_derivatives.py --output strategy_atlas_derivatives_runtime
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-derivatives
+          path: strategy_atlas_derivatives_runtime
+          retention-days: 1
+
+  microstructure:
+    name: Microstructure / arbitrage scout
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+      - run: python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_microstructure.py
+      - run: python3 strategy_atlas_microstructure.py --state-dir strategy_atlas_microstructure_runtime
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-microstructure
+          path: strategy_atlas_microstructure_runtime
+          retention-days: 1
+
+  persist:
+    name: Persist Atlas results
+    needs: [relative, derivatives, microstructure]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+      - uses: actions/download-artifact@v4
+        with:
+          name: atlas-relative
+          path: state/strategy_atlas_relative_runtime
+        continue-on-error: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: atlas-derivatives
+          path: state/strategy_atlas_derivatives_runtime
+        continue-on-error: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: atlas-microstructure
+          path: state/strategy_atlas_microstructure_runtime
+        continue-on-error: true
+      - name: Commit whatever succeeded
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Strategy Atlas"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f strategy_atlas_relative_runtime strategy_atlas_derivatives_runtime strategy_atlas_microstructure_runtime 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No Atlas results to persist."
+          else
+            git commit -m "atlas: persist parallel mechanism results"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
