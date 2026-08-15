@@ -1,0 +1,81 @@
+name: TradingCore Rapid Replay
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-rapid-replay.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
+
+jobs:
+  rapid-replay:
+    name: 365d Binance + Bybit rapid replay
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout frozen TradingCore code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Compile and safety self-test
+        working-directory: code
+        env:
+          TRADING_ENVIRONMENT: PAPER
+          LIVE_TRADING: "false"
+          PAPER_TRADING: "true"
+          DEMO_ONLY: "true"
+        run: |
+          python3 -m py_compile rapid_replay_protocol.py rapid_replay.py rapid_replay_selftest.py
+          python3 rapid_replay_selftest.py
+
+      - name: Run 365-day two-venue replay
+        working-directory: code
+        env:
+          TRADING_ENVIRONMENT: PAPER
+          LIVE_TRADING: "false"
+          PAPER_TRADING: "true"
+          DEMO_ONLY: "true"
+        run: |
+          python3 rapid_replay.py --output "$GITHUB_WORKSPACE/state/rapid_replay_runtime"
+
+      - name: Persist replay result
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Rapid Replay"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f rapid_replay_runtime
+          if git diff --cached --quiet; then
+            echo "No replay state changes to commit."
+          else
+            git commit -m "rapid-replay: persist two-venue result"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## TradingCore Rapid Replay" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/rapid_replay_runtime/RAPID_REPLAY_RESULT.json" ]; then
+            python3 -c "import json,os; p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','rapid_replay_runtime','RAPID_REPLAY_RESULT.json'); d=json.load(open(p,encoding='utf-8')); print('- state:',d.get('state')); print('- passing lanes:',d.get('passing_lane_count'),'/',d.get('lane_count')); print('- candidate:',d.get('candidate')); print('- LIVE / real orders: DISABLED')" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Replay result missing; inspect failed step." >> "$GITHUB_STEP_SUMMARY"
+          fi
