@@ -1,0 +1,89 @@
+name: TradingCore Cloud PAPER
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-cloud-paper.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-paper
+  cancel-in-progress: false
+
+jobs:
+  btc-1h-paper:
+    name: BTC 1H frozen PAPER
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout frozen TradingCore code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Python version
+        run: python3 --version
+
+      - name: Compile and safety self-test
+        working-directory: code
+        env:
+          TRADING_ENVIRONMENT: PAPER
+          LIVE_TRADING: "false"
+          PAPER_TRADING: "true"
+          DEMO_ONLY: "true"
+        run: |
+          python3 -m py_compile cloud_btc_1h_paper_once.py cloud_btc_1h_paper_selftest.py btc_1h_forward_shadow.py
+          python3 cloud_btc_1h_paper_selftest.py
+
+      - name: Run one cloud PAPER cycle
+        working-directory: code
+        env:
+          TRADING_ENVIRONMENT: PAPER
+          LIVE_TRADING: "false"
+          PAPER_TRADING: "true"
+          DEMO_ONLY: "true"
+        run: |
+          python3 cloud_btc_1h_paper_once.py \
+            --state-dir "$GITHUB_WORKSPACE/state/cloud_runtime" \
+            --verify-baseline
+
+      - name: Persist cloud state
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Cloud PAPER"
+          git config user.email "actions@users.noreply.github.com"
+          git add cloud_runtime
+          if git diff --cached --quiet; then
+            echo "No state changes to commit."
+          else
+            git commit -m "cloud-paper: update BTC 1H state"
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Job summary
+        if: always()
+        run: |
+          echo "## TradingCore Cloud PAPER" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/cloud_runtime/CLOUD_STATUS.json" ]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat "$GITHUB_WORKSPACE/state/cloud_runtime/CLOUD_STATUS.json" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "CLOUD_STATUS.json was not created; inspect the failed step above." >> "$GITHUB_STEP_SUMMARY"
+          fi
