@@ -6,7 +6,7 @@ existing TradingCore tasks. Fail-closed: self-test must pass first.
 $ErrorActionPreference = "Stop"
 
 $Repo = "C:\TradingCore_Cloud_Recovery_20260814_135929"
-$Py = "$Repo\.venv\Scripts\python.exe"
+$Py = "C:\TradingCore_Collector_B\.venv\Scripts\python.exe"
 $Root = "C:\TradingCore_Autonomous"
 $Control = "$Root\control"
 $Logs = "$Root\logs"
@@ -25,7 +25,7 @@ function Fail([string]$Text) {
     exit 1
 }
 
-if (-not (Test-Path $Py)) { Fail "Trusted TradingCore Python not found: $Py" }
+if (-not (Test-Path $Py)) { Fail "Collector B isolated Python not found: $Py" }
 if (-not (Test-Path $Data)) { Fail "Collector B data directory not found: $Data" }
 
 $Required = @(
@@ -48,6 +48,7 @@ $env:TRADING_ENVIRONMENT = "PAPER"
 $env:LIVE_TRADING = "false"
 $env:PAPER_TRADING = "true"
 $env:DEMO_ONLY = "true"
+$env:COLLECTOR_B_DATA_DIR = $Data
 
 Push-Location $Repo
 try {
@@ -61,7 +62,7 @@ if ($SelfTestCode -ne 0) { Fail "Forced-flow safety self-test failed." }
 @'
 $ErrorActionPreference = "Continue"
 $Repo = "C:\TradingCore_Cloud_Recovery_20260814_135929"
-$Py = "$Repo\.venv\Scripts\python.exe"
+$Py = "C:\TradingCore_Collector_B\.venv\Scripts\python.exe"
 $Root = "C:\TradingCore_Autonomous"
 $Logs = "$Root\logs"
 $Data = "C:\TradingCore_Collector_B\data"
@@ -98,7 +99,7 @@ while ($true) {
 @'
 $ErrorActionPreference = "Continue"
 $Repo = "C:\TradingCore_Cloud_Recovery_20260814_135929"
-$Py = "$Repo\.venv\Scripts\python.exe"
+$Py = "C:\TradingCore_Collector_B\.venv\Scripts\python.exe"
 $Root = "C:\TradingCore_Autonomous"
 $Logs = "$Root\logs"
 $Data = "C:\TradingCore_Collector_B\data"
@@ -165,12 +166,17 @@ $PaperProc = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Whe
     $_.CommandLine -like "*forced_flow_forward_paper.py*"
 })
 
+if ($OrchProc.Count -lt 1 -or $PaperProc.Count -lt 1) {
+    Fail "One or more autonomous worker processes failed to start. Check $Logs."
+}
+
+$ProtocolVersion = (& $Py -c "import forced_flow_protocol as p; print(p.PROTOCOL_VERSION)" | Select-Object -Last 1)
 $Status = @{
     schema = "TRADINGCORE_AUTONOMOUS_COMPLETION_INSTALL_V1"
     installed_at_utc = (Get-Date).ToUniversalTime().ToString("o")
     orchestrator_processes = $OrchProc.Count
     forward_paper_processes = $PaperProc.Count
-    protocol = (& $Py -c "import forced_flow_protocol as p; print(p.PROTOCOL_VERSION)")
+    protocol = $ProtocolVersion
     real_orders_enabled = $false
     live_trading_enabled = $false
     collector_a_modified = $false
@@ -184,7 +190,7 @@ Write-Host " TRADINGCORE AUTONOMOUS COMPLETION INSTALLED" -ForegroundColor Green
 Write-Host "==================================================" -ForegroundColor Green
 Write-Host "Research orchestrator: RUNNING / self-healing"
 Write-Host "Forward PAPER worker: RUNNING / waiting for research PASS"
-Write-Host "Protocol: FORCED_FLOW_REBOUND_V1 / FROZEN"
+Write-Host "Protocol: $ProtocolVersion / FROZEN"
 Write-Host "G2/G3 -> sample gate -> strict holdout -> PAPER: AUTOMATIC"
 Write-Host "LIVE trading: BLOCKED" -ForegroundColor Green
 Write-Host "Real orders: DISABLED" -ForegroundColor Green
