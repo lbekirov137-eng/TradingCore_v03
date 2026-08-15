@@ -77,16 +77,7 @@ jobs:
         run: |
           echo "## TradingCore Fast PAPER Lab" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$GITHUB_WORKSPACE/state/fast_paper_runtime/FAST_PAPER_STATUS.json" ]; then
-            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
-import json, os
-p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','fast_paper_runtime','FAST_PAPER_STATUS.json')
-d=json.load(open(p,encoding='utf-8'))
-print(f"- lanes: {d.get('lane_count')}")
-print(f"- total closed lane observations: {d.get('total_closed_trade_observations_across_independent_lanes')}")
-print(f"- lanes >=30: {d.get('lanes_with_30_or_more')}")
-print(f"- promising lanes: {d.get('promising_lanes')}")
-print("- LIVE / real orders: DISABLED")
-PY
+            python3 -c "import json,os; d=json.load(open(os.path.join(os.environ['GITHUB_WORKSPACE'],'state','fast_paper_runtime','FAST_PAPER_STATUS.json'),encoding='utf-8')); print('- lanes:',d.get('lane_count')); print('- total closed lane observations:',d.get('total_closed_trade_observations_across_independent_lanes')); print('- lanes >=30:',d.get('lanes_with_30_or_more')); print('- promising lanes:',d.get('promising_lanes')); print('- LIVE / real orders: DISABLED')" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "FAST_PAPER_STATUS.json missing; inspect the failed step." >> "$GITHUB_STEP_SUMMARY"
           fi
