@@ -1,9 +1,10 @@
 #requires -Version 5.1
 <#
-TradingCore FAST TRACK V4
+TradingCore FAST TRACK V4.1
 
 Goal: continue the project quickly without terminal cleanup or manual multi-step work.
 - Does NOT close Windows Terminal or the user's interactive shells.
+- Does NOT request/cancel Windows shutdown.
 - Keeps V1 PAPER / Shadow / Collector B alive.
 - Repairs/starts Wide V2 using the corrected sequential hidden installer.
 - Runs fresh read-only G2/G3 audits for narrow V1 and Wide V2.
@@ -44,7 +45,7 @@ function Is-HiddenTask([string]$Name) {
 function Fail([string]$Reason) {
     New-Item -ItemType Directory -Force -Path $OutRoot | Out-Null
     @{
-        schema="TRADINGCORE_FAST_TRACK_V4"
+        schema="TRADINGCORE_FAST_TRACK_V4_1"
         state="FAILED_SAFE"
         reason=$Reason
         updated_at_utc=(Get-Date).ToUniversalTime().ToString("o")
@@ -54,7 +55,7 @@ function Fail([string]$Reason) {
         collector_a_modified=$false
     } | ConvertTo-Json -Depth 10 | Set-Content $Out -Encoding UTF8
     Write-Host ""
-    Write-Host "FAST TRACK V4 STOPPED SAFELY" -ForegroundColor Red
+    Write-Host "FAST TRACK V4.1 STOPPED SAFELY" -ForegroundColor Red
     Write-Host $Reason -ForegroundColor Yellow
     Write-Host "Existing services were not intentionally stopped. No terminal cleanup was performed." -ForegroundColor Green
     exit 1
@@ -62,11 +63,9 @@ function Fail([string]$Reason) {
 
 Write-Host ""
 Write-Host "==================================================" -ForegroundColor Cyan
-Write-Host " TRADINGCORE FAST TRACK V4" -ForegroundColor Cyan
+Write-Host " TRADINGCORE FAST TRACK V4.1" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
-Write-Host "No Windows Terminal cleanup. V1 stays alive. Wide V2 will be repaired/started."
-
-& shutdown.exe /a 2>$null | Out-Null
+Write-Host "No Windows Terminal cleanup. No shutdown action. V1 stays alive. Wide V2 will be repaired/started."
 
 if (-not (Test-Path $Repo)) { Fail "TradingCore repo missing: $Repo" }
 if (-not (Test-Path $Py)) { Fail "Collector B Python missing: $Py" }
@@ -91,8 +90,12 @@ if ($Errors.Count -gt 0) {
 }
 
 # Repair/start Wide V2. This installer touches only Wide tasks/data.
+$OldPreference = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
 & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $WideInstaller
-if ($LASTEXITCODE -ne 0) { Fail "Wide V2 corrected installer returned non-zero." }
+$WideExit = $LASTEXITCODE
+$ErrorActionPreference = $OldPreference
+if ($WideExit -ne 0) { Fail "Wide V2 corrected installer returned non-zero." }
 
 # Refresh periodic V1 integrity jobs once. Their scheduled cadence remains intact.
 foreach ($Name in @(
@@ -166,7 +169,7 @@ if(-not $CLock -or @($CLock.symbols).Count -lt 10){$Critical += "WIDE_UNIVERSE_L
 
 $State=if($Critical.Count -eq 0){"RUNNING_AUTONOMOUS"}else{"FAILED_SAFE_ATTENTION"}
 $Summary=[ordered]@{
-    schema="TRADINGCORE_FAST_TRACK_V4"
+    schema="TRADINGCORE_FAST_TRACK_V4_1"
     state=$State
     updated_at_local=(Get-Date).ToString("o")
     critical_failures=$Critical
@@ -204,7 +207,7 @@ $Summary | ConvertTo-Json -Depth 20 | Set-Content $Out -Encoding UTF8
 
 Write-Host ""
 Write-Host "==================================================" -ForegroundColor $(if($Critical.Count -eq 0){"Green"}else{"Red"})
-Write-Host " TRADINGCORE FAST TRACK V4: $State" -ForegroundColor $(if($Critical.Count -eq 0){"Green"}else{"Red"})
+Write-Host " TRADINGCORE FAST TRACK V4.1: $State" -ForegroundColor $(if($Critical.Count -eq 0){"Green"}else{"Red"})
 Write-Host "=================================================="
 Write-Host "V1: G2=$($Summary.v1.g2) G3=$($Summary.v1.g3) events=$($Summary.v1.events)"
 Write-Host "Wide V2: universe=$($Summary.wide_v2.universe_count) G2=$($Summary.wide_v2.g2) G3=$($Summary.wide_v2.g3) events=$($Summary.wide_v2.events)"
