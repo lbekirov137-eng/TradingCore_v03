@@ -199,9 +199,21 @@ if ($OrchProc.Count -lt 1 -or $PaperProc.Count -lt 1) {
     Fail "One or more autonomous worker processes failed to start. Check $Logs."
 }
 
-$ProtocolVersion = (& $Py -c "import forced_flow_protocol as p; print(p.PROTOCOL_VERSION)" | Select-Object -Last 1)
+# Resolve protocol version from the repository directory so Python can import
+# the local frozen protocol module regardless of the caller's current folder.
+Push-Location $Repo
+try {
+    $ProtocolVersion = (& $Py -c "import forced_flow_protocol as p; print(p.PROTOCOL_VERSION)" | Select-Object -Last 1)
+    $ProtocolCode = $LASTEXITCODE
+} finally {
+    Pop-Location
+}
+if ($ProtocolCode -ne 0 -or [string]::IsNullOrWhiteSpace($ProtocolVersion)) {
+    Fail "Could not read frozen forced-flow protocol version."
+}
+
 $Status = @{
-    schema = "TRADINGCORE_AUTONOMOUS_COMPLETION_INSTALL_V2"
+    schema = "TRADINGCORE_AUTONOMOUS_COMPLETION_INSTALL_V3"
     installed_at_utc = (Get-Date).ToUniversalTime().ToString("o")
     orchestrator_processes = $OrchProc.Count
     forward_paper_processes = $PaperProc.Count
