@@ -1,6 +1,6 @@
 name: TradingCore Cloud PAPER
 
-# bootstrap-trigger: 2026-08-15-v2
+# bootstrap-trigger: 2026-08-15-v3
 on:
   workflow_dispatch:
   schedule:
@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: tradingcore-cloud-paper
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   btc-1h-paper:
