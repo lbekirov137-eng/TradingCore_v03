@@ -103,7 +103,6 @@ function Snapshot-ProjectTasks([string]$Regex) {
 function Stop-For-Shutdown {
     Log "Beginning graceful shutdown sequence."
 
-    # AI Media Factory: use its known stop script when available.
     $mediaStop = "C:\AI_Media_Factory\stop_autonomous_run.ps1"
     if (Test-Path $mediaStop) {
         Log "AI Media Factory graceful stop script"
@@ -112,7 +111,6 @@ function Stop-For-Shutdown {
         } catch { Log "AI Media stop warning: $($_.Exception.Message)" }
     }
 
-    # LinguaPilot: prefer an existing stop script, if one exists.
     $languageStops = @(
         "C:\LinguaPilot\stop_linguapilot.ps1",
         "C:\LinguaPilot\STOP_LINGUAPILOT.ps1",
@@ -128,7 +126,6 @@ function Stop-For-Shutdown {
         } catch { Log "LinguaPilot stop warning: $($_.Exception.Message)" }
     }
 
-    # Stop known TradingCore scheduled tasks, but DO NOT disable them permanently.
     foreach ($name in @(
         "TradingCore PAPER 24x7",
         "TradingCore BTC 1H Forward Shadow",
@@ -147,8 +144,6 @@ function Stop-For-Shutdown {
     Start-Sleep -Seconds 5
 }
 
-# Prevent Windows sleep while this supervisor is alive, without changing the
-# user's permanent power plan.
 try {
 Add-Type @"
 using System;
@@ -175,7 +170,6 @@ Log "5-hour overnight supervisor START"
 Log "Deadline local: $($Deadline.ToString('o'))"
 Log "LIVE trading remains disabled"
 
-# Initial task checks.
 [void](Ensure-Task "TradingCore PAPER 24x7")
 [void](Ensure-Task "TradingCore BTC 1H Forward Shadow")
 [void](Ensure-Task "TradingCore Collector B")
@@ -235,11 +229,10 @@ while ((Get-Date) -lt $Deadline) {
     }
     $snapshot | ConvertTo-Json -Depth 20 | Set-Content $StatusFile -Encoding UTF8
 
-    Log ("Heartbeat: PAPER={0} Shadow={1} Collector={2} G2={3} G3={4} Events={5}" -f \
-        ($paper -and $paper.running -eq $true), \
-        ($shadow -and $shadow.running -eq $true), \
-        ($collector -and $collector.running -eq $true), \
-        $snapshot.g2, $snapshot.g3, $snapshot.events)
+    $paperOk = [bool]($paper -and $paper.running -eq $true)
+    $shadowOk = [bool]($shadow -and $shadow.running -eq $true)
+    $collectorOk = [bool]($collector -and $collector.running -eq $true)
+    Log ("Heartbeat: PAPER={0} Shadow={1} Collector={2} G2={3} G3={4} Events={5}" -f $paperOk, $shadowOk, $collectorOk, $snapshot.g2, $snapshot.g3, $snapshot.events)
 
     $remaining = [int](($Deadline - (Get-Date)).TotalSeconds)
     if ($remaining -le 0) { break }
