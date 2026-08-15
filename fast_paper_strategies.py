@@ -18,8 +18,7 @@ from api.strategy_engine.strategies.contracts import (
     ema,
     session_vwap,
 )
-from fast_paper_protocol import CAPITAL_USD if False else REFERENCE_CAPITAL_USD
-from fast_paper_protocol import RISK_AMOUNT_USD
+from fast_paper_protocol import REFERENCE_CAPITAL_USD, RISK_AMOUNT_USD
 
 MIN_RR = 2.0
 
