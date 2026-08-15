@@ -142,21 +142,50 @@ foreach ($Script in @($OrchestratorLauncher,$ForwardLauncher)) {
     }
 }
 
+# Idempotent Scheduled Tasks setup. A missing old task is NORMAL and must not
+# fail a first installation. Avoid schtasks.exe native-stderr behaviour under
+# $ErrorActionPreference='Stop'.
 foreach ($Name in @($OrchestratorTask,$ForwardTask)) {
-    schtasks.exe /Delete /TN "$Name" /F 2>$null | Out-Null
+    try {
+        $ExistingTask = Get-ScheduledTask -TaskName $Name -ErrorAction SilentlyContinue
+        if ($ExistingTask) {
+            if ($ExistingTask.State -eq "Running") {
+                Stop-ScheduledTask -TaskName $Name -ErrorAction SilentlyContinue
+                Start-Sleep -Seconds 1
+            }
+            Unregister-ScheduledTask -TaskName $Name -Confirm:$false -ErrorAction Stop
+        }
+    } catch {
+        Fail "Could not replace scheduled task ${Name}: $($_.Exception.Message)"
+    }
 }
 
-$Cmd1 = "powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$OrchestratorLauncher`""
-$Cmd2 = "powershell.exe -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$ForwardLauncher`""
+try {
+    $CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 
-schtasks.exe /Create /TN "$OrchestratorTask" /TR "$Cmd1" /SC ONLOGON /RL LIMITED /F | Out-Null
-if ($LASTEXITCODE -ne 0) { Fail "Could not create autonomous orchestrator task." }
+    $Action1 = New-ScheduledTaskAction -Execute "powershell.exe" -Argument (
+        "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$OrchestratorLauncher`""
+    )
+    $Action2 = New-ScheduledTaskAction -Execute "powershell.exe" -Argument (
+        "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$ForwardLauncher`""
+    )
+    $Trigger = New-ScheduledTaskTrigger -AtLogOn -User $CurrentUser
+    $Principal = New-ScheduledTaskPrincipal -UserId $CurrentUser -LogonType Interactive -RunLevel Limited
+    $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew
 
-schtasks.exe /Create /TN "$ForwardTask" /TR "$Cmd2" /SC ONLOGON /RL LIMITED /F | Out-Null
-if ($LASTEXITCODE -ne 0) { Fail "Could not create forward PAPER worker task." }
+    Register-ScheduledTask -TaskName $OrchestratorTask -Action $Action1 -Trigger $Trigger -Principal $Principal -Settings $Settings -Force | Out-Null
+    Register-ScheduledTask -TaskName $ForwardTask -Action $Action2 -Trigger $Trigger -Principal $Principal -Settings $Settings -Force | Out-Null
+} catch {
+    Fail "Could not create autonomous Scheduled Tasks: $($_.Exception.Message)"
+}
 
-schtasks.exe /Run /TN "$OrchestratorTask" | Out-Null
-schtasks.exe /Run /TN "$ForwardTask" | Out-Null
+try {
+    Start-ScheduledTask -TaskName $OrchestratorTask -ErrorAction Stop
+    Start-ScheduledTask -TaskName $ForwardTask -ErrorAction Stop
+} catch {
+    Fail "Could not start autonomous Scheduled Tasks: $($_.Exception.Message)"
+}
+
 Start-Sleep -Seconds 12
 
 $OrchProc = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object {
@@ -172,11 +201,12 @@ if ($OrchProc.Count -lt 1 -or $PaperProc.Count -lt 1) {
 
 $ProtocolVersion = (& $Py -c "import forced_flow_protocol as p; print(p.PROTOCOL_VERSION)" | Select-Object -Last 1)
 $Status = @{
-    schema = "TRADINGCORE_AUTONOMOUS_COMPLETION_INSTALL_V1"
+    schema = "TRADINGCORE_AUTONOMOUS_COMPLETION_INSTALL_V2"
     installed_at_utc = (Get-Date).ToUniversalTime().ToString("o")
     orchestrator_processes = $OrchProc.Count
     forward_paper_processes = $PaperProc.Count
     protocol = $ProtocolVersion
+    task_scheduler_backend = "POWERSHELL_SCHEDULEDTASKS"
     real_orders_enabled = $false
     live_trading_enabled = $false
     collector_a_modified = $false
