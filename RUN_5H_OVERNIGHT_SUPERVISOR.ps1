@@ -53,7 +53,7 @@ function Ensure-Task([string]$Name) {
         }
         return $true
     } catch {
-        Log "TASK ERROR $Name: $($_.Exception.Message)"
+        Log "TASK ERROR ${Name}: $($_.Exception.Message)"
         return $false
     }
 }
