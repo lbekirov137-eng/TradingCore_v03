@@ -29,7 +29,10 @@ MAX_HOLD_HOURS = 24
 FUNDING_Z_LOOKBACK = 90
 MIN_FUNDING_HISTORY = 40
 
-# Extra cross-sectional evidence beyond generic TradingCore promotion gates.
+# Extra evidence beyond generic TradingCore promotion gates. These are stricter
+# because three predeclared families are evaluated on the same final holdout.
+ACCELERATOR_MIN_OOS_TRADES = 50
+ACCELERATOR_MIN_OOS_PROFIT_FACTOR = 1.25
 MIN_EVALUABLE_SYMBOLS_OOS = 5
 MIN_OOS_TRADES_PER_SYMBOL = 3
 MIN_PROFITABLE_SYMBOL_RATIO = 0.60
@@ -77,6 +80,8 @@ def protocol_dict() -> dict[str, Any]:
         "max_hold_hours": MAX_HOLD_HOURS,
         "funding_z_lookback": FUNDING_Z_LOOKBACK,
         "min_funding_history": MIN_FUNDING_HISTORY,
+        "accelerator_min_oos_trades": ACCELERATOR_MIN_OOS_TRADES,
+        "accelerator_min_oos_profit_factor": ACCELERATOR_MIN_OOS_PROFIT_FACTOR,
         "min_evaluable_symbols_oos": MIN_EVALUABLE_SYMBOLS_OOS,
         "min_oos_trades_per_symbol": MIN_OOS_TRADES_PER_SYMBOL,
         "min_profitable_symbol_ratio": MIN_PROFITABLE_SYMBOL_RATIO,
@@ -88,6 +93,7 @@ def protocol_dict() -> dict[str, Any]:
             "target": "entry + 2R",
             "same_bar_ordering": "STOP_FIRST",
             "time_stop": "24h close",
+            "portfolio_overlap": "at most one research position globally per family",
             "costs": "TradingCore conservative taker fees + slippage",
         },
         "safety": {
