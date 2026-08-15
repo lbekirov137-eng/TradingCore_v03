@@ -40,7 +40,7 @@ def main()->int:
         if audit_rc!=0 or not audit:base["state"]="AUDIT_FAILED_SAFE";base["audit_returncode"]=audit_rc;atomic(status,base);time.sleep(max(300,args.interval_seconds));continue
         g2=str((audit.get("g2") or {}).get("state"));g3=str((audit.get("g3") or {}).get("state"));base.update(g2=g2,g3=g3,current_epoch=audit.get("current_epoch"),current_epoch_events=(audit.get("evidence") or {}).get("valid_unique_events"))
         if g2=="G2_REPAIR_REQUIRED" or g3=="G3_REPAIR_REQUIRED":base["state"]="DATA_INTEGRITY_REPAIR_REQUIRED";atomic(status,base);time.sleep(max(300,args.interval_seconds));continue
-        research_rc=run(args.python,root/"forced_flow_wide_research_engine.py",["--data-dir",str(data)],logs/"research.log");research=read(root/"forced_flow_wide_research_results"/"LATEST_FORCED_FLOW_WIDE_RESEARCH.json")
+        research_rc=run(args.python,root/"forced_flow_wide_research_portfolio_safe.py",["--data-dir",str(data)],logs/"research.log");research=read(root/"forced_flow_wide_research_results"/"LATEST_FORCED_FLOW_WIDE_RESEARCH.json")
         if research_rc!=0 or not research:base["state"]="RESEARCH_FAILED_SAFE";base["research_returncode"]=research_rc;atomic(status,base);time.sleep(max(300,args.interval_seconds));continue
         rs=str(research.get("state") or "UNKNOWN");base["research_state"]=rs;base["selected_epoch"]=research.get("selected_epoch");base["readiness_missing"]=research.get("readiness_missing")
         if rs in ("WAITING_FOR_PREREGISTERED_EPOCH","INSUFFICIENT_TRADE_GEOMETRY"):
