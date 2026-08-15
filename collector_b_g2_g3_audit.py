@@ -1,30 +1,21 @@
 #!/usr/bin/env python3
-"""
-TradingCore Collector B — G2/G3 data quality audit.
+"""TradingCore Collector B — G2/G3 data quality audit.
 
 READ-ONLY AUDIT ONLY.
 
-This audit does not modify Collector A or Collector B evidence, does not compute
-trading outcomes, does not search strategies, and has no order path.
+Important timestamp semantics:
+- Bybit payload `ts` is Bybit system-generation time.
+- liquidation item `T` is Bybit's updated timestamp.
+- `received_ts_ms` is the LOCAL Windows host clock at receipt.
 
-G2 checks:
-- startup safety remains PAPER / no LIVE;
-- Collector B status identity and hard safety flags;
-- public Bybit subscription acknowledgement for the frozen allLiquidation topics;
-- public instrument metadata for BTCUSDT / ETHUSDT / SOLUSDT linear contracts;
-- normalized schema, side semantics, positive numeric size/price and timestamps.
+A local host clock cannot be directly ordered against an exchange clock. This
+version therefore probes Bybit public server time and corrects the local receive
+clock before treating a receive/source ordering issue as a G3 failure. Minor
+exchange-internal ts/T jitter is tolerated; large inversions remain fail-closed.
 
-G3 preliminary checks:
-- duplicate event keys;
-- source/event/receive timestamp ordering and latency sanity;
-- reconnect count / local gap-accounting requirement;
-- minimum observation sample before a preliminary data-quality pass.
-
-The audit derives quote_notional_usdt = executed_size * bankruptcy_price only for
-QA summaries. It never writes that value into collected evidence and never calls
-it USD. Stablecoin/USD conversion remains a separate downstream gate.
+No strategy/outcome computation, private API, order path, LIVE trading or
+Collector A mutation exists in this audit.
 """
-
 from __future__ import annotations
 
 import argparse
@@ -44,8 +35,7 @@ from websockets.asyncio.client import connect
 
 from config.startup_safety import assert_safe_startup
 
-
-SCHEMA = "TRADINGCORE_COLLECTOR_B_G2_G3_AUDIT_V1"
+SCHEMA = "TRADINGCORE_COLLECTOR_B_G2_G3_AUDIT_V2"
 COLLECTOR_SCHEMA = "TRADINGCORE_COLLECTOR_B_BYBIT_V1"
 COLLECTOR_ID = "COLLECTOR_B_BYBIT_PUBLIC_ALL_LIQUIDATION"
 PUBLIC_WS_URL = "wss://stream.bybit.com/v5/public/linear"
@@ -54,11 +44,17 @@ SYMBOLS = ("BTCUSDT", "ETHUSDT", "SOLUSDT")
 TOPICS = tuple(f"allLiquidation.{symbol}" for symbol in SYMBOLS)
 EXPECTED_SIDE_MAP = {"Buy": "LONG", "Sell": "SHORT"}
 
-# This is only a PRELIMINARY local-capture QA threshold, not an outcome or
-# profitability threshold. Final G3 completeness remains open until enough
-# observation time exists and any reconnect gaps are reconciled.
 G3_MIN_EVENTS = 100
 G3_MIN_SPAN_HOURS = 6.0
+
+# Bybit documents `ts` and `T` as different exchange-side timestamps but does
+# not publish a strict per-message monotonic invariant. A >10s inversion is
+# still anomalous enough to fail closed; small jitter is diagnostic only.
+EXCHANGE_TS_INVERSION_TOLERANCE_MS = 10_000.0
+
+# LOCAL receive time is corrected to Bybit server time before ordering checks.
+# Remaining negative lag beyond 5s is treated as a real anomaly.
+CORRECTED_RECEIVE_NEGATIVE_TOLERANCE_MS = 5_000.0
 
 
 def utc_now() -> str:
@@ -70,13 +66,11 @@ def _finite_positive(value: Any) -> float | None:
         number = float(value)
     except (TypeError, ValueError):
         return None
-    if not math.isfinite(number) or number <= 0:
-        return None
-    return number
+    return number if math.isfinite(number) and number > 0 else None
 
 
 def _read_json(path: Path) -> dict[str, Any]:
-    with path.open("r", encoding="utf-8") as handle:
+    with path.open("r", encoding="utf-8-sig") as handle:
         payload = json.load(handle)
     if not isinstance(payload, dict):
         raise TypeError(f"Expected object in {path}")
@@ -85,37 +79,62 @@ def _read_json(path: Path) -> dict[str, Any]:
 
 def _http_json(path: str, params: dict[str, Any]) -> dict[str, Any]:
     query = urlencode(params)
+    url = f"{PUBLIC_REST_BASE}{path}"
+    if query:
+        url += f"?{query}"
     request = Request(
-        f"{PUBLIC_REST_BASE}{path}?{query}",
-        headers={
-            "Accept": "application/json",
-            "User-Agent": "TradingCore-CollectorB-G2G3-Audit/1.0",
-        },
+        url,
+        headers={"Accept": "application/json", "User-Agent": "TradingCore-CollectorB-G2G3-Audit/2.0"},
         method="GET",
     )
     with urlopen(request, timeout=15) as response:
-        body = response.read().decode("utf-8")
-    payload = json.loads(body)
+        payload = json.loads(response.read().decode("utf-8"))
     if not isinstance(payload, dict):
         raise TypeError("Bybit public REST response must be an object")
     return payload
 
 
+def fetch_server_clock_probe() -> dict[str, Any]:
+    """Estimate local->Bybit clock offset using request midpoint."""
+    before_ms = time.time_ns() / 1_000_000.0
+    payload = _http_json("/v5/market/time", {})
+    after_ms = time.time_ns() / 1_000_000.0
+    if int(payload.get("retCode", -1)) != 0:
+        raise RuntimeError(f"Bybit server-time request failed: {payload.get('retMsg')}")
+
+    server_ms: float | None = None
+    if isinstance(payload.get("time"), (int, float)):
+        server_ms = float(payload["time"])
+    result = payload.get("result")
+    if server_ms is None and isinstance(result, dict):
+        raw_nano = result.get("timeNano")
+        try:
+            server_ms = int(str(raw_nano)) / 1_000_000.0
+        except (TypeError, ValueError):
+            server_ms = None
+    if server_ms is None:
+        raise RuntimeError("Bybit server-time response did not contain a usable timestamp")
+
+    midpoint_ms = (before_ms + after_ms) / 2.0
+    return {
+        "ok": True,
+        "server_ms": round(server_ms, 3),
+        "local_midpoint_ms": round(midpoint_ms, 3),
+        "local_to_bybit_offset_ms": round(server_ms - midpoint_ms, 3),
+        "round_trip_ms": round(after_ms - before_ms, 3),
+        "method": "PUBLIC_SERVER_TIME_REQUEST_MIDPOINT",
+    }
+
+
 def fetch_instrument(symbol: str) -> dict[str, Any]:
-    payload = _http_json(
-        "/v5/market/instruments-info",
-        {"category": "linear", "symbol": symbol, "limit": 1},
-    )
+    payload = _http_json("/v5/market/instruments-info", {"category": "linear", "symbol": symbol, "limit": 1})
     if int(payload.get("retCode", -1)) != 0:
         raise RuntimeError(f"Bybit instrument info failed for {symbol}: {payload.get('retMsg')}")
     result = payload.get("result")
     rows = result.get("list") if isinstance(result, dict) else None
-    if not isinstance(rows, list) or not rows:
-        raise RuntimeError(f"No Bybit instrument metadata for {symbol}")
-    row = rows[0]
-    if not isinstance(row, dict):
-        raise RuntimeError(f"Invalid instrument metadata row for {symbol}")
-    return row
+    if not isinstance(rows, list) or not rows or not isinstance(rows[0], dict):
+        raise RuntimeError(f"No valid Bybit instrument metadata for {symbol}")
+    return rows[0]
 
 
 async def subscription_probe(timeout_seconds: float = 12.0) -> dict[str, Any]:
@@ -134,9 +153,7 @@ async def subscription_probe(timeout_seconds: float = 12.0) -> dict[str, Any]:
             remaining = max(0.1, deadline - time.monotonic())
             raw = await asyncio.wait_for(websocket.recv(), timeout=remaining)
             payload = json.loads(raw)
-            if not isinstance(payload, dict):
-                continue
-            if payload.get("op") == "subscribe":
+            if isinstance(payload, dict) and payload.get("op") == "subscribe":
                 return {
                     "ack_received": True,
                     "success": payload.get("success") is True,
@@ -148,23 +165,35 @@ async def subscription_probe(timeout_seconds: float = 12.0) -> dict[str, Any]:
         return {"ack_received": False, "success": False, "reason": "SUBSCRIBE_ACK_TIMEOUT"}
 
 
-def scan_evidence(data_dir: Path) -> dict[str, Any]:
+def _summary(values: list[float]) -> dict[str, Any] | None:
+    if not values:
+        return None
+    ordered = sorted(values)
+    def percentile(p: float) -> float:
+        index = min(len(ordered) - 1, max(0, int(round((len(ordered) - 1) * p))))
+        return ordered[index]
+    return {
+        "min": round(min(values), 4),
+        "median": round(statistics.median(values), 4),
+        "p95": round(percentile(0.95), 4),
+        "max": round(max(values), 4),
+    }
+
+
+def scan_evidence(data_dir: Path, local_to_bybit_offset_ms: float | None) -> dict[str, Any]:
     normalized_root = data_dir / "normalized" / "bybit"
     files = sorted(normalized_root.glob("*.jsonl")) if normalized_root.exists() else []
 
-    total_lines = 0
-    invalid_json = 0
-    invalid_schema = 0
-    invalid_symbol = 0
-    invalid_side = 0
-    invalid_numeric = 0
-    invalid_timestamp = 0
-    duplicate_keys = 0
-    timestamp_order_anomalies = 0
+    total_lines = invalid_json = invalid_schema = invalid_symbol = invalid_side = 0
+    invalid_numeric = invalid_timestamp = duplicate_keys = 0
+    exchange_ts_inversions_raw = exchange_ts_inversions_hard = 0
+    local_receive_before_source_raw = corrected_receive_before_source_hard = 0
+
     keys: set[str] = set()
     event_times: list[int] = []
     source_event_ms: list[float] = []
-    receive_source_ms: list[float] = []
+    receive_source_ms_raw: list[float] = []
+    receive_source_ms_corrected: list[float] = []
     quote_notional_usdt: list[float] = []
     symbol_counts = {symbol: 0 for symbol in SYMBOLS}
     side_counts = {"LONG": 0, "SHORT": 0}
@@ -188,7 +217,6 @@ def scan_evidence(data_dir: Path) -> dict[str, Any]:
                 if symbol not in SYMBOLS:
                     invalid_symbol += 1
                     continue
-
                 source_side = row.get("source_side")
                 liquidated_side = row.get("liquidated_position_side")
                 if EXPECTED_SIDE_MAP.get(source_side) != liquidated_side:
@@ -209,10 +237,23 @@ def scan_evidence(data_dir: Path) -> dict[str, Any]:
                     continue
 
                 event_times.append(event_ts)
-                source_event_ms.append(float(source_ts - event_ts))
-                receive_source_ms.append(float(received_ts - source_ts))
-                if source_ts < event_ts or received_ts < source_ts:
-                    timestamp_order_anomalies += 1
+                exchange_delta = float(source_ts - event_ts)
+                raw_receive_delta = float(received_ts - source_ts)
+                source_event_ms.append(exchange_delta)
+                receive_source_ms_raw.append(raw_receive_delta)
+
+                if exchange_delta < 0:
+                    exchange_ts_inversions_raw += 1
+                if exchange_delta < -EXCHANGE_TS_INVERSION_TOLERANCE_MS:
+                    exchange_ts_inversions_hard += 1
+
+                if raw_receive_delta < 0:
+                    local_receive_before_source_raw += 1
+                if local_to_bybit_offset_ms is not None:
+                    corrected = float(received_ts + local_to_bybit_offset_ms - source_ts)
+                    receive_source_ms_corrected.append(corrected)
+                    if corrected < -CORRECTED_RECEIVE_NEGATIVE_TOLERANCE_MS:
+                        corrected_receive_before_source_hard += 1
 
                 key = str(row.get("event_key") or "")
                 if not key:
@@ -231,20 +272,7 @@ def scan_evidence(data_dir: Path) -> dict[str, Any]:
     if len(event_times) >= 2:
         span_hours = (max(event_times) - min(event_times)) / 3_600_000.0
 
-    def summary(values: list[float]) -> dict[str, Any] | None:
-        if not values:
-            return None
-        ordered = sorted(values)
-        def percentile(p: float) -> float:
-            index = min(len(ordered) - 1, max(0, int(round((len(ordered) - 1) * p))))
-            return ordered[index]
-        return {
-            "min": round(min(values), 4),
-            "median": round(statistics.median(values), 4),
-            "p95": round(percentile(0.95), 4),
-            "max": round(max(values), 4),
-        }
-
+    hard_timestamp_anomalies = exchange_ts_inversions_hard + corrected_receive_before_source_hard
     return {
         "files": [str(path) for path in files],
         "total_lines": total_lines,
@@ -256,14 +284,24 @@ def scan_evidence(data_dir: Path) -> dict[str, Any]:
         "invalid_numeric": invalid_numeric,
         "invalid_timestamp": invalid_timestamp,
         "duplicate_event_keys_in_normalized_files": duplicate_keys,
-        "timestamp_order_anomalies": timestamp_order_anomalies,
+        "timestamp_order_anomalies": hard_timestamp_anomalies,
+        "timestamp_diagnostics": {
+            "exchange_ts_before_event_raw_count": exchange_ts_inversions_raw,
+            "exchange_ts_before_event_hard_count": exchange_ts_inversions_hard,
+            "local_receive_before_source_raw_count": local_receive_before_source_raw,
+            "corrected_receive_before_source_hard_count": corrected_receive_before_source_hard,
+            "exchange_inversion_tolerance_ms": EXCHANGE_TS_INVERSION_TOLERANCE_MS,
+            "corrected_receive_negative_tolerance_ms": CORRECTED_RECEIVE_NEGATIVE_TOLERANCE_MS,
+            "note": "Local received_ts is compared to Bybit ts only after public server-time clock correction.",
+        },
         "observation_span_hours": round(span_hours, 4),
         "symbol_counts": symbol_counts,
         "liquidated_side_counts": side_counts,
-        "source_minus_event_ms": summary(source_event_ms),
-        "received_minus_source_ms": summary(receive_source_ms),
-        "quote_notional_usdt": summary(quote_notional_usdt),
-        "quote_notional_note": "QA DERIVATION ONLY: size_raw * bankruptcy_price_raw; this is USDT quote notional, not USD.",
+        "source_minus_event_ms": _summary(source_event_ms),
+        "local_received_minus_source_ms_raw": _summary(receive_source_ms_raw),
+        "bybit_corrected_received_minus_source_ms": _summary(receive_source_ms_corrected),
+        "quote_notional_usdt": _summary(quote_notional_usdt),
+        "quote_notional_note": "QA DERIVATION ONLY: size_raw * bankruptcy_price_raw; USDT quote notional, not USD.",
     }
 
 
@@ -278,8 +316,8 @@ def main() -> int:
     status_file = data_dir / "status.json"
     if not status_file.exists():
         raise SystemExit(f"Collector B status not found: {status_file}")
-
     status = _read_json(status_file)
+
     hard_safety = {
         "collector_schema_ok": status.get("schema") == COLLECTOR_SCHEMA,
         "collector_id_ok": status.get("collector_id") == COLLECTOR_ID,
@@ -324,7 +362,14 @@ def main() -> int:
     except Exception as error:
         probe = {"ack_received": False, "success": False, "error": f"{type(error).__name__}: {error}"}
 
-    evidence = scan_evidence(data_dir)
+    try:
+        clock_probe = fetch_server_clock_probe()
+        clock_offset = float(clock_probe["local_to_bybit_offset_ms"])
+    except Exception as error:
+        clock_probe = {"ok": False, "error": f"{type(error).__name__}: {error}"}
+        clock_offset = None
+
+    evidence = scan_evidence(data_dir, clock_offset)
 
     g2_failures: list[str] = []
     if not all(hard_safety.values()):
@@ -334,15 +379,11 @@ def main() -> int:
     if not probe.get("ack_received") or not probe.get("success"):
         g2_failures.append("PUBLIC_SUBSCRIPTION_ACK")
     if evidence["total_lines"] > 0:
-        for key in (
-            "invalid_json", "invalid_schema", "invalid_symbol", "invalid_side",
-            "invalid_numeric", "invalid_timestamp",
-        ):
+        for key in ("invalid_json", "invalid_schema", "invalid_symbol", "invalid_side", "invalid_numeric", "invalid_timestamp"):
             if evidence[key] != 0:
                 g2_failures.append(f"EVIDENCE_{key.upper()}")
     else:
         g2_failures.append("EVENT_SAMPLE_PENDING")
-
     g2_passed = not g2_failures
 
     g3_failures: list[str] = []
@@ -351,16 +392,15 @@ def main() -> int:
         g3_pending.append(f"MIN_EVENTS_{G3_MIN_EVENTS}")
     if evidence["observation_span_hours"] < G3_MIN_SPAN_HOURS:
         g3_pending.append(f"MIN_SPAN_{G3_MIN_SPAN_HOURS:g}H")
+    if not clock_probe.get("ok"):
+        g3_pending.append("BYBIT_CLOCK_PROBE_PENDING")
     if int(status.get("reconnect_count") or 0) > 0:
         g3_failures.append("RECONNECT_GAP_ACCOUNTING_REQUIRED")
     if evidence["duplicate_event_keys_in_normalized_files"] > 0:
         g3_failures.append("NORMALIZED_DUPLICATES")
     if evidence["timestamp_order_anomalies"] > 0:
         g3_failures.append("TIMESTAMP_ORDER_ANOMALIES")
-    if any(evidence[key] > 0 for key in (
-        "invalid_json", "invalid_schema", "invalid_symbol", "invalid_side",
-        "invalid_numeric", "invalid_timestamp",
-    )):
+    if any(evidence[key] > 0 for key in ("invalid_json", "invalid_schema", "invalid_symbol", "invalid_side", "invalid_numeric", "invalid_timestamp")):
         g3_failures.append("INVALID_NORMALIZED_RECORDS")
 
     if g3_failures:
@@ -377,6 +417,7 @@ def main() -> int:
         "safety": safety,
         "hard_safety": hard_safety,
         "subscription_probe": probe,
+        "server_clock_probe": clock_probe,
         "instrument_metadata": instruments,
         "evidence": evidence,
         "g2": {
@@ -390,7 +431,7 @@ def main() -> int:
             "pending": g3_pending,
             "minimum_events": G3_MIN_EVENTS,
             "minimum_span_hours": G3_MIN_SPAN_HOURS,
-            "note": "G3 preliminary pass concerns local capture quality only; it is not evidence of predictive edge or profitability.",
+            "note": "G3 preliminary pass concerns capture quality only; it is not evidence of predictive edge or profitability.",
         },
         "research_gate": "NO_OUTCOME_RESEARCH_UNTIL_G2_PASS_AND_G3_PRELIMINARY_PASS",
         "collector_a_modified": False,
@@ -406,24 +447,26 @@ def main() -> int:
     json_path = out / f"collector_b_g2_g3_{stamp}.json"
     latest_json = out / "LATEST_COLLECTOR_B_G2_G3.json"
     latest_txt = out / "LATEST_COLLECTOR_B_G2_G3.txt"
-    json_path.write_text(json.dumps(report, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
-    latest_json.write_text(json.dumps(report, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+    payload = json.dumps(report, indent=2, ensure_ascii=False, default=str)
+    json_path.write_text(payload, encoding="utf-8")
+    latest_json.write_text(payload, encoding="utf-8")
 
     lines = [
         "=" * 92,
-        "TRADINGCORE COLLECTOR B — G2/G3 DATA QUALITY AUDIT",
+        "TRADINGCORE COLLECTOR B — G2/G3 DATA QUALITY AUDIT V2",
         "=" * 92,
         f"Generated UTC: {report['generated_at_utc']}",
         f"Subscription ACK: {probe.get('ack_received')} success={probe.get('success')}",
+        f"Clock probe: ok={clock_probe.get('ok')} offset_ms={clock_probe.get('local_to_bybit_offset_ms')}",
         f"Events: {evidence['valid_unique_events']} span_hours={evidence['observation_span_hours']}",
         f"Reconnects: {int(status.get('reconnect_count') or 0)}",
+        f"Timestamp hard anomalies: {evidence['timestamp_order_anomalies']}",
         f"G2: {report['g2']['state']} issues={','.join(g2_failures) if g2_failures else 'NONE'}",
         f"G3: {g3_state} failures={','.join(g3_failures) if g3_failures else 'NONE'} pending={','.join(g3_pending) if g3_pending else 'NONE'}",
         "Outcome research: BLOCKED until G2 PASS + G3 PRELIMINARY PASS",
         "Collector A: UNCHANGED | Orders: DISABLED | LIVE: DISABLED",
     ]
     latest_txt.write_text("\n".join(lines), encoding="utf-8")
-
     print("\n".join(lines))
     print("JSON:", json_path)
     print("LATEST:", latest_txt)
