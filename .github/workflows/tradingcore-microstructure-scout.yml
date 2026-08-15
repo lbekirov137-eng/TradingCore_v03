@@ -1,0 +1,55 @@
+name: TradingCore Microstructure Scout
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "4,9,14,19,24,29,34,39,44,49,54,59 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-microstructure-scout.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+      - uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+      - name: Compile + snapshot
+        working-directory: code
+        run: |
+          python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_microstructure.py
+          python3 strategy_atlas_microstructure.py --state-dir "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime"
+      - name: Persist snapshots
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Microstructure Scout"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f strategy_atlas_microstructure_runtime
+          if git diff --cached --quiet; then
+            echo "No microstructure changes."
+          else
+            git commit -m "microstructure: append public market snapshot"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
