@@ -1,6 +1,6 @@
 {
-  "schema": "TRADINGCORE_STRATEGY_ATLAS_MICROSTRUCTURE_V1",
-  "recorded_at_utc": "2026-08-18T18:33:11.073831+00:00",
+  "schema": "TRADINGCORE_STRATEGY_ATLAS_MICROSTRUCTURE_V2",
+  "recorded_at_utc": "2026-08-18T18:53:19.216329+00:00",
   "protocol_version": "STRATEGY_ATLAS_V1_PARALLEL_MECHANISM_MAP",
   "protocol_fingerprint": "1fbbfc2868185656636b7ffd4572ca92c9796620217c623710774a22c7888efa",
   "families": [
@@ -15,62 +15,86 @@
     {
       "symbol": "BTC",
       "binance": {
-        "bid": 64777.63,
-        "ask": 64777.64,
-        "bid_sz": 3.67223,
-        "ask_sz": 4.75537
+        "bid": 64778.0,
+        "ask": 64778.01,
+        "bid_sz": 5.27872,
+        "ask_sz": 6.26333
       },
       "okx_spot": {
-        "bid": 64780.0,
-        "ask": 64780.1,
-        "last": 64780.0
+        "bid": 64783.1,
+        "ask": 64783.2,
+        "last": 64783.2
       },
       "cross_exchange": {
-        "buy_binance_sell_okx": -0.0029635676755127545,
-        "buy_okx_sell_binance": -0.0030381289933174545,
-        "best": -0.0029635676755127545
+        "buy_binance_sell_okx": -0.002921423952356836,
+        "buy_okx_sell_binance": -0.0030802677237308203,
+        "best": -0.002921423952356836
       },
-      "spot_perp_basis": -0.0005109601728928714,
-      "funding_rate": 8.3233658095e-06,
-      "open_interest": 2111038242.0985935,
-      "okx_orderbook_imbalance": 0.7152199191779497,
-      "okx_spot_spread": 1.543686322991178e-06,
+      "spot_perp_basis": -0.0005356326948962042,
+      "funding_rate": 7.3989379704e-06,
+      "open_interest": 2114870119.394774,
+      "okx_orderbook_imbalance": 0.6011602909338672,
+      "okx_top_level_imbalance": 0.7530294204888539,
+      "okx_trade_flow": {
+        "samples": 100,
+        "buy_notional": 62973.566846892994,
+        "sell_notional": 58748.26416035102,
+        "signed_imbalance": 0.034712776266818686,
+        "buy_share": 0.5173563881334093
+      },
+      "okx_microprice": 64783.17530294204,
+      "okx_microprice_edge": 3.905790633140782e-07,
+      "okx_spot_spread": 1.543612454524279e-06,
       "flags": {
         "cross_exchange_net_positive": false,
         "basis_abs_gt_30bps": false,
         "funding_abs_gt_5bps": false,
-        "orderbook_imbalance_extreme": true,
+        "orderbook_imbalance_extreme": false,
+        "trade_flow_imbalance_extreme": false,
+        "microprice_edge_gt_1bp": false,
         "passive_spread_gt_cost_proxy": false
       }
     },
     {
       "symbol": "ETH",
       "binance": {
-        "bid": 1916.19,
-        "ask": 1916.2,
-        "bid_sz": 18.5551,
-        "ask_sz": 52.4218
+        "bid": 1916.54,
+        "ask": 1916.55,
+        "bid_sz": 44.8857,
+        "ask_sz": 58.6192
       },
       "okx_spot": {
-        "bid": 1916.27,
-        "ask": 1916.28,
-        "last": 1916.27
+        "bid": 1916.52,
+        "ask": 1916.53,
+        "last": 1916.52
       },
       "cross_exchange": {
-        "buy_binance_sell_okx": -0.002963469366454527,
-        "buy_okx_sell_binance": -0.0030469659966183534,
-        "best": -0.002963469366454527
+        "buy_binance_sell_okx": -0.003015653126712034,
+        "buy_okx_sell_binance": -0.0029947822366463957,
+        "best": -0.0029947822366463957
       },
-      "spot_perp_basis": -0.0005322840727037814,
-      "funding_rate": -3.82848985455e-05,
-      "open_interest": 1339642193.7765048,
-      "okx_orderbook_imbalance": 0.5892347838022853,
-      "okx_spot_spread": 5.218471301082772e-06,
+      "spot_perp_basis": -0.0004956901049819606,
+      "funding_rate": -4.11612034311e-05,
+      "open_interest": 1338909657.5110848,
+      "okx_orderbook_imbalance": 0.497357636898636,
+      "okx_top_level_imbalance": 0.4465815775531828,
+      "okx_trade_flow": {
+        "samples": 100,
+        "buy_notional": 16268.199585339999,
+        "sell_notional": 35760.86961650999,
+        "signed_imbalance": -0.37464960127475994,
+        "buy_share": 0.31267519936262
+      },
+      "okx_microprice": 1916.5244658157756,
+      "okx_microprice_edge": -2.787254141933815e-07,
+      "okx_spot_spread": 5.217790578715409e-06,
       "flags": {
         "cross_exchange_net_positive": false,
         "basis_abs_gt_30bps": false,
         "funding_abs_gt_5bps": false,
         "orderbook_imbalance_extreme": false,
+        "trade_flow_imbalance_extreme": true,
+        "microprice_edge_gt_1bp": false,
         "passive_spread_gt_cost_proxy": false
       }
     },
@@ -79,37 +103,49 @@
       "binance": {
         "bid": 77.23,
         "ask": 77.24,
-        "bid_sz": 35.995,
-        "ask_sz": 809.184
+        "bid_sz": 833.951,
+        "ask_sz": 313.145
       },
       "okx_spot": {
-        "bid": 77.22,
-        "ask": 77.23,
-        "last": 77.23
+        "bid": 77.23,
+        "ask": 77.24,
+        "last": 77.24
       },
       "cross_exchange": {
-        "buy_binance_sell_okx": -0.0032589331952356223,
-        "buy_okx_sell_binance": -0.003,
-        "best": -0.003
+        "buy_binance_sell_okx": -0.0031294665976177,
+        "buy_okx_sell_binance": -0.0031294665976177,
+        "best": -0.0031294665976177
       },
-      "spot_perp_basis": -0.0006474168069402486,
-      "funding_rate": 8.45978693277e-05,
-      "open_interest": 237885460.20840007,
-      "okx_orderbook_imbalance": 0.4606602436380386,
-      "okx_spot_spread": 0.00012950012950030398,
+      "spot_perp_basis": -0.0006473329880890555,
+      "funding_rate": 8.16840170462e-05,
+      "open_interest": 238063283.78010005,
+      "okx_orderbook_imbalance": 0.4770197692075023,
+      "okx_top_level_imbalance": 0.5015993887028589,
+      "okx_trade_flow": {
+        "samples": 100,
+        "buy_notional": 8228.584090209997,
+        "sell_notional": 9079.074205779994,
+        "signed_imbalance": -0.04913952546469254,
+        "buy_share": 0.47543023726765377
+      },
+      "okx_microprice": 77.23501599388705,
+      "okx_microprice_edge": 2.070808189369444e-07,
+      "okx_spot_spread": 0.00012948336138784988,
       "flags": {
         "cross_exchange_net_positive": false,
         "basis_abs_gt_30bps": false,
         "funding_abs_gt_5bps": false,
         "orderbook_imbalance_extreme": false,
+        "trade_flow_imbalance_extreme": false,
+        "microprice_edge_gt_1bp": false,
         "passive_spread_gt_cost_proxy": false
       }
     }
   ],
   "triangular": {
-    "USDT_BTC_ETH_USDT": -0.004458231651707889,
-    "USDT_ETH_BTC_USDT": -0.004870156167243844,
-    "best": -0.004458231651707889
+    "USDT_BTC_ETH_USDT": -0.004618584107580204,
+    "USDT_ETH_BTC_USDT": -0.004709729538795893,
+    "best": -0.004618584107580204
   },
   "errors": {},
   "safety": {
@@ -123,5 +159,5 @@
   "private_api_used": false,
   "real_orders_enabled": false,
   "live_permission": false,
-  "note": "Feasibility snapshot only. Positive quoted spread is not executable-profit proof because latency, transfer/capital fragmentation and queue position are not fully modeled."
+  "note": "Forward feature snapshot only. Predictive signals still require chronological forward validation after costs/latency."
 }
