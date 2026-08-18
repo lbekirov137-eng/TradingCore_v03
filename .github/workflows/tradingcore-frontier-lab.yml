@@ -1,0 +1,98 @@
+name: TradingCore Frontier Research Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "13 */6 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-frontier-lab.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
+
+jobs:
+  frontier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+      - name: Compile frontier lab
+        working-directory: code
+        run: |
+          python3 -m py_compile frontier_history_miner.py frontier_momentum_lab.py frontier_microstructure_eval.py strategy_atlas_microstructure.py
+          python3 strategy_atlas_selftest.py
+      - name: Mine all prior challengers
+        working-directory: code
+        run: python3 frontier_history_miner.py --state-dir "$GITHUB_WORKSPACE/state" --output-dir "$GITHUB_WORKSPACE/state/frontier_runtime"
+      - name: Run fast time-series momentum discovery
+        working-directory: code
+        run: python3 frontier_momentum_lab.py --output-dir "$GITHUB_WORKSPACE/state/frontier_runtime"
+      - name: Capture upgraded microstructure snapshot
+        working-directory: code
+        run: python3 strategy_atlas_microstructure.py --state-dir "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime"
+      - name: Evaluate accumulated microstructure evidence
+        working-directory: code
+        run: python3 frontier_microstructure_eval.py --state-dir "$GITHUB_WORKSPACE/state" --output-dir "$GITHUB_WORKSPACE/state/frontier_runtime"
+      - name: Build compact frontier verdict
+        working-directory: state
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import datetime,timezone
+          root=Path('frontier_runtime')
+          def load(n):
+              p=root/n
+              return json.loads(p.read_text(encoding='utf-8')) if p.exists() else None
+          hist=load('FRONTIER_HISTORY_RANKING.json');mom=load('FRONTIER_MOMENTUM_RESULT.json');micro=load('FRONTIER_MICROSTRUCTURE_RESULT.json')
+          candidate=(mom or {}).get('candidate')
+          if candidate:
+              decision='HISTORICAL_FRONTIER_CANDIDATE_FORWARD_CONFIRM_REQUIRED'
+          else:
+              decision='NO_FRONTIER_CHAMPION_YET'
+          out={'schema':'TRADINGCORE_FRONTIER_VERDICT_V1','generated_at_utc':datetime.now(timezone.utc).isoformat(),'decision':decision,'momentum_state':(mom or {}).get('state'),'momentum_passing':(mom or {}).get('passing_lane_count'),'momentum_candidate':candidate,'momentum_top_challengers':(mom or {}).get('top_challengers',[])[:5],'historical_positive_challengers':(hist or {}).get('positive_challengers',[])[:8],'microstructure_top_signals':(micro or {}).get('top_predictive_signals',[])[:8],'snapshots_by_symbol':(micro or {}).get('snapshots_by_symbol'),'real_orders_enabled':False,'live_permission':False,'next_gate':'Independent venue + fresh forward confirmation after costs before MICRO-LIVE'}
+          (root/'FRONTIER_VERDICT.json').write_text(json.dumps(out,indent=2,default=str),encoding='utf-8')
+          print(json.dumps(out,indent=2,default=str))
+          PY
+      - name: Persist frontier research state
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Frontier Lab"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f frontier_runtime strategy_atlas_microstructure_runtime
+          if git diff --cached --quiet; then
+            echo "No frontier state changes."
+          else
+            git commit -m "frontier: update momentum and microstructure research"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Frontier Lab" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/frontier_runtime/FRONTIER_VERDICT.json" ]; then
+            cat "$GITHUB_WORKSPACE/state/frontier_runtime/FRONTIER_VERDICT.json" >> "$GITHUB_STEP_SUMMARY"
+          fi
