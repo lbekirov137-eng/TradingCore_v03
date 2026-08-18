@@ -1,0 +1,153 @@
+name: TradingCore Atlas Verdict
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-atlas-verdict.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-atlas-verdict
+  cancel-in-progress: true
+
+jobs:
+  verdict:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          fetch-depth: 1
+
+      - name: Build compact Atlas verdict
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          def load(path):
+              p = Path(path)
+              if not p.exists():
+                  return None
+              return json.loads(p.read_text(encoding='utf-8'))
+
+          price = load('strategy_atlas_price_runtime/STRATEGY_ATLAS_PRICE_RESULT.json')
+          rel = load('strategy_atlas_relative_runtime/STRATEGY_ATLAS_RELATIVE_RESULT.json')
+          der = load('strategy_atlas_derivatives_runtime/STRATEGY_ATLAS_DERIVATIVES_RESULT.json')
+          fast = load('fast_paper_runtime/FAST_PAPER_STATUS.json')
+
+          def compact_candidate(c):
+              if not isinstance(c, dict):
+                  return None
+              out = {
+                  'family': c.get('family'),
+                  'symbol': c.get('symbol'),
+                  'timeframe': c.get('timeframe'),
+                  'venues': {},
+              }
+              for venue, payload in (c.get('venues') or {}).items():
+                  if not isinstance(payload, dict):
+                      continue
+                  out['venues'][venue] = {
+                      'full': payload.get('full'),
+                      'first_half': payload.get('first_half'),
+                      'second_half': payload.get('second_half'),
+                      'segment_robustness': payload.get('segment_robustness'),
+                      'checks': payload.get('checks'),
+                      'passed': payload.get('passed'),
+                  }
+              return out
+
+          price_summary = None
+          if price:
+              price_summary = {
+                  'generated_at_utc': price.get('generated_at_utc'),
+                  'state': price.get('state'),
+                  'lane_count': price.get('lane_count'),
+                  'passing_lane_count': price.get('passing_lane_count'),
+                  'passing_lanes': price.get('passing_lanes') or [],
+                  'candidate': compact_candidate(price.get('candidate')),
+                  'data_failures': price.get('data_failures') or {},
+              }
+
+          rel_summary = None
+          if rel:
+              rel_summary = {
+                  'generated_at_utc': rel.get('generated_at_utc'),
+                  'state': rel.get('state'),
+                  'passing': rel.get('passing') or [],
+              }
+
+          der_summary = None
+          if der:
+              der_summary = {
+                  'generated_at_utc': der.get('generated_at_utc'),
+                  'state': der.get('state'),
+                  'shortlist': der.get('shortlist') or [],
+              }
+
+          fast_summary = None
+          if fast:
+              fast_summary = {
+                  'updated_at_utc': fast.get('updated_at_utc'),
+                  'mode': fast.get('mode'),
+                  'lane_count': fast.get('lane_count'),
+                  'total_closed_trade_observations_across_independent_lanes': fast.get('total_closed_trade_observations_across_independent_lanes'),
+                  'lanes_with_30_or_more': fast.get('lanes_with_30_or_more'),
+                  'locked_lane_decisions': fast.get('locked_lane_decisions'),
+                  'promising_lanes': fast.get('promising_lanes') or [],
+              }
+
+          historical_candidates = []
+          if price_summary and (price_summary.get('passing_lane_count') or 0) > 0:
+              historical_candidates.extend(price_summary.get('passing_lanes') or [])
+
+          if historical_candidates:
+              decision = 'HISTORICAL_CANDIDATE_EXISTS_FORWARD_VALIDATION_REQUIRED'
+          else:
+              decision = 'NO_HISTORICAL_CHAMPION'
+
+          if not fast_summary or (fast_summary.get('total_closed_trade_observations_across_independent_lanes') or 0) == 0:
+              live_gate = 'BLOCKED_NO_FORWARD_EXECUTION_EVIDENCE'
+          else:
+              live_gate = 'BLOCKED_UNTIL_FORWARD_GATE_PASSES'
+
+          out = {
+              'schema': 'TRADINGCORE_STRATEGY_ATLAS_VERDICT_V1',
+              'generated_at_utc': datetime.now(timezone.utc).isoformat(),
+              'decision': decision,
+              'live_gate': live_gate,
+              'price': price_summary,
+              'relative_value': rel_summary,
+              'derivatives': der_summary,
+              'fast_paper': fast_summary,
+              'real_orders_enabled': False,
+              'live_permission': False,
+              'note': 'Research verdict only. A historical candidate is not a LIVE permission.',
+          }
+
+          p = Path('strategy_atlas_runtime/STRATEGY_ATLAS_VERDICT.json')
+          p.parent.mkdir(parents=True, exist_ok=True)
+          p.write_text(json.dumps(out, indent=2, sort_keys=True), encoding='utf-8')
+          print(json.dumps(out, indent=2, sort_keys=True))
+          PY
+
+      - name: Persist verdict
+        run: |
+          git config user.name "TradingCore Atlas Verdict"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f strategy_atlas_runtime/STRATEGY_ATLAS_VERDICT.json
+          if git diff --cached --quiet; then
+            echo "No verdict changes."
+          else
+            git commit -m "atlas-verdict: publish compact research verdict"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
