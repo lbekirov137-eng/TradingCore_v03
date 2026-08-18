@@ -51,6 +51,51 @@ jobs:
           DEMO_ONLY: "true"
         run: |
           python3 strategy_atlas_price_v2.py --output "$GITHUB_WORKSPACE/state/strategy_atlas_price_runtime"
+      - name: Build compact research summary
+        working-directory: state
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          src = Path('strategy_atlas_price_runtime/STRATEGY_ATLAS_PRICE_RESULT.json')
+          dst = Path('strategy_atlas_price_runtime/STRATEGY_ATLAS_PRICE_SUMMARY.json')
+          d = json.loads(src.read_text(encoding='utf-8'))
+          c = d.get('candidate')
+          candidate = None
+          if isinstance(c, dict):
+              candidate = {
+                  'family': c.get('family'),
+                  'symbol': c.get('symbol'),
+                  'timeframe': c.get('timeframe'),
+                  'venues': {},
+              }
+              for venue, payload in (c.get('venues') or {}).items():
+                  if not isinstance(payload, dict):
+                      continue
+                  candidate['venues'][venue] = {
+                      'full': payload.get('full'),
+                      'first_half': payload.get('first_half'),
+                      'second_half': payload.get('second_half'),
+                      'segment_robustness': payload.get('segment_robustness'),
+                      'checks': payload.get('checks'),
+                      'passed': payload.get('passed'),
+                  }
+          out = {
+              'schema': 'TRADINGCORE_STRATEGY_ATLAS_PRICE_SUMMARY_V1',
+              'generated_at_utc': d.get('generated_at_utc'),
+              'state': d.get('state'),
+              'lane_count': d.get('lane_count'),
+              'passing_lane_count': d.get('passing_lane_count'),
+              'passing_lanes': d.get('passing_lanes') or [],
+              'candidate': candidate,
+              'data_failures': d.get('data_failures') or {},
+              'real_orders_enabled': False,
+              'live_permission': False,
+          }
+          dst.write_text(json.dumps(out, indent=2, sort_keys=True), encoding='utf-8')
+          print(json.dumps(out, indent=2, sort_keys=True))
+          PY
       - name: Persist atlas result
         working-directory: state
         run: |
@@ -68,6 +113,8 @@ jobs:
         if: always()
         run: |
           echo "## TradingCore Strategy Atlas Price" >> "$GITHUB_STEP_SUMMARY"
-          if [ -f "$GITHUB_WORKSPACE/state/strategy_atlas_price_runtime/STRATEGY_ATLAS_PRICE_RESULT.json" ]; then
+          if [ -f "$GITHUB_WORKSPACE/state/strategy_atlas_price_runtime/STRATEGY_ATLAS_PRICE_SUMMARY.json" ]; then
+            cat "$GITHUB_WORKSPACE/state/strategy_atlas_price_runtime/STRATEGY_ATLAS_PRICE_SUMMARY.json" >> "$GITHUB_STEP_SUMMARY"
+          elif [ -f "$GITHUB_WORKSPACE/state/strategy_atlas_price_runtime/STRATEGY_ATLAS_PRICE_RESULT.json" ]; then
             python3 -c "import json,os;d=json.load(open(os.path.join(os.environ['GITHUB_WORKSPACE'],'state','strategy_atlas_price_runtime','STRATEGY_ATLAS_PRICE_RESULT.json'));print('state:',d.get('state'));print('lanes:',d.get('lane_count'));print('passing:',d.get('passing_lane_count'));print('passing_lanes:',d.get('passing_lanes')[:10]);print('LIVE: disabled')" >> "$GITHUB_STEP_SUMMARY"
           fi
