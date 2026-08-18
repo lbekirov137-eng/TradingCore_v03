@@ -1,0 +1,63 @@
+name: TradingCore Frontier Forward PAPER
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "1,16,31,46 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-frontier-forward.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+      - name: Compile and run forward frontier
+        working-directory: code
+        run: |
+          python3 -m py_compile frontier_momentum_lab.py frontier_forward_paper.py
+          python3 frontier_forward_paper.py --state-dir "$GITHUB_WORKSPACE/state/frontier_forward_runtime" --freeze-utc "2026-08-18T18:45:00+00:00"
+      - name: Persist forward state
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Frontier Forward"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f frontier_forward_runtime
+          if git diff --cached --quiet; then
+            echo "No forward changes."
+          else
+            git commit -m "frontier-forward: update fresh PAPER evidence"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Frontier Forward PAPER" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/frontier_forward_runtime/FRONTIER_FORWARD_STATUS.json" ]; then
+            python3 -c "import json,os;d=json.load(open(os.path.join(os.environ['GITHUB_WORKSPACE'],'state','frontier_forward_runtime','FRONTIER_FORWARD_STATUS.json')));print('closed:',d.get('total_closed_trade_observations_across_lanes'));print('lanes>=10:',d.get('lanes_with_10_or_more'));print('promising:',d.get('promising_early'));print('LIVE: disabled')" >> "$GITHUB_STEP_SUMMARY"
+          fi
