@@ -40,11 +40,11 @@ jobs:
           path: state
           fetch-depth: 1
 
-      - name: Compile and run delta-neutral carry validation
+      - name: Compile and run delta-neutral carry validation V2
         working-directory: code
         run: |
-          python3 -m py_compile funding_carry_walkforward.py
-          python3 funding_carry_walkforward.py --output-dir "$GITHUB_WORKSPACE/state/funding_carry_runtime"
+          python3 -m py_compile funding_carry_walkforward.py funding_carry_walkforward_v2.py
+          python3 funding_carry_walkforward_v2.py --output-dir "$GITHUB_WORKSPACE/state/funding_carry_runtime"
 
       - name: Persist funding carry result
         working-directory: state
@@ -55,7 +55,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No funding carry changes."
           else
-            git commit -m "funding-carry: update delta-neutral validation"
+            git commit -m "funding-carry: update delta-neutral validation V2"
             git pull --rebase origin cloud-state
             git push origin HEAD:cloud-state
           fi
@@ -63,7 +63,7 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "## TradingCore Delta-Neutral Funding Carry" >> "$GITHUB_STEP_SUMMARY"
+          echo "## TradingCore Delta-Neutral Funding Carry V2" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$GITHUB_WORKSPACE/state/funding_carry_runtime/FUNDING_CARRY_RESULT.json" ]; then
             python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json, os
@@ -76,3 +76,5 @@ jobs:
           print('data_failures:', d.get('data_failures'))
           print('LIVE: disabled')
           PY
+
+# V2 rerun: bucketed funding, no same-bar credit, no discovery/holdout leakage.
