@@ -1,0 +1,95 @@
+name: TradingCore Adaptive Daily Alpha Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "53 1 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-adaptive-daily-alpha.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-adaptive-daily-alpha
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Install fixed numerical dependencies
+        run: python3 -m pip install --quiet "numpy>=1.26,<3" "pandas>=2.1,<4"
+
+      - name: Restore and verify adaptive alpha lab
+        working-directory: code
+        run: |
+          base64 -d research_payloads/adaptive_daily_alpha_lab.py.gz.b64 | gzip -d > adaptive_daily_alpha_lab.py
+          python3 -m py_compile adaptive_daily_alpha_lab.py
+          grep -q "TRADINGCORE_ADAPTIVE_DAILY_ALPHA_V1" adaptive_daily_alpha_lab.py
+
+      - name: Run four-year monthly walk-forward
+        working-directory: code
+        run: |
+          python3 adaptive_daily_alpha_lab.py --output-dir "$GITHUB_WORKSPACE/state/adaptive_daily_alpha_runtime"
+
+      - name: Persist result
+        if: always()
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Adaptive Daily Alpha"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f adaptive_daily_alpha_runtime
+          if git diff --cached --quiet; then
+            echo "No adaptive alpha changes."
+          else
+            git commit -m "adaptive-alpha: update trend-reversion-router validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Adaptive Daily Alpha" >> "$GITHUB_STEP_SUMMARY"
+          RESULT="$GITHUB_WORKSPACE/state/adaptive_daily_alpha_runtime/ADAPTIVE_DAILY_ALPHA_RESULT.json"
+          if [ -f "$RESULT" ]; then
+            export RESULT
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          d=json.load(open(os.environ['RESULT'],encoding='utf-8'))
+          print('state:',d.get('state'))
+          print('trend:',(d.get('trend_sleeve') or {}).get('metrics'))
+          print('reversion:',(d.get('reversion_sleeve') or {}).get('metrics'))
+          print('router:',(d.get('adaptive_router') or {}).get('metrics'))
+          print('recent_365_days:',(d.get('adaptive_router') or {}).get('recent_365_days'))
+          print('checks:',(d.get('adaptive_router') or {}).get('checks'))
+          print('data_failures:',d.get('data_failures'))
+          print('LIVE: disabled')
+          PY
+          else
+            echo "Result file missing; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
