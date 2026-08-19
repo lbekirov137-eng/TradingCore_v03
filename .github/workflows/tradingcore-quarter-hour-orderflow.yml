@@ -13,8 +13,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: tradingcore-quarter-hour-orderflow
-  cancel-in-progress: true
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
 
 jobs:
   validate:
@@ -88,3 +88,5 @@ jobs:
           else
             echo "Result file missing; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
           fi
+
+# Payload restored; rerun under the shared cloud-state writer lock.
