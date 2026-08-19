@@ -1,0 +1,95 @@
+name: TradingCore Spot Rotation Regime Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7 3 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-spot-rotation-regime.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-spot-rotation-regime
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Restore daily data engine and spot rotation lab
+        working-directory: code
+        run: |
+          base64 -d research_payloads/daily_regime_ensemble_lab.py.gz.b64 | gzip -d > daily_regime_ensemble_lab.py
+          base64 -d research_payloads/spot_rotation_regime_lab.py.gz.b64 | gzip -d > spot_rotation_regime_lab.py
+          python3 -m py_compile daily_regime_ensemble_lab.py spot_rotation_regime_lab.py
+          grep -q "TRADINGCORE_SPOT_ROTATION_REGIME_V1" spot_rotation_regime_lab.py
+
+      - name: Run four-year two-venue spot rotation validation
+        working-directory: code
+        run: |
+          python3 spot_rotation_regime_lab.py --output-dir "$GITHUB_WORKSPACE/state/spot_rotation_runtime"
+
+      - name: Persist result
+        if: always()
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Spot Rotation"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f spot_rotation_runtime
+          if git diff --cached --quiet; then
+            echo "No spot rotation changes."
+          else
+            git commit -m "spot-rotation: update long-only regime validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Spot Rotation Regime" >> "$GITHUB_STEP_SUMMARY"
+          RESULT="$GITHUB_WORKSPACE/state/spot_rotation_runtime/SPOT_ROTATION_RESULT.json"
+          if [ -f "$RESULT" ]; then
+            export RESULT
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          d=json.load(open(os.environ['RESULT'],encoding='utf-8'))
+          print('state:',d.get('state'))
+          print('selected:',d.get('selected_family'))
+          print('holdout_both_venues:',d.get('selected_holdout_passed_both_venues'))
+          print('discovery_candidates:',d.get('discovery_candidates'))
+          print('data_failures:',d.get('data_failures'))
+          for row in d.get('results') or []:
+              print('\n',row.get('family'))
+              for venue,payload in (row.get('venues') or {}).items():
+                  print(venue,'discovery=',payload.get('discovery'),'holdout=',payload.get('holdout'))
+          print('LIVE: disabled')
+          PY
+          else
+            echo "Result file missing; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
