@@ -1,0 +1,69 @@
+name: TradingCore Challenger Multi-Year Validator
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "27 1 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-challenger-multiyear.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+      - name: Compile and run multi-year validator
+        working-directory: code
+        run: |
+          python3 -m py_compile challenger_multiyear_validator.py strategy_atlas_price_v2.py
+          python3 challenger_multiyear_validator.py --output-dir "$GITHUB_WORKSPACE/state/challenger_multiyear_runtime"
+      - name: Persist validation state
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Challenger Validator"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f challenger_multiyear_runtime
+          if git diff --cached --quiet; then
+            echo "No challenger changes."
+          else
+            git commit -m "challenger: update multi-year validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Challenger Multi-Year Validator" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/challenger_multiyear_runtime/CHALLENGER_MULTIYEAR_RESULT.json" ]; then
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json,os
+          p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','challenger_multiyear_runtime','CHALLENGER_MULTIYEAR_RESULT.json')
+          d=json.load(open(p,encoding='utf-8'))
+          print('passing both venues:',d.get('passing_both_venues'))
+          print('data failures:',d.get('data_failures'))
+          print('LIVE: disabled')
+          PY
