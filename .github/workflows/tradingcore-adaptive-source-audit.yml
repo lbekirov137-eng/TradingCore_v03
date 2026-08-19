@@ -1,0 +1,56 @@
+name: TradingCore Adaptive Alpha Source Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-adaptive-source-audit.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-adaptive-source-audit
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Decode source for line-by-line audit
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/state/adaptive_source_audit"
+          base64 -d "$GITHUB_WORKSPACE/code/research_payloads/adaptive_daily_alpha_lab.py.gz.b64" | gzip -d > "$GITHUB_WORKSPACE/state/adaptive_source_audit/adaptive_daily_alpha_lab.py"
+          python3 -m py_compile "$GITHUB_WORKSPACE/state/adaptive_source_audit/adaptive_daily_alpha_lab.py"
+          sha256sum "$GITHUB_WORKSPACE/state/adaptive_source_audit/adaptive_daily_alpha_lab.py" > "$GITHUB_WORKSPACE/state/adaptive_source_audit/SHA256.txt"
+          grep -nE "net_return|equity|capital|weight|turnover|compound|pnl|return" "$GITHUB_WORKSPACE/state/adaptive_source_audit/adaptive_daily_alpha_lab.py" > "$GITHUB_WORKSPACE/state/adaptive_source_audit/ACCOUNTING_LINES.txt" || true
+
+      - name: Persist decoded audit source
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Accounting Audit"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f adaptive_source_audit
+          if git diff --cached --quiet; then
+            echo "No audit-source changes."
+          else
+            git commit -m "audit: expose adaptive alpha accounting source"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
