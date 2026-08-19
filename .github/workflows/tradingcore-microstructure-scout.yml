@@ -19,7 +19,7 @@ concurrency:
 jobs:
   scout:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     env:
       TRADING_ENVIRONMENT: PAPER
       LIVE_TRADING: "false"
@@ -35,12 +35,15 @@ jobs:
           ref: cloud-state
           path: state
           fetch-depth: 1
-      - name: Compile + snapshot
+
+      - name: Compile, capture snapshot, and score frozen forward lanes
         working-directory: code
         run: |
-          python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_microstructure.py
+          python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_microstructure.py microstructure_forward_execution.py
           python3 strategy_atlas_microstructure.py --state-dir "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime"
-      - name: Persist snapshots
+          python3 microstructure_forward_execution.py --state-dir "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime"
+
+      - name: Persist snapshots and forward execution state
         working-directory: state
         run: |
           git config user.name "TradingCore Microstructure Scout"
@@ -49,8 +52,22 @@ jobs:
           if git diff --cached --quiet; then
             echo "No microstructure changes."
           else
-            git commit -m "microstructure: append public market snapshot"
+            git commit -m "microstructure: append snapshot and forward execution evidence"
             git pull --rebase origin cloud-state
             git push origin HEAD:cloud-state
           fi
-# Frontier V2 trigger: L2 + trade-flow + microprice collector
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Microstructure Forward" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime/MICROSTRUCTURE_FORWARD_STATUS.json" ]; then
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','strategy_atlas_microstructure_runtime','MICROSTRUCTURE_FORWARD_STATUS.json')
+          d=json.load(open(p,encoding='utf-8'))
+          print('after_freeze:', d.get('snapshot_count_after_freeze'))
+          print('promising_early:', d.get('promising_early'))
+          print('champions:', d.get('champions'))
+          print('LIVE: disabled')
+          PY
