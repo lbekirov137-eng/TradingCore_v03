@@ -1,0 +1,3927 @@
+{
+  "schema": "TRADINGCORE_INTRADAY_SESSION_REGIME_V1",
+  "generated_at_utc": "2026-08-19T19:01:11.434613+00:00",
+  "state": "NO_INTRADAY_SESSION_CANDIDATE",
+  "history_years": 3,
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ],
+  "families": [
+    "ASIA_RANGE_BREAKOUT",
+    "US_RANGE_BREAKOUT",
+    "SWEEP_RECLAIM",
+    "VWAP_MEAN_REVERSION",
+    "REGIME_ROUTER"
+  ],
+  "selected_family": null,
+  "selected_holdout_passed_both_venues": false,
+  "discovery_candidates": [],
+  "execution_model": "1h close signal -> next-hour open; long/short price proxy; 1.5ATR stop; 2.5ATR target; stop-first; TradingCore costs",
+  "results": [
+    {
+      "family": "ASIA_RANGE_BREAKOUT",
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "closed_trades": 2010,
+            "wins": 753,
+            "losses": 1257,
+            "win_rate_percent": 37.46,
+            "net_r": -484.0974,
+            "profit_factor": 0.6485,
+            "expectancy_r": -0.2408,
+            "max_drawdown_r": 484.0974,
+            "capital_return_percent_at_0_1pct_risk": -48.4097,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -35.828,
+              "2023-Q4": -46.676,
+              "2024-Q1": -67.023,
+              "2024-Q2": -38.714,
+              "2024-Q3": -56.1,
+              "2024-Q4": -78.002,
+              "2025-Q1": -40.032,
+              "2025-Q2": -94.502,
+              "2025-Q3": -27.221
+            },
+            "recent_trades": [
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T13:00:00+00:00",
+                "exit_utc": "2025-08-12T16:00:00+00:00",
+                "r": 1.4695,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T13:00:00+00:00",
+                "exit_utc": "2025-08-12T20:00:00+00:00",
+                "r": 1.48497,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T15:00:00+00:00",
+                "exit_utc": "2025-08-13T03:00:00+00:00",
+                "r": -0.34412,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T11:00:00+00:00",
+                "exit_utc": "2025-08-13T13:00:00+00:00",
+                "r": 1.21521,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T14:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.392,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.15156,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T15:00:00+00:00",
+                "r": -1.18555,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T16:00:00+00:00",
+                "exit_utc": "2025-08-13T19:00:00+00:00",
+                "r": 1.32016,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T11:00:00+00:00",
+                "exit_utc": "2025-08-14T12:00:00+00:00",
+                "r": 1.32533,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-14T14:00:00+00:00",
+                "r": -1.14642,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-15T01:00:00+00:00",
+                "r": -0.12962,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-15T01:00:00+00:00",
+                "r": 0.02595,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T16:00:00+00:00",
+                "exit_utc": "2025-08-15T04:00:00+00:00",
+                "r": -0.17144,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T18:00:00+00:00",
+                "r": 1.5354,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-16T02:00:00+00:00",
+                "r": -0.09848,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T15:00:00+00:00",
+                "exit_utc": "2025-08-16T03:00:00+00:00",
+                "r": 0.53276,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-16T10:00:00+00:00",
+                "exit_utc": "2025-08-16T22:00:00+00:00",
+                "r": -0.53533,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T16:00:00+00:00",
+                "r": -1.79247,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": -1.24605,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T15:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": -1.22483,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 1024,
+            "wins": 365,
+            "losses": 659,
+            "win_rate_percent": 35.64,
+            "net_r": -330.3767,
+            "profit_factor": 0.5541,
+            "expectancy_r": -0.3226,
+            "max_drawdown_r": 340.793,
+            "capital_return_percent_at_0_1pct_risk": -33.0377,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -46.571,
+              "2025-Q4": -71.793,
+              "2026-Q1": -37.537,
+              "2026-Q2": -124.248,
+              "2026-Q3": -50.227
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-15T09:00:00+00:00",
+                "exit_utc": "2026-08-15T21:00:00+00:00",
+                "r": -1.72462,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T10:00:00+00:00",
+                "exit_utc": "2026-08-16T14:00:00+00:00",
+                "r": -2.72672,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T13:00:00+00:00",
+                "exit_utc": "2026-08-16T15:00:00+00:00",
+                "r": -1.82223,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T15:00:00+00:00",
+                "exit_utc": "2026-08-17T17:00:00+00:00",
+                "r": 1.03149,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T01:00:00+00:00",
+                "r": -1.41645,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T12:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": 1.24277,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -1.52645,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.04981,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T16:00:00+00:00",
+                "exit_utc": "2026-08-19T04:00:00+00:00",
+                "r": -0.92821,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T12:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.13221,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T09:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.26364,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 0.96929,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.19312,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.3107,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.15234,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.31732,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.39729,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.75377,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.03398,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.3898,
+                "reason": "WINDOW_END"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "closed_trades": 2015,
+            "wins": 753,
+            "losses": 1262,
+            "win_rate_percent": 37.37,
+            "net_r": -476.4345,
+            "profit_factor": 0.6544,
+            "expectancy_r": -0.2364,
+            "max_drawdown_r": 477.818,
+            "capital_return_percent_at_0_1pct_risk": -47.6434,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -39.228,
+              "2023-Q4": -43.884,
+              "2024-Q1": -65.267,
+              "2024-Q2": -40.644,
+              "2024-Q3": -53.008,
+              "2024-Q4": -77.226,
+              "2025-Q1": -41.048,
+              "2025-Q2": -93.095,
+              "2025-Q3": -23.035
+            },
+            "recent_trades": [
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T13:00:00+00:00",
+                "exit_utc": "2025-08-12T16:00:00+00:00",
+                "r": 1.46888,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T13:00:00+00:00",
+                "exit_utc": "2025-08-12T20:00:00+00:00",
+                "r": 1.4857,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T15:00:00+00:00",
+                "exit_utc": "2025-08-13T03:00:00+00:00",
+                "r": -0.34475,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T11:00:00+00:00",
+                "exit_utc": "2025-08-13T13:00:00+00:00",
+                "r": 1.22591,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T14:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.38438,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.15142,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T15:00:00+00:00",
+                "r": -1.1836,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T16:00:00+00:00",
+                "exit_utc": "2025-08-13T19:00:00+00:00",
+                "r": 1.32622,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T11:00:00+00:00",
+                "exit_utc": "2025-08-14T12:00:00+00:00",
+                "r": 1.33334,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-14T14:00:00+00:00",
+                "r": -1.14559,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-15T01:00:00+00:00",
+                "r": -0.1245,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-15T01:00:00+00:00",
+                "r": 0.03055,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T16:00:00+00:00",
+                "exit_utc": "2025-08-15T04:00:00+00:00",
+                "r": -0.16783,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T18:00:00+00:00",
+                "r": 1.53505,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-16T02:00:00+00:00",
+                "r": -0.09774,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T15:00:00+00:00",
+                "exit_utc": "2025-08-16T03:00:00+00:00",
+                "r": 0.53115,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-16T10:00:00+00:00",
+                "exit_utc": "2025-08-16T22:00:00+00:00",
+                "r": -0.55302,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T16:00:00+00:00",
+                "r": -1.77122,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": -1.24581,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T15:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": -1.22644,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 1014,
+            "wins": 363,
+            "losses": 651,
+            "win_rate_percent": 35.8,
+            "net_r": -330.6393,
+            "profit_factor": 0.5509,
+            "expectancy_r": -0.3261,
+            "max_drawdown_r": 341.0845,
+            "capital_return_percent_at_0_1pct_risk": -33.0639,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -46.241,
+              "2025-Q4": -69.596,
+              "2026-Q1": -43.353,
+              "2026-Q2": -125.62,
+              "2026-Q3": -45.83
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-15T09:00:00+00:00",
+                "exit_utc": "2026-08-15T21:00:00+00:00",
+                "r": -1.695,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T10:00:00+00:00",
+                "exit_utc": "2026-08-16T14:00:00+00:00",
+                "r": -2.66502,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T13:00:00+00:00",
+                "exit_utc": "2026-08-16T15:00:00+00:00",
+                "r": -1.8355,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T15:00:00+00:00",
+                "exit_utc": "2026-08-17T17:00:00+00:00",
+                "r": 1.04319,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T02:00:00+00:00",
+                "r": -1.41935,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T12:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": 1.23666,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -1.51932,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.03402,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T16:00:00+00:00",
+                "exit_utc": "2026-08-19T04:00:00+00:00",
+                "r": -0.93571,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T12:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.12932,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T09:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.25881,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 0.99251,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.18921,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.29314,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.16522,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.31489,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.38877,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.70889,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.03574,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.3998,
+                "reason": "WINDOW_END"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "family": "US_RANGE_BREAKOUT",
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "closed_trades": 2506,
+            "wins": 928,
+            "losses": 1578,
+            "win_rate_percent": 37.03,
+            "net_r": -597.9865,
+            "profit_factor": 0.6432,
+            "expectancy_r": -0.2386,
+            "max_drawdown_r": 606.9293,
+            "capital_return_percent_at_0_1pct_risk": -59.7986,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -70.548,
+              "2023-Q4": -63.923,
+              "2024-Q1": -43.415,
+              "2024-Q2": -36.991,
+              "2024-Q3": -74.223,
+              "2024-Q4": -108.796,
+              "2025-Q1": -73.056,
+              "2025-Q2": -85.832,
+              "2025-Q3": -41.203
+            },
+            "recent_trades": [
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-11T16:00:00+00:00",
+                "exit_utc": "2025-08-11T19:00:00+00:00",
+                "r": -1.17578,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T20:00:00+00:00",
+                "exit_utc": "2025-08-12T08:00:00+00:00",
+                "r": -0.07655,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T20:00:00+00:00",
+                "exit_utc": "2025-08-12T08:00:00+00:00",
+                "r": 0.10637,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T15:00:00+00:00",
+                "exit_utc": "2025-08-12T16:00:00+00:00",
+                "r": 1.48492,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T17:00:00+00:00",
+                "exit_utc": "2025-08-12T19:00:00+00:00",
+                "r": 1.49967,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T16:00:00+00:00",
+                "exit_utc": "2025-08-12T20:00:00+00:00",
+                "r": 1.49297,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T20:00:00+00:00",
+                "exit_utc": "2025-08-13T02:00:00+00:00",
+                "r": 1.50181,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T15:00:00+00:00",
+                "exit_utc": "2025-08-13T03:00:00+00:00",
+                "r": -0.34412,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T21:00:00+00:00",
+                "exit_utc": "2025-08-13T09:00:00+00:00",
+                "r": 0.85129,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T14:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.392,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T15:00:00+00:00",
+                "exit_utc": "2025-08-13T18:00:00+00:00",
+                "r": -1.1368,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T16:00:00+00:00",
+                "exit_utc": "2025-08-13T19:00:00+00:00",
+                "r": 1.32016,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T20:00:00+00:00",
+                "exit_utc": "2025-08-14T06:00:00+00:00",
+                "r": -1.33668,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T18:00:00+00:00",
+                "exit_utc": "2025-08-14T06:00:00+00:00",
+                "r": 0.42619,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T15:00:00+00:00",
+                "r": 1.50683,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T18:00:00+00:00",
+                "r": 1.5354,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-16T02:00:00+00:00",
+                "r": -0.09848,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T16:00:00+00:00",
+                "exit_utc": "2025-08-16T04:00:00+00:00",
+                "r": -0.38404,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T19:00:00+00:00",
+                "exit_utc": "2025-08-16T07:00:00+00:00",
+                "r": -1.12428,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T16:00:00+00:00",
+                "exit_utc": "2025-08-17T17:00:00+00:00",
+                "r": -1.2244,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 1318,
+            "wins": 480,
+            "losses": 838,
+            "win_rate_percent": 36.42,
+            "net_r": -367.2756,
+            "profit_factor": 0.5893,
+            "expectancy_r": -0.2787,
+            "max_drawdown_r": 370.9909,
+            "capital_return_percent_at_0_1pct_risk": -36.7276,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -58.219,
+              "2025-Q4": -96.352,
+              "2026-Q1": -40.852,
+              "2026-Q2": -93.955,
+              "2026-Q3": -77.899
+            },
+            "recent_trades": [
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T15:00:00+00:00",
+                "exit_utc": "2026-08-16T16:00:00+00:00",
+                "r": 0.30302,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T17:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -2.68781,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T17:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -2.19722,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T16:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -1.80145,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T19:00:00+00:00",
+                "exit_utc": "2026-08-16T21:00:00+00:00",
+                "r": -2.0861,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T21:00:00+00:00",
+                "exit_utc": "2026-08-16T21:00:00+00:00",
+                "r": 0.96692,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T15:00:00+00:00",
+                "exit_utc": "2026-08-17T17:00:00+00:00",
+                "r": 1.03149,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T01:00:00+00:00",
+                "r": -1.43544,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T15:00:00+00:00",
+                "exit_utc": "2026-08-18T02:00:00+00:00",
+                "r": -1.42167,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T18:00:00+00:00",
+                "exit_utc": "2026-08-18T06:00:00+00:00",
+                "r": -0.58332,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -1.52645,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.34707,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.04981,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T14:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.02596,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.15234,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.31732,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.39729,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.75377,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.03398,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.3898,
+                "reason": "WINDOW_END"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "closed_trades": 2507,
+            "wins": 921,
+            "losses": 1586,
+            "win_rate_percent": 36.74,
+            "net_r": -597.6549,
+            "profit_factor": 0.6428,
+            "expectancy_r": -0.2384,
+            "max_drawdown_r": 607.3026,
+            "capital_return_percent_at_0_1pct_risk": -59.7655,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -68.458,
+              "2023-Q4": -64.959,
+              "2024-Q1": -43.846,
+              "2024-Q2": -37.923,
+              "2024-Q3": -78.403,
+              "2024-Q4": -105.208,
+              "2025-Q1": -73.786,
+              "2025-Q2": -86.053,
+              "2025-Q3": -39.018
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T20:00:00+00:00",
+                "exit_utc": "2025-08-12T08:00:00+00:00",
+                "r": -0.08183,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T20:00:00+00:00",
+                "exit_utc": "2025-08-12T08:00:00+00:00",
+                "r": 0.10988,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T15:00:00+00:00",
+                "exit_utc": "2025-08-12T16:00:00+00:00",
+                "r": 1.48413,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T17:00:00+00:00",
+                "exit_utc": "2025-08-12T19:00:00+00:00",
+                "r": 1.49952,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T16:00:00+00:00",
+                "exit_utc": "2025-08-12T20:00:00+00:00",
+                "r": 1.49407,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T20:00:00+00:00",
+                "exit_utc": "2025-08-13T02:00:00+00:00",
+                "r": 1.50245,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T15:00:00+00:00",
+                "exit_utc": "2025-08-13T03:00:00+00:00",
+                "r": -0.34475,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T21:00:00+00:00",
+                "exit_utc": "2025-08-13T09:00:00+00:00",
+                "r": 0.86487,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T14:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.38438,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T15:00:00+00:00",
+                "exit_utc": "2025-08-13T18:00:00+00:00",
+                "r": -1.13722,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T16:00:00+00:00",
+                "exit_utc": "2025-08-13T19:00:00+00:00",
+                "r": 1.32622,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T20:00:00+00:00",
+                "exit_utc": "2025-08-14T06:00:00+00:00",
+                "r": -1.33137,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T20:00:00+00:00",
+                "exit_utc": "2025-08-14T08:00:00+00:00",
+                "r": -0.34384,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T15:00:00+00:00",
+                "r": 1.5068,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T18:00:00+00:00",
+                "r": 1.53505,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-16T02:00:00+00:00",
+                "r": -0.09774,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T16:00:00+00:00",
+                "exit_utc": "2025-08-16T04:00:00+00:00",
+                "r": -0.38686,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T19:00:00+00:00",
+                "exit_utc": "2025-08-16T07:00:00+00:00",
+                "r": -1.12464,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-16T15:00:00+00:00",
+                "exit_utc": "2025-08-17T03:00:00+00:00",
+                "r": -0.73459,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T16:00:00+00:00",
+                "exit_utc": "2025-08-17T16:00:00+00:00",
+                "r": -1.22655,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 1316,
+            "wins": 480,
+            "losses": 836,
+            "win_rate_percent": 36.47,
+            "net_r": -361.3123,
+            "profit_factor": 0.593,
+            "expectancy_r": -0.2746,
+            "max_drawdown_r": 365.575,
+            "capital_return_percent_at_0_1pct_risk": -36.1312,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -57.02,
+              "2025-Q4": -89.601,
+              "2026-Q1": -42.813,
+              "2026-Q2": -95.179,
+              "2026-Q3": -76.698
+            },
+            "recent_trades": [
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T15:00:00+00:00",
+                "exit_utc": "2026-08-16T16:00:00+00:00",
+                "r": 0.3256,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T17:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -2.6208,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T17:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -2.18239,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T16:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -1.80897,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T19:00:00+00:00",
+                "exit_utc": "2026-08-16T21:00:00+00:00",
+                "r": -2.07154,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T21:00:00+00:00",
+                "exit_utc": "2026-08-16T21:00:00+00:00",
+                "r": 0.96161,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T15:00:00+00:00",
+                "exit_utc": "2026-08-17T17:00:00+00:00",
+                "r": 1.04319,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T01:00:00+00:00",
+                "r": -1.43652,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T15:00:00+00:00",
+                "exit_utc": "2026-08-18T02:00:00+00:00",
+                "r": -1.42396,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T18:00:00+00:00",
+                "exit_utc": "2026-08-18T06:00:00+00:00",
+                "r": -0.57791,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -1.51932,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.36021,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.03402,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T14:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.04624,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.16522,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.31489,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.38877,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.70889,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.03574,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T16:00:00+00:00",
+                "exit_utc": "2026-08-19T17:00:00+00:00",
+                "r": -0.3998,
+                "reason": "WINDOW_END"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "family": "SWEEP_RECLAIM",
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "closed_trades": 1895,
+            "wins": 736,
+            "losses": 1159,
+            "win_rate_percent": 38.84,
+            "net_r": -507.884,
+            "profit_factor": 0.5943,
+            "expectancy_r": -0.268,
+            "max_drawdown_r": 510.2392,
+            "capital_return_percent_at_0_1pct_risk": -50.7884,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -33.672,
+              "2023-Q4": -62.358,
+              "2024-Q1": -72.977,
+              "2024-Q2": -46.826,
+              "2024-Q3": -58.82,
+              "2024-Q4": -59.874,
+              "2025-Q1": -66.96,
+              "2025-Q2": -43.503,
+              "2025-Q3": -62.894
+            },
+            "recent_trades": [
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-10T15:00:00+00:00",
+                "exit_utc": "2025-08-11T02:00:00+00:00",
+                "r": 1.47374,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T06:00:00+00:00",
+                "exit_utc": "2025-08-11T11:00:00+00:00",
+                "r": 1.46924,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T04:00:00+00:00",
+                "exit_utc": "2025-08-11T12:00:00+00:00",
+                "r": 1.25579,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-11T14:00:00+00:00",
+                "exit_utc": "2025-08-11T19:00:00+00:00",
+                "r": -1.17616,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T17:00:00+00:00",
+                "exit_utc": "2025-08-12T05:00:00+00:00",
+                "r": 0.18595,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-12T14:00:00+00:00",
+                "exit_utc": "2025-08-12T15:00:00+00:00",
+                "r": -1.17176,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-12T17:00:00+00:00",
+                "exit_utc": "2025-08-12T20:00:00+00:00",
+                "r": -1.17374,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T04:00:00+00:00",
+                "exit_utc": "2025-08-13T09:00:00+00:00",
+                "r": -1.14933,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T15:00:00+00:00",
+                "exit_utc": "2025-08-13T18:00:00+00:00",
+                "r": -1.35832,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T11:00:00+00:00",
+                "exit_utc": "2025-08-13T21:00:00+00:00",
+                "r": -1.19427,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T22:00:00+00:00",
+                "exit_utc": "2025-08-13T22:00:00+00:00",
+                "r": -1.34685,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T05:00:00+00:00",
+                "exit_utc": "2025-08-14T12:00:00+00:00",
+                "r": 1.48188,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T14:00:00+00:00",
+                "exit_utc": "2025-08-14T18:00:00+00:00",
+                "r": -1.12677,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T14:00:00+00:00",
+                "exit_utc": "2025-08-14T21:00:00+00:00",
+                "r": -1.08525,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T19:00:00+00:00",
+                "exit_utc": "2025-08-15T07:00:00+00:00",
+                "r": 0.36246,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T17:00:00+00:00",
+                "exit_utc": "2025-08-16T05:00:00+00:00",
+                "r": -0.11575,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T21:00:00+00:00",
+                "exit_utc": "2025-08-16T09:00:00+00:00",
+                "r": -0.42514,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T08:00:00+00:00",
+                "r": -1.26331,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T09:00:00+00:00",
+                "r": -1.79356,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T10:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": 0.86588,
+                "reason": "TARGET"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 811,
+            "wins": 337,
+            "losses": 474,
+            "win_rate_percent": 41.55,
+            "net_r": -189.5932,
+            "profit_factor": 0.6342,
+            "expectancy_r": -0.2338,
+            "max_drawdown_r": 192.6277,
+            "capital_return_percent_at_0_1pct_risk": -18.9593,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -19.519,
+              "2025-Q4": -7.945,
+              "2026-Q1": -64.144,
+              "2026-Q2": -52.628,
+              "2026-Q3": -45.357
+            },
+            "recent_trades": [
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-07T11:00:00+00:00",
+                "exit_utc": "2026-08-07T12:00:00+00:00",
+                "r": -1.40977,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-08T05:00:00+00:00",
+                "exit_utc": "2026-08-08T11:00:00+00:00",
+                "r": -1.37315,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-08T16:00:00+00:00",
+                "exit_utc": "2026-08-09T04:00:00+00:00",
+                "r": 0.30758,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-09T17:00:00+00:00",
+                "exit_utc": "2026-08-09T23:00:00+00:00",
+                "r": 1.2551,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-09T23:00:00+00:00",
+                "exit_utc": "2026-08-10T00:00:00+00:00",
+                "r": -2.06812,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-09T23:00:00+00:00",
+                "exit_utc": "2026-08-10T00:00:00+00:00",
+                "r": -1.67333,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T01:00:00+00:00",
+                "exit_utc": "2026-08-10T01:00:00+00:00",
+                "r": 1.14524,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-11T20:00:00+00:00",
+                "exit_utc": "2026-08-12T08:00:00+00:00",
+                "r": 0.18905,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-11T23:00:00+00:00",
+                "exit_utc": "2026-08-12T11:00:00+00:00",
+                "r": -0.98357,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-12T13:00:00+00:00",
+                "exit_utc": "2026-08-12T14:00:00+00:00",
+                "r": 1.24911,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-12T13:00:00+00:00",
+                "exit_utc": "2026-08-12T14:00:00+00:00",
+                "r": 1.28292,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-12T23:00:00+00:00",
+                "exit_utc": "2026-08-13T05:00:00+00:00",
+                "r": 1.29923,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-12T21:00:00+00:00",
+                "exit_utc": "2026-08-13T09:00:00+00:00",
+                "r": -0.17653,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-14T09:00:00+00:00",
+                "exit_utc": "2026-08-14T14:00:00+00:00",
+                "r": -1.54093,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-14T20:00:00+00:00",
+                "exit_utc": "2026-08-15T08:00:00+00:00",
+                "r": -0.29548,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T06:00:00+00:00",
+                "exit_utc": "2026-08-17T11:00:00+00:00",
+                "r": -1.7907,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T12:00:00+00:00",
+                "exit_utc": "2026-08-17T15:00:00+00:00",
+                "r": -1.69581,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T04:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": 1.22179,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-18T13:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": -1.4286,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-18T20:00:00+00:00",
+                "exit_utc": "2026-08-19T08:00:00+00:00",
+                "r": -0.71864,
+                "reason": "TIME"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "closed_trades": 1887,
+            "wins": 721,
+            "losses": 1166,
+            "win_rate_percent": 38.21,
+            "net_r": -535.8044,
+            "profit_factor": 0.5746,
+            "expectancy_r": -0.2839,
+            "max_drawdown_r": 538.1815,
+            "capital_return_percent_at_0_1pct_risk": -53.5804,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -32.217,
+              "2023-Q4": -66.839,
+              "2024-Q1": -77.727,
+              "2024-Q2": -57.418,
+              "2024-Q3": -67.903,
+              "2024-Q4": -59.555,
+              "2025-Q1": -62.265,
+              "2025-Q2": -47.155,
+              "2025-Q3": -64.725
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T04:00:00+00:00",
+                "exit_utc": "2025-08-11T12:00:00+00:00",
+                "r": 1.26013,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-11T14:00:00+00:00",
+                "exit_utc": "2025-08-11T19:00:00+00:00",
+                "r": -1.17622,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-11T17:00:00+00:00",
+                "exit_utc": "2025-08-12T05:00:00+00:00",
+                "r": 0.18583,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-12T14:00:00+00:00",
+                "exit_utc": "2025-08-12T15:00:00+00:00",
+                "r": -1.17133,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-12T17:00:00+00:00",
+                "exit_utc": "2025-08-12T20:00:00+00:00",
+                "r": -1.17285,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T04:00:00+00:00",
+                "exit_utc": "2025-08-13T09:00:00+00:00",
+                "r": -1.14912,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T15:00:00+00:00",
+                "exit_utc": "2025-08-13T18:00:00+00:00",
+                "r": -1.35239,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T11:00:00+00:00",
+                "exit_utc": "2025-08-13T21:00:00+00:00",
+                "r": -1.19171,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T22:00:00+00:00",
+                "exit_utc": "2025-08-13T23:00:00+00:00",
+                "r": -1.33946,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T05:00:00+00:00",
+                "exit_utc": "2025-08-14T12:00:00+00:00",
+                "r": 1.48335,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T14:00:00+00:00",
+                "exit_utc": "2025-08-14T18:00:00+00:00",
+                "r": -1.12629,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T14:00:00+00:00",
+                "exit_utc": "2025-08-14T21:00:00+00:00",
+                "r": -1.08455,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T19:00:00+00:00",
+                "exit_utc": "2025-08-15T07:00:00+00:00",
+                "r": 0.36659,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T17:00:00+00:00",
+                "exit_utc": "2025-08-16T05:00:00+00:00",
+                "r": -0.0945,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T17:00:00+00:00",
+                "exit_utc": "2025-08-16T05:00:00+00:00",
+                "r": 0.01386,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T21:00:00+00:00",
+                "exit_utc": "2025-08-16T09:00:00+00:00",
+                "r": -0.44017,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T08:00:00+00:00",
+                "r": -1.26309,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T09:00:00+00:00",
+                "r": -1.77335,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T10:00:00+00:00",
+                "exit_utc": "2025-08-17T15:00:00+00:00",
+                "r": -1.22755,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T10:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": 0.88929,
+                "reason": "TARGET"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 794,
+            "wins": 330,
+            "losses": 464,
+            "win_rate_percent": 41.56,
+            "net_r": -180.381,
+            "profit_factor": 0.6415,
+            "expectancy_r": -0.2272,
+            "max_drawdown_r": 183.4621,
+            "capital_return_percent_at_0_1pct_risk": -18.0381,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -19.76,
+              "2025-Q4": -7.317,
+              "2026-Q1": -58.144,
+              "2026-Q2": -50.683,
+              "2026-Q3": -44.477
+            },
+            "recent_trades": [
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-09T17:00:00+00:00",
+                "exit_utc": "2026-08-09T23:00:00+00:00",
+                "r": 1.24938,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-09T23:00:00+00:00",
+                "exit_utc": "2026-08-10T00:00:00+00:00",
+                "r": -2.06487,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-09T23:00:00+00:00",
+                "exit_utc": "2026-08-10T00:00:00+00:00",
+                "r": -1.67096,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T01:00:00+00:00",
+                "exit_utc": "2026-08-10T13:00:00+00:00",
+                "r": -1.5152,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T18:00:00+00:00",
+                "exit_utc": "2026-08-11T06:00:00+00:00",
+                "r": -0.43439,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T18:00:00+00:00",
+                "exit_utc": "2026-08-11T06:00:00+00:00",
+                "r": -0.31998,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-11T20:00:00+00:00",
+                "exit_utc": "2026-08-12T08:00:00+00:00",
+                "r": 0.18457,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-11T23:00:00+00:00",
+                "exit_utc": "2026-08-12T11:00:00+00:00",
+                "r": -1.01407,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-12T13:00:00+00:00",
+                "exit_utc": "2026-08-12T14:00:00+00:00",
+                "r": 1.24965,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-12T13:00:00+00:00",
+                "exit_utc": "2026-08-12T14:00:00+00:00",
+                "r": 1.28054,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-12T23:00:00+00:00",
+                "exit_utc": "2026-08-13T05:00:00+00:00",
+                "r": 1.29773,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-12T21:00:00+00:00",
+                "exit_utc": "2026-08-13T09:00:00+00:00",
+                "r": -0.20126,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-14T09:00:00+00:00",
+                "exit_utc": "2026-08-14T14:00:00+00:00",
+                "r": -1.52985,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-14T20:00:00+00:00",
+                "exit_utc": "2026-08-15T08:00:00+00:00",
+                "r": -0.29666,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T23:00:00+00:00",
+                "exit_utc": "2026-08-17T01:00:00+00:00",
+                "r": 0.87311,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T06:00:00+00:00",
+                "exit_utc": "2026-08-17T11:00:00+00:00",
+                "r": -1.76567,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T12:00:00+00:00",
+                "exit_utc": "2026-08-17T15:00:00+00:00",
+                "r": -1.67796,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T04:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": 1.22356,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-18T13:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": -1.43437,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-18T17:00:00+00:00",
+                "exit_utc": "2026-08-19T05:00:00+00:00",
+                "r": 0.07901,
+                "reason": "TIME"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "family": "VWAP_MEAN_REVERSION",
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "closed_trades": 398,
+            "wins": 148,
+            "losses": 250,
+            "win_rate_percent": 37.19,
+            "net_r": -118.5672,
+            "profit_factor": 0.5505,
+            "expectancy_r": -0.2979,
+            "max_drawdown_r": 127.5868,
+            "capital_return_percent_at_0_1pct_risk": -11.8567,
+            "positive_quarters": 2,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -17.315,
+              "2023-Q4": -23.661,
+              "2024-Q1": -13.235,
+              "2024-Q2": -25.747,
+              "2024-Q3": -21.893,
+              "2024-Q4": -13.492,
+              "2025-Q1": -11.749,
+              "2025-Q2": 6.734,
+              "2025-Q3": 1.791
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-06T16:00:00+00:00",
+                "exit_utc": "2025-07-06T21:00:00+00:00",
+                "r": -1.84326,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-07T22:00:00+00:00",
+                "exit_utc": "2025-07-08T10:00:00+00:00",
+                "r": 1.04619,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-08T12:00:00+00:00",
+                "exit_utc": "2025-07-09T00:00:00+00:00",
+                "r": -0.98336,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-16T02:00:00+00:00",
+                "exit_utc": "2025-07-16T09:00:00+00:00",
+                "r": -1.1749,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-18T18:00:00+00:00",
+                "exit_utc": "2025-07-19T06:00:00+00:00",
+                "r": 0.1751,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-20T17:00:00+00:00",
+                "exit_utc": "2025-07-20T22:00:00+00:00",
+                "r": 1.00339,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-21T01:00:00+00:00",
+                "exit_utc": "2025-07-21T03:00:00+00:00",
+                "r": 1.19376,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-24T16:00:00+00:00",
+                "exit_utc": "2025-07-25T03:00:00+00:00",
+                "r": 1.52371,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-28T19:00:00+00:00",
+                "exit_utc": "2025-07-29T06:00:00+00:00",
+                "r": 1.14389,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-30T20:00:00+00:00",
+                "exit_utc": "2025-07-31T03:00:00+00:00",
+                "r": 1.30813,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-31T02:00:00+00:00",
+                "exit_utc": "2025-07-31T14:00:00+00:00",
+                "r": 0.95172,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-31T22:00:00+00:00",
+                "exit_utc": "2025-07-31T23:00:00+00:00",
+                "r": -1.41407,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-04T18:00:00+00:00",
+                "exit_utc": "2025-08-05T06:00:00+00:00",
+                "r": 1.005,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-04T18:00:00+00:00",
+                "exit_utc": "2025-08-05T06:00:00+00:00",
+                "r": -0.1577,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-05T17:00:00+00:00",
+                "exit_utc": "2025-08-06T05:00:00+00:00",
+                "r": -0.0195,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-06T17:00:00+00:00",
+                "exit_utc": "2025-08-07T05:00:00+00:00",
+                "r": 0.26345,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-06T17:00:00+00:00",
+                "exit_utc": "2025-08-07T05:00:00+00:00",
+                "r": -0.5292,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-06T19:00:00+00:00",
+                "exit_utc": "2025-08-07T07:00:00+00:00",
+                "r": -0.67464,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T15:00:00+00:00",
+                "r": -1.22083,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T12:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": 1.41546,
+                "reason": "TARGET"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 182,
+            "wins": 73,
+            "losses": 109,
+            "win_rate_percent": 40.11,
+            "net_r": -49.7014,
+            "profit_factor": 0.5776,
+            "expectancy_r": -0.2731,
+            "max_drawdown_r": 56.4475,
+            "capital_return_percent_at_0_1pct_risk": -4.9701,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -0.602,
+              "2025-Q4": 0.214,
+              "2026-Q1": -14.076,
+              "2026-Q2": -10.559,
+              "2026-Q3": -24.679
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-07-20T17:00:00+00:00",
+                "exit_utc": "2026-07-21T05:00:00+00:00",
+                "r": -0.63776,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-23T19:00:00+00:00",
+                "exit_utc": "2026-07-24T00:00:00+00:00",
+                "r": -1.29457,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-23T15:00:00+00:00",
+                "exit_utc": "2026-07-24T03:00:00+00:00",
+                "r": 0.77929,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-23T19:00:00+00:00",
+                "exit_utc": "2026-07-24T07:00:00+00:00",
+                "r": 0.04227,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-07-27T00:00:00+00:00",
+                "exit_utc": "2026-07-27T01:00:00+00:00",
+                "r": 0.96873,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-28T00:00:00+00:00",
+                "exit_utc": "2026-07-28T01:00:00+00:00",
+                "r": -1.235,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-28T03:00:00+00:00",
+                "exit_utc": "2026-07-28T13:00:00+00:00",
+                "r": -1.23233,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-28T03:00:00+00:00",
+                "exit_utc": "2026-07-28T15:00:00+00:00",
+                "r": 1.43275,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-31T09:00:00+00:00",
+                "exit_utc": "2026-07-31T13:00:00+00:00",
+                "r": -1.30736,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-31T11:00:00+00:00",
+                "exit_utc": "2026-07-31T14:00:00+00:00",
+                "r": -1.3143,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-06T11:00:00+00:00",
+                "exit_utc": "2026-08-06T18:00:00+00:00",
+                "r": -1.37089,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-08T05:00:00+00:00",
+                "exit_utc": "2026-08-08T11:00:00+00:00",
+                "r": -1.37315,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T15:00:00+00:00",
+                "exit_utc": "2026-08-10T15:00:00+00:00",
+                "r": -1.56217,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T18:00:00+00:00",
+                "exit_utc": "2026-08-11T06:00:00+00:00",
+                "r": -0.4443,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T18:00:00+00:00",
+                "exit_utc": "2026-08-11T06:00:00+00:00",
+                "r": -0.32629,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-12T13:00:00+00:00",
+                "exit_utc": "2026-08-12T14:00:00+00:00",
+                "r": 1.24911,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-14T08:00:00+00:00",
+                "exit_utc": "2026-08-14T20:00:00+00:00",
+                "r": 0.12303,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T23:00:00+00:00",
+                "exit_utc": "2026-08-17T01:00:00+00:00",
+                "r": 0.87354,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T04:00:00+00:00",
+                "exit_utc": "2026-08-17T06:00:00+00:00",
+                "r": -1.55104,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T06:00:00+00:00",
+                "exit_utc": "2026-08-17T11:00:00+00:00",
+                "r": -1.7907,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "closed_trades": 376,
+            "wins": 141,
+            "losses": 235,
+            "win_rate_percent": 37.5,
+            "net_r": -111.8514,
+            "profit_factor": 0.5475,
+            "expectancy_r": -0.2975,
+            "max_drawdown_r": 116.6921,
+            "capital_return_percent_at_0_1pct_risk": -11.1851,
+            "positive_quarters": 1,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -17.078,
+              "2023-Q4": -20.754,
+              "2024-Q1": -13.93,
+              "2024-Q2": -17.763,
+              "2024-Q3": -23.884,
+              "2024-Q4": -12.621,
+              "2025-Q1": -5.158,
+              "2025-Q2": -1.04,
+              "2025-Q3": 0.376
+            },
+            "recent_trades": [
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-06T16:00:00+00:00",
+                "exit_utc": "2025-07-06T21:00:00+00:00",
+                "r": -1.35303,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-07T22:00:00+00:00",
+                "exit_utc": "2025-07-08T10:00:00+00:00",
+                "r": 1.05824,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-08T12:00:00+00:00",
+                "exit_utc": "2025-07-09T00:00:00+00:00",
+                "r": -0.94855,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-17T23:00:00+00:00",
+                "exit_utc": "2025-07-18T11:00:00+00:00",
+                "r": 0.19436,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-18T18:00:00+00:00",
+                "exit_utc": "2025-07-19T06:00:00+00:00",
+                "r": 0.17591,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-20T17:00:00+00:00",
+                "exit_utc": "2025-07-20T22:00:00+00:00",
+                "r": 1.01952,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-21T01:00:00+00:00",
+                "exit_utc": "2025-07-21T04:00:00+00:00",
+                "r": 1.20107,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-24T16:00:00+00:00",
+                "exit_utc": "2025-07-25T03:00:00+00:00",
+                "r": 1.52397,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-28T19:00:00+00:00",
+                "exit_utc": "2025-07-29T06:00:00+00:00",
+                "r": 1.15447,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-30T20:00:00+00:00",
+                "exit_utc": "2025-07-31T03:00:00+00:00",
+                "r": 1.31474,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-07-31T02:00:00+00:00",
+                "exit_utc": "2025-07-31T14:00:00+00:00",
+                "r": 0.93298,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-07-31T22:00:00+00:00",
+                "exit_utc": "2025-07-31T23:00:00+00:00",
+                "r": -1.40755,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-04T18:00:00+00:00",
+                "exit_utc": "2025-08-05T06:00:00+00:00",
+                "r": 0.96765,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-04T18:00:00+00:00",
+                "exit_utc": "2025-08-05T06:00:00+00:00",
+                "r": -0.15449,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-05T17:00:00+00:00",
+                "exit_utc": "2025-08-06T05:00:00+00:00",
+                "r": -0.0353,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-06T17:00:00+00:00",
+                "exit_utc": "2025-08-07T05:00:00+00:00",
+                "r": 0.24798,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-06T17:00:00+00:00",
+                "exit_utc": "2025-08-07T05:00:00+00:00",
+                "r": -0.52854,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-06T19:00:00+00:00",
+                "exit_utc": "2025-08-07T07:00:00+00:00",
+                "r": -0.66704,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T17:00:00+00:00",
+                "exit_utc": "2025-08-16T05:00:00+00:00",
+                "r": 0.01386,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T15:00:00+00:00",
+                "r": -1.22252,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 182,
+            "wins": 74,
+            "losses": 108,
+            "win_rate_percent": 40.66,
+            "net_r": -48.7558,
+            "profit_factor": 0.5885,
+            "expectancy_r": -0.2679,
+            "max_drawdown_r": 57.127,
+            "capital_return_percent_at_0_1pct_risk": -4.8756,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": 1.078,
+              "2025-Q4": -6.539,
+              "2026-Q1": -12.733,
+              "2026-Q2": -10.268,
+              "2026-Q3": -20.293
+            },
+            "recent_trades": [
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-17T07:00:00+00:00",
+                "exit_utc": "2026-07-17T13:00:00+00:00",
+                "r": -1.24498,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-07-18T21:00:00+00:00",
+                "exit_utc": "2026-07-19T02:00:00+00:00",
+                "r": -1.4562,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-07-20T17:00:00+00:00",
+                "exit_utc": "2026-07-21T03:00:00+00:00",
+                "r": -1.22774,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-07-20T17:00:00+00:00",
+                "exit_utc": "2026-07-21T05:00:00+00:00",
+                "r": -0.68327,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-23T15:00:00+00:00",
+                "exit_utc": "2026-07-24T03:00:00+00:00",
+                "r": 0.80216,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-23T19:00:00+00:00",
+                "exit_utc": "2026-07-24T07:00:00+00:00",
+                "r": 0.04289,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-07-27T00:00:00+00:00",
+                "exit_utc": "2026-07-27T01:00:00+00:00",
+                "r": 0.96578,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-28T00:00:00+00:00",
+                "exit_utc": "2026-07-28T01:00:00+00:00",
+                "r": -1.23418,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-28T03:00:00+00:00",
+                "exit_utc": "2026-07-28T13:00:00+00:00",
+                "r": -1.23141,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-31T09:00:00+00:00",
+                "exit_utc": "2026-07-31T13:00:00+00:00",
+                "r": -1.30876,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-07-31T11:00:00+00:00",
+                "exit_utc": "2026-07-31T14:00:00+00:00",
+                "r": -1.31769,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-06T11:00:00+00:00",
+                "exit_utc": "2026-08-06T18:00:00+00:00",
+                "r": -1.37424,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T15:00:00+00:00",
+                "exit_utc": "2026-08-10T15:00:00+00:00",
+                "r": -1.56099,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T18:00:00+00:00",
+                "exit_utc": "2026-08-11T06:00:00+00:00",
+                "r": -0.43439,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-10T18:00:00+00:00",
+                "exit_utc": "2026-08-11T06:00:00+00:00",
+                "r": -0.31998,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-11T17:00:00+00:00",
+                "exit_utc": "2026-08-11T20:00:00+00:00",
+                "r": 1.31276,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-12T13:00:00+00:00",
+                "exit_utc": "2026-08-12T14:00:00+00:00",
+                "r": 1.24965,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T23:00:00+00:00",
+                "exit_utc": "2026-08-17T01:00:00+00:00",
+                "r": 0.87311,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T04:00:00+00:00",
+                "exit_utc": "2026-08-17T06:00:00+00:00",
+                "r": -1.55364,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T06:00:00+00:00",
+                "exit_utc": "2026-08-17T11:00:00+00:00",
+                "r": -1.76567,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "family": "REGIME_ROUTER",
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "closed_trades": 3051,
+            "wins": 1160,
+            "losses": 1891,
+            "win_rate_percent": 38.02,
+            "net_r": -711.7674,
+            "profit_factor": 0.6505,
+            "expectancy_r": -0.2333,
+            "max_drawdown_r": 715.192,
+            "capital_return_percent_at_0_1pct_risk": -71.1767,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -82.121,
+              "2023-Q4": -61.18,
+              "2024-Q1": -84.499,
+              "2024-Q2": -84.02,
+              "2024-Q3": -121.276,
+              "2024-Q4": -108.157,
+              "2025-Q1": -45.603,
+              "2025-Q2": -88.255,
+              "2025-Q3": -36.656
+            },
+            "recent_trades": [
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-12T21:00:00+00:00",
+                "exit_utc": "2025-08-13T09:00:00+00:00",
+                "r": 0.85129,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T11:00:00+00:00",
+                "exit_utc": "2025-08-13T13:00:00+00:00",
+                "r": 1.21521,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T14:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.392,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.15156,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T15:00:00+00:00",
+                "r": -1.18555,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T15:00:00+00:00",
+                "exit_utc": "2025-08-13T18:00:00+00:00",
+                "r": -1.1368,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T16:00:00+00:00",
+                "exit_utc": "2025-08-13T19:00:00+00:00",
+                "r": 1.32016,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T20:00:00+00:00",
+                "exit_utc": "2025-08-14T06:00:00+00:00",
+                "r": -1.33668,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T18:00:00+00:00",
+                "exit_utc": "2025-08-14T06:00:00+00:00",
+                "r": 0.42619,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T11:00:00+00:00",
+                "exit_utc": "2025-08-14T12:00:00+00:00",
+                "r": 1.32533,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-14T14:00:00+00:00",
+                "r": -1.14642,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T14:00:00+00:00",
+                "exit_utc": "2025-08-14T21:00:00+00:00",
+                "r": -1.08525,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T19:00:00+00:00",
+                "exit_utc": "2025-08-15T07:00:00+00:00",
+                "r": 0.36246,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T15:00:00+00:00",
+                "r": 1.50683,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-16T02:00:00+00:00",
+                "r": -0.09848,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T21:00:00+00:00",
+                "exit_utc": "2025-08-16T09:00:00+00:00",
+                "r": -0.42514,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-16T10:00:00+00:00",
+                "exit_utc": "2025-08-16T22:00:00+00:00",
+                "r": -0.53533,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T15:00:00+00:00",
+                "r": -1.22083,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T16:00:00+00:00",
+                "r": -1.79247,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": -1.24605,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 1518,
+            "wins": 567,
+            "losses": 951,
+            "win_rate_percent": 37.35,
+            "net_r": -439.9812,
+            "profit_factor": 0.5792,
+            "expectancy_r": -0.2898,
+            "max_drawdown_r": 447.4868,
+            "capital_return_percent_at_0_1pct_risk": -43.9981,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -64.19,
+              "2025-Q4": -92.276,
+              "2026-Q1": -43.042,
+              "2026-Q2": -140.028,
+              "2026-Q3": -100.445
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T15:00:00+00:00",
+                "exit_utc": "2026-08-16T16:00:00+00:00",
+                "r": -0.35254,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T17:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -2.68781,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T16:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -1.80145,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T21:00:00+00:00",
+                "exit_utc": "2026-08-16T21:00:00+00:00",
+                "r": 0.96692,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T23:00:00+00:00",
+                "exit_utc": "2026-08-17T01:00:00+00:00",
+                "r": 0.87354,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T04:00:00+00:00",
+                "exit_utc": "2026-08-17T06:00:00+00:00",
+                "r": -1.55104,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T06:00:00+00:00",
+                "exit_utc": "2026-08-17T11:00:00+00:00",
+                "r": -1.7907,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T12:00:00+00:00",
+                "exit_utc": "2026-08-17T15:00:00+00:00",
+                "r": -1.69581,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T01:00:00+00:00",
+                "r": -1.43544,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T04:00:00+00:00",
+                "r": -0.55949,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-18T13:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": -1.4286,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -1.52645,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.34707,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.04981,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T12:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.13221,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T09:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.26364,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 0.96929,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.19312,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.3107,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.15234,
+                "reason": "TARGET"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "closed_trades": 3034,
+            "wins": 1154,
+            "losses": 1880,
+            "win_rate_percent": 38.04,
+            "net_r": -705.8386,
+            "profit_factor": 0.6508,
+            "expectancy_r": -0.2326,
+            "max_drawdown_r": 709.2537,
+            "capital_return_percent_at_0_1pct_risk": -70.5839,
+            "positive_quarters": 0,
+            "quarter_count": 9,
+            "quarter_r": {
+              "2023-Q3": -80.158,
+              "2023-Q4": -67.178,
+              "2024-Q1": -83.446,
+              "2024-Q2": -89.734,
+              "2024-Q3": -122.735,
+              "2024-Q4": -106.187,
+              "2025-Q1": -34.158,
+              "2025-Q2": -89.456,
+              "2025-Q3": -32.786
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T14:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.38438,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T14:00:00+00:00",
+                "r": -1.15142,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T10:00:00+00:00",
+                "exit_utc": "2025-08-13T15:00:00+00:00",
+                "r": -1.1836,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-13T15:00:00+00:00",
+                "exit_utc": "2025-08-13T18:00:00+00:00",
+                "r": -1.13722,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T16:00:00+00:00",
+                "exit_utc": "2025-08-13T19:00:00+00:00",
+                "r": 1.32622,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T20:00:00+00:00",
+                "exit_utc": "2025-08-14T06:00:00+00:00",
+                "r": -1.33137,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-13T20:00:00+00:00",
+                "exit_utc": "2025-08-14T08:00:00+00:00",
+                "r": -0.34384,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T11:00:00+00:00",
+                "exit_utc": "2025-08-14T12:00:00+00:00",
+                "r": 1.33334,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-14T13:00:00+00:00",
+                "exit_utc": "2025-08-14T14:00:00+00:00",
+                "r": -1.14559,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T14:00:00+00:00",
+                "exit_utc": "2025-08-14T21:00:00+00:00",
+                "r": -1.08455,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-14T19:00:00+00:00",
+                "exit_utc": "2025-08-15T07:00:00+00:00",
+                "r": 0.36659,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-15T15:00:00+00:00",
+                "r": 1.5068,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-15T14:00:00+00:00",
+                "exit_utc": "2025-08-16T02:00:00+00:00",
+                "r": -0.09774,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T17:00:00+00:00",
+                "exit_utc": "2025-08-16T05:00:00+00:00",
+                "r": 0.01386,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-15T21:00:00+00:00",
+                "exit_utc": "2025-08-16T09:00:00+00:00",
+                "r": -0.44017,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-16T10:00:00+00:00",
+                "exit_utc": "2025-08-16T22:00:00+00:00",
+                "r": -0.55302,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-16T15:00:00+00:00",
+                "exit_utc": "2025-08-17T03:00:00+00:00",
+                "r": -0.73459,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2025-08-17T06:00:00+00:00",
+                "exit_utc": "2025-08-17T15:00:00+00:00",
+                "r": -1.22252,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T16:00:00+00:00",
+                "r": -1.77122,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2025-08-17T09:00:00+00:00",
+                "exit_utc": "2025-08-17T18:00:00+00:00",
+                "r": -1.24581,
+                "reason": "STOP"
+              }
+            ]
+          },
+          "discovery_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "closed_trades": 1513,
+            "wins": 562,
+            "losses": 951,
+            "win_rate_percent": 37.14,
+            "net_r": -435.9602,
+            "profit_factor": 0.5812,
+            "expectancy_r": -0.2881,
+            "max_drawdown_r": 444.9311,
+            "capital_return_percent_at_0_1pct_risk": -43.596,
+            "positive_quarters": 0,
+            "quarter_count": 5,
+            "quarter_r": {
+              "2025-Q3": -55.6,
+              "2025-Q4": -101.141,
+              "2026-Q1": -48.09,
+              "2026-Q2": -133.139,
+              "2026-Q3": -97.99
+            },
+            "recent_trades": [
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T15:00:00+00:00",
+                "exit_utc": "2026-08-16T16:00:00+00:00",
+                "r": -0.25595,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T17:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -2.6208,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T16:00:00+00:00",
+                "exit_utc": "2026-08-16T17:00:00+00:00",
+                "r": -1.80897,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-16T21:00:00+00:00",
+                "exit_utc": "2026-08-16T21:00:00+00:00",
+                "r": 0.96161,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-16T23:00:00+00:00",
+                "exit_utc": "2026-08-17T01:00:00+00:00",
+                "r": 0.87311,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T04:00:00+00:00",
+                "exit_utc": "2026-08-17T06:00:00+00:00",
+                "r": -1.55364,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T06:00:00+00:00",
+                "exit_utc": "2026-08-17T11:00:00+00:00",
+                "r": -1.76567,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-17T12:00:00+00:00",
+                "exit_utc": "2026-08-17T15:00:00+00:00",
+                "r": -1.67796,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T01:00:00+00:00",
+                "r": -1.43652,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-17T16:00:00+00:00",
+                "exit_utc": "2026-08-18T04:00:00+00:00",
+                "r": -0.53354,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "SHORT",
+                "entry_utc": "2026-08-18T13:00:00+00:00",
+                "exit_utc": "2026-08-18T14:00:00+00:00",
+                "r": -1.43437,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -1.51932,
+                "reason": "STOP"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.36021,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-18T15:00:00+00:00",
+                "exit_utc": "2026-08-19T03:00:00+00:00",
+                "r": -0.03402,
+                "reason": "TIME"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T12:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.12932,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T09:00:00+00:00",
+                "exit_utc": "2026-08-19T12:00:00+00:00",
+                "r": 1.25881,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 0.99251,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "ETHUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.18921,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "SOLUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T13:00:00+00:00",
+                "exit_utc": "2026-08-19T14:00:00+00:00",
+                "r": 1.29314,
+                "reason": "TARGET"
+              },
+              {
+                "symbol": "BTCUSDT",
+                "side": "LONG",
+                "entry_utc": "2026-08-19T15:00:00+00:00",
+                "exit_utc": "2026-08-19T15:00:00+00:00",
+                "r": 1.16522,
+                "reason": "TARGET"
+              }
+            ]
+          },
+          "holdout_checks": {
+            "trades": true,
+            "pf": false,
+            "expectancy": false,
+            "drawdown": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    }
+  ],
+  "data_failures": {},
+  "safety": {
+    "trading_environment": "PAPER",
+    "live_trading": false,
+    "paper_trading": true,
+    "demo_only": true,
+    "leverage": 1,
+    "live_order_code_present": false
+  },
+  "private_api_used": false,
+  "real_orders_enabled": false,
+  "live_permission": false,
+  "note": "Spot price proxy research only. A pass requires exact perpetual/funding validation, fresh forward PAPER, and explicit owner permission."
+}
