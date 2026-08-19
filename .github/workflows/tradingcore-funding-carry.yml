@@ -43,10 +43,41 @@ jobs:
       - name: Compile and run delta-neutral carry validation V2
         working-directory: code
         run: |
-          python3 -m py_compile funding_carry_walkforward.py funding_carry_walkforward_v2.py
-          python3 funding_carry_walkforward_v2.py --output-dir "$GITHUB_WORKSPACE/state/funding_carry_runtime"
+          OUT="$GITHUB_WORKSPACE/state/funding_carry_runtime"
+          LOG="$OUT/FUNDING_CARRY_RUN.log"
+          RESULT="$OUT/FUNDING_CARRY_RESULT.json"
+          mkdir -p "$OUT"
+          set +e
+          python3 -m py_compile funding_carry_walkforward.py funding_carry_walkforward_v2.py >"$LOG" 2>&1
+          RC=$?
+          if [ "$RC" -eq 0 ]; then
+            python3 funding_carry_walkforward_v2.py --output-dir "$OUT" >>"$LOG" 2>&1
+            RC=$?
+          fi
+          echo "CARRY_RC=$RC" >> "$GITHUB_ENV"
+          if [ ! -f "$RESULT" ]; then
+            export RESULT LOG RC
+            python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          log_path=Path(os.environ['LOG'])
+          text=log_path.read_text(encoding='utf-8',errors='replace') if log_path.exists() else ''
+          out={
+            'schema':'TRADINGCORE_DELTA_NEUTRAL_FUNDING_CARRY_V2_DIAGNOSTIC',
+            'generated_at_utc':datetime.now(timezone.utc).isoformat(),
+            'state':'FUNDING_CARRY_EXECUTION_FAILED',
+            'return_code':int(os.environ.get('RC','-1')),
+            'log_tail':text[-12000:],
+            'real_orders_enabled':False,
+            'live_permission':False,
+          }
+          Path(os.environ['RESULT']).write_text(json.dumps(out,indent=2),encoding='utf-8')
+          PY
+          fi
 
       - name: Persist funding carry result
+        if: always()
         working-directory: state
         run: |
           git config user.name "TradingCore Funding Carry"
@@ -64,6 +95,7 @@ jobs:
         if: always()
         run: |
           echo "## TradingCore Delta-Neutral Funding Carry V2" >> "$GITHUB_STEP_SUMMARY"
+          echo "return_code: ${CARRY_RC:-unknown}" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$GITHUB_WORKSPACE/state/funding_carry_runtime/FUNDING_CARRY_RESULT.json" ]; then
             python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json, os
@@ -74,7 +106,8 @@ jobs:
           print('holdout_both_venues:', d.get('selected_holdout_passed_both_venues'))
           print('discovery_candidates:', d.get('discovery_candidates'))
           print('data_failures:', d.get('data_failures'))
+          print('log_tail:', str(d.get('log_tail',''))[-1500:])
           print('LIVE: disabled')
           PY
 
-# V2 rerun: bucketed funding, no same-bar credit, no discovery/holdout leakage.
+# Diagnostic rerun: corrected carry logic; persist both success and failure evidence.
