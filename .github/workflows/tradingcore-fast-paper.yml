@@ -1,9 +1,11 @@
 name: TradingCore Fast PAPER Lab
 
+# Low-yield legacy lane set: hourly replay is sufficient because each run
+# reconstructs all closed candles since the frozen forward timestamp.
 on:
   workflow_dispatch:
   schedule:
-    - cron: "7,22,37,52 * * * *"
+    - cron: "7 * * * *"
   push:
     branches: [main]
     paths:
