@@ -1,0 +1,94 @@
+name: TradingCore Daily Regime Ensemble Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 2 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-daily-regime-ensemble.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-daily-regime-ensemble
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Restore and verify Daily Regime Ensemble
+        working-directory: code
+        run: |
+          base64 -d research_payloads/daily_regime_ensemble_lab.py.gz.b64 | gzip -d > daily_regime_ensemble_lab.py
+          python3 -m py_compile daily_regime_ensemble_lab.py
+          grep -q "TRADINGCORE_DAILY_REGIME_ENSEMBLE_V1" daily_regime_ensemble_lab.py
+
+      - name: Run four-year two-venue regime ensemble validation
+        working-directory: code
+        run: |
+          python3 daily_regime_ensemble_lab.py --output-dir "$GITHUB_WORKSPACE/state/daily_regime_runtime"
+
+      - name: Persist result
+        if: always()
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Daily Regime Ensemble"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f daily_regime_runtime
+          if git diff --cached --quiet; then
+            echo "No Daily Regime changes."
+          else
+            git commit -m "daily-regime: update two-venue ensemble validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Daily Regime Ensemble" >> "$GITHUB_STEP_SUMMARY"
+          RESULT="$GITHUB_WORKSPACE/state/daily_regime_runtime/DAILY_REGIME_ENSEMBLE_RESULT.json"
+          if [ -f "$RESULT" ]; then
+            export RESULT
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          d=json.load(open(os.environ['RESULT'],encoding='utf-8'))
+          print('state:',d.get('state'))
+          print('selected:',d.get('selected_family'))
+          print('holdout_both_venues:',d.get('selected_holdout_passed_both_venues'))
+          print('discovery_candidates:',d.get('discovery_candidates'))
+          print('data_failures:',d.get('data_failures'))
+          for row in d.get('results') or []:
+              print('\n',row.get('family'))
+              for venue, payload in (row.get('venues') or {}).items():
+                  print(venue,'discovery=',payload.get('discovery'),'holdout=',payload.get('holdout'))
+          print('LIVE: disabled')
+          PY
+          else
+            echo "Result file missing; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
