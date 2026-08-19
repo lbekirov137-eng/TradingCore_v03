@@ -1,0 +1,90 @@
+name: TradingCore Quarter-Hour Orderflow Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "57 0 * * 2,5"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-quarter-hour-orderflow.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-quarter-hour-orderflow
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Decode, compile and run quarter-hour lab
+        working-directory: code
+        run: |
+          base64 -d research_payloads/quarter_hour_orderflow_lab.py.gz.b64 | gzip -d > quarter_hour_orderflow_lab.py
+          python3 -m py_compile quarter_hour_orderflow_lab.py
+          python3 quarter_hour_orderflow_lab.py --output-dir "$GITHUB_WORKSPACE/state/quarter_hour_runtime"
+
+      - name: Persist result
+        if: always()
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Quarter-Hour Lab"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f quarter_hour_runtime
+          if git diff --cached --quiet; then
+            echo "No quarter-hour changes."
+          else
+            git commit -m "quarter-hour: update orderflow validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Quarter-Hour Orderflow" >> "$GITHUB_STEP_SUMMARY"
+          RESULT="$GITHUB_WORKSPACE/state/quarter_hour_runtime/QUARTER_HOUR_ORDERFLOW_RESULT.json"
+          if [ -f "$RESULT" ]; then
+            RESULT="$RESULT" python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          d=json.load(open(os.environ['RESULT'],encoding='utf-8'))
+          print('state:', d.get('state'))
+          print('tested_lane_count:', d.get('tested_lane_count'))
+          print('selected:', d.get('selected'))
+          print('holdout_passed:', d.get('selected_holdout_passed'))
+          print('discovery_candidates:', d.get('discovery_candidates'))
+          print('data_failures:', d.get('data_failures'))
+          if d.get('selected'):
+              for row in d.get('results') or []:
+                  if all(row.get(k)==d['selected'].get(k) for k in ('symbol','family','horizon_minutes')):
+                      print('discovery:', row.get('discovery'))
+                      print('holdout:', row.get('holdout'))
+          print('LIVE: disabled')
+          PY
+          else
+            echo "Result file missing; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
