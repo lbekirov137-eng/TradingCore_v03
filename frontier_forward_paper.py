@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""TradingCore Frontier Forward PAPER V1.
+"""TradingCore Frontier Forward PAPER V1.1.
 Replays only candles AFTER a frozen forward timestamp, with warmup data before it.
 Public Binance spot data; long-only; 1x capital cap; TradingCore conservative costs.
 No authenticated API and no real orders.
+
+V1.1 execution fix: the trailing stop used for a candle is frozen before that
+candle. A trail derived from the current close activates only on the next candle.
 """
 from __future__ import annotations
-import argparse,json,math,time
+import argparse,json,time
 from concurrent.futures import ThreadPoolExecutor,as_completed
-from datetime import datetime,timezone,timedelta
+from datetime import datetime,timezone
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request,urlopen
@@ -21,7 +24,7 @@ def req(url,attempts=4):
  last=None
  for n in range(attempts):
   try:
-   with urlopen(Request(url,headers={'User-Agent':'TradingCore-FrontierForward/1.0','Accept':'application/json'}),timeout=20) as r:return json.loads(r.read().decode())
+   with urlopen(Request(url,headers={'User-Agent':'TradingCore-FrontierForward/1.1','Accept':'application/json'}),timeout=20) as r:return json.loads(r.read().decode())
   except Exception as e:
    last=e
    if n+1<attempts:time.sleep(min(4,.4*(2**n)))
@@ -47,13 +50,14 @@ def sim(fam,symbol,tf,rows,freeze_ms):
  for i in range(1,len(rows)):
   c=rows[i];x=f[i]
   if pos:
-   if finite(x['atr']):pos['trail']=max(pos['trail'],c['c']-2.0*x['atr'])
-   exitp=reason=None
-   if c['l']<=pos['trail']:exitp=pos['trail'];reason='TRAIL'
+   active_trail=pos['trail'];exitp=reason=None
+   if c['l']<=active_trail:exitp=active_trail;reason='TRAIL'
    elif finite(x['e20']) and c['c']<x['e20']:exitp=c['c'];reason='EMA_EXIT'
    elif i-pos['i']>=maxbars:exitp=c['c'];reason='TIME_EXIT'
    if exitp is not None:
     cc=compute_trade_costs(entry_price=pos['entry'],exit_price=exitp,quantity=pos['qty'],side='LONG',config=cfg);r=cc['net_pnl']/pos['risk'];rs.append(r);trades.append({'entry_utc':datetime.fromtimestamp(pos['ts']/1000,tz=timezone.utc).isoformat(),'exit_utc':datetime.fromtimestamp(c['ts']/1000,tz=timezone.utc).isoformat(),'entry':pos['entry'],'exit':exitp,'r':round(r,5),'net_pnl':cc['net_pnl'],'reason':reason});pos=None
+   elif finite(x['atr']):
+    pos['trail']=max(active_trail,c['c']-2.0*x['atr'])
   if pos or c['ts']<freeze_ms or not signal(fam,rows,f,i):continue
   a=x['atr'];signals+=1
   if not finite(a) or a<=0:continue
@@ -78,5 +82,5 @@ def main():
    if len(rows)<100:continue
    for fam in FAMS:lanes.append(sim(fam,s,tf,rows,freeze_ms))
  prom=[x for x in lanes if x['promising_early']];prom.sort(key=lambda x:(x['stats']['expectancy_r'] if finite(x['stats']['expectancy_r']) else -99,x['closed_trades']),reverse=True)
- out={'schema':'TRADINGCORE_FRONTIER_FORWARD_PAPER_V1','updated_at_utc':datetime.now(timezone.utc).isoformat(),'forward_freeze_utc':freeze.isoformat(),'lane_count':len(lanes),'total_closed_trade_observations_across_lanes':sum(x['closed_trades'] for x in lanes),'lanes_with_10_or_more':sum(x['closed_trades']>=10 for x in lanes),'promising_early':[x['lane_id'] for x in prom[:10]],'top_promising':prom[:10],'lanes':lanes,'data_failures':fail,'safety':safe,'real_orders_enabled':False,'live_permission':False,'note':'Forward-only evidence. Early promising flags are not Champion or LIVE permission.'};root=Path(a.state_dir);root.mkdir(parents=True,exist_ok=True);(root/'FRONTIER_FORWARD_STATUS.json').write_text(json.dumps(out,indent=2,default=str),encoding='utf-8');print('FRONTIER_FORWARD closed=',out['total_closed_trade_observations_across_lanes'],'promising=',out['promising_early'],'real_orders=False');return 0
+ out={'schema':'TRADINGCORE_FRONTIER_FORWARD_PAPER_V1_1','updated_at_utc':datetime.now(timezone.utc).isoformat(),'forward_freeze_utc':freeze.isoformat(),'lane_count':len(lanes),'total_closed_trade_observations_across_lanes':sum(x['closed_trades'] for x in lanes),'lanes_with_10_or_more':sum(x['closed_trades']>=10 for x in lanes),'promising_early':[x['lane_id'] for x in prom[:10]],'top_promising':prom[:10],'lanes':lanes,'data_failures':fail,'execution_model':{'entry':'signal candle close with conservative fee/slippage model','stop':'prior-candle frozen trail; current-close trail activates next candle','intrabar_lookahead_fixed':True},'safety':safe,'real_orders_enabled':False,'live_permission':False,'note':'Forward-only evidence. Early promising flags are not Champion or LIVE permission.'};root=Path(a.state_dir);root.mkdir(parents=True,exist_ok=True);(root/'FRONTIER_FORWARD_STATUS.json').write_text(json.dumps(out,indent=2,default=str),encoding='utf-8');print('FRONTIER_FORWARD closed=',out['total_closed_trade_observations_across_lanes'],'promising=',out['promising_early'],'real_orders=False');return 0
 if __name__=='__main__':raise SystemExit(main())
