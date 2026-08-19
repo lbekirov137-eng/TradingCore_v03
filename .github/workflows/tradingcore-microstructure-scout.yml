@@ -13,8 +13,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: tradingcore-cloud-state-writer
-  cancel-in-progress: false
+  group: tradingcore-microstructure-scout
+  cancel-in-progress: true
 
 jobs:
   scout:
@@ -72,4 +72,4 @@ jobs:
           print('LIVE: disabled')
           PY
 
-# Dual-venue V3 forced run: Binance + OKX L2 and aggressive trade flow.
+# Dedicated queue: do not let slower cloud-state research block 5-minute market snapshots.
