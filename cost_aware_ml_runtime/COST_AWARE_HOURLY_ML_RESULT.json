@@ -1,6 +1,6 @@
 {
   "schema": "TRADINGCORE_COST_AWARE_HOURLY_ML_V1",
-  "generated_at_utc": "2026-08-19T17:03:27.460724+00:00",
+  "generated_at_utc": "2026-08-19T17:12:40.429001+00:00",
   "state": "NO_COST_AWARE_ML_CANDIDATE",
   "symbol": "BTCUSDT",
   "history_years": 4,
@@ -37,19 +37,646 @@
   "execution_model": "next-bar-open; 1.5 ATR stop; six-hour time exit; conservative TradingCore costs; non-overlapping long-only trades",
   "venues": {
     "BINANCE": {
-      "error": "ImportError: sklearn needs to be installed in order to use this module",
-      "passed": false
+      "full": {
+        "closed_trades": 212,
+        "wins": 95,
+        "losses": 117,
+        "win_rate_percent": 44.81,
+        "net_r": -17.5582,
+        "profit_factor": 0.8065,
+        "expectancy_r": -0.0828,
+        "max_drawdown_r": 20.7949
+      },
+      "fold_count": 8,
+      "positive_folds": 3,
+      "positive_fold_ratio": 0.375,
+      "recent_three_positive": false,
+      "checks": {
+        "trades": true,
+        "profit_factor": false,
+        "expectancy": false,
+        "drawdown": false,
+        "positive_fold_ratio": false,
+        "recent_three_positive": false
+      },
+      "passed": false,
+      "folds": [
+        {
+          "test_start_utc": "2024-08-25T17:00:00+00:00",
+          "test_end_utc": "2024-11-23T17:00:00+00:00",
+          "train_rows": 17510,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 34,
+            "wins": 18,
+            "losses": 16,
+            "win_rate_percent": 52.94,
+            "net_r": 0.6172,
+            "profit_factor": 1.0439,
+            "expectancy_r": 0.0182,
+            "max_drawdown_r": 6.2339
+          }
+        },
+        {
+          "test_start_utc": "2024-11-23T17:00:00+00:00",
+          "test_end_utc": "2025-02-21T17:00:00+00:00",
+          "train_rows": 17510,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 34,
+            "wins": 18,
+            "losses": 16,
+            "win_rate_percent": 52.94,
+            "net_r": 0.6409,
+            "profit_factor": 1.0461,
+            "expectancy_r": 0.0189,
+            "max_drawdown_r": 5.0136
+          }
+        },
+        {
+          "test_start_utc": "2025-02-21T17:00:00+00:00",
+          "test_end_utc": "2025-05-22T17:00:00+00:00",
+          "train_rows": 17510,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 56,
+            "wins": 28,
+            "losses": 28,
+            "win_rate_percent": 50.0,
+            "net_r": -0.0573,
+            "profit_factor": 0.9975,
+            "expectancy_r": -0.001,
+            "max_drawdown_r": 6.7324
+          }
+        },
+        {
+          "test_start_utc": "2025-05-22T17:00:00+00:00",
+          "test_end_utc": "2025-08-20T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 7,
+            "wins": 3,
+            "losses": 4,
+            "win_rate_percent": 42.86,
+            "net_r": -0.1903,
+            "profit_factor": 0.9462,
+            "expectancy_r": -0.0272,
+            "max_drawdown_r": 1.9507
+          }
+        },
+        {
+          "test_start_utc": "2025-08-20T17:00:00+00:00",
+          "test_end_utc": "2025-11-18T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 15,
+            "wins": 6,
+            "losses": 9,
+            "win_rate_percent": 40.0,
+            "net_r": -0.0335,
+            "profit_factor": 0.993,
+            "expectancy_r": -0.0022,
+            "max_drawdown_r": 2.2936
+          }
+        },
+        {
+          "test_start_utc": "2025-11-18T17:00:00+00:00",
+          "test_end_utc": "2026-02-16T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 49,
+            "wins": 17,
+            "losses": 32,
+            "win_rate_percent": 34.69,
+            "net_r": -15.9339,
+            "profit_factor": 0.4169,
+            "expectancy_r": -0.3252,
+            "max_drawdown_r": 15.9339
+          }
+        },
+        {
+          "test_start_utc": "2026-02-16T17:00:00+00:00",
+          "test_end_utc": "2026-05-17T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 6,
+            "wins": 1,
+            "losses": 5,
+            "win_rate_percent": 16.67,
+            "net_r": -2.6998,
+            "profit_factor": 0.049,
+            "expectancy_r": -0.45,
+            "max_drawdown_r": 2.6998
+          }
+        },
+        {
+          "test_start_utc": "2026-05-17T17:00:00+00:00",
+          "test_end_utc": "2026-08-15T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 11,
+            "wins": 4,
+            "losses": 7,
+            "win_rate_percent": 36.36,
+            "net_r": 0.0984,
+            "profit_factor": 1.0761,
+            "expectancy_r": 0.0089,
+            "max_drawdown_r": 0.6496
+          }
+        }
+      ],
+      "top_features": [
+        {
+          "feature": "atr14_pct",
+          "importance": 0.057268
+        },
+        {
+          "feature": "hour_cos",
+          "importance": 0.056429
+        },
+        {
+          "feature": "rsi14",
+          "importance": 0.055311
+        },
+        {
+          "feature": "ema48_gap",
+          "importance": 0.052981
+        },
+        {
+          "feature": "dow_cos",
+          "importance": 0.052826
+        },
+        {
+          "feature": "ret_168",
+          "importance": 0.04988
+        },
+        {
+          "feature": "vol_72",
+          "importance": 0.049712
+        },
+        {
+          "feature": "vol_168",
+          "importance": 0.049633
+        },
+        {
+          "feature": "ema12_gap",
+          "importance": 0.047821
+        },
+        {
+          "feature": "vol_24",
+          "importance": 0.0476
+        }
+      ],
+      "recent_trades": [
+        {
+          "decision_utc": "2026-02-12T04:00:00+00:00",
+          "prediction_pct": 0.3744,
+          "r": 0.7355,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-02-16T00:00:00+00:00",
+          "prediction_pct": 0.3551,
+          "r": -0.78549,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-02-16T10:00:00+00:00",
+          "prediction_pct": 0.3522,
+          "r": -1.31116,
+          "reason": "STOP"
+        },
+        {
+          "decision_utc": "2026-03-06T10:00:00+00:00",
+          "prediction_pct": 0.4038,
+          "r": -1.23618,
+          "reason": "STOP"
+        },
+        {
+          "decision_utc": "2026-03-06T23:00:00+00:00",
+          "prediction_pct": 0.4085,
+          "r": -0.3491,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-03-07T06:00:00+00:00",
+          "prediction_pct": 0.4033,
+          "r": 0.13899,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-03-11T00:00:00+00:00",
+          "prediction_pct": 0.3913,
+          "r": -0.29548,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-04-07T23:00:00+00:00",
+          "prediction_pct": 0.377,
+          "r": -0.4118,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-04-13T22:00:00+00:00",
+          "prediction_pct": 0.3692,
+          "r": -0.54621,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-04T02:00:00+00:00",
+          "prediction_pct": 0.4057,
+          "r": 0.15589,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-04T09:00:00+00:00",
+          "prediction_pct": 0.6262,
+          "r": 0.35148,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-04T16:00:00+00:00",
+          "prediction_pct": 0.6641,
+          "r": -0.01498,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-05T23:00:00+00:00",
+          "prediction_pct": 0.4496,
+          "r": -0.18532,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-06T09:00:00+00:00",
+          "prediction_pct": 0.4818,
+          "r": -0.29217,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-08T11:00:00+00:00",
+          "prediction_pct": 0.5124,
+          "r": -0.13788,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-25T13:00:00+00:00",
+          "prediction_pct": 0.8414,
+          "r": 0.87097,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-26T15:00:00+00:00",
+          "prediction_pct": 0.4544,
+          "r": -0.51466,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-26T22:00:00+00:00",
+          "prediction_pct": 0.5482,
+          "r": 0.01217,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-27T05:00:00+00:00",
+          "prediction_pct": 0.4478,
+          "r": -0.07498,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-27T12:00:00+00:00",
+          "prediction_pct": 0.4115,
+          "r": -0.07215,
+          "reason": "TIME"
+        }
+      ]
     },
     "OKX": {
-      "error": "ImportError: sklearn needs to be installed in order to use this module",
-      "passed": false
+      "full": {
+        "closed_trades": 222,
+        "wins": 88,
+        "losses": 134,
+        "win_rate_percent": 39.64,
+        "net_r": -37.2358,
+        "profit_factor": 0.6501,
+        "expectancy_r": -0.1677,
+        "max_drawdown_r": 44.5578
+      },
+      "fold_count": 8,
+      "positive_folds": 2,
+      "positive_fold_ratio": 0.25,
+      "recent_three_positive": false,
+      "checks": {
+        "trades": true,
+        "profit_factor": false,
+        "expectancy": false,
+        "drawdown": false,
+        "positive_fold_ratio": false,
+        "recent_three_positive": false
+      },
+      "passed": false,
+      "folds": [
+        {
+          "test_start_utc": "2024-08-25T17:00:00+00:00",
+          "test_end_utc": "2024-11-23T17:00:00+00:00",
+          "train_rows": 17503,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 33,
+            "wins": 16,
+            "losses": 17,
+            "win_rate_percent": 48.48,
+            "net_r": 2.9356,
+            "profit_factor": 1.2533,
+            "expectancy_r": 0.089,
+            "max_drawdown_r": 6.7162
+          }
+        },
+        {
+          "test_start_utc": "2024-11-23T17:00:00+00:00",
+          "test_end_utc": "2025-02-21T17:00:00+00:00",
+          "train_rows": 17503,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 39,
+            "wins": 19,
+            "losses": 20,
+            "win_rate_percent": 48.72,
+            "net_r": -5.8243,
+            "profit_factor": 0.7102,
+            "expectancy_r": -0.1493,
+            "max_drawdown_r": 10.8821
+          }
+        },
+        {
+          "test_start_utc": "2025-02-21T17:00:00+00:00",
+          "test_end_utc": "2025-05-22T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 61,
+            "wins": 24,
+            "losses": 37,
+            "win_rate_percent": 39.34,
+            "net_r": -13.346,
+            "profit_factor": 0.5968,
+            "expectancy_r": -0.2188,
+            "max_drawdown_r": 14.0803
+          }
+        },
+        {
+          "test_start_utc": "2025-05-22T17:00:00+00:00",
+          "test_end_utc": "2025-08-20T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 5,
+            "wins": 1,
+            "losses": 4,
+            "win_rate_percent": 20.0,
+            "net_r": -3.3229,
+            "profit_factor": 0.0403,
+            "expectancy_r": -0.6646,
+            "max_drawdown_r": 3.3229
+          }
+        },
+        {
+          "test_start_utc": "2025-08-20T17:00:00+00:00",
+          "test_end_utc": "2025-11-18T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 11,
+            "wins": 2,
+            "losses": 9,
+            "win_rate_percent": 18.18,
+            "net_r": -3.8321,
+            "profit_factor": 0.2771,
+            "expectancy_r": -0.3484,
+            "max_drawdown_r": 3.8321
+          }
+        },
+        {
+          "test_start_utc": "2025-11-18T17:00:00+00:00",
+          "test_end_utc": "2026-02-16T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 49,
+            "wins": 16,
+            "losses": 33,
+            "win_rate_percent": 32.65,
+            "net_r": -13.8107,
+            "profit_factor": 0.4735,
+            "expectancy_r": -0.2819,
+            "max_drawdown_r": 15.3961
+          }
+        },
+        {
+          "test_start_utc": "2026-02-16T17:00:00+00:00",
+          "test_end_utc": "2026-05-17T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 10,
+            "wins": 5,
+            "losses": 5,
+            "win_rate_percent": 50.0,
+            "net_r": 1.8467,
+            "profit_factor": 1.7504,
+            "expectancy_r": 0.1847,
+            "max_drawdown_r": 1.7148
+          }
+        },
+        {
+          "test_start_utc": "2026-05-17T17:00:00+00:00",
+          "test_end_utc": "2026-08-15T17:00:00+00:00",
+          "train_rows": 17512,
+          "test_rows": 2160,
+          "stats": {
+            "closed_trades": 14,
+            "wins": 5,
+            "losses": 9,
+            "win_rate_percent": 35.71,
+            "net_r": -1.8821,
+            "profit_factor": 0.5508,
+            "expectancy_r": -0.1344,
+            "max_drawdown_r": 2.8618
+          }
+        }
+      ],
+      "top_features": [
+        {
+          "feature": "atr14_pct",
+          "importance": 0.058376
+        },
+        {
+          "feature": "hour_cos",
+          "importance": 0.057015
+        },
+        {
+          "feature": "dow_cos",
+          "importance": 0.055548
+        },
+        {
+          "feature": "rsi14",
+          "importance": 0.055117
+        },
+        {
+          "feature": "ema48_gap",
+          "importance": 0.053952
+        },
+        {
+          "feature": "ret_168",
+          "importance": 0.051338
+        },
+        {
+          "feature": "vol_168",
+          "importance": 0.049621
+        },
+        {
+          "feature": "vol_72",
+          "importance": 0.048807
+        },
+        {
+          "feature": "dow_sin",
+          "importance": 0.048625
+        },
+        {
+          "feature": "vol_24",
+          "importance": 0.04753
+        }
+      ],
+      "recent_trades": [
+        {
+          "decision_utc": "2026-03-07T06:00:00+00:00",
+          "prediction_pct": 0.4342,
+          "r": 0.13789,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-03-11T00:00:00+00:00",
+          "prediction_pct": 0.4691,
+          "r": -0.28556,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-03-11T07:00:00+00:00",
+          "prediction_pct": 0.3839,
+          "r": 0.32629,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-03-25T17:00:00+00:00",
+          "prediction_pct": 0.397,
+          "r": 0.40354,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-04-08T01:00:00+00:00",
+          "prediction_pct": 0.3679,
+          "r": -0.06837,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-04-13T22:00:00+00:00",
+          "prediction_pct": 0.3614,
+          "r": -0.53979,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-04T04:00:00+00:00",
+          "prediction_pct": 0.7738,
+          "r": -1.14277,
+          "reason": "STOP"
+        },
+        {
+          "decision_utc": "2026-06-04T10:00:00+00:00",
+          "prediction_pct": 1.0834,
+          "r": 0.74769,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-04T17:00:00+00:00",
+          "prediction_pct": 0.5212,
+          "r": 0.12645,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-05T09:00:00+00:00",
+          "prediction_pct": 0.3846,
+          "r": -1.13573,
+          "reason": "STOP"
+        },
+        {
+          "decision_utc": "2026-06-05T19:00:00+00:00",
+          "prediction_pct": 0.4961,
+          "r": 0.35798,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-06T02:00:00+00:00",
+          "prediction_pct": 0.3828,
+          "r": -1.1263,
+          "reason": "STOP"
+        },
+        {
+          "decision_utc": "2026-06-06T05:00:00+00:00",
+          "prediction_pct": 0.4765,
+          "r": -0.21981,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-06T13:00:00+00:00",
+          "prediction_pct": 0.8282,
+          "r": -0.33269,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-08T11:00:00+00:00",
+          "prediction_pct": 0.4536,
+          "r": -0.13667,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-25T13:00:00+00:00",
+          "prediction_pct": 0.819,
+          "r": 0.86725,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-26T14:00:00+00:00",
+          "prediction_pct": 0.3603,
+          "r": -0.04488,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-26T21:00:00+00:00",
+          "prediction_pct": 0.4472,
+          "r": 0.2081,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-27T04:00:00+00:00",
+          "prediction_pct": 0.564,
+          "r": -0.0091,
+          "reason": "TIME"
+        },
+        {
+          "decision_utc": "2026-06-27T11:00:00+00:00",
+          "prediction_pct": 0.3998,
+          "r": -0.04161,
+          "reason": "TIME"
+        }
+      ]
     }
   },
   "passed_both_venues": false,
-  "data_failures": {
-    "BINANCE": "ImportError: sklearn needs to be installed in order to use this module",
-    "OKX": "ImportError: sklearn needs to be installed in order to use this module"
-  },
+  "data_failures": {},
   "safety": {
     "trading_environment": "PAPER",
     "live_trading": false,
