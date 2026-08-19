@@ -11,8 +11,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: tradingcore-adaptive-source-audit
-  cancel-in-progress: true
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
 
 jobs:
   audit:
@@ -54,3 +54,5 @@ jobs:
             git pull --rebase origin cloud-state
             git push origin HEAD:cloud-state
           fi
+
+# Retry under the shared cloud-state writer lock to avoid concurrent push conflicts.
