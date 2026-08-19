@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""TradingCore Frontier Momentum Lab V1.
+"""TradingCore Frontier Momentum Lab V1.1.
 Fast historical discovery on BTC/ETH/SOL using 15m/30m/1h public Binance data.
 Research/PAPER only. Long-only, 1x gross cap, conservative TradingCore costs.
 No final-data tuning: a small frozen family map is evaluated chronologically.
+
+V1.1 execution fix: the trailing stop used for a candle is frozen BEFORE that
+candle. A new trail derived from the candle close only becomes active on the
+next candle. This removes intrabar look-ahead from the original V1 simulator.
 """
 from __future__ import annotations
 import argparse,json,math,statistics,time
@@ -24,7 +28,7 @@ def get(url,attempts=5):
  last=None
  for n in range(attempts):
   try:
-   with urlopen(Request(url,headers={'User-Agent':'TradingCore-Frontier/1.0','Accept':'application/json'}),timeout=25) as r:return json.loads(r.read().decode())
+   with urlopen(Request(url,headers={'User-Agent':'TradingCore-Frontier/1.1','Accept':'application/json'}),timeout=25) as r:return json.loads(r.read().decode())
   except Exception as e:
    last=e
    if n+1<attempts:time.sleep(min(5,.5*(2**n)))
@@ -95,13 +99,16 @@ def simulate(fam,symbol,tf,rows):
  for i in range(1,len(rows)):
   c=rows[i];x=f[i]
   if pos:
-   if finite(x['atr']):pos['trail']=max(pos['trail'],c['c']-2.0*x['atr'])
-   exitp=None
-   if c['l']<=pos['trail']:exitp=pos['trail']
+   # IMPORTANT: use the trail that existed BEFORE this candle. The trail
+   # derived from this candle close becomes active only for the next candle.
+   active_trail=pos['trail'];exitp=None
+   if c['l']<=active_trail:exitp=active_trail
    elif finite(x['e20']) and c['c']<x['e20']:exitp=c['c']
    elif i-pos['i']>=maxbars:exitp=c['c']
    if exitp is not None:
     cc=compute_trade_costs(entry_price=pos['entry'],exit_price=exitp,quantity=pos['qty'],side='LONG',config=cfg);rs.append(cc['net_pnl']/pos['risk']);pos=None
+   elif finite(x['atr']):
+    pos['trail']=max(active_trail,c['c']-2.0*x['atr'])
   if pos or not signal(fam,rows,f,i):continue
   a=x['atr'];signals+=1
   if not finite(a) or a<=0:continue
@@ -130,5 +137,5 @@ def main():
    if len(rows)<300:continue
    for fam in FAMS:lanes.append(simulate(fam,s,tf,rows))
  lanes.sort(key=rank,reverse=True);passed=[x for x in lanes if x['passed']];chall=[x for x in lanes if x['full']['closed_trades']>=8 and finite(x['full']['expectancy_r']) and x['full']['expectancy_r']>0][:12]
- out={'schema':'TRADINGCORE_FRONTIER_MOMENTUM_V1','generated_at_utc':datetime.now(timezone.utc).isoformat(),'state':'FRONTIER_CANDIDATE_FOUND_NOT_LIVE' if passed else 'NO_FRONTIER_CHAMPION_YET','lane_count':len(lanes),'passing_lane_count':len(passed),'candidate':passed[0] if passed else None,'passing_lanes':[{k:x[k] for k in ('family','symbol','timeframe')} for x in passed],'top_challengers':chall,'top_ranked':lanes[:15],'data_failures':fail,'safety':safe,'real_orders_enabled':False,'live_permission':False,'note':'Discovery screen only. Any passing lane still requires independent venue and fresh forward confirmation.'};d=Path(a.output_dir);d.mkdir(parents=True,exist_ok=True);(d/'FRONTIER_MOMENTUM_RESULT.json').write_text(json.dumps(out,indent=2,default=str),encoding='utf-8');print('FRONTIER_MOMENTUM',out['state'],'passing',len(passed),'top',[(x['family'],x['symbol'],x['timeframe'],x['full']) for x in lanes[:3]]);return 0
+ out={'schema':'TRADINGCORE_FRONTIER_MOMENTUM_V1_1','generated_at_utc':datetime.now(timezone.utc).isoformat(),'state':'FRONTIER_CANDIDATE_FOUND_NOT_LIVE' if passed else 'NO_FRONTIER_CHAMPION_YET','lane_count':len(lanes),'passing_lane_count':len(passed),'candidate':passed[0] if passed else None,'passing_lanes':[{k:x[k] for k in ('family','symbol','timeframe')} for x in passed],'top_challengers':chall,'top_ranked':lanes[:15],'data_failures':fail,'execution_model':{'entry':'signal candle close with conservative fee/slippage model','stop':'prior-candle frozen trail; current-close trail activates next candle','intrabar_lookahead_fixed':True},'safety':safe,'real_orders_enabled':False,'live_permission':False,'note':'Discovery screen only. Any passing lane still requires independent venue and fresh forward confirmation.'};d=Path(a.output_dir);d.mkdir(parents=True,exist_ok=True);(d/'FRONTIER_MOMENTUM_RESULT.json').write_text(json.dumps(out,indent=2,default=str),encoding='utf-8');print('FRONTIER_MOMENTUM',out['state'],'passing',len(passed),'top',[(x['family'],x['symbol'],x['timeframe'],x['full']) for x in lanes[:3]]);return 0
 if __name__=='__main__':raise SystemExit(main())
