@@ -1,0 +1,76 @@
+name: TradingCore Exact Monthly 500 Scenario
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-monthly-500-scenario.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-monthly-500-scenario
+  cancel-in-progress: true
+
+jobs:
+  calculate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+    steps:
+      - name: Checkout research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Calculate exact one-month $500 scenario
+        working-directory: code
+        run: |
+          python3 -m py_compile monthly_500_funding_scenario.py
+          python3 monthly_500_funding_scenario.py \
+            --start-utc "2026-07-19T18:23:31Z" \
+            --end-utc "2026-08-19T18:23:31Z" \
+            --output "$GITHUB_WORKSPACE/state/monthly_500_runtime/MONTHLY_500_RESULT.json"
+
+      - name: Persist result
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Monthly Scenario"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f monthly_500_runtime
+          git commit -m "monthly-500: calculate exact funding-carry scenario" || exit 0
+          git pull --rebase origin cloud-state
+          git push origin HEAD:cloud-state
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore exact one-month $500 scenario" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/monthly_500_runtime/MONTHLY_500_RESULT.json" ]; then
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','monthly_500_runtime','MONTHLY_500_RESULT.json')
+          d=json.load(open(p,encoding='utf-8'))
+          print('signals:', d.get('signal_count'))
+          print('trades:', d.get('closed_or_marked_trades'))
+          print('strategy_net_usd:', d.get('strategy_net_pnl_after_trading_costs_usd'))
+          print('ending_before_transfer:', d.get('ending_balance_before_external_transfer_fees_usd'))
+          print('ending_after_assumed_withdrawal:', d.get('ending_cash_after_assumed_withdrawal_usd'))
+          print('cash_profit_after_withdrawal:', d.get('net_cash_profit_after_assumed_withdrawal_usd'))
+          print('LIVE: disabled')
+          PY
