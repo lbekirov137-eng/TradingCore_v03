@@ -1,0 +1,94 @@
+name: TradingCore Intraday Session Regime Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "29 4 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-intraday-session-regime.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-intraday-session-regime
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Restore and verify intraday session lab
+        working-directory: code
+        run: |
+          base64 -d research_payloads/intraday_session_regime_lab.py.gz.b64 | gzip -d > intraday_session_regime_lab.py
+          python3 -m py_compile intraday_session_regime_lab.py
+          grep -q "TRADINGCORE_INTRADAY_SESSION_REGIME_V1" intraday_session_regime_lab.py
+
+      - name: Run three-year two-venue session validation
+        working-directory: code
+        run: |
+          python3 intraday_session_regime_lab.py --output-dir "$GITHUB_WORKSPACE/state/intraday_session_runtime"
+
+      - name: Persist result
+        if: always()
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Intraday Session Lab"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f intraday_session_runtime
+          if git diff --cached --quiet; then
+            echo "No intraday session changes."
+          else
+            git commit -m "intraday-session: update two-venue regime validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Intraday Session Regime" >> "$GITHUB_STEP_SUMMARY"
+          RESULT="$GITHUB_WORKSPACE/state/intraday_session_runtime/INTRADAY_SESSION_RESULT.json"
+          if [ -f "$RESULT" ]; then
+            export RESULT
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          d=json.load(open(os.environ['RESULT'],encoding='utf-8'))
+          print('state:',d.get('state'))
+          print('selected:',d.get('selected_family'))
+          print('holdout_both_venues:',d.get('selected_holdout_passed_both_venues'))
+          print('discovery_candidates:',d.get('discovery_candidates'))
+          print('data_failures:',d.get('data_failures'))
+          for row in d.get('results') or []:
+              print('\n',row.get('family'))
+              for venue,payload in (row.get('venues') or {}).items():
+                  print(venue,'discovery=',payload.get('discovery'),'holdout=',payload.get('holdout'))
+          print('LIVE: disabled')
+          PY
+          else
+            echo "Result file missing; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
