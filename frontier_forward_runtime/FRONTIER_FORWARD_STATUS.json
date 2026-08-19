@@ -1,12 +1,13 @@
 {
   "schema": "TRADINGCORE_FRONTIER_FORWARD_PAPER_V1_1",
-  "updated_at_utc": "2026-08-19T22:49:18.173239+00:00",
+  "updated_at_utc": "2026-08-19T23:17:16.832708+00:00",
   "forward_freeze_utc": "2026-08-18T18:45:00+00:00",
   "lane_count": 36,
-  "total_closed_trade_observations_across_lanes": 29,
+  "total_closed_trade_observations_across_lanes": 32,
   "lanes_with_10_or_more": 0,
   "promising_early": [
     "SOLUSDT:15m:DONCHIAN_48H",
+    "SOLUSDT:30m:TSMOM_VOL_24H",
     "SOLUSDT:15m:TSMOM_VOL_24H"
   ],
   "top_promising": [
@@ -55,6 +56,74 @@
           "exit": 85.49787061996946,
           "r": 2.03933,
           "net_pnl": 2.03933171,
+          "reason": "TRAIL"
+        }
+      ],
+      "promising_early": true
+    },
+    {
+      "lane_id": "SOLUSDT:30m:TSMOM_VOL_24H",
+      "family": "TSMOM_VOL_24H",
+      "symbol": "SOLUSDT",
+      "timeframe": "30m",
+      "signals": 6,
+      "closed_trades": 5,
+      "stats": {
+        "closed_trades": 5,
+        "wins": 1,
+        "losses": 4,
+        "win_rate_percent": 20.0,
+        "net_r": 15.5167,
+        "profit_factor": 4.5358,
+        "expectancy_r": 3.1033,
+        "max_drawdown_r": 4.3885
+      },
+      "segment_robustness": null,
+      "open_position": true,
+      "recent_trades": [
+        {
+          "entry_utc": "2026-08-18T19:00:00+00:00",
+          "exit_utc": "2026-08-18T20:30:00+00:00",
+          "entry": 77.35,
+          "exit": 76.91386699055323,
+          "r": -1.53056,
+          "net_pnl": -1.53056296,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-18T22:00:00+00:00",
+          "exit_utc": "2026-08-19T00:30:00+00:00",
+          "entry": 77.05,
+          "exit": 76.91,
+          "r": -0.90379,
+          "net_pnl": -0.90378525,
+          "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-08-19T03:00:00+00:00",
+          "exit_utc": "2026-08-19T04:30:00+00:00",
+          "entry": 77.01,
+          "exit": 76.86,
+          "r": -0.94994,
+          "net_pnl": -0.94993943,
+          "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-08-19T05:00:00+00:00",
+          "exit_utc": "2026-08-19T05:30:00+00:00",
+          "entry": 76.95,
+          "exit": 76.8,
+          "r": -1.00422,
+          "net_pnl": -1.00421676,
+          "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-08-19T06:30:00+00:00",
+          "exit_utc": "2026-08-19T22:30:00+00:00",
+          "entry": 77.07,
+          "exit": 85.24983818441203,
+          "r": 19.90525,
+          "net_pnl": 19.90525193,
           "reason": "TRAIL"
         }
       ],
@@ -997,16 +1066,16 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "SOLUSDT",
       "timeframe": "30m",
-      "signals": 5,
-      "closed_trades": 4,
+      "signals": 6,
+      "closed_trades": 5,
       "stats": {
-        "closed_trades": 4,
-        "wins": 0,
+        "closed_trades": 5,
+        "wins": 1,
         "losses": 4,
-        "win_rate_percent": 0.0,
-        "net_r": -4.3885,
-        "profit_factor": 0.0,
-        "expectancy_r": -1.0971,
+        "win_rate_percent": 20.0,
+        "net_r": 15.5167,
+        "profit_factor": 4.5358,
+        "expectancy_r": 3.1033,
         "max_drawdown_r": 4.3885
       },
       "segment_robustness": null,
@@ -1047,30 +1116,49 @@
           "r": -1.00422,
           "net_pnl": -1.00421676,
           "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-08-19T06:30:00+00:00",
+          "exit_utc": "2026-08-19T22:30:00+00:00",
+          "entry": 77.07,
+          "exit": 85.24983818441203,
+          "r": 19.90525,
+          "net_pnl": 19.90525193,
+          "reason": "TRAIL"
         }
       ],
-      "promising_early": false
+      "promising_early": true
     },
     {
       "lane_id": "SOLUSDT:30m:TSMOM_DUAL_24H_7D",
       "family": "TSMOM_DUAL_24H_7D",
       "symbol": "SOLUSDT",
       "timeframe": "30m",
-      "signals": 1,
-      "closed_trades": 0,
+      "signals": 2,
+      "closed_trades": 1,
       "stats": {
-        "closed_trades": 0,
-        "wins": 0,
+        "closed_trades": 1,
+        "wins": 1,
         "losses": 0,
-        "win_rate_percent": null,
-        "net_r": null,
-        "profit_factor": null,
-        "expectancy_r": null,
-        "max_drawdown_r": null
+        "win_rate_percent": 100.0,
+        "net_r": 12.8625,
+        "profit_factor": 99.0,
+        "expectancy_r": 12.8625,
+        "max_drawdown_r": 0.0
       },
       "segment_robustness": null,
       "open_position": true,
-      "recent_trades": [],
+      "recent_trades": [
+        {
+          "entry_utc": "2026-08-19T14:00:00+00:00",
+          "exit_utc": "2026-08-19T22:30:00+00:00",
+          "entry": 78.56,
+          "exit": 85.24983818441203,
+          "r": 12.86252,
+          "net_pnl": 12.86252267,
+          "reason": "TRAIL"
+        }
+      ],
       "promising_early": false
     },
     {
@@ -1079,19 +1167,19 @@
       "symbol": "SOLUSDT",
       "timeframe": "30m",
       "signals": 2,
-      "closed_trades": 1,
+      "closed_trades": 2,
       "stats": {
-        "closed_trades": 1,
-        "wins": 0,
+        "closed_trades": 2,
+        "wins": 1,
         "losses": 1,
-        "win_rate_percent": 0.0,
-        "net_r": -1.5306,
-        "profit_factor": 0.0,
-        "expectancy_r": -1.5306,
+        "win_rate_percent": 50.0,
+        "net_r": 12.3993,
+        "profit_factor": 9.1012,
+        "expectancy_r": 6.1997,
         "max_drawdown_r": 1.5306
       },
       "segment_robustness": null,
-      "open_position": true,
+      "open_position": false,
       "recent_trades": [
         {
           "entry_utc": "2026-08-18T19:00:00+00:00",
@@ -1100,6 +1188,15 @@
           "exit": 76.91386699055323,
           "r": -1.53056,
           "net_pnl": -1.53056296,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-19T12:30:00+00:00",
+          "exit_utc": "2026-08-19T22:30:00+00:00",
+          "entry": 78.41,
+          "exit": 85.24983818441203,
+          "r": 13.9299,
+          "net_pnl": 13.92990364,
           "reason": "TRAIL"
         }
       ],
