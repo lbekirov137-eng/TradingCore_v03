@@ -1,0 +1,65 @@
+{
+  "schema": "TRADINGCORE_COST_AWARE_HOURLY_ML_V1",
+  "generated_at_utc": "2026-08-19T17:03:27.460724+00:00",
+  "state": "NO_COST_AWARE_ML_CANDIDATE",
+  "symbol": "BTCUSDT",
+  "history_years": 4,
+  "horizon_bars": 6,
+  "prediction_hurdle": 0.0035,
+  "train_days": 730,
+  "test_days": 90,
+  "features": [
+    "ret_1",
+    "ret_3",
+    "ret_6",
+    "ret_12",
+    "ret_24",
+    "ret_72",
+    "ret_168",
+    "ema12_gap",
+    "ema48_gap",
+    "ema168_gap",
+    "vol_24",
+    "vol_72",
+    "vol_168",
+    "atr14_pct",
+    "rsi14",
+    "volume_z24",
+    "volume_z168",
+    "range_pct",
+    "close_location",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos"
+  ],
+  "model": "Fixed XGBoost regression; no hyperparameter search",
+  "execution_model": "next-bar-open; 1.5 ATR stop; six-hour time exit; conservative TradingCore costs; non-overlapping long-only trades",
+  "venues": {
+    "BINANCE": {
+      "error": "ImportError: sklearn needs to be installed in order to use this module",
+      "passed": false
+    },
+    "OKX": {
+      "error": "ImportError: sklearn needs to be installed in order to use this module",
+      "passed": false
+    }
+  },
+  "passed_both_venues": false,
+  "data_failures": {
+    "BINANCE": "ImportError: sklearn needs to be installed in order to use this module",
+    "OKX": "ImportError: sklearn needs to be installed in order to use this module"
+  },
+  "safety": {
+    "trading_environment": "PAPER",
+    "live_trading": false,
+    "paper_trading": true,
+    "demo_only": true,
+    "leverage": 1,
+    "live_order_code_present": false
+  },
+  "private_api_used": false,
+  "real_orders_enabled": false,
+  "live_permission": false,
+  "note": "Walk-forward evidence only. A pass still requires a newly frozen forward execution test before micro-live review."
+}
