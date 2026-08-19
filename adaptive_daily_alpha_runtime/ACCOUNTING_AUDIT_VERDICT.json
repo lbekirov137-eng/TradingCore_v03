@@ -1,0 +1,20 @@
+{
+  "schema": "TRADINGCORE_RESEARCH_ACCOUNTING_AUDIT_V1",
+  "audited_result": "adaptive_daily_alpha_runtime/ADAPTIVE_DAILY_ALPHA_RESULT.json",
+  "decision": "REJECT_SUSPICIOUS_ACCOUNTING_UNTIL_REPRODUCED",
+  "reasons": [
+    "Reported compounded return exceeds one million percent while declared gross exposure is capped at 1x.",
+    "Reported Sharpe near 11 with drawdown near 17.5 percent is inconsistent with all independently validated TradingCore families and requires line-by-line accounting reproduction.",
+    "The result has not been reproduced by an independent implementation or exact trade ledger reconciliation.",
+    "A research candidate may not be promoted from aggregate metrics alone."
+  ],
+  "required_repairs": [
+    "Decode and review the exact source used by the workflow.",
+    "Reconcile every daily position weight, turnover charge, cash balance and compounded return.",
+    "Enforce gross exposure <= 1.0 and cash >= 0 at every timestamp.",
+    "Re-run from a fresh frozen holdout and compare with a second independent implementation."
+  ],
+  "real_orders_enabled": false,
+  "live_permission": false,
+  "micro_live_review_ready": false
+}
