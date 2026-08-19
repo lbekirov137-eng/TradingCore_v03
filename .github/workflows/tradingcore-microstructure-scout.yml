@@ -36,14 +36,14 @@ jobs:
           path: state
           fetch-depth: 1
 
-      - name: Compile, capture snapshot, and score frozen forward lanes
+      - name: Capture dual-venue snapshot and score consensus lanes
         working-directory: code
         run: |
-          python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_microstructure.py microstructure_forward_execution.py
+          python3 -m py_compile strategy_atlas_protocol.py strategy_atlas_microstructure.py microstructure_forward_execution.py microstructure_forward_execution_v2.py
           python3 strategy_atlas_microstructure.py --state-dir "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime"
-          python3 microstructure_forward_execution.py --state-dir "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime"
+          python3 microstructure_forward_execution_v2.py --state-dir "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime"
 
-      - name: Persist snapshots and forward execution state
+      - name: Persist snapshots and dual-venue forward state
         working-directory: state
         run: |
           git config user.name "TradingCore Microstructure Scout"
@@ -52,7 +52,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No microstructure changes."
           else
-            git commit -m "microstructure: append snapshot and forward execution evidence"
+            git commit -m "microstructure: append dual-venue consensus evidence"
             git pull --rebase origin cloud-state
             git push origin HEAD:cloud-state
           fi
@@ -60,16 +60,18 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "## TradingCore Microstructure Forward" >> "$GITHUB_STEP_SUMMARY"
+          echo "## TradingCore Microstructure Forward V2" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$GITHUB_WORKSPACE/state/strategy_atlas_microstructure_runtime/MICROSTRUCTURE_FORWARD_STATUS.json" ]; then
             python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json, os
           p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','strategy_atlas_microstructure_runtime','MICROSTRUCTURE_FORWARD_STATUS.json')
           d=json.load(open(p,encoding='utf-8'))
+          print('schema:', d.get('schema'))
           print('after_freeze:', d.get('snapshot_count_after_freeze'))
           print('promising_early:', d.get('promising_early'))
           print('champions:', d.get('champions'))
+          print('confirmation:', d.get('confirmation_model'))
           print('LIVE: disabled')
           PY
 
-# Dedicated queue: do not let slower cloud-state research block 5-minute market snapshots.
+# V2: require Binance and OKX agreement before an executable signal is scored.
