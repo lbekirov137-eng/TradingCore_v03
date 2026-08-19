@@ -1,0 +1,81 @@
+name: TradingCore Cost-Aware Hourly ML Lab
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1,4"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-cost-aware-ml.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-cloud-state-writer
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Install fixed ML dependencies
+        run: python3 -m pip install --quiet "numpy>=1.26" "pandas>=2.1" "xgboost>=2.0,<4"
+
+      - name: Compile and run cost-aware walk-forward
+        working-directory: code
+        run: |
+          python3 -m py_compile cost_aware_hourly_ml_lab.py
+          python3 cost_aware_hourly_ml_lab.py --output-dir "$GITHUB_WORKSPACE/state/cost_aware_ml_runtime"
+
+      - name: Persist cost-aware result
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Cost-Aware ML"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f cost_aware_ml_runtime
+          if git diff --cached --quiet; then
+            echo "No cost-aware ML changes."
+          else
+            git commit -m "cost-aware-ml: update BTC walk-forward validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Cost-Aware Hourly ML" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$GITHUB_WORKSPACE/state/cost_aware_ml_runtime/COST_AWARE_HOURLY_ML_RESULT.json" ]; then
+            python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          p=os.path.join(os.environ['GITHUB_WORKSPACE'],'state','cost_aware_ml_runtime','COST_AWARE_HOURLY_ML_RESULT.json')
+          d=json.load(open(p,encoding='utf-8'))
+          print('state:', d.get('state'))
+          print('passed_both_venues:', d.get('passed_both_venues'))
+          for venue, row in (d.get('venues') or {}).items():
+              print(venue, 'full=', row.get('full'), 'fold_ratio=', row.get('positive_fold_ratio'), 'passed=', row.get('passed'))
+          print('data_failures:', d.get('data_failures'))
+          print('LIVE: disabled')
+          PY
