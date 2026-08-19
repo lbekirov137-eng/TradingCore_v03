@@ -41,7 +41,7 @@ jobs:
           fetch-depth: 1
 
       - name: Install fixed ML dependencies
-        run: python3 -m pip install --quiet "numpy>=1.26" "pandas>=2.1" "xgboost>=2.0,<4"
+        run: python3 -m pip install --quiet "numpy>=1.26" "pandas>=2.1" "scikit-learn>=1.4,<2" "xgboost>=2.0,<4"
 
       - name: Compile and run cost-aware walk-forward
         working-directory: code
@@ -79,3 +79,5 @@ jobs:
           print('data_failures:', d.get('data_failures'))
           print('LIVE: disabled')
           PY
+
+# Dependency repair rerun: model and frozen gates are unchanged.
