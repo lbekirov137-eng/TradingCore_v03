@@ -1,0 +1,3984 @@
+{
+  "schema": "TRADINGCORE_MULTI_HORIZON_TREND_PORTFOLIO_V1",
+  "generated_at_utc": "2026-08-19T19:43:12.234030+00:00",
+  "state": "NO_TREND_CANDIDATE",
+  "history_years": 4,
+  "universe": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "XRPUSDT",
+    "ADAUSDT",
+    "DOGEUSDT",
+    "LINKUSDT",
+    "LTCUSDT",
+    "BCHUSDT",
+    "AVAXUSDT"
+  ],
+  "selected_lane": null,
+  "selected_holdout_passed_both_venues": false,
+  "discovery_candidates": [],
+  "execution_model": "daily evaluation; weekly/monthly rebalance; long-only-to-cash plus one research-only market-neutral lane; next-open; 15bps one-way costs",
+  "results": [
+    {
+      "lane_id": "LONG_ONLY_60D_WEEKLY",
+      "kind": "LONG",
+      "horizons": [
+        60
+      ],
+      "rebalance": 7,
+      "panic": false,
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 761,
+            "positive_days": 395,
+            "negative_days": 372,
+            "net_return_percent": 256.1834,
+            "profit_factor": 1.2344,
+            "annualized_sharpe": 1.3104,
+            "max_drawdown_percent": 43.0126,
+            "average_daily_bps": 18.5476,
+            "average_turnover": 0.0599,
+            "total_cost_percent": 7.8021,
+            "positive_quarters": 4,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -5.004,
+              "2023-Q3": -9.543,
+              "2023-Q4": 87.648,
+              "2024-Q1": 63.357,
+              "2024-Q2": -25.812,
+              "2024-Q3": -16.121,
+              "2024-Q4": 83.049,
+              "2025-Q1": -1.158,
+              "2025-Q2": -3.528,
+              "2025-Q3": 24.494
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.819,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -336.788,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -86.332,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -37.07,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.392,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -341.037,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -256.595,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 342.776,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.496,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.947,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.074,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.199,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.75,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 141.878,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 58.956,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -225.208,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 664.27,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 270.531,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -476.659,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -93.229,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 202,
+            "positive_days": 94,
+            "negative_days": 112,
+            "net_return_percent": -33.3405,
+            "profit_factor": 0.8006,
+            "annualized_sharpe": -1.0241,
+            "max_drawdown_percent": 44.0273,
+            "average_daily_bps": -9.5409,
+            "average_turnover": 0.0442,
+            "total_cost_percent": 2.5586,
+            "positive_quarters": 2,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 1.103,
+              "2025-Q4": -12.371,
+              "2026-Q1": -17.104,
+              "2026-Q2": -10.238,
+              "2026-Q3": 1.117
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 59.143,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 24.752,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 50.617,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 86.265,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": -76.787,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": -80.542,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 85.834,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": -108.018,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 13.447,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": -79.944,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 73.27,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": -41.512,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 108.066,
+                "gross": 1.0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 761,
+            "positive_days": 395,
+            "negative_days": 372,
+            "net_return_percent": 236.8945,
+            "profit_factor": 1.226,
+            "annualized_sharpe": 1.2658,
+            "max_drawdown_percent": 46.1347,
+            "average_daily_bps": 17.878,
+            "average_turnover": 0.0593,
+            "total_cost_percent": 7.7276,
+            "positive_quarters": 4,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -4.985,
+              "2023-Q3": -9.459,
+              "2023-Q4": 87.648,
+              "2024-Q1": 63.352,
+              "2024-Q2": -25.794,
+              "2024-Q3": -20.742,
+              "2024-Q4": 83.019,
+              "2025-Q1": -1.176,
+              "2025-Q2": -3.529,
+              "2025-Q3": 24.495
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.404,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -335.874,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -88.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -36.165,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.673,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -340.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -255.992,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 341.945,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.192,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.786,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.168,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.943,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.875,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 140.842,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 59.671,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -224.184,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 662.423,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 271.505,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -476.559,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -94.105,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 202,
+            "positive_days": 94,
+            "negative_days": 112,
+            "net_return_percent": -33.2989,
+            "profit_factor": 0.8008,
+            "annualized_sharpe": -1.0197,
+            "max_drawdown_percent": 43.9768,
+            "average_daily_bps": -9.5169,
+            "average_turnover": 0.0442,
+            "total_cost_percent": 2.5581,
+            "positive_quarters": 2,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 1.107,
+              "2025-Q4": -12.354,
+              "2026-Q1": -17.089,
+              "2026-Q2": -10.209,
+              "2026-Q3": 1.106
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 58.807,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 24.862,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 50.099,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 86.895,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": -76.055,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": -80.963,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 85.246,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": -108.048,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 13.503,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": -77.905,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 71.429,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": -41.347,
+                "gross": 1.0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 106.99,
+                "gross": 1.0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "lane_id": "LONG_ONLY_120D_WEEKLY",
+      "kind": "LONG",
+      "horizons": [
+        120
+      ],
+      "rebalance": 7,
+      "panic": false,
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 789,
+            "positive_days": 410,
+            "negative_days": 383,
+            "net_return_percent": 296.9594,
+            "profit_factor": 1.248,
+            "annualized_sharpe": 1.3524,
+            "max_drawdown_percent": 46.0565,
+            "average_daily_bps": 20.2475,
+            "average_turnover": 0.0385,
+            "total_cost_percent": 5.0645,
+            "positive_quarters": 6,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -0.525,
+              "2023-Q3": 10.92,
+              "2023-Q4": 92.002,
+              "2024-Q1": 65.81,
+              "2024-Q2": -29.434,
+              "2024-Q3": -5.035,
+              "2024-Q4": 64.783,
+              "2025-Q1": -27.107,
+              "2025-Q2": 5.369,
+              "2025-Q3": 33.24
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.819,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -336.788,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -86.332,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -37.07,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.392,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -341.037,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -256.595,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 342.776,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.496,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.947,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.074,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.199,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.75,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 141.878,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 58.956,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -225.208,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 664.27,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 270.531,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -476.659,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -93.229,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 140,
+            "positive_days": 69,
+            "negative_days": 76,
+            "net_return_percent": -18.6158,
+            "profit_factor": 0.8947,
+            "annualized_sharpe": -0.4353,
+            "max_drawdown_percent": 30.9517,
+            "average_daily_bps": -4.049,
+            "average_turnover": 0.0166,
+            "total_cost_percent": 0.9064,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 4.318,
+              "2025-Q4": -18.081,
+              "2026-Q1": -4.765,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 789,
+            "positive_days": 411,
+            "negative_days": 382,
+            "net_return_percent": 297.4405,
+            "profit_factor": 1.2482,
+            "annualized_sharpe": 1.3531,
+            "max_drawdown_percent": 46.0237,
+            "average_daily_bps": 20.264,
+            "average_turnover": 0.0385,
+            "total_cost_percent": 5.0655,
+            "positive_quarters": 6,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -0.496,
+              "2023-Q3": 10.913,
+              "2023-Q4": 91.988,
+              "2024-Q1": 65.834,
+              "2024-Q2": -29.431,
+              "2024-Q3": -5.032,
+              "2024-Q4": 64.773,
+              "2025-Q1": -27.045,
+              "2025-Q2": 5.368,
+              "2025-Q3": 33.246
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.404,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -335.874,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -88.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -36.165,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.673,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -340.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -255.992,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 341.945,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.192,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.786,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.168,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.943,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.875,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 140.842,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 59.671,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -224.184,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 662.423,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 271.505,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -476.559,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -94.105,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 140,
+            "positive_days": 69,
+            "negative_days": 76,
+            "net_return_percent": -18.6095,
+            "profit_factor": 0.8948,
+            "annualized_sharpe": -0.4334,
+            "max_drawdown_percent": 30.939,
+            "average_daily_bps": -4.0394,
+            "average_turnover": 0.0166,
+            "total_cost_percent": 0.9065,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 4.323,
+              "2025-Q4": -18.059,
+              "2026-Q1": -4.788,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "lane_id": "LONG_ONLY_DUAL_60_180_WEEKLY",
+      "kind": "LONG",
+      "horizons": [
+        60,
+        180
+      ],
+      "rebalance": 7,
+      "panic": false,
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 824,
+            "positive_days": 425,
+            "negative_days": 401,
+            "net_return_percent": 189.5194,
+            "profit_factor": 1.1765,
+            "annualized_sharpe": 1.057,
+            "max_drawdown_percent": 47.8408,
+            "average_daily_bps": 17.3632,
+            "average_turnover": 0.0485,
+            "total_cost_percent": 6.3467,
+            "positive_quarters": 5,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -11.1,
+              "2023-Q3": -3.345,
+              "2023-Q4": 89.567,
+              "2024-Q1": 70.893,
+              "2024-Q2": -29.159,
+              "2024-Q3": -17.112,
+              "2024-Q4": 76.225,
+              "2025-Q1": -24.595,
+              "2025-Q2": 6.337,
+              "2025-Q3": 25.354
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 238.375,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -284.093,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -39.631,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": 111.845,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -312.298,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -273.6,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -246.734,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 373.704,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 477.317,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.947,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.074,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.199,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.75,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 141.878,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 58.956,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -207.663,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 649.817,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 265.695,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -455.609,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -104.07,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 181,
+            "positive_days": 88,
+            "negative_days": 96,
+            "net_return_percent": -17.6881,
+            "profit_factor": 0.9025,
+            "annualized_sharpe": -0.436,
+            "max_drawdown_percent": 32.7987,
+            "average_daily_bps": -3.8747,
+            "average_turnover": 0.0208,
+            "total_cost_percent": 1.2084,
+            "positive_quarters": 2,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 4.318,
+              "2025-Q4": -20.372,
+              "2026-Q1": -5.633,
+              "2026-Q2": -0.357,
+              "2026-Q3": 5.382
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 54.602,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": -41.131,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 44.469,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 118.81,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": -36.182,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": -22.457,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 166.399,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": -37.627,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 70.144,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 18.381,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 139.644,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": -29.923,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 83.315,
+                "gross": 0.5
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 824,
+            "positive_days": 425,
+            "negative_days": 401,
+            "net_return_percent": 189.5806,
+            "profit_factor": 1.1766,
+            "annualized_sharpe": 1.0571,
+            "max_drawdown_percent": 47.8019,
+            "average_daily_bps": 17.3684,
+            "average_turnover": 0.0485,
+            "total_cost_percent": 6.3483,
+            "positive_quarters": 5,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -11.092,
+              "2023-Q3": -3.334,
+              "2023-Q4": 89.474,
+              "2024-Q1": 70.904,
+              "2024-Q2": -29.14,
+              "2024-Q3": -17.156,
+              "2024-Q4": 76.213,
+              "2025-Q1": -24.542,
+              "2025-Q2": 6.333,
+              "2025-Q3": 25.366
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 238.125,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -283.418,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -40.683,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": 112.065,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -313.115,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -272.512,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -246.151,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 373.998,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 477.012,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.786,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.168,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.943,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.875,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 140.842,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 59.671,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -206.775,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 647.812,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 266.614,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -455.487,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -105.093,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 181,
+            "positive_days": 88,
+            "negative_days": 96,
+            "net_return_percent": -17.6516,
+            "profit_factor": 0.9029,
+            "annualized_sharpe": -0.4328,
+            "max_drawdown_percent": 32.7827,
+            "average_daily_bps": -3.8546,
+            "average_turnover": 0.0208,
+            "total_cost_percent": 1.208,
+            "positive_quarters": 2,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 4.323,
+              "2025-Q4": -20.341,
+              "2026-Q1": -5.642,
+              "2026-Q2": -0.354,
+              "2026-Q3": 5.391
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 54.973,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": -41.226,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 44.895,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 119.071,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": -36.723,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": -21.955,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 165.884,
+                "gross": 0.75
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": -37.409,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 70.336,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 18.008,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 139.483,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": -29.674,
+                "gross": 0.5
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 83.6,
+                "gross": 0.5
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "lane_id": "LONG_ONLY_MULTI_20_60_120_240_WEEKLY",
+      "kind": "LONG",
+      "horizons": [
+        20,
+        60,
+        120,
+        240
+      ],
+      "rebalance": 7,
+      "panic": false,
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 845,
+            "positive_days": 441,
+            "negative_days": 405,
+            "net_return_percent": 225.5423,
+            "profit_factor": 1.1956,
+            "annualized_sharpe": 1.1507,
+            "max_drawdown_percent": 48.6093,
+            "average_daily_bps": 18.5362,
+            "average_turnover": 0.0449,
+            "total_cost_percent": 5.89,
+            "positive_quarters": 6,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -5.3,
+              "2023-Q3": 0.174,
+              "2023-Q4": 84.817,
+              "2024-Q1": 63.795,
+              "2024-Q2": -30.921,
+              "2024-Q3": -18.021,
+              "2024-Q4": 80.346,
+              "2025-Q1": -22.819,
+              "2025-Q2": 9.014,
+              "2025-Q3": 31.921
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.819,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -336.788,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -86.332,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -37.07,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.392,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -341.037,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -256.595,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 342.776,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.496,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.947,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.074,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.199,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.75,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 141.878,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 58.956,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -174.838,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 659.526,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 195.948,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -503.001,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -171.605,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 168,
+            "positive_days": 78,
+            "negative_days": 93,
+            "net_return_percent": -24.0262,
+            "profit_factor": 0.8596,
+            "annualized_sharpe": -0.6501,
+            "max_drawdown_percent": 34.2618,
+            "average_daily_bps": -5.9781,
+            "average_turnover": 0.0237,
+            "total_cost_percent": 1.2924,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 3.924,
+              "2025-Q4": -20.258,
+              "2026-Q1": -8.323,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 845,
+            "positive_days": 440,
+            "negative_days": 406,
+            "net_return_percent": 225.4596,
+            "profit_factor": 1.1956,
+            "annualized_sharpe": 1.1504,
+            "max_drawdown_percent": 48.6018,
+            "average_daily_bps": 18.5353,
+            "average_turnover": 0.0449,
+            "total_cost_percent": 5.8909,
+            "positive_quarters": 6,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -5.278,
+              "2023-Q3": 0.183,
+              "2023-Q4": 84.689,
+              "2024-Q1": 63.808,
+              "2024-Q2": -30.912,
+              "2024-Q3": -18.011,
+              "2024-Q4": 80.301,
+              "2025-Q1": -22.833,
+              "2025-Q2": 9.031,
+              "2025-Q3": 31.931
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.404,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -335.874,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -88.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -36.165,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.673,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -340.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -255.992,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 341.945,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.192,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.786,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.168,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.943,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.875,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 140.842,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 59.671,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -173.453,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 657.341,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 196.658,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -502.88,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -172.643,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 168,
+            "positive_days": 78,
+            "negative_days": 93,
+            "net_return_percent": -24.0181,
+            "profit_factor": 0.8598,
+            "annualized_sharpe": -0.6476,
+            "max_drawdown_percent": 34.2572,
+            "average_daily_bps": -5.9676,
+            "average_turnover": 0.0237,
+            "total_cost_percent": 1.2922,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 3.927,
+              "2025-Q4": -20.226,
+              "2026-Q1": -8.353,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "lane_id": "LONG_ONLY_MULTI_MONTHLY",
+      "kind": "LONG",
+      "horizons": [
+        20,
+        60,
+        120,
+        240
+      ],
+      "rebalance": 28,
+      "panic": false,
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 824,
+            "positive_days": 435,
+            "negative_days": 390,
+            "net_return_percent": 167.5728,
+            "profit_factor": 1.1722,
+            "annualized_sharpe": 1.0159,
+            "max_drawdown_percent": 51.9998,
+            "average_daily_bps": 16.1123,
+            "average_turnover": 0.0207,
+            "total_cost_percent": 2.7979,
+            "positive_quarters": 4,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -12.025,
+              "2023-Q3": -4.329,
+              "2023-Q4": 86.86,
+              "2024-Q1": 62.549,
+              "2024-Q2": -27.74,
+              "2024-Q3": -6.279,
+              "2024-Q4": 66.013,
+              "2025-Q1": -27.847,
+              "2025-Q2": -6.608,
+              "2025-Q3": 38.153
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 315.371,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -238.41,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -38.784,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": 98.01,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -298.936,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -357.928,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -320.747,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 389.7,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 474.342,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.947,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.074,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.199,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.75,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 141.878,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 58.956,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -228.747,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 676.103,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 268.643,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -479.446,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -93.287,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 168,
+            "positive_days": 81,
+            "negative_days": 88,
+            "net_return_percent": -26.3008,
+            "profit_factor": 0.8594,
+            "annualized_sharpe": -0.6874,
+            "max_drawdown_percent": 36.2632,
+            "average_daily_bps": -6.6523,
+            "average_turnover": 0.0098,
+            "total_cost_percent": 0.5346,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 4.274,
+              "2025-Q4": -22.017,
+              "2026-Q1": -9.367,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 824,
+            "positive_days": 434,
+            "negative_days": 391,
+            "net_return_percent": 167.6919,
+            "profit_factor": 1.1723,
+            "annualized_sharpe": 1.0162,
+            "max_drawdown_percent": 51.9965,
+            "average_daily_bps": 16.1197,
+            "average_turnover": 0.0207,
+            "total_cost_percent": 2.7982,
+            "positive_quarters": 4,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -12.021,
+              "2023-Q3": -4.309,
+              "2023-Q4": 86.807,
+              "2024-Q1": 62.577,
+              "2024-Q2": -27.733,
+              "2024-Q3": -6.283,
+              "2024-Q4": 66.018,
+              "2025-Q1": -27.843,
+              "2025-Q2": -6.596,
+              "2025-Q3": 38.159
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 314.853,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -238.516,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -38.907,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": 97.568,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -299.096,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -357.33,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -319.909,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 390.204,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 474.033,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.786,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.168,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.943,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.875,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 140.842,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 59.671,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -227.724,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 674.292,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 269.588,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -479.374,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -94.144,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 168,
+            "positive_days": 82,
+            "negative_days": 87,
+            "net_return_percent": -26.289,
+            "profit_factor": 0.8596,
+            "annualized_sharpe": -0.6847,
+            "max_drawdown_percent": 36.2507,
+            "average_daily_bps": -6.6397,
+            "average_turnover": 0.0098,
+            "total_cost_percent": 0.5345,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 4.279,
+              "2025-Q4": -22.0,
+              "2026-Q1": -9.376,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "lane_id": "LONG_ONLY_PANIC_FILTERED_WEEKLY",
+      "kind": "LONG",
+      "horizons": [
+        20,
+        60,
+        120,
+        240
+      ],
+      "rebalance": 7,
+      "panic": true,
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 845,
+            "positive_days": 441,
+            "negative_days": 405,
+            "net_return_percent": 252.0232,
+            "profit_factor": 1.2128,
+            "annualized_sharpe": 1.268,
+            "max_drawdown_percent": 47.8596,
+            "average_daily_bps": 18.7352,
+            "average_turnover": 0.0474,
+            "total_cost_percent": 6.2015,
+            "positive_quarters": 6,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -4.055,
+              "2023-Q3": 0.174,
+              "2023-Q4": 84.817,
+              "2024-Q1": 65.434,
+              "2024-Q2": -29.914,
+              "2024-Q3": -18.021,
+              "2024-Q4": 81.178,
+              "2025-Q1": -20.189,
+              "2025-Q2": 9.297,
+              "2025-Q3": 31.921
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.819,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -336.788,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -86.332,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -37.07,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.392,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -341.037,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -256.595,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 342.776,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.496,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.947,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.074,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.199,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.75,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 141.878,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 58.956,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -174.838,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 659.526,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 195.948,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -503.001,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -171.605,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 168,
+            "positive_days": 78,
+            "negative_days": 93,
+            "net_return_percent": -18.7202,
+            "profit_factor": 0.8928,
+            "annualized_sharpe": -0.485,
+            "max_drawdown_percent": 29.6706,
+            "average_daily_bps": -4.2599,
+            "average_turnover": 0.0236,
+            "total_cost_percent": 1.2873,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 3.924,
+              "2025-Q4": -14.689,
+              "2026-Q1": -8.323,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 845,
+            "positive_days": 440,
+            "negative_days": 406,
+            "net_return_percent": 251.8882,
+            "profit_factor": 1.2128,
+            "annualized_sharpe": 1.2674,
+            "max_drawdown_percent": 47.8515,
+            "average_daily_bps": 18.7326,
+            "average_turnover": 0.0474,
+            "total_cost_percent": 6.2022,
+            "positive_quarters": 6,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": -4.041,
+              "2023-Q3": 0.183,
+              "2023-Q4": 84.689,
+              "2024-Q1": 65.452,
+              "2024-Q2": -29.904,
+              "2024-Q3": -18.011,
+              "2024-Q4": 81.132,
+              "2025-Q1": -20.211,
+              "2025-Q2": 9.314,
+              "2025-Q3": 31.931
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 264.404,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": -335.874,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": -88.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": -36.165,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": -327.673,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": -340.477,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": -255.992,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 341.945,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 489.192,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": -297.786,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 154.168,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 533.943,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 132.875,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 140.842,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 59.671,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": -173.453,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": 657.341,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": 196.658,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": -502.88,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -172.643,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": false,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 168,
+            "positive_days": 78,
+            "negative_days": 93,
+            "net_return_percent": -18.7027,
+            "profit_factor": 0.8931,
+            "annualized_sharpe": -0.4825,
+            "max_drawdown_percent": 29.6581,
+            "average_daily_bps": -4.2466,
+            "average_turnover": 0.0236,
+            "total_cost_percent": 1.2874,
+            "positive_quarters": 1,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": 3.927,
+              "2025-Q4": -14.645,
+              "2026-Q1": -8.353,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": false,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    },
+    {
+      "lane_id": "MARKET_NEUTRAL_MULTI_WEEKLY_RESEARCH",
+      "kind": "NEUTRAL",
+      "horizons": [
+        20,
+        60,
+        120,
+        240
+      ],
+      "rebalance": 7,
+      "panic": true,
+      "venues": {
+        "BINANCE": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 502,
+            "positive_days": 272,
+            "negative_days": 244,
+            "net_return_percent": -0.9904,
+            "profit_factor": 1.0069,
+            "annualized_sharpe": 0.0365,
+            "max_drawdown_percent": 24.0437,
+            "average_daily_bps": 0.1357,
+            "average_turnover": 0.0572,
+            "total_cost_percent": 11.9174,
+            "positive_quarters": 5,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": 8.745,
+              "2023-Q3": -4.369,
+              "2023-Q4": 8.499,
+              "2024-Q1": 6.789,
+              "2024-Q2": -0.579,
+              "2024-Q3": -3.44,
+              "2024-Q4": 2.83,
+              "2025-Q1": 3.672,
+              "2025-Q2": -4.724,
+              "2025-Q3": -15.729
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": 195.131,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": -167.1,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": -142.865,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": 2.951,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -146.395,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": true,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 77,
+            "positive_days": 44,
+            "negative_days": 37,
+            "net_return_percent": 12.1825,
+            "profit_factor": 1.7217,
+            "annualized_sharpe": 1.7591,
+            "max_drawdown_percent": 3.5686,
+            "average_daily_bps": 3.2287,
+            "average_turnover": 0.0331,
+            "total_cost_percent": 2.5041,
+            "positive_quarters": 2,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": -1.259,
+              "2025-Q4": 9.696,
+              "2026-Q1": 3.571,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": false,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": true,
+            "quarters": false
+          },
+          "holdout_passed": false
+        },
+        "OKX": {
+          "discovery": {
+            "calendar_days": 852,
+            "invested_days": 502,
+            "positive_days": 272,
+            "negative_days": 244,
+            "net_return_percent": -0.9518,
+            "profit_factor": 1.0071,
+            "annualized_sharpe": 0.0377,
+            "max_drawdown_percent": 24.0208,
+            "average_daily_bps": 0.1399,
+            "average_turnover": 0.0572,
+            "total_cost_percent": 11.9175,
+            "positive_quarters": 5,
+            "quarter_count": 10,
+            "quarter_returns_percent": {
+              "2023-Q2": 8.831,
+              "2023-Q3": -4.395,
+              "2023-Q4": 8.452,
+              "2024-Q1": 6.798,
+              "2024-Q2": -0.586,
+              "2024-Q3": -3.429,
+              "2024-Q4": 2.843,
+              "2025-Q1": 3.651,
+              "2025-Q2": -4.691,
+              "2025-Q3": -15.737
+            },
+            "recent_days": [
+              {
+                "utc": "2025-07-27T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-28T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2025-08-11T00:00:00+00:00",
+                "return_bps": 196.955,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-12T00:00:00+00:00",
+                "return_bps": -168.177,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-13T00:00:00+00:00",
+                "return_bps": -143.679,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-14T00:00:00+00:00",
+                "return_bps": 2.517,
+                "gross": 1.0
+              },
+              {
+                "utc": "2025-08-15T00:00:00+00:00",
+                "return_bps": -146.972,
+                "gross": 1.0
+              }
+            ]
+          },
+          "discovery_checks": {
+            "days": true,
+            "invested": true,
+            "net": false,
+            "pf": false,
+            "sharpe": false,
+            "dd": true,
+            "quarters": false
+          },
+          "discovery_passed": false,
+          "holdout": {
+            "calendar_days": 363,
+            "invested_days": 77,
+            "positive_days": 45,
+            "negative_days": 36,
+            "net_return_percent": 12.1663,
+            "profit_factor": 1.7201,
+            "annualized_sharpe": 1.7547,
+            "max_drawdown_percent": 3.5687,
+            "average_daily_bps": 3.2249,
+            "average_turnover": 0.0331,
+            "total_cost_percent": 2.5039,
+            "positive_quarters": 2,
+            "quarter_count": 5,
+            "quarter_returns_percent": {
+              "2025-Q3": -1.266,
+              "2025-Q4": 9.696,
+              "2026-Q1": 3.564,
+              "2026-Q2": 0.0,
+              "2026-Q3": 0.0
+            },
+            "recent_days": [
+              {
+                "utc": "2026-07-29T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-30T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-07-31T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-01T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-02T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-03T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-04T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-05T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-06T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-07T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-08T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-09T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-10T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-11T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-12T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-13T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-14T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-15T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-16T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              },
+              {
+                "utc": "2026-08-17T00:00:00+00:00",
+                "return_bps": 0.0,
+                "gross": 0
+              }
+            ]
+          },
+          "holdout_checks": {
+            "days": true,
+            "invested": false,
+            "net": true,
+            "pf": true,
+            "sharpe": true,
+            "dd": true,
+            "quarters": false
+          },
+          "holdout_passed": false
+        }
+      },
+      "discovery_passed_both_venues": false
+    }
+  ],
+  "data_failures": {},
+  "safety": {
+    "trading_environment": "PAPER",
+    "live_trading": false,
+    "paper_trading": true,
+    "demo_only": true,
+    "leverage": 1,
+    "live_order_code_present": false
+  },
+  "private_api_used": false,
+  "real_orders_enabled": false,
+  "live_permission": false,
+  "note": "Historical screen only. Any pass requires fresh PAPER forward and existing safety gates before micro-live review."
+}
