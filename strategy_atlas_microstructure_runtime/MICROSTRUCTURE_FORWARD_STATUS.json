@@ -1,60 +1,18 @@
 {
-  "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V1",
-  "updated_at_utc": "2026-08-19T20:02:21.973515+00:00",
+  "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
+  "updated_at_utc": "2026-08-19T20:08:11.248893+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 190,
-  "snapshot_count_after_freeze": 10,
+  "snapshot_count_total": 191,
+  "snapshot_count_after_freeze": 11,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
-  "lane_count": 5,
+  "lane_count": 7,
   "promising_early": [],
   "champions": [],
   "lanes": [
     {
-      "lane_id": "ETH:TOP_HIGH_CONTINUATION:H6",
-      "symbol": "ETH",
-      "signal": "TOP_HIGH_CONTINUATION",
-      "horizon": 6,
-      "signal_count": 1,
-      "stats": {
-        "closed_trades": 1,
-        "wins": 1,
-        "losses": 0,
-        "win_rate_percent": 100.0,
-        "net_bps": 98.9441,
-        "average_net_bps": 98.9441,
-        "profit_factor": 99.0,
-        "max_drawdown_bps": 0.0
-      },
-      "positive_time_segments": 0,
-      "early_checks": {
-        "trades": false,
-        "average_net_bps": true,
-        "profit_factor": true
-      },
-      "promising_early": false,
-      "champion_checks": {
-        "trades": false,
-        "average_net_bps": true,
-        "profit_factor": true,
-        "drawdown": true,
-        "time_segments": false
-      },
-      "champion_passed": false,
-      "recent_trades": [
-        {
-          "signal_utc": "2026-08-19T17:25:30.048339+00:00",
-          "entry_utc": "2026-08-19T17:33:32.964301+00:00",
-          "exit_utc": "2026-08-19T19:42:56.355490+00:00",
-          "entry_ask": 2072.98,
-          "exit_bid": 2099.75,
-          "net_bps": 98.94412
-        }
-      ]
-    },
-    {
-      "lane_id": "BTC:DEPTH_HIGH_CONTINUATION:H6",
+      "lane_id": "BTC:CROSS_DEPTH_HIGH_CONTINUATION:H6",
       "symbol": "BTC",
-      "signal": "DEPTH_HIGH_CONTINUATION",
+      "signal": "CROSS_DEPTH_HIGH_CONTINUATION",
       "horizon": 6,
       "signal_count": 1,
       "stats": {
@@ -94,18 +52,18 @@
       ]
     },
     {
-      "lane_id": "ETH:FLOW_SELL_REVERSION_LONG:H6",
+      "lane_id": "ETH:CROSS_DEPTH_HIGH_CONTINUATION:H6",
       "symbol": "ETH",
-      "signal": "FLOW_SELL_REVERSION_LONG",
+      "signal": "CROSS_DEPTH_HIGH_CONTINUATION",
       "horizon": 6,
-      "signal_count": 3,
+      "signal_count": 1,
       "stats": {
         "closed_trades": 1,
         "wins": 1,
         "losses": 0,
         "win_rate_percent": 100.0,
-        "net_bps": 16.8518,
-        "average_net_bps": 16.8518,
+        "net_bps": 86.9634,
+        "average_net_bps": 86.9634,
         "profit_factor": 99.0,
         "max_drawdown_bps": 0.0
       },
@@ -126,30 +84,30 @@
       "champion_passed": false,
       "recent_trades": [
         {
-          "signal_utc": "2026-08-19T17:05:16.957986+00:00",
-          "entry_utc": "2026-08-19T17:09:13.146096+00:00",
-          "exit_utc": "2026-08-19T18:52:39.036788+00:00",
-          "entry_ask": 2080.04,
-          "exit_bid": 2089.8,
-          "net_bps": 16.85181
+          "signal_utc": "2026-08-19T17:09:13.146096+00:00",
+          "entry_utc": "2026-08-19T17:25:30.048339+00:00",
+          "exit_utc": "2026-08-19T19:12:49.666987+00:00",
+          "entry_ask": 2072.75,
+          "exit_bid": 2097.03,
+          "net_bps": 86.96342
         }
       ]
     },
     {
-      "lane_id": "SOL:FLOW_SELL_REVERSION_LONG:H3",
-      "symbol": "SOL",
-      "signal": "FLOW_SELL_REVERSION_LONG",
-      "horizon": 3,
-      "signal_count": 2,
+      "lane_id": "BTC:CROSS_DEPTH_LOW_REVERSION_LONG:H6",
+      "symbol": "BTC",
+      "signal": "CROSS_DEPTH_LOW_REVERSION_LONG",
+      "horizon": 6,
+      "signal_count": 0,
       "stats": {
-        "closed_trades": 1,
+        "closed_trades": 0,
         "wins": 0,
-        "losses": 1,
-        "win_rate_percent": 0.0,
-        "net_bps": -4.4722,
-        "average_net_bps": -4.4722,
-        "profit_factor": 0.0,
-        "max_drawdown_bps": 4.4722
+        "losses": 0,
+        "win_rate_percent": null,
+        "net_bps": null,
+        "average_net_bps": null,
+        "profit_factor": null,
+        "max_drawdown_bps": null
       },
       "positive_time_segments": 0,
       "early_checks": {
@@ -162,25 +120,150 @@
         "trades": false,
         "average_net_bps": false,
         "profit_factor": false,
+        "drawdown": false,
+        "time_segments": false
+      },
+      "champion_passed": false,
+      "recent_trades": []
+    },
+    {
+      "lane_id": "ETH:CROSS_FLOW_SELL_REVERSION_LONG:H3",
+      "symbol": "ETH",
+      "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
+      "horizon": 3,
+      "signal_count": 2,
+      "stats": {
+        "closed_trades": 1,
+        "wins": 1,
+        "losses": 0,
+        "win_rate_percent": 100.0,
+        "net_bps": 59.9867,
+        "average_net_bps": 59.9867,
+        "profit_factor": 99.0,
+        "max_drawdown_bps": 0.0
+      },
+      "positive_time_segments": 0,
+      "early_checks": {
+        "trades": false,
+        "average_net_bps": true,
+        "profit_factor": true
+      },
+      "promising_early": false,
+      "champion_checks": {
+        "trades": false,
+        "average_net_bps": true,
+        "profit_factor": true,
         "drawdown": true,
         "time_segments": false
       },
       "champion_passed": false,
       "recent_trades": [
         {
-          "signal_utc": "2026-08-19T17:56:22.068006+00:00",
-          "entry_utc": "2026-08-19T18:44:28.692636+00:00",
-          "exit_utc": "2026-08-19T19:12:49.666987+00:00",
-          "entry_ask": 82.14,
-          "exit_bid": 82.35,
-          "net_bps": -4.47223
+          "signal_utc": "2026-08-19T17:09:13.146096+00:00",
+          "entry_utc": "2026-08-19T17:25:30.048339+00:00",
+          "exit_utc": "2026-08-19T17:56:22.068006+00:00",
+          "entry_ask": 2072.75,
+          "exit_bid": 2091.43,
+          "net_bps": 59.98668
         }
       ]
     },
     {
-      "lane_id": "BTC:DEPTH_LOW_REVERSION_LONG:H6",
+      "lane_id": "BTC:CROSS_FLOW_SELL_REVERSION_LONG:H3",
       "symbol": "BTC",
-      "signal": "DEPTH_LOW_REVERSION_LONG",
+      "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
+      "horizon": 3,
+      "signal_count": 1,
+      "stats": {
+        "closed_trades": 1,
+        "wins": 1,
+        "losses": 0,
+        "win_rate_percent": 100.0,
+        "net_bps": 15.0381,
+        "average_net_bps": 15.0381,
+        "profit_factor": 99.0,
+        "max_drawdown_bps": 0.0
+      },
+      "positive_time_segments": 0,
+      "early_checks": {
+        "trades": false,
+        "average_net_bps": true,
+        "profit_factor": true
+      },
+      "promising_early": false,
+      "champion_checks": {
+        "trades": false,
+        "average_net_bps": true,
+        "profit_factor": true,
+        "drawdown": true,
+        "time_segments": false
+      },
+      "champion_passed": false,
+      "recent_trades": [
+        {
+          "signal_utc": "2026-08-19T17:09:13.146096+00:00",
+          "entry_utc": "2026-08-19T17:25:30.048339+00:00",
+          "exit_utc": "2026-08-19T17:56:22.068006+00:00",
+          "entry_ask": 67929.3,
+          "exit_bid": 68235.7,
+          "net_bps": 15.03808
+        }
+      ]
+    },
+    {
+      "lane_id": "SOL:CROSS_FLOW_BUY_CONTINUATION:H3",
+      "symbol": "SOL",
+      "signal": "CROSS_FLOW_BUY_CONTINUATION",
+      "horizon": 3,
+      "signal_count": 2,
+      "stats": {
+        "closed_trades": 2,
+        "wins": 1,
+        "losses": 1,
+        "win_rate_percent": 50.0,
+        "net_bps": 16.1678,
+        "average_net_bps": 8.0839,
+        "profit_factor": 1.7518,
+        "max_drawdown_bps": 21.5063
+      },
+      "positive_time_segments": 0,
+      "early_checks": {
+        "trades": false,
+        "average_net_bps": true,
+        "profit_factor": true
+      },
+      "promising_early": false,
+      "champion_checks": {
+        "trades": false,
+        "average_net_bps": true,
+        "profit_factor": true,
+        "drawdown": true,
+        "time_segments": false
+      },
+      "champion_passed": false,
+      "recent_trades": [
+        {
+          "signal_utc": "2026-08-19T17:09:13.146096+00:00",
+          "entry_utc": "2026-08-19T17:25:30.048339+00:00",
+          "exit_utc": "2026-08-19T17:56:22.068006+00:00",
+          "entry_ask": 81.15,
+          "exit_bid": 81.7,
+          "net_bps": 37.67409
+        },
+        {
+          "signal_utc": "2026-08-19T19:12:49.666987+00:00",
+          "entry_utc": "2026-08-19T19:42:56.355490+00:00",
+          "exit_utc": "2026-08-19T20:08:00.133427+00:00",
+          "entry_ask": 82.29,
+          "exit_bid": 82.36,
+          "net_bps": -21.50625
+        }
+      ]
+    },
+    {
+      "lane_id": "ETH:CROSS_DEPTH_AND_FLOW_BUY:H6",
+      "symbol": "ETH",
+      "signal": "CROSS_DEPTH_AND_FLOW_BUY",
       "horizon": 6,
       "signal_count": 0,
       "stats": {
@@ -222,5 +305,6 @@
   "private_api_used": false,
   "real_orders_enabled": false,
   "live_permission": false,
-  "note": "Single-venue forward execution evidence. Even a champion pass requires independent Binance microstructure confirmation before micro-live review."
+  "note": "Dual-venue forward execution evidence. A champion pass still requires enough independent trades, time-segment robustness and explicit owner approval before any micro-live review.",
+  "confirmation_model": "Signal requires Binance+OKX agreement; next OKX snapshot ask entry; future OKX bid exit; observed spread plus conservative fees/slippage."
 }
