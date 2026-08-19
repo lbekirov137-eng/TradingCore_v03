@@ -13,8 +13,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: tradingcore-cloud-state-writer
-  cancel-in-progress: false
+  group: tradingcore-cost-aware-ml
+  cancel-in-progress: true
 
 jobs:
   validate:
@@ -80,4 +80,4 @@ jobs:
           print('LIVE: disabled')
           PY
 
-# Dependency repair rerun: model and frozen gates are unchanged.
+# Independent compute queue: frozen model and gates unchanged.
