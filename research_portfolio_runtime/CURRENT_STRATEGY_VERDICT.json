@@ -1,0 +1,70 @@
+{
+  "schema": "TRADINGCORE_CURRENT_STRATEGY_VERDICT_V1",
+  "as_of_utc": "2026-08-19T20:05:00Z",
+  "decision": "NO_VALIDATED_DAILY_PROFIT_CHAMPION",
+  "live_gate": "BLOCKED",
+  "validated_rejects": [
+    {
+      "lab": "DAILY_REGIME_ENSEMBLE_V1",
+      "reason": "No family passed discovery on Binance and OKX after conservative turnover and short-carry costs."
+    },
+    {
+      "lab": "MULTI_ASSET_FUNDING_PORTFOLIO_V1",
+      "reason": "No diversified funding lane passed the two-venue discovery gate."
+    },
+    {
+      "lab": "LOW_TURNOVER_DAILY_ROUTER_V1",
+      "reason": "Frozen cost-hurdle lanes generated no qualifying executable trades."
+    },
+    {
+      "lab": "MULTI_HORIZON_TREND_PORTFOLIO_V1",
+      "reason": "Strong discovery returns collapsed in the untouched holdout; regime overfit."
+    },
+    {
+      "lab": "RISK_OFF_MOMENTUM",
+      "reason": "Positive gross drift was too weak after costs and drawdown controls."
+    },
+    {
+      "lab": "SPOT_ROTATION_REGIME",
+      "reason": "No robust two-venue holdout candidate."
+    },
+    {
+      "lab": "INTRADAY_SESSION_REGIME",
+      "reason": "Session strategies were materially negative after costs."
+    },
+    {
+      "lab": "COST_AWARE_HOURLY_ML",
+      "reason": "Walk-forward expectancy and profit factor were negative on Binance and OKX."
+    }
+  ],
+  "quarantined_results": [
+    {
+      "lab": "ADAPTIVE_DAILY_ALPHA",
+      "decision": "REJECT_SUSPICIOUS_ACCOUNTING_UNTIL_REPRODUCED",
+      "reason": "Aggregate result reported implausibly large compounded returns under a declared 1x exposure cap and has not passed ledger reconciliation."
+    }
+  ],
+  "active_research": [
+    {
+      "lab": "MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
+      "status": "PAPER_FORWARD_ACTIVE",
+      "why": "The first costed single-venue event was positive, but it was one correlated market episode. V2 now requires Binance and OKX confirmation before scoring a signal.",
+      "minimum_gate": "At least 50 independent closed trades, positive average net bps, PF >= 1.30, drawdown <= 100 bps and 3/4 positive time segments."
+    },
+    {
+      "lab": "QUARTER_HOUR_ORDERFLOW",
+      "status": "HISTORICAL_VALIDATOR_INSTALLED_NOT_YET_COUNTED",
+      "why": "Tests 45 frozen order-flow lanes around quarter-hour liquidity events using official Binance futures archives and conservative execution."
+    }
+  ],
+  "operating_policy": {
+    "evaluate_market_daily": true,
+    "force_trade_daily": false,
+    "default_decision": "NO_TRADE",
+    "paper_only": true,
+    "real_orders_enabled": false,
+    "live_permission": false,
+    "leverage": 1,
+    "risk_per_trade_percent": 0.1
+  }
+}
