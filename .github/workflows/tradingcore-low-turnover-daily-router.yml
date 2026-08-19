@@ -1,0 +1,88 @@
+name: TradingCore Low-Turnover Daily Router
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 1 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tradingcore-low-turnover-daily-router.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tradingcore-low-turnover-daily-router
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      TRADING_ENVIRONMENT: PAPER
+      LIVE_TRADING: "false"
+      PAPER_TRADING: "true"
+      DEMO_ONLY: "true"
+
+    steps:
+      - name: Checkout frozen research code
+        uses: actions/checkout@v4
+        with:
+          ref: reconcile-railway-paper
+          path: code
+          fetch-depth: 1
+
+      - name: Checkout persistent cloud state
+        uses: actions/checkout@v4
+        with:
+          ref: cloud-state
+          path: state
+          fetch-depth: 1
+
+      - name: Decode, compile and run low-turnover router
+        working-directory: code
+        run: |
+          base64 -d research_payloads/low_turnover_daily_router_lab.py.gz.b64 | gzip -d > low_turnover_daily_router_lab.py
+          python3 -m py_compile low_turnover_daily_router_lab.py
+          python3 low_turnover_daily_router_lab.py --output-dir "$GITHUB_WORKSPACE/state/low_turnover_daily_runtime"
+
+      - name: Persist result
+        if: always()
+        working-directory: state
+        run: |
+          git config user.name "TradingCore Low-Turnover Router"
+          git config user.email "actions@users.noreply.github.com"
+          git add -f low_turnover_daily_runtime
+          if git diff --cached --quiet; then
+            echo "No low-turnover router changes."
+          else
+            git commit -m "low-turnover-router: update two-venue validation"
+            git pull --rebase origin cloud-state
+            git push origin HEAD:cloud-state
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## TradingCore Low-Turnover Daily Router" >> "$GITHUB_STEP_SUMMARY"
+          RESULT="$GITHUB_WORKSPACE/state/low_turnover_daily_runtime/LOW_TURNOVER_DAILY_RESULT.json"
+          if [ -f "$RESULT" ]; then
+            RESULT="$RESULT" python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          d=json.load(open(os.environ['RESULT'],encoding='utf-8'))
+          print('state:', d.get('state'))
+          print('selected_lane:', d.get('selected_lane'))
+          print('holdout_both_venues:', d.get('selected_holdout_passed_both_venues'))
+          print('discovery_candidates:', d.get('discovery_candidates'))
+          print('data_failures:', d.get('data_failures'))
+          for row in d.get('results') or []:
+              if row.get('lane_id') == d.get('selected_lane'):
+                  for venue, payload in (row.get('venues') or {}).items():
+                      print(venue, 'discovery=', payload.get('discovery'), 'holdout=', payload.get('holdout'), 'holdout_passed=', payload.get('holdout_passed'))
+          print('LIVE: disabled')
+          PY
+          else
+            echo "Result file missing; inspect job logs." >> "$GITHUB_STEP_SUMMARY"
+          fi
