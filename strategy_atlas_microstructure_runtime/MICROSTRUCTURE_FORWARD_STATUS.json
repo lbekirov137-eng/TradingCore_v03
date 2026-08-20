@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-20T06:01:07.429131+00:00",
+  "updated_at_utc": "2026-08-20T07:02:13.795742+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 207,
-  "snapshot_count_after_freeze": 27,
+  "snapshot_count_total": 208,
+  "snapshot_count_after_freeze": 28,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [],
@@ -16,26 +16,26 @@
       "horizon": 6,
       "signal_count": 3,
       "stats": {
-        "closed_trades": 2,
-        "wins": 1,
+        "closed_trades": 3,
+        "wins": 2,
         "losses": 1,
-        "win_rate_percent": 50.0,
-        "net_bps": -30.2654,
-        "average_net_bps": -15.1327,
-        "profit_factor": 0.598,
+        "win_rate_percent": 66.67,
+        "net_bps": 65.9237,
+        "average_net_bps": 21.9746,
+        "profit_factor": 1.8755,
         "max_drawdown_bps": 75.2952
       },
       "positive_time_segments": 0,
       "early_checks": {
         "trades": false,
-        "average_net_bps": false,
-        "profit_factor": false
+        "average_net_bps": true,
+        "profit_factor": true
       },
       "promising_early": false,
       "champion_checks": {
         "trades": false,
-        "average_net_bps": false,
-        "profit_factor": false,
+        "average_net_bps": true,
+        "profit_factor": true,
         "drawdown": true,
         "time_segments": false
       },
@@ -56,6 +56,14 @@
           "entry_ask": 69704.1,
           "exit_bid": 69387.9,
           "net_bps": -75.29516
+        },
+        {
+          "signal_utc": "2026-08-20T02:32:15.135655+00:00",
+          "entry_utc": "2026-08-20T03:27:16.440446+00:00",
+          "exit_utc": "2026-08-20T07:02:04.313908+00:00",
+          "entry_ask": 68967.4,
+          "exit_bid": 69839.0,
+          "net_bps": 96.18905
         }
       ]
     },
@@ -147,7 +155,7 @@
       "symbol": "ETH",
       "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
       "horizon": 3,
-      "signal_count": 5,
+      "signal_count": 6,
       "stats": {
         "closed_trades": 4,
         "wins": 4,
@@ -263,7 +271,7 @@
       "symbol": "SOL",
       "signal": "CROSS_FLOW_BUY_CONTINUATION",
       "horizon": 3,
-      "signal_count": 4,
+      "signal_count": 5,
       "stats": {
         "closed_trades": 4,
         "wins": 1,
