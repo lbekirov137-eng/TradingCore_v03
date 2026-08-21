@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-21T06:50:59.972078+00:00",
+  "updated_at_utc": "2026-08-21T07:36:17.824161+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 247,
-  "snapshot_count_after_freeze": 67,
+  "snapshot_count_total": 249,
+  "snapshot_count_after_freeze": 69,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
@@ -156,7 +156,7 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_LOW_REVERSION_LONG",
       "horizon": 6,
-      "signal_count": 5,
+      "signal_count": 6,
       "stats": {
         "closed_trades": 3,
         "wins": 3,
@@ -330,16 +330,16 @@
       "horizon": 3,
       "signal_count": 8,
       "stats": {
-        "closed_trades": 7,
-        "wins": 4,
+        "closed_trades": 8,
+        "wins": 5,
         "losses": 3,
-        "win_rate_percent": 57.14,
-        "net_bps": 12.4257,
-        "average_net_bps": 1.7751,
-        "profit_factor": 1.1135,
+        "win_rate_percent": 62.5,
+        "net_bps": 107.1742,
+        "average_net_bps": 13.3968,
+        "profit_factor": 1.9787,
         "max_drawdown_bps": 109.5076
       },
-      "positive_time_segments": 0,
+      "positive_time_segments": 3,
       "early_checks": {
         "trades": false,
         "average_net_bps": true,
@@ -348,10 +348,10 @@
       "promising_early": false,
       "champion_checks": {
         "trades": false,
-        "average_net_bps": false,
-        "profit_factor": false,
+        "average_net_bps": true,
+        "profit_factor": true,
         "drawdown": false,
-        "time_segments": false
+        "time_segments": true
       },
       "champion_passed": false,
       "recent_trades": [
@@ -410,6 +410,14 @@
           "entry_ask": 74374.1,
           "exit_bid": 75032.2,
           "net_bps": 58.35242
+        },
+        {
+          "signal_utc": "2026-08-21T05:54:34.814202+00:00",
+          "entry_utc": "2026-08-21T06:50:48.085221+00:00",
+          "exit_utc": "2026-08-21T07:36:07.771498+00:00",
+          "entry_ask": 75486.8,
+          "exit_bid": 76429.9,
+          "net_bps": 94.74841
         }
       ]
     },
@@ -420,13 +428,13 @@
       "horizon": 3,
       "signal_count": 9,
       "stats": {
-        "closed_trades": 8,
+        "closed_trades": 9,
         "wins": 3,
-        "losses": 5,
-        "win_rate_percent": 37.5,
-        "net_bps": 60.6225,
-        "average_net_bps": 7.5778,
-        "profit_factor": 1.2606,
+        "losses": 6,
+        "win_rate_percent": 33.33,
+        "net_bps": 44.9767,
+        "average_net_bps": 4.9974,
+        "profit_factor": 1.1812,
         "max_drawdown_bps": 167.5064
       },
       "positive_time_segments": 2,
@@ -508,6 +516,14 @@
           "entry_ask": 87.69,
           "exit_bid": 88.92,
           "net_bps": 110.05652
+        },
+        {
+          "signal_utc": "2026-08-21T05:20:08.763002+00:00",
+          "entry_utc": "2026-08-21T05:54:34.814202+00:00",
+          "exit_utc": "2026-08-21T07:07:04.207898+00:00",
+          "entry_ask": 90.43,
+          "exit_bid": 90.56,
+          "net_bps": -15.6458
         }
       ]
     },
