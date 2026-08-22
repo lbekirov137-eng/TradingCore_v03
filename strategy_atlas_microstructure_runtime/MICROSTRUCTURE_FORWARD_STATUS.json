@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-22T22:46:30.337776+00:00",
+  "updated_at_utc": "2026-08-22T23:03:09.724454+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 326,
-  "snapshot_count_after_freeze": 146,
+  "snapshot_count_total": 327,
+  "snapshot_count_after_freeze": 147,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
@@ -17,20 +17,20 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_HIGH_CONTINUATION",
       "horizon": 6,
-      "signal_count": 12,
+      "signal_count": 10,
       "stats": {
-        "closed_trades": 9,
+        "closed_trades": 10,
         "wins": 4,
-        "losses": 5,
-        "win_rate_percent": 44.44,
-        "net_bps": -51.7011,
-        "average_net_bps": -5.7446,
-        "profit_factor": 0.7641,
-        "max_drawdown_bps": 137.8915
+        "losses": 6,
+        "win_rate_percent": 40.0,
+        "net_bps": -94.5043,
+        "average_net_bps": -9.4504,
+        "profit_factor": 0.6393,
+        "max_drawdown_bps": 177.2301
       },
       "positive_time_segments": 1,
       "early_checks": {
-        "trades": false,
+        "trades": true,
         "average_net_bps": false,
         "profit_factor": false
       },
@@ -115,6 +115,14 @@
           "entry_ask": 77007.7,
           "exit_bid": 77192.9,
           "net_bps": -5.98652
+        },
+        {
+          "signal_utc": "2026-08-22T20:43:31.109501+00:00",
+          "entry_utc": "2026-08-22T21:02:48.411562+00:00",
+          "exit_utc": "2026-08-22T23:02:59.076782+00:00",
+          "entry_ask": 77130.6,
+          "exit_bid": 77031.7,
+          "net_bps": -42.80318
         }
       ]
     },
@@ -123,7 +131,7 @@
       "symbol": "ETH",
       "signal": "CROSS_DEPTH_HIGH_CONTINUATION",
       "horizon": 6,
-      "signal_count": 6,
+      "signal_count": 7,
       "stats": {
         "closed_trades": 6,
         "wins": 3,
