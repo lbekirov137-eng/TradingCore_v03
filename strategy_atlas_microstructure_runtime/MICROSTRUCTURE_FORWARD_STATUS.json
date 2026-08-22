@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-22T14:03:21.282894+00:00",
+  "updated_at_utc": "2026-08-22T14:34:59.908698+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 305,
-  "snapshot_count_after_freeze": 125,
+  "snapshot_count_total": 306,
+  "snapshot_count_after_freeze": 126,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
@@ -197,7 +197,7 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_LOW_REVERSION_LONG",
       "horizon": 6,
-      "signal_count": 8,
+      "signal_count": 9,
       "stats": {
         "closed_trades": 8,
         "wins": 5,
@@ -581,16 +581,16 @@
       "horizon": 3,
       "signal_count": 16,
       "stats": {
-        "closed_trades": 15,
+        "closed_trades": 16,
         "wins": 7,
-        "losses": 8,
-        "win_rate_percent": 46.67,
-        "net_bps": 281.0328,
-        "average_net_bps": 18.7355,
-        "profit_factor": 1.611,
-        "max_drawdown_bps": 211.7369
+        "losses": 9,
+        "win_rate_percent": 43.75,
+        "net_bps": 272.3251,
+        "average_net_bps": 17.0203,
+        "profit_factor": 1.581,
+        "max_drawdown_bps": 220.4446
       },
-      "positive_time_segments": 2,
+      "positive_time_segments": 3,
       "early_checks": {
         "trades": true,
         "average_net_bps": true,
@@ -602,7 +602,7 @@
         "average_net_bps": true,
         "profit_factor": true,
         "drawdown": false,
-        "time_segments": false
+        "time_segments": true
       },
       "champion_passed": false,
       "recent_trades": [
@@ -725,6 +725,14 @@
           "entry_ask": 94.01,
           "exit_bid": 93.1,
           "net_bps": -126.65306
+        },
+        {
+          "signal_utc": "2026-08-22T13:10:46.875060+00:00",
+          "entry_utc": "2026-08-22T13:45:39.224939+00:00",
+          "exit_utc": "2026-08-22T14:34:48.333111+00:00",
+          "entry_ask": 93.79,
+          "exit_bid": 93.99,
+          "net_bps": -8.70774
         }
       ]
     },
