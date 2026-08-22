@@ -1,6 +1,6 @@
 {
   "schema": "TRADINGCORE_FRONTIER_VERDICT_V1",
-  "generated_at_utc": "2026-08-22T01:49:28.515182+00:00",
+  "generated_at_utc": "2026-08-22T06:58:36.980383+00:00",
   "decision": "NO_FRONTIER_CHAMPION_YET",
   "momentum_state": "NO_FRONTIER_CHAMPION_YET",
   "momentum_passing": 0,
@@ -10,35 +10,35 @@
       "family": "DONCHIAN_48H",
       "symbol": "ETHUSDT",
       "timeframe": "1h",
-      "signals": 83,
+      "signals": 82,
       "full": {
         "closed_trades": 82,
         "wins": 23,
         "losses": 59,
         "win_rate_percent": 28.05,
-        "net_r": 18.5382,
-        "profit_factor": 1.303,
-        "expectancy_r": 0.2261,
-        "max_drawdown_r": 18.7428
+        "net_r": 18.5298,
+        "profit_factor": 1.3028,
+        "expectancy_r": 0.226,
+        "max_drawdown_r": 17.6094
       },
       "first_half": {
         "closed_trades": 41,
-        "wins": 9,
-        "losses": 32,
-        "win_rate_percent": 21.95,
-        "net_r": -17.9184,
-        "profit_factor": 0.421,
-        "expectancy_r": -0.437,
-        "max_drawdown_r": 17.9184
+        "wins": 10,
+        "losses": 31,
+        "win_rate_percent": 24.39,
+        "net_r": -14.1276,
+        "profit_factor": 0.5261,
+        "expectancy_r": -0.3446,
+        "max_drawdown_r": 16.7851
       },
       "second_half": {
         "closed_trades": 41,
-        "wins": 14,
-        "losses": 27,
-        "win_rate_percent": 34.15,
-        "net_r": 36.4566,
-        "profit_factor": 2.2056,
-        "expectancy_r": 0.8892,
+        "wins": 13,
+        "losses": 28,
+        "win_rate_percent": 31.71,
+        "net_r": 32.6575,
+        "profit_factor": 2.0407,
+        "expectancy_r": 0.7965,
         "max_drawdown_r": 10.0741
       },
       "segment_robustness": 0.5,
@@ -50,6 +50,53 @@
         "first_positive": false,
         "second_positive": true,
         "robust": true
+      },
+      "passed": false
+    },
+    {
+      "family": "TSMOM_DUAL_24H_7D",
+      "symbol": "ETHUSDT",
+      "timeframe": "30m",
+      "signals": 105,
+      "full": {
+        "closed_trades": 105,
+        "wins": 26,
+        "losses": 79,
+        "win_rate_percent": 24.76,
+        "net_r": 0.0189,
+        "profit_factor": 1.0003,
+        "expectancy_r": 0.0002,
+        "max_drawdown_r": 28.0577
+      },
+      "first_half": {
+        "closed_trades": 52,
+        "wins": 13,
+        "losses": 39,
+        "win_rate_percent": 25.0,
+        "net_r": -6.4281,
+        "profit_factor": 0.8165,
+        "expectancy_r": -0.1236,
+        "max_drawdown_r": 8.6886
+      },
+      "second_half": {
+        "closed_trades": 53,
+        "wins": 13,
+        "losses": 40,
+        "win_rate_percent": 24.53,
+        "net_r": 6.447,
+        "profit_factor": 1.176,
+        "expectancy_r": 0.1216,
+        "max_drawdown_r": 19.3691
+      },
+      "segment_robustness": 0.25,
+      "checks": {
+        "trades": true,
+        "pf": false,
+        "exp": false,
+        "dd": false,
+        "first_positive": false,
+        "second_positive": true,
+        "robust": false
       },
       "passed": false
     }
@@ -154,10 +201,10 @@
   ],
   "microstructure_top_signals": [
     {
-      "n": 51,
-      "avg_raw_bps": 93.6998,
-      "hit_rate_percent": 76.47,
-      "t_like": 4.6327,
+      "n": 52,
+      "avg_raw_bps": 92.7571,
+      "hit_rate_percent": 76.92,
+      "t_like": 4.6708,
       "signal": "FLOW_SELL_REVERSION_LONG",
       "symbol": "BTC",
       "horizon_snapshots": 6
@@ -172,40 +219,22 @@
       "horizon_snapshots": 6
     },
     {
-      "n": 35,
-      "avg_raw_bps": 118.3511,
-      "hit_rate_percent": 68.57,
-      "t_like": 4.0362,
+      "n": 36,
+      "avg_raw_bps": 118.1146,
+      "hit_rate_percent": 69.44,
+      "t_like": 4.143,
       "signal": "TOP_HIGH_CONTINUATION",
       "symbol": "SOL",
       "horizon_snapshots": 6
     },
     {
-      "n": 51,
-      "avg_raw_bps": 63.5994,
-      "hit_rate_percent": 74.51,
-      "t_like": 3.9872,
+      "n": 52,
+      "avg_raw_bps": 62.4341,
+      "hit_rate_percent": 75.0,
+      "t_like": 3.9801,
       "signal": "FLOW_SELL_REVERSION_LONG",
       "symbol": "BTC",
       "horizon_snapshots": 3
-    },
-    {
-      "n": 48,
-      "avg_raw_bps": 78.7003,
-      "hit_rate_percent": 60.42,
-      "t_like": 3.8464,
-      "signal": "FLOW_BUY_CONTINUATION",
-      "symbol": "SOL",
-      "horizon_snapshots": 6
-    },
-    {
-      "n": 51,
-      "avg_raw_bps": 73.4898,
-      "hit_rate_percent": 62.75,
-      "t_like": 3.8309,
-      "signal": "FLOW_BUY_CONTINUATION",
-      "symbol": "BTC",
-      "horizon_snapshots": 6
     },
     {
       "n": 31,
@@ -217,19 +246,37 @@
       "horizon_snapshots": 6
     },
     {
-      "n": 50,
-      "avg_raw_bps": 52.5065,
-      "hit_rate_percent": 66.0,
-      "t_like": 3.4749,
-      "signal": "DEPTH_LOW_REVERSION_LONG",
+      "n": 53,
+      "avg_raw_bps": 70.5907,
+      "hit_rate_percent": 60.38,
+      "t_like": 3.5014,
+      "signal": "FLOW_BUY_CONTINUATION",
+      "symbol": "SOL",
+      "horizon_snapshots": 6
+    },
+    {
+      "n": 55,
+      "avg_raw_bps": 60.9744,
+      "hit_rate_percent": 58.18,
+      "t_like": 3.2314,
+      "signal": "FLOW_BUY_CONTINUATION",
+      "symbol": "BTC",
+      "horizon_snapshots": 6
+    },
+    {
+      "n": 62,
+      "avg_raw_bps": 43.8495,
+      "hit_rate_percent": 58.06,
+      "t_like": 3.1613,
+      "signal": "DEPTH_HIGH_CONTINUATION",
       "symbol": "BTC",
       "horizon_snapshots": 6
     }
   ],
   "snapshots_by_symbol": {
-    "BTC": 281,
-    "ETH": 281,
-    "SOL": 281
+    "BTC": 289,
+    "ETH": 289,
+    "SOL": 289
   },
   "real_orders_enabled": false,
   "live_permission": false,
