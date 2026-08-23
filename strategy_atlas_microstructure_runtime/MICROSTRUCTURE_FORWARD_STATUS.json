@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-23T19:36:42.619882+00:00",
+  "updated_at_utc": "2026-08-23T19:55:01.115452+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 367,
-  "snapshot_count_after_freeze": 187,
+  "snapshot_count_total": 368,
+  "snapshot_count_after_freeze": 188,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
@@ -263,16 +263,16 @@
       "horizon": 6,
       "signal_count": 12,
       "stats": {
-        "closed_trades": 11,
+        "closed_trades": 12,
         "wins": 8,
-        "losses": 3,
-        "win_rate_percent": 72.73,
-        "net_bps": 618.4604,
-        "average_net_bps": 56.2237,
-        "profit_factor": 3.6537,
+        "losses": 4,
+        "win_rate_percent": 66.67,
+        "net_bps": 616.0978,
+        "average_net_bps": 51.3415,
+        "profit_factor": 3.6171,
         "max_drawdown_bps": 159.5527
       },
-      "positive_time_segments": 3,
+      "positive_time_segments": 4,
       "early_checks": {
         "trades": true,
         "average_net_bps": true,
@@ -375,6 +375,14 @@
           "entry_ask": 76679.9,
           "exit_bid": 77026.4,
           "net_bps": 15.12009
+        },
+        {
+          "signal_utc": "2026-08-23T17:44:21.919834+00:00",
+          "entry_utc": "2026-08-23T18:00:22.630402+00:00",
+          "exit_utc": "2026-08-23T19:54:49.079045+00:00",
+          "entry_ask": 77170.5,
+          "exit_bid": 77384.1,
+          "net_bps": -2.36253
         }
       ]
     },
@@ -383,7 +391,7 @@
       "symbol": "ETH",
       "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
       "horizon": 3,
-      "signal_count": 18,
+      "signal_count": 19,
       "stats": {
         "closed_trades": 18,
         "wins": 11,
