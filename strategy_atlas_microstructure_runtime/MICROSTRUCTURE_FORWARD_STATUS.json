@@ -1,12 +1,13 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-23T08:45:04.468081+00:00",
+  "updated_at_utc": "2026-08-23T09:12:29.313871+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 342,
-  "snapshot_count_after_freeze": 162,
+  "snapshot_count_total": 343,
+  "snapshot_count_after_freeze": 163,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
+    "BTC:CROSS_DEPTH_LOW_REVERSION_LONG:H6",
     "ETH:CROSS_FLOW_SELL_REVERSION_LONG:H3",
     "SOL:CROSS_FLOW_BUY_CONTINUATION:H3"
   ],
@@ -229,24 +230,24 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_LOW_REVERSION_LONG",
       "horizon": 6,
-      "signal_count": 11,
+      "signal_count": 10,
       "stats": {
-        "closed_trades": 9,
-        "wins": 6,
+        "closed_trades": 10,
+        "wins": 7,
         "losses": 3,
-        "win_rate_percent": 66.67,
-        "net_bps": 575.134,
-        "average_net_bps": 63.9038,
-        "profit_factor": 3.4678,
+        "win_rate_percent": 70.0,
+        "net_bps": 603.3403,
+        "average_net_bps": 60.334,
+        "profit_factor": 3.5888,
         "max_drawdown_bps": 159.5527
       },
       "positive_time_segments": 3,
       "early_checks": {
-        "trades": false,
+        "trades": true,
         "average_net_bps": true,
         "profit_factor": true
       },
-      "promising_early": false,
+      "promising_early": true,
       "champion_checks": {
         "trades": false,
         "average_net_bps": true,
@@ -327,6 +328,14 @@
           "entry_ask": 77011.1,
           "exit_bid": 77286.4,
           "net_bps": 5.69449
+        },
+        {
+          "signal_utc": "2026-08-23T06:01:51.612822+00:00",
+          "entry_utc": "2026-08-23T06:57:17.214456+00:00",
+          "exit_utc": "2026-08-23T09:12:13.436614+00:00",
+          "entry_ask": 76097.4,
+          "exit_bid": 76541.0,
+          "net_bps": 28.2063
         }
       ]
     },
