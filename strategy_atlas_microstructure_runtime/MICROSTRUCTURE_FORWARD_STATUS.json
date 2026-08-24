@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-24T03:02:24.622768+00:00",
+  "updated_at_utc": "2026-08-24T04:02:05.174930+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 381,
-  "snapshot_count_after_freeze": 201,
+  "snapshot_count_total": 382,
+  "snapshot_count_after_freeze": 202,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
@@ -165,18 +165,18 @@
       "horizon": 6,
       "signal_count": 10,
       "stats": {
-        "closed_trades": 9,
+        "closed_trades": 10,
         "wins": 5,
-        "losses": 4,
-        "win_rate_percent": 55.56,
-        "net_bps": -32.451,
-        "average_net_bps": -3.6057,
-        "profit_factor": 0.9298,
+        "losses": 5,
+        "win_rate_percent": 50.0,
+        "net_bps": -133.4333,
+        "average_net_bps": -13.3433,
+        "profit_factor": 0.763,
         "max_drawdown_bps": 286.7538
       },
-      "positive_time_segments": 1,
+      "positive_time_segments": 2,
       "early_checks": {
-        "trades": false,
+        "trades": true,
         "average_net_bps": false,
         "profit_factor": false
       },
@@ -261,6 +261,14 @@
           "entry_ask": 2427.57,
           "exit_bid": 2457.0,
           "net_bps": 91.05056
+        },
+        {
+          "signal_utc": "2026-08-23T23:22:02.303583+00:00",
+          "entry_utc": "2026-08-23T23:44:00.000594+00:00",
+          "exit_utc": "2026-08-24T04:01:57.374528+00:00",
+          "entry_ask": 2451.86,
+          "exit_bid": 2434.43,
+          "net_bps": -100.98229
         }
       ]
     },
