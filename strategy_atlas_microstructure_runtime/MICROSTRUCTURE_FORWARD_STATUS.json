@@ -1,14 +1,15 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-08-24T11:37:45.337141+00:00",
+  "updated_at_utc": "2026-08-24T12:01:39.497419+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 392,
-  "snapshot_count_after_freeze": 212,
+  "snapshot_count_total": 393,
+  "snapshot_count_after_freeze": 213,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
     "BTC:CROSS_DEPTH_LOW_REVERSION_LONG:H6",
-    "ETH:CROSS_FLOW_SELL_REVERSION_LONG:H3"
+    "ETH:CROSS_FLOW_SELL_REVERSION_LONG:H3",
+    "SOL:CROSS_FLOW_BUY_CONTINUATION:H3"
   ],
   "champions": [],
   "lanes": [
@@ -17,18 +18,18 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_HIGH_CONTINUATION",
       "horizon": 6,
-      "signal_count": 17,
+      "signal_count": 16,
       "stats": {
-        "closed_trades": 15,
-        "wins": 6,
+        "closed_trades": 16,
+        "wins": 7,
         "losses": 9,
-        "win_rate_percent": 40.0,
-        "net_bps": -225.254,
-        "average_net_bps": -15.0169,
-        "profit_factor": 0.4527,
+        "win_rate_percent": 43.75,
+        "net_bps": -83.1336,
+        "average_net_bps": -5.1959,
+        "profit_factor": 0.798,
         "max_drawdown_bps": 322.1674
       },
-      "positive_time_segments": 1,
+      "positive_time_segments": 2,
       "early_checks": {
         "trades": true,
         "average_net_bps": false,
@@ -163,6 +164,14 @@
           "entry_ask": 77055.3,
           "exit_bid": 77396.3,
           "net_bps": 14.18757
+        },
+        {
+          "signal_utc": "2026-08-24T07:40:09.721419+00:00",
+          "entry_utc": "2026-08-24T08:27:47.008351+00:00",
+          "exit_utc": "2026-08-24T12:01:26.625501+00:00",
+          "entry_ask": 76958.4,
+          "exit_bid": 78285.0,
+          "net_bps": 142.12036
         }
       ]
     },
@@ -431,7 +440,7 @@
       "symbol": "ETH",
       "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
       "horizon": 3,
-      "signal_count": 20,
+      "signal_count": 21,
       "stats": {
         "closed_trades": 19,
         "wins": 12,
@@ -805,22 +814,22 @@
       "horizon": 3,
       "signal_count": 27,
       "stats": {
-        "closed_trades": 26,
-        "wins": 7,
+        "closed_trades": 27,
+        "wins": 8,
         "losses": 19,
-        "win_rate_percent": 26.92,
-        "net_bps": -65.757,
-        "average_net_bps": -2.5291,
-        "profit_factor": 0.9185,
+        "win_rate_percent": 29.63,
+        "net_bps": 3.3969,
+        "average_net_bps": 0.1258,
+        "profit_factor": 1.0042,
         "max_drawdown_bps": 558.5267
       },
       "positive_time_segments": 1,
       "early_checks": {
         "trades": true,
-        "average_net_bps": false,
-        "profit_factor": false
+        "average_net_bps": true,
+        "profit_factor": true
       },
-      "promising_early": false,
+      "promising_early": true,
       "champion_checks": {
         "trades": false,
         "average_net_bps": false,
@@ -830,14 +839,6 @@
       },
       "champion_passed": false,
       "recent_trades": [
-        {
-          "signal_utc": "2026-08-20T21:48:35.216574+00:00",
-          "entry_utc": "2026-08-20T22:12:35.988260+00:00",
-          "exit_utc": "2026-08-20T23:12:45.666255+00:00",
-          "entry_ask": 87.37,
-          "exit_bid": 87.44,
-          "net_bps": -22.00011
-        },
         {
           "signal_utc": "2026-08-20T23:43:28.325774+00:00",
           "entry_utc": "2026-08-21T00:03:06.367546+00:00",
@@ -989,6 +990,14 @@
           "entry_ask": 95.37,
           "exit_bid": 95.43,
           "net_bps": -23.71815
+        },
+        {
+          "signal_utc": "2026-08-24T10:18:52.445649+00:00",
+          "entry_utc": "2026-08-24T10:58:39.398382+00:00",
+          "exit_utc": "2026-08-24T12:01:26.625501+00:00",
+          "entry_ask": 94.66,
+          "exit_bid": 95.6,
+          "net_bps": 69.15386
         }
       ]
     },
