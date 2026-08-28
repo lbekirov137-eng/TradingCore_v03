@@ -1,12 +1,12 @@
 {
   "schema": "TRADINGCORE_FAST_PAPER_CLOUD_V1",
-  "updated_at_utc": "2026-08-28T05:20:04.712331+00:00",
+  "updated_at_utc": "2026-08-28T18:36:18.003601+00:00",
   "mode": "EXPERIMENTAL_FAST_PAPER_ONLY",
   "protocol_version": "FAST_PAPER_LAB_V1",
   "protocol_fingerprint": "72c1807b38e5d5b9e1dbcecdc36a5041cecfd746354e89b970a1cf234b8725b6",
   "forward_freeze_utc": "2026-08-15T11:15:00+00:00",
   "lane_count": 36,
-  "total_closed_trade_observations_across_independent_lanes": 16,
+  "total_closed_trade_observations_across_independent_lanes": 18,
   "lanes_with_30_or_more": 0,
   "locked_lane_decisions": 0,
   "promising_lanes": [],
@@ -141,7 +141,7 @@
       "symbol": "BTCUSDT",
       "timeframe": "30m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 0,
+      "signals": 1,
       "closed_trades": 0,
       "stats": {
         "closed_trades": 0,
@@ -163,7 +163,15 @@
         "regime_count": 0
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 77788.46,
+        "stop": 76800.08,
+        "target": 80259.4,
+        "quantity": 0.0010117566118294536,
+        "risk_amount": 1.0,
+        "entry_index": 970,
+        "entry_utc": "2026-08-28T17:00:00+00:00"
+      },
       "trades": [],
       "decision": null
     },
@@ -342,7 +350,7 @@
       "symbol": "ETHUSDT",
       "timeframe": "30m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 1,
+      "signals": 2,
       "closed_trades": 1,
       "stats": {
         "closed_trades": 1,
@@ -368,7 +376,15 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 2442.29,
+        "stop": 2402.5,
+        "target": 2541.75,
+        "quantity": 0.02513194269917067,
+        "risk_amount": 1.0,
+        "entry_index": 970,
+        "entry_utc": "2026-08-28T17:00:00+00:00"
+      },
       "trades": [
         {
           "entry_utc": "2026-08-25T08:30:00+00:00",
@@ -543,30 +559,45 @@
       "symbol": "BNBUSDT",
       "timeframe": "30m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 0,
-      "closed_trades": 0,
+      "signals": 1,
+      "closed_trades": 1,
       "stats": {
-        "closed_trades": 0,
+        "closed_trades": 1,
         "wins": 0,
-        "losses": 0,
-        "win_rate_percent": null,
-        "net_pnl": null,
-        "profit_factor": null,
-        "expectancy_r": null,
-        "average_r": null,
-        "max_drawdown_r": null,
-        "max_loss_streak": 0,
+        "losses": 1,
+        "win_rate_percent": 0.0,
+        "net_pnl": -1.23360506,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.2336,
+        "average_r": -1.2336,
+        "max_drawdown_r": 1.2336,
+        "max_loss_streak": 1,
         "rolling_window": 20,
-        "rolling_trades": 0,
+        "rolling_trades": 1,
         "rolling_expectancy_r": null,
-        "trading_days": 0,
-        "trading_day_list": [],
-        "regimes_observed": [],
-        "regime_count": 0
+        "trading_days": 1,
+        "trading_day_list": [
+          "2026-08-28"
+        ],
+        "regimes_observed": [
+          "BNBUSDT"
+        ],
+        "regime_count": 1
       },
       "segment_robustness": null,
       "open_position": null,
-      "trades": [],
+      "trades": [
+        {
+          "entry_utc": "2026-08-28T15:00:00+00:00",
+          "closed_utc": "2026-08-28T16:30:00+00:00",
+          "entry": 704.53,
+          "exit": 695.54,
+          "exit_reason": "STOP_LOSS",
+          "net_pnl": -1.23360506,
+          "r_multiple": -1.23360506,
+          "real_order_sent": false
+        }
+      ],
       "decision": null
     },
     {
@@ -651,30 +682,45 @@
       "symbol": "LTCUSDT",
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 0,
-      "closed_trades": 0,
+      "signals": 1,
+      "closed_trades": 1,
       "stats": {
-        "closed_trades": 0,
+        "closed_trades": 1,
         "wins": 0,
-        "losses": 0,
-        "win_rate_percent": null,
-        "net_pnl": null,
-        "profit_factor": null,
-        "expectancy_r": null,
-        "average_r": null,
-        "max_drawdown_r": null,
-        "max_loss_streak": 0,
+        "losses": 1,
+        "win_rate_percent": 0.0,
+        "net_pnl": -1.23564566,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.2356,
+        "average_r": -1.2356,
+        "max_drawdown_r": 1.2356,
+        "max_loss_streak": 1,
         "rolling_window": 20,
-        "rolling_trades": 0,
+        "rolling_trades": 1,
         "rolling_expectancy_r": null,
-        "trading_days": 0,
-        "trading_day_list": [],
-        "regimes_observed": [],
-        "regime_count": 0
+        "trading_days": 1,
+        "trading_day_list": [
+          "2026-08-28"
+        ],
+        "regimes_observed": [
+          "LTCUSDT"
+        ],
+        "regime_count": 1
       },
       "segment_robustness": null,
       "open_position": null,
-      "trades": [],
+      "trades": [
+        {
+          "entry_utc": "2026-08-28T14:30:00+00:00",
+          "closed_utc": "2026-08-28T16:15:00+00:00",
+          "entry": 49.01,
+          "exit": 48.39,
+          "exit_reason": "STOP_LOSS",
+          "net_pnl": -1.23564566,
+          "r_multiple": -1.23564566,
+          "real_order_sent": false
+        }
+      ],
       "decision": null
     },
     {
