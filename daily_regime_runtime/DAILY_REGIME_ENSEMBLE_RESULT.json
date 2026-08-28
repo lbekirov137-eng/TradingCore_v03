@@ -1,6 +1,6 @@
 {
   "schema": "TRADINGCORE_DAILY_REGIME_ENSEMBLE_V1",
-  "generated_at_utc": "2026-08-27T13:04:47.807746+00:00",
+  "generated_at_utc": "2026-08-28T14:34:43.107046+00:00",
   "state": "NO_DAILY_REGIME_CANDIDATE",
   "history_years": 4,
   "universe": [
@@ -28,10 +28,10 @@
   "selected_holdout_passed_both_venues": false,
   "discovery_candidates": [],
   "windows": {
-    "discovery_start_utc": "2022-08-27T00:00:00+00:00",
-    "discovery_end_utc": "2025-08-23T23:59:59.999000+00:00",
-    "holdout_start_utc": "2025-08-28T00:00:00+00:00",
-    "holdout_end_utc": "2026-08-26T00:00:00+00:00"
+    "discovery_start_utc": "2022-08-28T00:00:00+00:00",
+    "discovery_end_utc": "2025-08-24T23:59:59.999000+00:00",
+    "holdout_start_utc": "2025-08-29T00:00:00+00:00",
+    "holdout_end_utc": "2026-08-27T00:00:00+00:00"
   },
   "execution_model": "daily close signal -> next daily open; market-neutral long top2/short bottom2; rank hysteresis; 15bps one-way cost; 3bps/day short-carry proxy",
   "results": [
@@ -43,24 +43,24 @@
             "calendar_days": 1093,
             "active_days": 888,
             "flat_days": 205,
-            "positive_days": 396,
-            "negative_days": 527,
-            "positive_day_rate_percent": 36.23,
-            "active_positive_day_rate_percent": 44.59,
-            "net_return_percent": -88.9192,
-            "average_daily_bps": -15.2083,
-            "profit_factor": 0.8065,
-            "annualized_sharpe": -0.9826,
-            "max_drawdown_percent": 91.4195,
-            "average_turnover": 0.6709,
+            "positive_days": 395,
+            "negative_days": 528,
+            "positive_day_rate_percent": 36.14,
+            "active_positive_day_rate_percent": 44.48,
+            "net_return_percent": -91.5924,
+            "average_daily_bps": -17.7033,
+            "profit_factor": 0.7784,
+            "annualized_sharpe": -1.1425,
+            "max_drawdown_percent": 91.9966,
+            "average_turnover": 0.6695,
             "total_trading_cost_percent": 110.1375,
             "total_short_carry_proxy_percent": 18.81,
-            "positive_quarters": 3,
+            "positive_quarters": 2,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": 4.645,
+              "2023-Q1": -7.336,
               "2023-Q2": -9.296,
               "2023-Q3": -16.018,
               "2023-Q4": -26.62,
@@ -70,15 +70,9 @@
               "2024-Q4": 9.379,
               "2025-Q1": -41.045,
               "2025-Q2": -16.949,
-              "2025-Q3": -15.813
+              "2025-Q3": -27.864
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 14.972,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 9.194,
@@ -189,8 +183,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -25.513,
+                "return_bps": -10.513,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -1444.342,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -209,34 +209,28 @@
             "calendar_days": 362,
             "active_days": 348,
             "flat_days": 14,
-            "positive_days": 169,
-            "negative_days": 193,
-            "positive_day_rate_percent": 46.69,
-            "active_positive_day_rate_percent": 48.56,
-            "net_return_percent": -3.8907,
-            "average_daily_bps": 1.5891,
-            "profit_factor": 1.0247,
-            "annualized_sharpe": 0.1286,
-            "max_drawdown_percent": 32.675,
-            "average_turnover": 0.8384,
-            "total_trading_cost_percent": 45.7125,
-            "total_short_carry_proxy_percent": 7.2675,
+            "positive_days": 170,
+            "negative_days": 192,
+            "positive_day_rate_percent": 46.96,
+            "active_positive_day_rate_percent": 48.85,
+            "net_return_percent": -2.7659,
+            "average_daily_bps": 1.9121,
+            "profit_factor": 1.0298,
+            "annualized_sharpe": 0.1547,
+            "max_drawdown_percent": 32.7823,
+            "average_turnover": 0.8398,
+            "total_trading_cost_percent": 45.7875,
+            "total_short_carry_proxy_percent": 7.26,
             "positive_quarters": 2,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -16.797,
+              "2025-Q3": -16.929,
               "2025-Q4": 6.873,
               "2026-Q1": -10.555,
               "2026-Q2": 29.838,
-              "2026-Q3": -6.932
+              "2026-Q3": -5.693
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 28.361,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": 20.895,
@@ -347,7 +341,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -276.798,
+                "return_bps": -258.048,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": 113.676,
                 "regime": "PANIC",
                 "active": true
               }
@@ -369,24 +369,24 @@
             "calendar_days": 1093,
             "active_days": 886,
             "flat_days": 207,
-            "positive_days": 401,
-            "negative_days": 522,
-            "positive_day_rate_percent": 36.69,
-            "active_positive_day_rate_percent": 45.26,
-            "net_return_percent": -88.2154,
-            "average_daily_bps": -14.5601,
-            "profit_factor": 0.8159,
-            "annualized_sharpe": -0.9312,
-            "max_drawdown_percent": 90.8922,
-            "average_turnover": 0.6802,
+            "positive_days": 400,
+            "negative_days": 523,
+            "positive_day_rate_percent": 36.6,
+            "active_positive_day_rate_percent": 45.15,
+            "net_return_percent": -91.1815,
+            "average_daily_bps": -17.164,
+            "profit_factor": 0.7868,
+            "annualized_sharpe": -1.0947,
+            "max_drawdown_percent": 91.6068,
+            "average_turnover": 0.6789,
             "total_trading_cost_percent": 111.675,
             "total_short_carry_proxy_percent": 18.9525,
-            "positive_quarters": 3,
+            "positive_quarters": 2,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": 4.663,
+              "2023-Q1": -7.34,
               "2023-Q2": -9.222,
               "2023-Q3": -9.239,
               "2023-Q4": -24.359,
@@ -396,15 +396,9 @@
               "2024-Q4": 9.129,
               "2025-Q1": -41.161,
               "2025-Q2": -15.771,
-              "2025-Q3": -12.192
+              "2025-Q3": -25.781
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 15.911,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 8.174,
@@ -515,8 +509,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -21.574,
+                "return_bps": -6.574,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -1560.3,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -535,34 +535,28 @@
             "calendar_days": 362,
             "active_days": 348,
             "flat_days": 14,
-            "positive_days": 168,
-            "negative_days": 194,
-            "positive_day_rate_percent": 46.41,
-            "active_positive_day_rate_percent": 48.28,
-            "net_return_percent": -20.2612,
-            "average_daily_bps": -3.4904,
-            "profit_factor": 0.9486,
-            "annualized_sharpe": -0.2789,
+            "positive_days": 169,
+            "negative_days": 193,
+            "positive_day_rate_percent": 46.69,
+            "active_positive_day_rate_percent": 48.56,
+            "net_return_percent": -19.3121,
+            "average_daily_bps": -3.1618,
+            "profit_factor": 0.9534,
+            "annualized_sharpe": -0.2525,
             "max_drawdown_percent": 31.0155,
-            "average_turnover": 0.8025,
-            "total_trading_cost_percent": 43.7625,
-            "total_short_carry_proxy_percent": 7.1775,
+            "average_turnover": 0.8039,
+            "total_trading_cost_percent": 43.8375,
+            "total_short_carry_proxy_percent": 7.17,
             "positive_quarters": 2,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -16.497,
+              "2025-Q3": -16.638,
               "2025-Q4": 10.922,
               "2026-Q1": -10.257,
               "2026-Q2": 18.851,
-              "2026-Q3": -19.287
+              "2026-Q3": -18.189
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 25.134,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": 21.392,
@@ -673,7 +667,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -275.193,
+                "return_bps": -256.443,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": 116.609,
                 "regime": "PANIC",
                 "active": true
               }
@@ -705,20 +705,20 @@
             "negative_days": 490,
             "positive_day_rate_percent": 39.62,
             "active_positive_day_rate_percent": 47.79,
-            "net_return_percent": -92.3335,
-            "average_daily_bps": -19.443,
-            "profit_factor": 0.7733,
-            "annualized_sharpe": -1.3274,
-            "max_drawdown_percent": 93.1608,
-            "average_turnover": 0.5231,
-            "total_trading_cost_percent": 85.9125,
+            "net_return_percent": -92.5641,
+            "average_daily_bps": -19.7234,
+            "profit_factor": 0.7705,
+            "annualized_sharpe": -1.3468,
+            "max_drawdown_percent": 93.2596,
+            "average_turnover": 0.5226,
+            "total_trading_cost_percent": 85.8375,
             "total_short_carry_proxy_percent": 19.6875,
             "positive_quarters": 2,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -25.918,
+              "2023-Q1": -26.51,
               "2023-Q2": 47.919,
               "2023-Q3": -26.661,
               "2023-Q4": -46.444,
@@ -728,15 +728,9 @@
               "2024-Q4": -17.194,
               "2025-Q1": -26.852,
               "2025-Q2": -9.858,
-              "2025-Q3": -42.058
+              "2025-Q3": -43.348
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 22.482,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": -46.259,
@@ -847,8 +841,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -13.754,
+                "return_bps": 1.246,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -237.343,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -867,34 +867,28 @@
             "calendar_days": 362,
             "active_days": 357,
             "flat_days": 5,
-            "positive_days": 174,
-            "negative_days": 188,
-            "positive_day_rate_percent": 48.07,
-            "active_positive_day_rate_percent": 48.74,
-            "net_return_percent": -23.4182,
-            "average_daily_bps": -2.7588,
-            "profit_factor": 0.9656,
-            "annualized_sharpe": -0.1694,
+            "positive_days": 171,
+            "negative_days": 191,
+            "positive_day_rate_percent": 47.24,
+            "active_positive_day_rate_percent": 47.9,
+            "net_return_percent": -31.1064,
+            "average_daily_bps": -5.6712,
+            "profit_factor": 0.9304,
+            "annualized_sharpe": -0.348,
             "max_drawdown_percent": 47.0681,
-            "average_turnover": 0.5276,
-            "total_trading_cost_percent": 28.8375,
-            "total_short_carry_proxy_percent": 8.25,
+            "average_turnover": 0.5345,
+            "total_trading_cost_percent": 29.2125,
+            "total_short_carry_proxy_percent": 8.085,
             "positive_quarters": 1,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -19.652,
+              "2025-Q3": -27.558,
               "2025-Q4": 31.203,
               "2026-Q1": -13.05,
               "2026-Q2": -4.356,
-              "2026-Q3": -12.647
+              "2026-Q3": -12.839
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 210.411,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -79.393,
@@ -1005,7 +999,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": 209.405,
+                "return_bps": 228.155,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -40.36,
                 "regime": "PANIC",
                 "active": true
               }
@@ -1031,20 +1031,20 @@
             "negative_days": 492,
             "positive_day_rate_percent": 39.43,
             "active_positive_day_rate_percent": 47.57,
-            "net_return_percent": -91.6392,
-            "average_daily_bps": -18.5957,
-            "profit_factor": 0.7835,
-            "annualized_sharpe": -1.2603,
-            "max_drawdown_percent": 92.5474,
-            "average_turnover": 0.5213,
-            "total_trading_cost_percent": 85.6125,
+            "net_return_percent": -91.8899,
+            "average_daily_bps": -18.8753,
+            "profit_factor": 0.7807,
+            "annualized_sharpe": -1.2795,
+            "max_drawdown_percent": 92.6537,
+            "average_turnover": 0.5208,
+            "total_trading_cost_percent": 85.5375,
             "total_short_carry_proxy_percent": 20.01,
             "positive_quarters": 1,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -25.977,
+              "2023-Q1": -26.567,
               "2023-Q2": 48.152,
               "2023-Q3": -26.688,
               "2023-Q4": -46.394,
@@ -1054,15 +1054,9 @@
               "2024-Q4": -17.207,
               "2025-Q1": -26.868,
               "2025-Q2": -1.505,
-              "2025-Q3": -43.953
+              "2025-Q3": -45.197
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 21.945,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": -46.585,
@@ -1173,8 +1167,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -14.671,
+                "return_bps": 0.329,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -236.743,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -1193,34 +1193,28 @@
             "calendar_days": 362,
             "active_days": 357,
             "flat_days": 5,
-            "positive_days": 170,
-            "negative_days": 192,
-            "positive_day_rate_percent": 46.96,
-            "active_positive_day_rate_percent": 47.62,
-            "net_return_percent": -4.4584,
-            "average_daily_bps": 3.4227,
-            "profit_factor": 1.0428,
-            "annualized_sharpe": 0.2079,
+            "positive_days": 168,
+            "negative_days": 194,
+            "positive_day_rate_percent": 46.41,
+            "active_positive_day_rate_percent": 47.06,
+            "net_return_percent": -13.1827,
+            "average_daily_bps": 0.7872,
+            "profit_factor": 1.0097,
+            "annualized_sharpe": 0.0478,
             "max_drawdown_percent": 39.645,
-            "average_turnover": 0.5145,
-            "total_trading_cost_percent": 28.0125,
-            "total_short_carry_proxy_percent": 8.4075,
+            "average_turnover": 0.5214,
+            "total_trading_cost_percent": 28.3875,
+            "total_short_carry_proxy_percent": 8.22,
             "positive_quarters": 2,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -17.154,
+              "2025-Q3": -25.288,
               "2025-Q4": 23.426,
               "2026-Q1": 4.926,
               "2026-Q2": -4.403,
-              "2026-Q3": -6.849
+              "2026-Q3": -6.139
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 207.34,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -76.556,
@@ -1331,7 +1325,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": 17.238,
+                "return_bps": 24.738,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": 68.654,
                 "regime": "PANIC",
                 "active": true
               }
@@ -1359,24 +1359,24 @@
             "calendar_days": 1093,
             "active_days": 907,
             "flat_days": 186,
-            "positive_days": 440,
-            "negative_days": 483,
-            "positive_day_rate_percent": 40.26,
-            "active_positive_day_rate_percent": 48.51,
-            "net_return_percent": 34.2766,
-            "average_daily_bps": 6.4135,
-            "profit_factor": 1.0886,
-            "annualized_sharpe": 0.4477,
+            "positive_days": 439,
+            "negative_days": 484,
+            "positive_day_rate_percent": 40.16,
+            "active_positive_day_rate_percent": 48.4,
+            "net_return_percent": 30.8957,
+            "average_daily_bps": 6.1796,
+            "profit_factor": 1.0852,
+            "annualized_sharpe": 0.4314,
             "max_drawdown_percent": 50.6771,
             "average_turnover": 0.4979,
             "total_trading_cost_percent": 81.7875,
             "total_short_carry_proxy_percent": 18.945,
-            "positive_quarters": 6,
+            "positive_quarters": 5,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -23.773,
+              "2023-Q1": -23.892,
               "2023-Q2": 47.329,
               "2023-Q3": -34.768,
               "2023-Q4": 26.858,
@@ -1386,15 +1386,9 @@
               "2024-Q4": 53.934,
               "2025-Q1": -0.523,
               "2025-Q2": -4.379,
-              "2025-Q3": 0.436
+              "2025-Q3": -1.939
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 6.3,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": -53.965,
@@ -1505,8 +1499,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": 1.382,
+                "return_bps": 16.382,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -251.153,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -1529,30 +1529,24 @@
             "negative_days": 200,
             "positive_day_rate_percent": 44.75,
             "active_positive_day_rate_percent": 45.38,
-            "net_return_percent": -37.4534,
-            "average_daily_bps": -9.8245,
-            "profit_factor": 0.867,
-            "annualized_sharpe": -0.7404,
+            "net_return_percent": -37.0051,
+            "average_daily_bps": -9.627,
+            "profit_factor": 0.8695,
+            "annualized_sharpe": -0.7255,
             "max_drawdown_percent": 45.6837,
-            "average_turnover": 0.5283,
+            "average_turnover": 0.5304,
             "total_trading_cost_percent": 28.875,
-            "total_short_carry_proxy_percent": 7.7475,
+            "total_short_carry_proxy_percent": 7.74,
             "positive_quarters": 2,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -9.888,
+              "2025-Q3": -9.278,
               "2025-Q4": 2.273,
               "2026-Q1": -23.289,
               "2026-Q2": 7.09,
-              "2026-Q3": -17.386
+              "2026-Q3": -17.353
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 210.411,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -79.393,
@@ -1663,7 +1657,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": 189.548,
+                "return_bps": 208.298,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -14.445,
                 "regime": "PANIC",
                 "active": true
               }
@@ -1685,24 +1685,24 @@
             "calendar_days": 1093,
             "active_days": 906,
             "flat_days": 187,
-            "positive_days": 437,
-            "negative_days": 486,
-            "positive_day_rate_percent": 39.98,
-            "active_positive_day_rate_percent": 48.23,
-            "net_return_percent": 3.1285,
-            "average_daily_bps": 4.1787,
-            "profit_factor": 1.0565,
-            "annualized_sharpe": 0.2861,
+            "positive_days": 436,
+            "negative_days": 487,
+            "positive_day_rate_percent": 39.89,
+            "active_positive_day_rate_percent": 48.12,
+            "net_return_percent": 0.5385,
+            "average_daily_bps": 3.9453,
+            "profit_factor": 1.0532,
+            "annualized_sharpe": 0.2701,
             "max_drawdown_percent": 50.7563,
             "average_turnover": 0.4979,
             "total_trading_cost_percent": 81.7875,
             "total_short_carry_proxy_percent": 18.945,
-            "positive_quarters": 5,
+            "positive_quarters": 4,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -20.323,
+              "2023-Q1": -20.447,
               "2023-Q2": 55.831,
               "2023-Q3": -34.884,
               "2023-Q4": 26.933,
@@ -1712,15 +1712,9 @@
               "2024-Q4": 53.846,
               "2025-Q1": -22.626,
               "2025-Q2": -4.399,
-              "2025-Q3": 0.408
+              "2025-Q3": -1.961
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 6.528,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": -54.951,
@@ -1831,8 +1825,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": 0.926,
+                "return_bps": 15.926,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -250.583,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -1855,30 +1855,24 @@
             "negative_days": 201,
             "positive_day_rate_percent": 44.48,
             "active_positive_day_rate_percent": 44.97,
-            "net_return_percent": -39.8623,
-            "average_daily_bps": -10.7801,
-            "profit_factor": 0.86,
-            "annualized_sharpe": -0.7965,
-            "max_drawdown_percent": 41.0565,
-            "average_turnover": 0.5463,
+            "net_return_percent": -39.4329,
+            "average_daily_bps": -10.5833,
+            "profit_factor": 0.8623,
+            "annualized_sharpe": -0.7819,
+            "max_drawdown_percent": 40.6549,
+            "average_turnover": 0.5483,
             "total_trading_cost_percent": 29.85,
-            "total_short_carry_proxy_percent": 7.9425,
+            "total_short_carry_proxy_percent": 7.935,
             "positive_quarters": 2,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -21.206,
+              "2025-Q3": -20.669,
               "2025-Q4": 2.458,
               "2026-Q1": -21.874,
               "2026-Q2": 15.441,
-              "2026-Q3": -17.406
+              "2026-Q3": -17.379
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 207.34,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -76.556,
@@ -1989,7 +1983,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": 188.848,
+                "return_bps": 207.598,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -15.127,
                 "regime": "PANIC",
                 "active": true
               }
@@ -2018,15 +2018,15 @@
             "active_days": 683,
             "flat_days": 410,
             "positive_days": 289,
-            "negative_days": 550,
+            "negative_days": 551,
             "positive_day_rate_percent": 26.44,
             "active_positive_day_rate_percent": 42.31,
-            "net_return_percent": -90.9775,
+            "net_return_percent": -90.9774,
             "average_daily_bps": -20.7453,
             "profit_factor": 0.5825,
-            "annualized_sharpe": -2.5561,
+            "annualized_sharpe": -2.5562,
             "max_drawdown_percent": 91.3071,
-            "average_turnover": 0.9062,
+            "average_turnover": 0.9071,
             "total_trading_cost_percent": 148.725,
             "total_short_carry_proxy_percent": 10.9725,
             "positive_quarters": 1,
@@ -2047,12 +2047,6 @@
               "2025-Q3": -11.919
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 8.782,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 52.894,
@@ -2163,9 +2157,15 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -75.33,
+                "return_bps": -60.33,
                 "regime": "UP_TREND",
                 "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -15.0,
+                "regime": "RANGE",
+                "active": false
               }
             ]
           },
@@ -2184,33 +2184,27 @@
             "active_days": 178,
             "flat_days": 184,
             "positive_days": 82,
-            "negative_days": 179,
+            "negative_days": 178,
             "positive_day_rate_percent": 22.65,
             "active_positive_day_rate_percent": 46.07,
-            "net_return_percent": -50.0863,
-            "average_daily_bps": -18.0166,
-            "profit_factor": 0.4488,
-            "annualized_sharpe": -2.4144,
-            "max_drawdown_percent": 50.9837,
-            "average_turnover": 0.7314,
-            "total_trading_cost_percent": 39.7875,
-            "total_short_carry_proxy_percent": 2.4225,
+            "net_return_percent": -50.1873,
+            "average_daily_bps": -18.0733,
+            "profit_factor": 0.446,
+            "annualized_sharpe": -2.4229,
+            "max_drawdown_percent": 50.9465,
+            "average_turnover": 0.7265,
+            "total_trading_cost_percent": 39.525,
+            "total_short_carry_proxy_percent": 2.415,
             "positive_quarters": 0,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -7.527,
+              "2025-Q3": -7.927,
               "2025-Q4": -4.887,
               "2026-Q1": -30.24,
               "2026-Q2": -7.113,
-              "2026-Q3": -12.42
+              "2026-Q3": -12.218
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 0.0,
-                "regime": "RANGE",
-                "active": false
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -46.783,
@@ -2321,7 +2315,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -116.773,
+                "return_bps": -109.273,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": 15.561,
                 "regime": "PANIC",
                 "active": true
               }
@@ -2344,15 +2344,15 @@
             "active_days": 685,
             "flat_days": 408,
             "positive_days": 287,
-            "negative_days": 552,
+            "negative_days": 553,
             "positive_day_rate_percent": 26.26,
             "active_positive_day_rate_percent": 41.9,
-            "net_return_percent": -93.6111,
+            "net_return_percent": -93.611,
             "average_daily_bps": -23.875,
             "profit_factor": 0.5369,
-            "annualized_sharpe": -2.9186,
+            "annualized_sharpe": -2.9187,
             "max_drawdown_percent": 93.8321,
-            "average_turnover": 0.9051,
+            "average_turnover": 0.906,
             "total_trading_cost_percent": 148.5375,
             "total_short_carry_proxy_percent": 10.9575,
             "positive_quarters": 1,
@@ -2370,15 +2370,9 @@
               "2024-Q4": -22.284,
               "2025-Q1": -32.06,
               "2025-Q2": 2.008,
-              "2025-Q3": -12.332
+              "2025-Q3": -12.331
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 9.305,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 53.923,
@@ -2489,9 +2483,15 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -75.635,
+                "return_bps": -60.635,
                 "regime": "UP_TREND",
                 "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -15.0,
+                "regime": "RANGE",
+                "active": false
               }
             ]
           },
@@ -2507,36 +2507,30 @@
           "discovery_passed": false,
           "holdout": {
             "calendar_days": 362,
-            "active_days": 178,
-            "flat_days": 184,
-            "positive_days": 82,
+            "active_days": 177,
+            "flat_days": 185,
+            "positive_days": 81,
             "negative_days": 180,
-            "positive_day_rate_percent": 22.65,
-            "active_positive_day_rate_percent": 46.07,
-            "net_return_percent": -48.8201,
-            "average_daily_bps": -17.3351,
-            "profit_factor": 0.4597,
-            "annualized_sharpe": -2.3341,
-            "max_drawdown_percent": 49.7464,
-            "average_turnover": 0.7369,
-            "total_trading_cost_percent": 40.0875,
-            "total_short_carry_proxy_percent": 2.4225,
+            "positive_day_rate_percent": 22.38,
+            "active_positive_day_rate_percent": 45.76,
+            "net_return_percent": -49.0421,
+            "average_daily_bps": -17.4558,
+            "profit_factor": 0.4552,
+            "annualized_sharpe": -2.3514,
+            "max_drawdown_percent": 49.7461,
+            "average_turnover": 0.7327,
+            "total_trading_cost_percent": 39.7875,
+            "total_short_carry_proxy_percent": 2.4075,
             "positive_quarters": 0,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -6.878,
+              "2025-Q3": -7.282,
               "2025-Q4": -4.648,
               "2026-Q1": -30.118,
               "2026-Q2": -7.271,
               "2026-Q3": -11.051
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 0.0,
-                "regime": "RANGE",
-                "active": false
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -47.725,
@@ -2647,9 +2641,15 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -84.998,
+                "return_bps": -77.498,
                 "regime": "PANIC",
                 "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -7.5,
+                "regime": "PANIC",
+                "active": false
               }
             ]
           },
@@ -2676,15 +2676,15 @@
             "active_days": 686,
             "flat_days": 407,
             "positive_days": 310,
-            "negative_days": 526,
+            "negative_days": 527,
             "positive_day_rate_percent": 28.36,
             "active_positive_day_rate_percent": 45.19,
-            "net_return_percent": -68.4619,
+            "net_return_percent": -68.4575,
             "average_daily_bps": -8.4264,
             "profit_factor": 0.8417,
-            "annualized_sharpe": -0.7755,
+            "annualized_sharpe": -0.7757,
             "max_drawdown_percent": 70.069,
-            "average_turnover": 0.7379,
+            "average_turnover": 0.7402,
             "total_trading_cost_percent": 121.35,
             "total_short_carry_proxy_percent": 12.255,
             "positive_quarters": 4,
@@ -2702,15 +2702,9 @@
               "2024-Q4": 10.076,
               "2025-Q1": -3.351,
               "2025-Q2": 19.837,
-              "2025-Q3": -33.799
+              "2025-Q3": -33.79
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": -32.756,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 85.007,
@@ -2821,9 +2815,15 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -393.644,
+                "return_bps": -356.144,
                 "regime": "UP_TREND",
                 "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -37.5,
+                "regime": "RANGE",
+                "active": false
               }
             ]
           },
@@ -2841,34 +2841,28 @@
             "calendar_days": 362,
             "active_days": 175,
             "flat_days": 187,
-            "positive_days": 92,
+            "positive_days": 91,
             "negative_days": 169,
-            "positive_day_rate_percent": 25.41,
-            "active_positive_day_rate_percent": 52.57,
-            "net_return_percent": -10.157,
-            "average_daily_bps": -1.2761,
-            "profit_factor": 0.961,
-            "annualized_sharpe": -0.1294,
+            "positive_day_rate_percent": 25.14,
+            "active_positive_day_rate_percent": 52.0,
+            "net_return_percent": -10.6183,
+            "average_daily_bps": -1.4188,
+            "profit_factor": 0.9566,
+            "annualized_sharpe": -0.1439,
             "max_drawdown_percent": 36.5125,
-            "average_turnover": 0.6768,
-            "total_trading_cost_percent": 36.825,
-            "total_short_carry_proxy_percent": 2.88,
+            "average_turnover": 0.672,
+            "total_trading_cost_percent": 36.5625,
+            "total_short_carry_proxy_percent": 2.8725,
             "positive_quarters": 2,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -3.05,
+              "2025-Q3": -3.461,
               "2025-Q4": -9.468,
               "2026-Q1": -3.601,
               "2026-Q2": 2.999,
-              "2026-Q3": 3.092
+              "2026-Q3": 3.0
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 0.0,
-                "regime": "RANGE",
-                "active": false
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -48.612,
@@ -2979,7 +2973,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -17.722,
+                "return_bps": -10.222,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -16.434,
                 "regime": "PANIC",
                 "active": true
               }
@@ -3002,15 +3002,15 @@
             "active_days": 687,
             "flat_days": 406,
             "positive_days": 313,
-            "negative_days": 522,
+            "negative_days": 523,
             "positive_day_rate_percent": 28.64,
             "active_positive_day_rate_percent": 45.56,
-            "net_return_percent": -70.4064,
+            "net_return_percent": -70.4023,
             "average_daily_bps": -9.0096,
             "profit_factor": 0.8318,
-            "annualized_sharpe": -0.8306,
+            "annualized_sharpe": -0.8308,
             "max_drawdown_percent": 71.1324,
-            "average_turnover": 0.7422,
+            "average_turnover": 0.7445,
             "total_trading_cost_percent": 122.0625,
             "total_short_carry_proxy_percent": 12.36,
             "positive_quarters": 4,
@@ -3028,15 +3028,9 @@
               "2024-Q4": 10.205,
               "2025-Q1": -8.213,
               "2025-Q2": 3.375,
-              "2025-Q3": -31.653
+              "2025-Q3": -31.644
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": -32.469,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 85.504,
@@ -3147,9 +3141,15 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": -391.148,
+                "return_bps": -353.648,
                 "regime": "UP_TREND",
                 "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -37.5,
+                "regime": "RANGE",
+                "active": false
               }
             ]
           },
@@ -3167,34 +3167,28 @@
             "calendar_days": 362,
             "active_days": 176,
             "flat_days": 186,
-            "positive_days": 91,
+            "positive_days": 90,
             "negative_days": 172,
-            "positive_day_rate_percent": 25.14,
-            "active_positive_day_rate_percent": 51.7,
-            "net_return_percent": 8.4536,
-            "average_daily_bps": 3.7971,
-            "profit_factor": 1.1291,
-            "annualized_sharpe": 0.398,
+            "positive_day_rate_percent": 24.86,
+            "active_positive_day_rate_percent": 51.14,
+            "net_return_percent": 8.0073,
+            "average_daily_bps": 3.6826,
+            "profit_factor": 1.1254,
+            "annualized_sharpe": 0.386,
             "max_drawdown_percent": 28.8789,
-            "average_turnover": 0.672,
-            "total_trading_cost_percent": 36.5625,
-            "total_short_carry_proxy_percent": 2.895,
+            "average_turnover": 0.6671,
+            "total_trading_cost_percent": 36.3,
+            "total_short_carry_proxy_percent": 2.8875,
             "positive_quarters": 2,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -3.463,
+              "2025-Q3": -3.867,
               "2025-Q4": -4.063,
               "2026-Q1": -4.26,
               "2026-Q2": 2.933,
-              "2026-Q3": 18.829
+              "2026-Q3": 18.837
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 0.0,
-                "regime": "RANGE",
-                "active": false
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -48.599,
@@ -3305,7 +3299,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -26.227,
+                "return_bps": -18.727,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -6.817,
                 "regime": "PANIC",
                 "active": true
               }
@@ -3331,26 +3331,26 @@
         "BINANCE": {
           "discovery": {
             "calendar_days": 1093,
-            "active_days": 780,
-            "flat_days": 313,
+            "active_days": 779,
+            "flat_days": 314,
             "positive_days": 337,
             "negative_days": 555,
             "positive_day_rate_percent": 30.83,
-            "active_positive_day_rate_percent": 43.21,
-            "net_return_percent": -87.3704,
-            "average_daily_bps": -16.5416,
-            "profit_factor": 0.7384,
-            "annualized_sharpe": -1.4525,
-            "max_drawdown_percent": 87.5644,
-            "average_turnover": 0.7754,
-            "total_trading_cost_percent": 127.5,
-            "total_short_carry_proxy_percent": 14.61,
+            "active_positive_day_rate_percent": 43.26,
+            "net_return_percent": -87.3036,
+            "average_daily_bps": -16.4928,
+            "profit_factor": 0.7391,
+            "annualized_sharpe": -1.448,
+            "max_drawdown_percent": 87.4978,
+            "average_turnover": 0.7772,
+            "total_trading_cost_percent": 127.425,
+            "total_short_carry_proxy_percent": 14.595,
             "positive_quarters": 2,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -4.709,
+              "2023-Q1": -4.199,
               "2023-Q2": -15.513,
               "2023-Q3": -26.284,
               "2023-Q4": -36.708,
@@ -3360,15 +3360,9 @@
               "2024-Q4": 13.454,
               "2025-Q1": -14.599,
               "2025-Q2": -9.878,
-              "2025-Q3": -41.913
+              "2025-Q3": -41.917
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 33.051,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 70.007,
@@ -3479,9 +3473,15 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": 156.06,
+                "return_bps": 193.56,
                 "regime": "UP_TREND",
                 "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -37.5,
+                "regime": "RANGE",
+                "active": false
               }
             ]
           },
@@ -3499,34 +3499,28 @@
             "calendar_days": 362,
             "active_days": 221,
             "flat_days": 141,
-            "positive_days": 93,
-            "negative_days": 210,
-            "positive_day_rate_percent": 25.69,
-            "active_positive_day_rate_percent": 42.08,
-            "net_return_percent": -49.0968,
-            "average_daily_bps": -17.9563,
-            "profit_factor": 0.5392,
-            "annualized_sharpe": -2.9458,
-            "max_drawdown_percent": 51.3638,
-            "average_turnover": 0.8101,
-            "total_trading_cost_percent": 44.0625,
-            "total_short_carry_proxy_percent": 3.5325,
+            "positive_days": 92,
+            "negative_days": 211,
+            "positive_day_rate_percent": 25.41,
+            "active_positive_day_rate_percent": 41.63,
+            "net_return_percent": -48.7777,
+            "average_daily_bps": -17.7811,
+            "profit_factor": 0.5443,
+            "annualized_sharpe": -2.9107,
+            "max_drawdown_percent": 51.3269,
+            "average_turnover": 0.8163,
+            "total_trading_cost_percent": 44.4,
+            "total_short_carry_proxy_percent": 3.57,
             "positive_quarters": 0,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -7.791,
+              "2025-Q3": -7.427,
               "2025-Q4": -2.412,
               "2026-Q1": -8.956,
               "2026-Q2": -12.709,
-              "2026-Q3": -28.821
+              "2026-Q3": -28.656
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 0.0,
-                "regime": "RANGE",
-                "active": false
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -48.612,
@@ -3637,7 +3631,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -113.023,
+                "return_bps": -105.523,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": 15.561,
                 "regime": "PANIC",
                 "active": true
               }
@@ -3657,26 +3657,26 @@
         "OKX": {
           "discovery": {
             "calendar_days": 1093,
-            "active_days": 782,
-            "flat_days": 311,
+            "active_days": 781,
+            "flat_days": 312,
             "positive_days": 340,
             "negative_days": 552,
             "positive_day_rate_percent": 31.11,
-            "active_positive_day_rate_percent": 43.48,
-            "net_return_percent": -87.2748,
-            "average_daily_bps": -16.3627,
-            "profit_factor": 0.7458,
-            "annualized_sharpe": -1.407,
-            "max_drawdown_percent": 87.4688,
-            "average_turnover": 0.7921,
-            "total_trading_cost_percent": 130.2375,
-            "total_short_carry_proxy_percent": 14.805,
+            "active_positive_day_rate_percent": 43.53,
+            "net_return_percent": -87.2059,
+            "average_daily_bps": -16.3127,
+            "profit_factor": 0.7466,
+            "annualized_sharpe": -1.4025,
+            "max_drawdown_percent": 87.4001,
+            "average_turnover": 0.7939,
+            "total_trading_cost_percent": 130.1625,
+            "total_short_carry_proxy_percent": 14.79,
             "positive_quarters": 2,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -4.943,
+              "2023-Q1": -4.422,
               "2023-Q2": -12.026,
               "2023-Q3": -19.565,
               "2023-Q4": -26.626,
@@ -3686,15 +3686,9 @@
               "2024-Q4": 12.25,
               "2025-Q1": -15.934,
               "2025-Q2": -26.53,
-              "2025-Q3": -42.402
+              "2025-Q3": -42.406
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 33.118,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": 70.504,
@@ -3805,9 +3799,15 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": 154.817,
+                "return_bps": 192.317,
                 "regime": "UP_TREND",
                 "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -37.5,
+                "regime": "RANGE",
+                "active": false
               }
             ]
           },
@@ -3823,36 +3823,30 @@
           "discovery_passed": false,
           "holdout": {
             "calendar_days": 362,
-            "active_days": 217,
-            "flat_days": 145,
-            "positive_days": 91,
-            "negative_days": 208,
-            "positive_day_rate_percent": 25.14,
-            "active_positive_day_rate_percent": 41.94,
-            "net_return_percent": -36.6868,
-            "average_daily_bps": -11.8793,
-            "profit_factor": 0.6785,
-            "annualized_sharpe": -1.8604,
-            "max_drawdown_percent": 39.5021,
-            "average_turnover": 0.8122,
-            "total_trading_cost_percent": 44.175,
-            "total_short_carry_proxy_percent": 3.525,
+            "active_days": 216,
+            "flat_days": 146,
+            "positive_days": 89,
+            "negative_days": 210,
+            "positive_day_rate_percent": 24.59,
+            "active_positive_day_rate_percent": 41.2,
+            "net_return_percent": -36.4393,
+            "average_daily_bps": -11.7689,
+            "profit_factor": 0.682,
+            "annualized_sharpe": -1.8396,
+            "max_drawdown_percent": 39.5018,
+            "average_turnover": 0.8191,
+            "total_trading_cost_percent": 44.475,
+            "total_short_carry_proxy_percent": 3.555,
             "positive_quarters": 1,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -7.749,
+              "2025-Q3": -7.388,
               "2025-Q4": 1.195,
               "2026-Q1": -6.502,
               "2026-Q2": -12.453,
-              "2026-Q3": -17.145
+              "2026-Q3": -17.144
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 0.0,
-                "regime": "RANGE",
-                "active": false
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -48.599,
@@ -3963,9 +3957,15 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -81.248,
+                "return_bps": -73.748,
                 "regime": "PANIC",
                 "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -7.5,
+                "regime": "PANIC",
+                "active": false
               }
             ]
           },
@@ -3989,27 +3989,27 @@
         "BINANCE": {
           "discovery": {
             "calendar_days": 1093,
-            "active_days": 773,
-            "flat_days": 320,
-            "positive_days": 357,
-            "negative_days": 471,
-            "positive_day_rate_percent": 32.66,
-            "active_positive_day_rate_percent": 46.18,
-            "net_return_percent": -56.9671,
-            "average_daily_bps": -5.1024,
-            "profit_factor": 0.9129,
-            "annualized_sharpe": -0.4259,
-            "max_drawdown_percent": 62.2032,
-            "average_turnover": 0.562,
-            "total_trading_cost_percent": 92.2868,
-            "total_short_carry_proxy_percent": 14.2771,
+            "active_days": 734,
+            "flat_days": 359,
+            "positive_days": 336,
+            "negative_days": 453,
+            "positive_day_rate_percent": 30.74,
+            "active_positive_day_rate_percent": 45.78,
+            "net_return_percent": -57.146,
+            "average_daily_bps": -5.2606,
+            "profit_factor": 0.9054,
+            "annualized_sharpe": -0.4497,
+            "max_drawdown_percent": 61.2655,
+            "average_turnover": 0.5313,
+            "total_trading_cost_percent": 87.2525,
+            "total_short_carry_proxy_percent": 13.4879,
             "positive_quarters": 4,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -17.053,
-              "2023-Q2": 17.931,
+              "2023-Q1": -23.049,
+              "2023-Q2": 29.659,
               "2023-Q3": -24.949,
               "2023-Q4": 19.118,
               "2024-Q1": -8.817,
@@ -4018,15 +4018,9 @@
               "2024-Q4": 1.964,
               "2025-Q1": -19.307,
               "2025-Q2": 6.946,
-              "2025-Q3": -15.788
+              "2025-Q3": -17.779
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 14.423,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": -41.357,
@@ -4137,8 +4131,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": 1.382,
+                "return_bps": 16.382,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -251.153,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -4158,33 +4158,27 @@
             "active_days": 258,
             "flat_days": 104,
             "positive_days": 122,
-            "negative_days": 151,
+            "negative_days": 150,
             "positive_day_rate_percent": 33.7,
             "active_positive_day_rate_percent": 47.29,
-            "net_return_percent": -53.3618,
-            "average_daily_bps": -19.7662,
-            "profit_factor": 0.5799,
-            "annualized_sharpe": -2.4007,
-            "max_drawdown_percent": 55.7079,
-            "average_turnover": 0.5771,
-            "total_trading_cost_percent": 31.4095,
-            "total_short_carry_proxy_percent": 4.1261,
+            "net_return_percent": -49.5321,
+            "average_daily_bps": -17.6658,
+            "profit_factor": 0.607,
+            "annualized_sharpe": -2.2105,
+            "max_drawdown_percent": 51.997,
+            "average_turnover": 0.5651,
+            "total_trading_cost_percent": 30.7621,
+            "total_short_carry_proxy_percent": 4.1186,
             "positive_quarters": 1,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -18.259,
+              "2025-Q3": -11.41,
               "2025-Q4": -12.16,
               "2026-Q1": -32.365,
               "2026-Q2": 5.405,
-              "2026-Q3": -8.889
+              "2026-Q3": -9.029
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 26.176,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": 5.095,
@@ -4295,7 +4289,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -101.336,
+                "return_bps": -93.836,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -22.942,
                 "regime": "PANIC",
                 "active": true
               }
@@ -4315,27 +4315,27 @@
         "OKX": {
           "discovery": {
             "calendar_days": 1093,
-            "active_days": 764,
-            "flat_days": 329,
-            "positive_days": 364,
-            "negative_days": 446,
-            "positive_day_rate_percent": 33.3,
-            "active_positive_day_rate_percent": 47.64,
-            "net_return_percent": -48.6716,
-            "average_daily_bps": -3.7207,
-            "profit_factor": 0.9325,
-            "annualized_sharpe": -0.3258,
+            "active_days": 724,
+            "flat_days": 369,
+            "positive_days": 342,
+            "negative_days": 429,
+            "positive_day_rate_percent": 31.29,
+            "active_positive_day_rate_percent": 47.24,
+            "net_return_percent": -54.6395,
+            "average_daily_bps": -5.0314,
+            "profit_factor": 0.9037,
+            "annualized_sharpe": -0.459,
             "max_drawdown_percent": 60.2792,
-            "average_turnover": 0.5343,
-            "total_trading_cost_percent": 87.7417,
-            "total_short_carry_proxy_percent": 14.2272,
+            "average_turnover": 0.5054,
+            "total_trading_cost_percent": 83.007,
+            "total_short_carry_proxy_percent": 13.3781,
             "positive_quarters": 4,
             "quarter_count": 13,
             "quarter_returns_percent": {
               "2022-Q3": 0.0,
               "2022-Q4": 0.0,
-              "2023-Q1": -6.56,
-              "2023-Q2": 22.25,
+              "2023-Q1": -23.045,
+              "2023-Q2": 34.35,
               "2023-Q3": -25.625,
               "2023-Q4": 19.691,
               "2024-Q1": 5.822,
@@ -4344,15 +4344,9 @@
               "2024-Q4": 2.052,
               "2025-Q1": -19.742,
               "2025-Q2": -13.826,
-              "2025-Q3": -17.709
+              "2025-Q3": -19.651
             },
             "recent_days": [
-              {
-                "decision_utc": "2025-08-04T00:00:00+00:00",
-                "return_bps": 15.911,
-                "regime": "UP_TREND",
-                "active": true
-              },
               {
                 "decision_utc": "2025-08-05T00:00:00+00:00",
                 "return_bps": -20.733,
@@ -4463,8 +4457,14 @@
               },
               {
                 "decision_utc": "2025-08-23T00:00:00+00:00",
-                "return_bps": 0.926,
+                "return_bps": 15.926,
                 "regime": "UP_TREND",
+                "active": true
+              },
+              {
+                "decision_utc": "2025-08-24T00:00:00+00:00",
+                "return_bps": -250.583,
+                "regime": "RANGE",
                 "active": true
               }
             ]
@@ -4484,33 +4484,27 @@
             "active_days": 281,
             "flat_days": 81,
             "positive_days": 128,
-            "negative_days": 162,
+            "negative_days": 161,
             "positive_day_rate_percent": 35.36,
             "active_positive_day_rate_percent": 45.55,
-            "net_return_percent": -41.8192,
-            "average_daily_bps": -13.9119,
-            "profit_factor": 0.6771,
-            "annualized_sharpe": -1.8709,
+            "net_return_percent": -36.9579,
+            "average_daily_bps": -11.774,
+            "profit_factor": 0.7125,
+            "annualized_sharpe": -1.6433,
             "max_drawdown_percent": 44.871,
-            "average_turnover": 0.5237,
-            "total_trading_cost_percent": 28.513,
-            "total_short_carry_proxy_percent": 4.2157,
+            "average_turnover": 0.5106,
+            "total_trading_cost_percent": 27.8005,
+            "total_short_carry_proxy_percent": 4.2082,
             "positive_quarters": 1,
             "quarter_count": 5,
             "quarter_returns_percent": {
-              "2025-Q3": -7.705,
+              "2025-Q3": 0.0,
               "2025-Q4": -9.722,
               "2026-Q1": -28.008,
               "2026-Q2": 13.069,
-              "2026-Q3": -14.219
+              "2026-Q3": -14.213
             },
             "recent_days": [
-              {
-                "decision_utc": "2026-08-05T00:00:00+00:00",
-                "return_bps": 13.33,
-                "regime": "RANGE",
-                "active": true
-              },
               {
                 "decision_utc": "2026-08-06T00:00:00+00:00",
                 "return_bps": -17.667,
@@ -4621,7 +4615,13 @@
               },
               {
                 "decision_utc": "2026-08-24T00:00:00+00:00",
-                "return_bps": -26.227,
+                "return_bps": -18.727,
+                "regime": "PANIC",
+                "active": true
+              },
+              {
+                "decision_utc": "2026-08-25T00:00:00+00:00",
+                "return_bps": -6.817,
                 "regime": "PANIC",
                 "active": true
               }
