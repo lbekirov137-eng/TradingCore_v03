@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-09-02T18:09:07.256258+00:00",
+  "updated_at_utc": "2026-09-02T21:04:04.444599+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 529,
-  "snapshot_count_after_freeze": 349,
+  "snapshot_count_total": 531,
+  "snapshot_count_after_freeze": 351,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
@@ -213,16 +213,16 @@
       "horizon": 6,
       "signal_count": 20,
       "stats": {
-        "closed_trades": 19,
-        "wins": 6,
+        "closed_trades": 20,
+        "wins": 7,
         "losses": 13,
-        "win_rate_percent": 31.58,
-        "net_bps": -474.3952,
-        "average_net_bps": -24.9682,
-        "profit_factor": 0.4959,
+        "win_rate_percent": 35.0,
+        "net_bps": -431.4697,
+        "average_net_bps": -21.5735,
+        "profit_factor": 0.5415,
         "max_drawdown_bps": 561.3587
       },
-      "positive_time_segments": 1,
+      "positive_time_segments": 0,
       "early_checks": {
         "trades": true,
         "average_net_bps": false,
@@ -389,6 +389,14 @@
           "entry_ask": 2413.98,
           "exit_bid": 2412.57,
           "net_bps": -35.83222
+        },
+        {
+          "signal_utc": "2026-09-02T10:49:36.759489+00:00",
+          "entry_utc": "2026-09-02T11:14:31.038646+00:00",
+          "exit_utc": "2026-09-02T21:03:51.432562+00:00",
+          "entry_ask": 2375.57,
+          "exit_bid": 2392.92,
+          "net_bps": 42.92559
         }
       ]
     },
@@ -397,7 +405,7 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_LOW_REVERSION_LONG",
       "horizon": 6,
-      "signal_count": 23,
+      "signal_count": 24,
       "stats": {
         "closed_trades": 23,
         "wins": 11,
@@ -591,7 +599,7 @@
       "symbol": "ETH",
       "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
       "horizon": 3,
-      "signal_count": 33,
+      "signal_count": 34,
       "stats": {
         "closed_trades": 32,
         "wins": 16,
