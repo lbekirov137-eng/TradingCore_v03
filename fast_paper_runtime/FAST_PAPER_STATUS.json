@@ -1,12 +1,12 @@
 {
   "schema": "TRADINGCORE_FAST_PAPER_CLOUD_V1",
-  "updated_at_utc": "2026-09-02T04:24:41.941017+00:00",
+  "updated_at_utc": "2026-09-02T09:32:25.097063+00:00",
   "mode": "EXPERIMENTAL_FAST_PAPER_ONLY",
   "protocol_version": "FAST_PAPER_LAB_V1",
   "protocol_fingerprint": "72c1807b38e5d5b9e1dbcecdc36a5041cecfd746354e89b970a1cf234b8725b6",
   "forward_freeze_utc": "2026-08-15T11:15:00+00:00",
   "lane_count": 36,
-  "total_closed_trade_observations_across_independent_lanes": 20,
+  "total_closed_trade_observations_across_independent_lanes": 21,
   "lanes_with_30_or_more": 0,
   "locked_lane_decisions": 0,
   "promising_lanes": [],
@@ -250,24 +250,25 @@
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
       "signals": 2,
-      "closed_trades": 1,
+      "closed_trades": 2,
       "stats": {
-        "closed_trades": 1,
+        "closed_trades": 2,
         "wins": 1,
-        "losses": 0,
-        "win_rate_percent": 100.0,
-        "net_pnl": 1.34809454,
-        "profit_factor": null,
-        "expectancy_r": 1.3481,
-        "average_r": 1.3481,
-        "max_drawdown_r": 0.0,
-        "max_loss_streak": 0,
+        "losses": 1,
+        "win_rate_percent": 50.0,
+        "net_pnl": 0.11980071,
+        "profit_factor": 1.098,
+        "expectancy_r": 0.0599,
+        "average_r": 0.0599,
+        "max_drawdown_r": 1.2283,
+        "max_loss_streak": 1,
         "rolling_window": 20,
-        "rolling_trades": 1,
+        "rolling_trades": 2,
         "rolling_expectancy_r": null,
-        "trading_days": 1,
+        "trading_days": 2,
         "trading_day_list": [
-          "2026-08-24"
+          "2026-08-24",
+          "2026-09-02"
         ],
         "regimes_observed": [
           "ETHUSDT"
@@ -275,15 +276,7 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": {
-        "entry": 2412.83,
-        "stop": 2381.33,
-        "target": 2491.59,
-        "quantity": 0.031746031746031744,
-        "risk_amount": 1.0,
-        "entry_index": 2334,
-        "entry_utc": "2026-09-01T19:00:00+00:00"
-      },
+      "open_position": null,
       "trades": [
         {
           "entry_utc": "2026-08-23T15:00:00+00:00",
@@ -293,6 +286,16 @@
           "exit_reason": "TIME_STOP",
           "net_pnl": 1.34809454,
           "r_multiple": 1.34809454,
+          "real_order_sent": false
+        },
+        {
+          "entry_utc": "2026-09-01T19:00:00+00:00",
+          "closed_utc": "2026-09-02T09:30:00+00:00",
+          "entry": 2412.83,
+          "exit": 2381.33,
+          "exit_reason": "STOP_LOSS",
+          "net_pnl": -1.22829383,
+          "r_multiple": -1.22829383,
           "real_order_sent": false
         }
       ],
