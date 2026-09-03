@@ -1,6 +1,6 @@
 {
   "schema": "TRADINGCORE_MULTI_ASSET_FUNDING_PORTFOLIO_V1",
-  "generated_at_utc": "2026-09-02T07:20:23.097024+00:00",
+  "generated_at_utc": "2026-09-03T07:23:49.426569+00:00",
   "state": "NO_MULTI_ASSET_FUNDING_CANDIDATE",
   "history_years": 3,
   "universe": [
@@ -17,10 +17,10 @@
   "selected_holdout_passed_both_venues": false,
   "discovery_candidates": [],
   "windows": {
-    "discovery_start_utc": "2023-08-01T00:00:00+00:00",
-    "discovery_end_utc": "2025-07-28T23:59:59.999000+00:00",
-    "holdout_start_utc": "2025-08-02T00:00:00+00:00",
-    "holdout_end_utc": "2026-07-31T00:00:00+00:00"
+    "discovery_start_utc": "2023-09-01T00:00:00+00:00",
+    "discovery_end_utc": "2025-08-28T23:59:59.999000+00:00",
+    "holdout_start_utc": "2025-09-02T00:00:00+00:00",
+    "holdout_end_utc": "2026-08-31T00:00:00+00:00"
   },
   "execution_model": "daily multi-asset long spot / short perp; next-day open; equal notionals; conservative two-leg costs; funding credited only after entry",
   "results": [
@@ -32,35 +32,17 @@
       "venues": {
         "BINANCE": {
           "discovery": {
-            "closed_trades": 48,
+            "closed_trades": 50,
             "wins": 12,
-            "losses": 36,
-            "win_rate_percent": 25.0,
-            "net_return_percent": -3.969,
-            "profit_factor": 0.5356,
-            "average_return_bps": -8.3714,
-            "max_drawdown_percent": 6.3525,
-            "active_days": 633,
-            "time_in_market_percent": 91.08,
+            "losses": 38,
+            "win_rate_percent": 24.0,
+            "net_return_percent": -4.3553,
+            "profit_factor": 0.5126,
+            "average_return_bps": -8.8418,
+            "max_drawdown_percent": 6.7101,
+            "active_days": 662,
+            "time_in_market_percent": 91.31,
             "recent_trades": [
-              {
-                "symbol": "BTC",
-                "entry_utc": "2025-02-08T00:00:00+00:00",
-                "exit_utc": "2025-02-09T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.013195,
-                "return_percent": -0.31136,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LTC",
-                "entry_utc": "2025-02-10T00:00:00+00:00",
-                "exit_utc": "2025-02-26T00:00:00+00:00",
-                "holding_days": 16,
-                "funding_pnl": 1.31373,
-                "return_percent": -0.18487,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "BTC",
                 "entry_utc": "2025-02-27T00:00:00+00:00",
@@ -217,26 +199,44 @@
               {
                 "symbol": "XRP",
                 "entry_utc": "2025-07-04T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 26,
-                "funding_pnl": 3.679345,
-                "return_percent": 0.02042,
+                "exit_utc": "2025-08-02T00:00:00+00:00",
+                "holding_days": 29,
+                "funding_pnl": 3.81158,
+                "return_percent": 0.03476,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2025-08-03T00:00:00+00:00",
+                "exit_utc": "2025-08-19T00:00:00+00:00",
+                "holding_days": 16,
+                "funding_pnl": 1.384935,
+                "return_percent": -0.17943,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "ETH",
+                "entry_utc": "2025-08-20T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 10,
+                "funding_pnl": 0.75024,
+                "return_percent": -0.23752,
                 "reason": "WINDOW_END"
               }
             ]
           },
           "discovery_segments": [
             {
-              "closed_trades": 17,
-              "wins": 7,
-              "losses": 10,
-              "win_rate_percent": 41.18,
-              "net_return_percent": 1.6401,
-              "profit_factor": 1.7771,
-              "average_return_bps": 9.6875,
-              "max_drawdown_percent": 1.054,
-              "active_days": 309,
-              "time_in_market_percent": 93.35,
+              "closed_trades": 19,
+              "wins": 8,
+              "losses": 11,
+              "win_rate_percent": 42.11,
+              "net_return_percent": 1.2648,
+              "profit_factor": 1.508,
+              "average_return_bps": 6.7237,
+              "max_drawdown_percent": 1.2284,
+              "active_days": 335,
+              "time_in_market_percent": 92.8,
               "recent_trades": [
                 {
                   "symbol": "XRP",
@@ -385,44 +385,44 @@
                 {
                   "symbol": "ETH",
                   "entry_utc": "2024-07-07T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 24,
-                  "funding_pnl": 2.44489,
-                  "return_percent": -0.07855,
-                  "reason": "WINDOW_END"
-                }
-              ]
-            },
-            {
-              "closed_trades": 32,
-              "wins": 4,
-              "losses": 28,
-              "win_rate_percent": 12.5,
-              "net_return_percent": -5.8121,
-              "profit_factor": 0.1236,
-              "average_return_bps": -18.6753,
-              "max_drawdown_percent": 5.8314,
-              "active_days": 323,
-              "time_in_market_percent": 88.74,
-              "recent_trades": [
+                  "exit_utc": "2024-08-06T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 2.92544,
+                  "return_percent": 0.02587,
+                  "reason": "MAX_HOLD"
+                },
                 {
-                  "symbol": "BTC",
-                  "entry_utc": "2025-02-08T00:00:00+00:00",
-                  "exit_utc": "2025-02-09T00:00:00+00:00",
-                  "holding_days": 1,
-                  "funding_pnl": -0.013195,
-                  "return_percent": -0.31136,
+                  "symbol": "DOGE",
+                  "entry_utc": "2024-08-09T00:00:00+00:00",
+                  "exit_utc": "2024-08-11T00:00:00+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": 0.05774,
+                  "return_percent": -0.28579,
                   "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "LTC",
-                  "entry_utc": "2025-02-10T00:00:00+00:00",
-                  "exit_utc": "2025-02-26T00:00:00+00:00",
-                  "holding_days": 16,
-                  "funding_pnl": 1.31373,
-                  "return_percent": -0.18487,
+                  "entry_utc": "2024-08-12T00:00:00+00:00",
+                  "exit_utc": "2024-08-29T00:00:00+00:00",
+                  "holding_days": 17,
+                  "funding_pnl": 1.09757,
+                  "return_percent": -0.18801,
                   "reason": "FUNDING_DECAY"
-                },
+                }
+              ]
+            },
+            {
+              "closed_trades": 31,
+              "wins": 4,
+              "losses": 27,
+              "win_rate_percent": 12.9,
+              "net_return_percent": -5.5499,
+              "profit_factor": 0.1307,
+              "average_return_bps": -18.3819,
+              "max_drawdown_percent": 5.5499,
+              "active_days": 327,
+              "time_in_market_percent": 89.84,
+              "recent_trades": [
                 {
                   "symbol": "BTC",
                   "entry_utc": "2025-02-27T00:00:00+00:00",
@@ -579,10 +579,28 @@
                 {
                   "symbol": "XRP",
                   "entry_utc": "2025-07-04T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 26,
-                  "funding_pnl": 3.679345,
-                  "return_percent": 0.02042,
+                  "exit_utc": "2025-08-02T00:00:00+00:00",
+                  "holding_days": 29,
+                  "funding_pnl": 3.81158,
+                  "return_percent": 0.03476,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "XRP",
+                  "entry_utc": "2025-08-03T00:00:00+00:00",
+                  "exit_utc": "2025-08-19T00:00:00+00:00",
+                  "holding_days": 16,
+                  "funding_pnl": 1.384935,
+                  "return_percent": -0.17943,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "ETH",
+                  "entry_utc": "2025-08-20T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 10,
+                  "funding_pnl": 0.75024,
+                  "return_percent": -0.23752,
                   "reason": "WINDOW_END"
                 }
               ]
@@ -602,31 +620,13 @@
             "wins": 0,
             "losses": 37,
             "win_rate_percent": 0.0,
-            "net_return_percent": -8.535,
+            "net_return_percent": -8.4873,
             "profit_factor": 0.0,
-            "average_return_bps": -24.08,
-            "max_drawdown_percent": 8.535,
+            "average_return_bps": -23.9389,
+            "max_drawdown_percent": 8.4873,
             "active_days": 293,
             "time_in_market_percent": 80.49,
             "recent_trades": [
-              {
-                "symbol": "LINK",
-                "entry_utc": "2026-02-14T00:00:00+00:00",
-                "exit_utc": "2026-02-19T00:00:00+00:00",
-                "holding_days": 5,
-                "funding_pnl": 0.18506,
-                "return_percent": -0.25621,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2026-02-22T00:00:00+00:00",
-                "exit_utc": "2026-02-23T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.0651,
-                "return_percent": -0.24665,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "ADA",
                 "entry_utc": "2026-02-26T00:00:00+00:00",
@@ -783,10 +783,28 @@
               {
                 "symbol": "LINK",
                 "entry_utc": "2026-07-28T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 4,
-                "funding_pnl": 0.26166,
-                "return_percent": -0.28111,
+                "exit_utc": "2026-08-27T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 3.138895,
+                "return_percent": -0.05798,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-28T00:00:00+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 1,
+                "funding_pnl": -0.053685,
+                "return_percent": -0.31078,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "BTC",
+                "entry_utc": "2026-08-30T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 2,
+                "funding_pnl": 0.26306,
+                "return_percent": -0.27299,
                 "reason": "WINDOW_END"
               }
             ]
@@ -851,16 +869,16 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 11,
+            "closed_trades": 12,
             "wins": 0,
-            "losses": 11,
+            "losses": 12,
             "win_rate_percent": 0.0,
-            "net_return_percent": -3.003,
+            "net_return_percent": -3.0744,
             "profit_factor": 0.0,
-            "average_return_bps": -27.6769,
-            "max_drawdown_percent": 3.003,
-            "active_days": 45,
-            "time_in_market_percent": 12.36,
+            "average_return_bps": -25.9853,
+            "max_drawdown_percent": 3.0744,
+            "active_days": 75,
+            "time_in_market_percent": 20.6,
             "recent_trades": [
               {
                 "symbol": "ETH",
@@ -955,10 +973,19 @@
               {
                 "symbol": "ADA",
                 "entry_utc": "2026-08-01T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 1,
-                "funding_pnl": 0.15,
-                "return_percent": -0.25523,
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 16,
+                "funding_pnl": 0.99654,
+                "return_percent": -0.17773,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LTC",
+                "entry_utc": "2026-08-18T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 15,
+                "funding_pnl": 1.773834,
+                "return_percent": -0.15127,
                 "reason": "WINDOW_END"
               }
             ]
@@ -982,53 +1009,17 @@
       "venues": {
         "BINANCE": {
           "discovery": {
-            "closed_trades": 89,
+            "closed_trades": 93,
             "wins": 22,
-            "losses": 67,
-            "win_rate_percent": 24.72,
-            "net_return_percent": -3.1949,
-            "profit_factor": 0.5768,
-            "average_return_bps": -3.632,
-            "max_drawdown_percent": 5.4245,
-            "active_days": 670,
-            "time_in_market_percent": 96.4,
+            "losses": 71,
+            "win_rate_percent": 23.66,
+            "net_return_percent": -3.5474,
+            "profit_factor": 0.5509,
+            "average_return_bps": -3.8679,
+            "max_drawdown_percent": 5.7689,
+            "active_days": 701,
+            "time_in_market_percent": 96.69,
             "recent_trades": [
-              {
-                "symbol": "DOGE",
-                "entry_utc": "2025-03-24T00:00:00+00:00",
-                "exit_utc": "2025-03-28T00:00:00+00:00",
-                "holding_days": 4,
-                "funding_pnl": 0.14964,
-                "return_percent": -0.1424,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LTC",
-                "entry_utc": "2025-03-24T00:00:00+00:00",
-                "exit_utc": "2025-03-29T00:00:00+00:00",
-                "holding_days": 5,
-                "funding_pnl": 0.153762,
-                "return_percent": -0.12266,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2025-04-02T00:00:00+00:00",
-                "exit_utc": "2025-04-07T00:00:00+00:00",
-                "holding_days": 5,
-                "funding_pnl": 0.132443,
-                "return_percent": -0.10675,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "BTC",
-                "entry_utc": "2025-03-30T00:00:00+00:00",
-                "exit_utc": "2025-04-21T00:00:00+00:00",
-                "holding_days": 22,
-                "funding_pnl": 0.600318,
-                "return_percent": -0.0937,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "XRP",
                 "entry_utc": "2025-04-22T00:00:00+00:00",
@@ -1158,90 +1149,72 @@
               {
                 "symbol": "XRP",
                 "entry_utc": "2025-07-04T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 26,
-                "funding_pnl": 1.839672,
-                "return_percent": 0.01021,
-                "reason": "WINDOW_END"
+                "exit_utc": "2025-08-02T00:00:00+00:00",
+                "holding_days": 29,
+                "funding_pnl": 1.90579,
+                "return_percent": 0.01738,
+                "reason": "FUNDING_DECAY"
               },
               {
                 "symbol": "ETH",
                 "entry_utc": "2025-07-07T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 23,
-                "funding_pnl": 1.48795,
-                "return_percent": -0.02525,
+                "exit_utc": "2025-08-06T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.655602,
+                "return_percent": -0.01367,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2025-08-03T00:00:00+00:00",
+                "exit_utc": "2025-08-19T00:00:00+00:00",
+                "holding_days": 16,
+                "funding_pnl": 0.692468,
+                "return_percent": -0.08971,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LTC",
+                "entry_utc": "2025-08-07T00:00:00+00:00",
+                "exit_utc": "2025-08-27T00:00:00+00:00",
+                "holding_days": 20,
+                "funding_pnl": 0.998872,
+                "return_percent": -0.05,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "ETH",
+                "entry_utc": "2025-08-20T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 10,
+                "funding_pnl": 0.37512,
+                "return_percent": -0.11876,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2025-08-28T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 2,
+                "funding_pnl": 0.133505,
+                "return_percent": -0.12492,
                 "reason": "WINDOW_END"
               }
             ]
           },
           "discovery_segments": [
             {
-              "closed_trades": 34,
-              "wins": 14,
-              "losses": 20,
-              "win_rate_percent": 41.18,
-              "net_return_percent": 1.4912,
-              "profit_factor": 1.6857,
-              "average_return_bps": 4.3832,
-              "max_drawdown_percent": 1.137,
-              "active_days": 324,
-              "time_in_market_percent": 97.89,
+              "closed_trades": 40,
+              "wins": 15,
+              "losses": 25,
+              "win_rate_percent": 37.5,
+              "net_return_percent": 0.7707,
+              "profit_factor": 1.2685,
+              "average_return_bps": 1.9458,
+              "max_drawdown_percent": 1.5503,
+              "active_days": 354,
+              "time_in_market_percent": 98.06,
               "recent_trades": [
-                {
-                  "symbol": "ADA",
-                  "entry_utc": "2023-12-17T00:00:00+00:00",
-                  "exit_utc": "2024-01-16T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 4.257073,
-                  "return_percent": 0.29633,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "XRP",
-                  "entry_utc": "2024-01-08T00:00:00+00:00",
-                  "exit_utc": "2024-02-07T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 2.229378,
-                  "return_percent": 0.06716,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2024-01-17T00:00:00+00:00",
-                  "exit_utc": "2024-02-16T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 2.253125,
-                  "return_percent": 0.02225,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "XRP",
-                  "entry_utc": "2024-02-08T00:00:00+00:00",
-                  "exit_utc": "2024-03-09T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 7.737998,
-                  "return_percent": 0.57703,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "ADA",
-                  "entry_utc": "2024-02-17T00:00:00+00:00",
-                  "exit_utc": "2024-03-18T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 9.89191,
-                  "return_percent": 0.84007,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2024-03-10T00:00:00+00:00",
-                  "exit_utc": "2024-04-09T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 6.119305,
-                  "return_percent": 0.47718,
-                  "reason": "MAX_HOLD"
-                },
                 {
                   "symbol": "BTC",
                   "entry_utc": "2024-03-19T00:00:00+00:00",
@@ -1351,73 +1324,91 @@
                   "reason": "FUNDING_DECAY"
                 },
                 {
-                  "symbol": "ETH",
-                  "entry_utc": "2024-07-07T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 24,
-                  "funding_pnl": 1.222445,
-                  "return_percent": -0.03928,
-                  "reason": "WINDOW_END"
-                },
-                {
                   "symbol": "XRP",
                   "entry_utc": "2024-07-28T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 3,
-                  "funding_pnl": 0.200023,
-                  "return_percent": -0.12667,
+                  "exit_utc": "2024-08-05T00:00:00+00:00",
+                  "holding_days": 8,
+                  "funding_pnl": 0.341088,
+                  "return_percent": -0.10571,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "ETH",
+                  "entry_utc": "2024-07-07T00:00:00+00:00",
+                  "exit_utc": "2024-08-06T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 1.46272,
+                  "return_percent": 0.01294,
+                  "reason": "MAX_HOLD"
+                },
+                {
+                  "symbol": "BTC",
+                  "entry_utc": "2024-08-06T00:00:00+00:00",
+                  "exit_utc": "2024-08-08T00:00:00+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": 0.002145,
+                  "return_percent": -0.14428,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "ADA",
+                  "entry_utc": "2024-08-09T00:00:00+00:00",
+                  "exit_utc": "2024-08-10T00:00:00+00:00",
+                  "holding_days": 1,
+                  "funding_pnl": -0.010788,
+                  "return_percent": -0.15029,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "DOGE",
+                  "entry_utc": "2024-08-09T00:00:00+00:00",
+                  "exit_utc": "2024-08-11T00:00:00+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": 0.02887,
+                  "return_percent": -0.14289,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LINK",
+                  "entry_utc": "2024-08-16T00:00:00+00:00",
+                  "exit_utc": "2024-08-17T00:00:00+00:00",
+                  "holding_days": 1,
+                  "funding_pnl": -0.046733,
+                  "return_percent": -0.14449,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LTC",
+                  "entry_utc": "2024-08-11T00:00:00+00:00",
+                  "exit_utc": "2024-08-29T00:00:00+00:00",
+                  "holding_days": 18,
+                  "funding_pnl": 0.603178,
+                  "return_percent": -0.09067,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "ADA",
+                  "entry_utc": "2024-08-19T00:00:00+00:00",
+                  "exit_utc": "2024-08-29T23:59:59.999000+00:00",
+                  "holding_days": 12,
+                  "funding_pnl": 0.51322,
+                  "return_percent": -0.11253,
                   "reason": "WINDOW_END"
                 }
               ]
             },
             {
-              "closed_trades": 57,
+              "closed_trades": 54,
               "wins": 7,
-              "losses": 50,
-              "win_rate_percent": 12.28,
-              "net_return_percent": -4.908,
-              "profit_factor": 0.1267,
-              "average_return_bps": -8.8208,
-              "max_drawdown_percent": 4.908,
-              "active_days": 345,
-              "time_in_market_percent": 94.78,
+              "losses": 47,
+              "win_rate_percent": 12.96,
+              "net_return_percent": -4.4387,
+              "profit_factor": 0.1397,
+              "average_return_bps": -8.4,
+              "max_drawdown_percent": 4.4387,
+              "active_days": 346,
+              "time_in_market_percent": 95.05,
               "recent_trades": [
-                {
-                  "symbol": "DOGE",
-                  "entry_utc": "2025-03-24T00:00:00+00:00",
-                  "exit_utc": "2025-03-28T00:00:00+00:00",
-                  "holding_days": 4,
-                  "funding_pnl": 0.14964,
-                  "return_percent": -0.1424,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LTC",
-                  "entry_utc": "2025-03-24T00:00:00+00:00",
-                  "exit_utc": "2025-03-29T00:00:00+00:00",
-                  "holding_days": 5,
-                  "funding_pnl": 0.153762,
-                  "return_percent": -0.12266,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2025-04-02T00:00:00+00:00",
-                  "exit_utc": "2025-04-07T00:00:00+00:00",
-                  "holding_days": 5,
-                  "funding_pnl": 0.132443,
-                  "return_percent": -0.10675,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "BTC",
-                  "entry_utc": "2025-03-30T00:00:00+00:00",
-                  "exit_utc": "2025-04-21T00:00:00+00:00",
-                  "holding_days": 22,
-                  "funding_pnl": 0.600318,
-                  "return_percent": -0.0937,
-                  "reason": "FUNDING_DECAY"
-                },
                 {
                   "symbol": "XRP",
                   "entry_utc": "2025-04-22T00:00:00+00:00",
@@ -1547,19 +1538,55 @@
                 {
                   "symbol": "XRP",
                   "entry_utc": "2025-07-04T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 26,
-                  "funding_pnl": 1.839672,
-                  "return_percent": 0.01021,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2025-08-02T00:00:00+00:00",
+                  "holding_days": 29,
+                  "funding_pnl": 1.90579,
+                  "return_percent": 0.01738,
+                  "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "ETH",
                   "entry_utc": "2025-07-07T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 23,
-                  "funding_pnl": 1.48795,
-                  "return_percent": -0.02525,
+                  "exit_utc": "2025-08-06T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 1.655602,
+                  "return_percent": -0.01367,
+                  "reason": "MAX_HOLD"
+                },
+                {
+                  "symbol": "XRP",
+                  "entry_utc": "2025-08-03T00:00:00+00:00",
+                  "exit_utc": "2025-08-19T00:00:00+00:00",
+                  "holding_days": 16,
+                  "funding_pnl": 0.692468,
+                  "return_percent": -0.08971,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LTC",
+                  "entry_utc": "2025-08-07T00:00:00+00:00",
+                  "exit_utc": "2025-08-27T00:00:00+00:00",
+                  "holding_days": 20,
+                  "funding_pnl": 0.998872,
+                  "return_percent": -0.05,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "ETH",
+                  "entry_utc": "2025-08-20T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 10,
+                  "funding_pnl": 0.37512,
+                  "return_percent": -0.11876,
+                  "reason": "WINDOW_END"
+                },
+                {
+                  "symbol": "SOL",
+                  "entry_utc": "2025-08-28T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": 0.133505,
+                  "return_percent": -0.12492,
                   "reason": "WINDOW_END"
                 }
               ]
@@ -1575,44 +1602,17 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 79,
+            "closed_trades": 80,
             "wins": 0,
-            "losses": 79,
+            "losses": 80,
             "win_rate_percent": 0.0,
-            "net_return_percent": -9.4204,
+            "net_return_percent": -9.521,
             "profit_factor": 0.0,
-            "average_return_bps": -12.5158,
-            "max_drawdown_percent": 9.4204,
+            "average_return_bps": -12.4981,
+            "max_drawdown_percent": 9.521,
             "active_days": 315,
             "time_in_market_percent": 86.54,
             "recent_trades": [
-              {
-                "symbol": "DOGE",
-                "entry_utc": "2026-04-17T00:00:00+00:00",
-                "exit_utc": "2026-04-20T00:00:00+00:00",
-                "holding_days": 3,
-                "funding_pnl": 0.030358,
-                "return_percent": -0.1393,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2026-04-22T00:00:00+00:00",
-                "exit_utc": "2026-04-24T00:00:00+00:00",
-                "holding_days": 2,
-                "funding_pnl": 0.06137,
-                "return_percent": -0.15135,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LTC",
-                "entry_utc": "2026-04-21T00:00:00+00:00",
-                "exit_utc": "2026-04-27T00:00:00+00:00",
-                "holding_days": 6,
-                "funding_pnl": 0.156687,
-                "return_percent": -0.141,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "LINK",
                 "entry_utc": "2026-04-29T00:00:00+00:00",
@@ -1749,21 +1749,48 @@
                 "reason": "FUNDING_DECAY"
               },
               {
+                "symbol": "ADA",
+                "entry_utc": "2026-07-30T00:00:00+00:00",
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 18,
+                "funding_pnl": 0.843108,
+                "return_percent": -0.04072,
+                "reason": "FUNDING_DECAY"
+              },
+              {
                 "symbol": "LINK",
                 "entry_utc": "2026-07-28T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 4,
-                "funding_pnl": 0.13083,
-                "return_percent": -0.14056,
+                "exit_utc": "2026-08-27T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.569447,
+                "return_percent": -0.02899,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-28T00:00:00+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 1,
+                "funding_pnl": -0.026842,
+                "return_percent": -0.15539,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "BTC",
+                "entry_utc": "2026-08-18T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 14,
+                "funding_pnl": 0.8543,
+                "return_percent": -0.08184,
                 "reason": "WINDOW_END"
               },
               {
-                "symbol": "ADA",
-                "entry_utc": "2026-07-30T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
+                "symbol": "LTC",
+                "entry_utc": "2026-08-30T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
                 "holding_days": 2,
-                "funding_pnl": 0.121833,
-                "return_percent": -0.12519,
+                "funding_pnl": 0.057642,
+                "return_percent": -0.15861,
                 "reason": "WINDOW_END"
               }
             ]
@@ -1828,16 +1855,16 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 16,
+            "closed_trades": 19,
             "wins": 0,
-            "losses": 16,
+            "losses": 19,
             "win_rate_percent": 0.0,
-            "net_return_percent": -2.0975,
+            "net_return_percent": -2.2996,
             "profit_factor": 0.0,
-            "average_return_bps": -13.2398,
-            "max_drawdown_percent": 2.0975,
-            "active_days": 54,
-            "time_in_market_percent": 14.84,
+            "average_return_bps": -12.2362,
+            "max_drawdown_percent": 2.2996,
+            "active_days": 85,
+            "time_in_market_percent": 23.35,
             "recent_trades": [
               {
                 "symbol": "ETH",
@@ -1968,19 +1995,46 @@
               {
                 "symbol": "DOGE",
                 "entry_utc": "2026-07-26T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 7,
-                "funding_pnl": 0.253523,
-                "return_percent": -0.11505,
-                "reason": "WINDOW_END"
+                "exit_utc": "2026-08-03T00:00:00+00:00",
+                "holding_days": 8,
+                "funding_pnl": 0.244604,
+                "return_percent": -0.12092,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2026-08-04T00:00:00+00:00",
+                "exit_utc": "2026-08-05T00:00:00+00:00",
+                "holding_days": 1,
+                "funding_pnl": -0.005794,
+                "return_percent": -0.15013,
+                "reason": "FUNDING_DECAY"
               },
               {
                 "symbol": "ADA",
                 "entry_utc": "2026-08-01T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 1,
-                "funding_pnl": 0.075,
-                "return_percent": -0.12761,
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 16,
+                "funding_pnl": 0.49827,
+                "return_percent": -0.08887,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "DOGE",
+                "entry_utc": "2026-08-06T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 27,
+                "funding_pnl": 1.449086,
+                "return_percent": -0.0136,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "LTC",
+                "entry_utc": "2026-08-18T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 15,
+                "funding_pnl": 0.886917,
+                "return_percent": -0.07564,
                 "reason": "WINDOW_END"
               }
             ]
@@ -2004,53 +2058,17 @@
       "venues": {
         "BINANCE": {
           "discovery": {
-            "closed_trades": 60,
-            "wins": 21,
-            "losses": 39,
-            "win_rate_percent": 35.0,
-            "net_return_percent": 0.0882,
-            "profit_factor": 1.0245,
-            "average_return_bps": 0.1653,
-            "max_drawdown_percent": 2.6903,
-            "active_days": 553,
-            "time_in_market_percent": 79.57,
+            "closed_trades": 64,
+            "wins": 22,
+            "losses": 42,
+            "win_rate_percent": 34.38,
+            "net_return_percent": -0.2439,
+            "profit_factor": 0.9472,
+            "average_return_bps": -0.3641,
+            "max_drawdown_percent": 3.0132,
+            "active_days": 584,
+            "time_in_market_percent": 80.55,
             "recent_trades": [
-              {
-                "symbol": "ADA",
-                "entry_utc": "2025-01-16T00:00:00+00:00",
-                "exit_utc": "2025-02-04T00:00:00+00:00",
-                "holding_days": 19,
-                "funding_pnl": 1.084973,
-                "return_percent": -0.01092,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2025-02-22T00:00:00+00:00",
-                "exit_utc": "2025-02-23T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.087227,
-                "return_percent": -0.16495,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LTC",
-                "entry_utc": "2025-02-10T00:00:00+00:00",
-                "exit_utc": "2025-02-26T00:00:00+00:00",
-                "holding_days": 16,
-                "funding_pnl": 0.656865,
-                "return_percent": -0.09243,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LTC",
-                "entry_utc": "2025-02-28T00:00:00+00:00",
-                "exit_utc": "2025-03-03T00:00:00+00:00",
-                "holding_days": 3,
-                "funding_pnl": 0.074218,
-                "return_percent": -0.14131,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "SOL",
                 "entry_utc": "2025-03-01T00:00:00+00:00",
@@ -2180,45 +2198,72 @@
               {
                 "symbol": "XRP",
                 "entry_utc": "2025-07-04T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 26,
-                "funding_pnl": 1.839672,
-                "return_percent": 0.01021,
-                "reason": "WINDOW_END"
+                "exit_utc": "2025-08-02T00:00:00+00:00",
+                "holding_days": 29,
+                "funding_pnl": 1.90579,
+                "return_percent": 0.01738,
+                "reason": "FUNDING_DECAY"
               },
               {
                 "symbol": "ADA",
                 "entry_utc": "2025-07-08T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 22,
-                "funding_pnl": 1.608495,
-                "return_percent": -0.01862,
+                "exit_utc": "2025-08-07T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 2.013352,
+                "return_percent": 0.02148,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "DOGE",
+                "entry_utc": "2025-08-08T00:00:00+00:00",
+                "exit_utc": "2025-08-19T00:00:00+00:00",
+                "holding_days": 11,
+                "funding_pnl": 0.553943,
+                "return_percent": -0.09699,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LTC",
+                "entry_utc": "2025-08-06T00:00:00+00:00",
+                "exit_utc": "2025-08-27T00:00:00+00:00",
+                "holding_days": 21,
+                "funding_pnl": 1.063797,
+                "return_percent": -0.0388,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "ETH",
+                "entry_utc": "2025-08-20T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 10,
+                "funding_pnl": 0.37512,
+                "return_percent": -0.11876,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2025-08-28T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 2,
+                "funding_pnl": 0.133505,
+                "return_percent": -0.12492,
                 "reason": "WINDOW_END"
               }
             ]
           },
           "discovery_segments": [
             {
-              "closed_trades": 27,
+              "closed_trades": 28,
               "wins": 14,
-              "losses": 13,
-              "win_rate_percent": 51.85,
-              "net_return_percent": 2.2135,
-              "profit_factor": 2.7277,
-              "average_return_bps": 8.1405,
-              "max_drawdown_percent": 0.624,
-              "active_days": 298,
-              "time_in_market_percent": 90.03,
+              "losses": 14,
+              "win_rate_percent": 50.0,
+              "net_return_percent": 2.1186,
+              "profit_factor": 2.5421,
+              "average_return_bps": 7.5181,
+              "max_drawdown_percent": 0.7163,
+              "active_days": 307,
+              "time_in_market_percent": 85.04,
               "recent_trades": [
-                {
-                  "symbol": "SOL",
-                  "entry_utc": "2023-12-13T00:00:00+00:00",
-                  "exit_utc": "2024-01-12T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 4.991753,
-                  "return_percent": 0.32006,
-                  "reason": "MAX_HOLD"
-                },
                 {
                   "symbol": "DOGE",
                   "entry_utc": "2023-12-25T00:00:00+00:00",
@@ -2375,71 +2420,44 @@
                 {
                   "symbol": "LINK",
                   "entry_utc": "2024-07-12T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 19,
-                  "funding_pnl": 0.951595,
-                  "return_percent": -0.06931,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2024-08-02T00:00:00+00:00",
+                  "holding_days": 21,
+                  "funding_pnl": 0.94095,
+                  "return_percent": -0.06579,
+                  "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "XRP",
                   "entry_utc": "2024-07-28T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 3,
-                  "funding_pnl": 0.200023,
-                  "return_percent": -0.12667,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2024-08-05T00:00:00+00:00",
+                  "holding_days": 8,
+                  "funding_pnl": 0.341088,
+                  "return_percent": -0.10571,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "BTC",
+                  "entry_utc": "2024-08-03T00:00:00+00:00",
+                  "exit_utc": "2024-08-08T00:00:00+00:00",
+                  "holding_days": 5,
+                  "funding_pnl": 0.17658,
+                  "return_percent": -0.11736,
+                  "reason": "FUNDING_DECAY"
                 }
               ]
             },
             {
-              "closed_trades": 34,
-              "wins": 7,
-              "losses": 27,
-              "win_rate_percent": 20.59,
-              "net_return_percent": -2.2043,
-              "profit_factor": 0.2346,
-              "average_return_bps": -6.5485,
-              "max_drawdown_percent": 2.3018,
-              "active_days": 254,
-              "time_in_market_percent": 69.78,
+              "closed_trades": 36,
+              "wins": 8,
+              "losses": 28,
+              "win_rate_percent": 22.22,
+              "net_return_percent": -2.3135,
+              "profit_factor": 0.2332,
+              "average_return_bps": -6.4947,
+              "max_drawdown_percent": 2.626,
+              "active_days": 277,
+              "time_in_market_percent": 76.1,
               "recent_trades": [
-                {
-                  "symbol": "ADA",
-                  "entry_utc": "2025-01-16T00:00:00+00:00",
-                  "exit_utc": "2025-02-04T00:00:00+00:00",
-                  "holding_days": 19,
-                  "funding_pnl": 1.084973,
-                  "return_percent": -0.01092,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2025-02-22T00:00:00+00:00",
-                  "exit_utc": "2025-02-23T00:00:00+00:00",
-                  "holding_days": 1,
-                  "funding_pnl": -0.087227,
-                  "return_percent": -0.16495,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LTC",
-                  "entry_utc": "2025-02-10T00:00:00+00:00",
-                  "exit_utc": "2025-02-26T00:00:00+00:00",
-                  "holding_days": 16,
-                  "funding_pnl": 0.656865,
-                  "return_percent": -0.09243,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LTC",
-                  "entry_utc": "2025-02-28T00:00:00+00:00",
-                  "exit_utc": "2025-03-03T00:00:00+00:00",
-                  "holding_days": 3,
-                  "funding_pnl": 0.074218,
-                  "return_percent": -0.14131,
-                  "reason": "FUNDING_DECAY"
-                },
                 {
                   "symbol": "SOL",
                   "entry_utc": "2025-03-01T00:00:00+00:00",
@@ -2569,19 +2587,55 @@
                 {
                   "symbol": "XRP",
                   "entry_utc": "2025-07-04T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 26,
-                  "funding_pnl": 1.839672,
-                  "return_percent": 0.01021,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2025-08-02T00:00:00+00:00",
+                  "holding_days": 29,
+                  "funding_pnl": 1.90579,
+                  "return_percent": 0.01738,
+                  "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "ADA",
                   "entry_utc": "2025-07-08T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 22,
-                  "funding_pnl": 1.608495,
-                  "return_percent": -0.01862,
+                  "exit_utc": "2025-08-07T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 2.013352,
+                  "return_percent": 0.02148,
+                  "reason": "MAX_HOLD"
+                },
+                {
+                  "symbol": "DOGE",
+                  "entry_utc": "2025-08-08T00:00:00+00:00",
+                  "exit_utc": "2025-08-19T00:00:00+00:00",
+                  "holding_days": 11,
+                  "funding_pnl": 0.553943,
+                  "return_percent": -0.09699,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LTC",
+                  "entry_utc": "2025-08-06T00:00:00+00:00",
+                  "exit_utc": "2025-08-27T00:00:00+00:00",
+                  "holding_days": 21,
+                  "funding_pnl": 1.063797,
+                  "return_percent": -0.0388,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "ETH",
+                  "entry_utc": "2025-08-20T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 10,
+                  "funding_pnl": 0.37512,
+                  "return_percent": -0.11876,
+                  "reason": "WINDOW_END"
+                },
+                {
+                  "symbol": "SOL",
+                  "entry_utc": "2025-08-28T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": 0.133505,
+                  "return_percent": -0.12492,
                   "reason": "WINDOW_END"
                 }
               ]
@@ -2590,51 +2644,24 @@
           "positive_segments": 1,
           "discovery_checks": {
             "trades": true,
-            "net_positive": true,
+            "net_positive": false,
             "profit_factor": false,
             "drawdown": true,
             "segments": false
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 35,
+            "closed_trades": 36,
             "wins": 0,
-            "losses": 35,
+            "losses": 36,
             "win_rate_percent": 0.0,
-            "net_return_percent": -4.0885,
+            "net_return_percent": -4.1621,
             "profit_factor": 0.0,
-            "average_return_bps": -11.9192,
-            "max_drawdown_percent": 4.0885,
-            "active_days": 175,
-            "time_in_market_percent": 48.08,
+            "average_return_bps": -11.8012,
+            "max_drawdown_percent": 4.1621,
+            "active_days": 173,
+            "time_in_market_percent": 47.53,
             "recent_trades": [
-              {
-                "symbol": "ADA",
-                "entry_utc": "2026-03-14T00:00:00+00:00",
-                "exit_utc": "2026-03-15T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.109608,
-                "return_percent": -0.16018,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LTC",
-                "entry_utc": "2026-03-14T00:00:00+00:00",
-                "exit_utc": "2026-03-22T00:00:00+00:00",
-                "holding_days": 8,
-                "funding_pnl": 0.176203,
-                "return_percent": -0.12703,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "ADA",
-                "entry_utc": "2026-03-26T00:00:00+00:00",
-                "exit_utc": "2026-03-28T00:00:00+00:00",
-                "holding_days": 2,
-                "funding_pnl": 0.000445,
-                "return_percent": -0.13312,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "LINK",
                 "entry_utc": "2026-04-02T00:00:00+00:00",
@@ -2773,19 +2800,46 @@
               {
                 "symbol": "LINK",
                 "entry_utc": "2026-07-16T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 16,
-                "funding_pnl": 0.567053,
-                "return_percent": -0.08676,
-                "reason": "WINDOW_END"
+                "exit_utc": "2026-08-15T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.308107,
+                "return_percent": -0.02051,
+                "reason": "MAX_HOLD"
               },
               {
                 "symbol": "ADA",
                 "entry_utc": "2026-07-30T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 18,
+                "funding_pnl": 0.843108,
+                "return_percent": -0.04072,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 8,
+                "funding_pnl": 0.440608,
+                "return_percent": -0.10147,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 8,
+                "funding_pnl": 0.460545,
+                "return_percent": -0.11002,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "BTC",
+                "entry_utc": "2026-08-30T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
                 "holding_days": 2,
-                "funding_pnl": 0.121833,
-                "return_percent": -0.12519,
+                "funding_pnl": 0.13153,
+                "return_percent": -0.13649,
                 "reason": "WINDOW_END"
               }
             ]
@@ -2850,16 +2904,16 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 8,
+            "closed_trades": 11,
             "wins": 0,
-            "losses": 8,
+            "losses": 11,
             "win_rate_percent": 0.0,
-            "net_return_percent": -0.961,
+            "net_return_percent": -1.2285,
             "profit_factor": 0.0,
-            "average_return_bps": -12.0626,
-            "max_drawdown_percent": 0.961,
-            "active_days": 31,
-            "time_in_market_percent": 8.52,
+            "average_return_bps": -11.2304,
+            "max_drawdown_percent": 1.2285,
+            "active_days": 62,
+            "time_in_market_percent": 17.03,
             "recent_trades": [
               {
                 "symbol": "ETH",
@@ -2925,12 +2979,39 @@
                 "reason": "FUNDING_DECAY"
               },
               {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-09T00:00:00+00:00",
+                "exit_utc": "2026-08-16T00:00:00+00:00",
+                "holding_days": 7,
+                "funding_pnl": 0.225136,
+                "return_percent": -0.12668,
+                "reason": "FUNDING_DECAY"
+              },
+              {
                 "symbol": "ADA",
                 "entry_utc": "2026-07-31T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 2,
-                "funding_pnl": 0.15,
-                "return_percent": -0.13408,
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 17,
+                "funding_pnl": 0.57327,
+                "return_percent": -0.09587,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2026-08-17T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 16,
+                "funding_pnl": 0.803107,
+                "return_percent": -0.08896,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 12,
+                "funding_pnl": 0.688639,
+                "return_percent": -0.09289,
                 "reason": "WINDOW_END"
               }
             ]
@@ -2954,71 +3035,17 @@
       "venues": {
         "BINANCE": {
           "discovery": {
-            "closed_trades": 82,
-            "wins": 33,
-            "losses": 49,
-            "win_rate_percent": 40.24,
-            "net_return_percent": 0.8283,
-            "profit_factor": 1.242,
-            "average_return_bps": 1.0148,
-            "max_drawdown_percent": 2.2033,
-            "active_days": 556,
-            "time_in_market_percent": 80.0,
+            "closed_trades": 88,
+            "wins": 34,
+            "losses": 54,
+            "win_rate_percent": 38.64,
+            "net_return_percent": 0.4533,
+            "profit_factor": 1.1194,
+            "average_return_bps": 0.5224,
+            "max_drawdown_percent": 2.5669,
+            "active_days": 587,
+            "time_in_market_percent": 80.97,
             "recent_trades": [
-              {
-                "symbol": "LINK",
-                "entry_utc": "2025-03-26T00:00:00+00:00",
-                "exit_utc": "2025-03-29T00:00:00+00:00",
-                "holding_days": 3,
-                "funding_pnl": 0.082582,
-                "return_percent": -0.08451,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "ADA",
-                "entry_utc": "2025-03-26T00:00:00+00:00",
-                "exit_utc": "2025-03-29T00:00:00+00:00",
-                "holding_days": 3,
-                "funding_pnl": -0.00097,
-                "return_percent": -0.09906,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2025-04-10T00:00:00+00:00",
-                "exit_utc": "2025-04-16T00:00:00+00:00",
-                "holding_days": 6,
-                "funding_pnl": 0.126113,
-                "return_percent": -0.0713,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "XRP",
-                "entry_utc": "2025-04-24T00:00:00+00:00",
-                "exit_utc": "2025-04-30T00:00:00+00:00",
-                "holding_days": 6,
-                "funding_pnl": 0.117445,
-                "return_percent": -0.08273,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "DOGE",
-                "entry_utc": "2025-04-24T00:00:00+00:00",
-                "exit_utc": "2025-05-01T00:00:00+00:00",
-                "holding_days": 7,
-                "funding_pnl": 0.115547,
-                "return_percent": -0.08642,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "ADA",
-                "entry_utc": "2025-04-24T00:00:00+00:00",
-                "exit_utc": "2025-05-01T00:00:00+00:00",
-                "holding_days": 7,
-                "funding_pnl": 0.109395,
-                "return_percent": -0.08528,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "LINK",
                 "entry_utc": "2025-05-03T00:00:00+00:00",
@@ -3121,54 +3148,99 @@
               {
                 "symbol": "XRP",
                 "entry_utc": "2025-07-04T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 26,
-                "funding_pnl": 1.226448,
-                "return_percent": 0.00681,
-                "reason": "WINDOW_END"
+                "exit_utc": "2025-08-02T00:00:00+00:00",
+                "holding_days": 29,
+                "funding_pnl": 1.270527,
+                "return_percent": 0.01159,
+                "reason": "FUNDING_DECAY"
               },
               {
                 "symbol": "LINK",
                 "entry_utc": "2025-07-04T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 26,
-                "funding_pnl": 1.140717,
-                "return_percent": 0.00386,
-                "reason": "WINDOW_END"
+                "exit_utc": "2025-08-03T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.256182,
+                "return_percent": 0.02448,
+                "reason": "MAX_HOLD"
               },
               {
                 "symbol": "ADA",
                 "entry_utc": "2025-07-08T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 22,
-                "funding_pnl": 1.07233,
-                "return_percent": -0.01241,
+                "exit_utc": "2025-08-07T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.342235,
+                "return_percent": 0.01432,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "DOGE",
+                "entry_utc": "2025-08-08T00:00:00+00:00",
+                "exit_utc": "2025-08-19T00:00:00+00:00",
+                "holding_days": 11,
+                "funding_pnl": 0.369295,
+                "return_percent": -0.06466,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LTC",
+                "entry_utc": "2025-08-06T00:00:00+00:00",
+                "exit_utc": "2025-08-27T00:00:00+00:00",
+                "holding_days": 21,
+                "funding_pnl": 0.709198,
+                "return_percent": -0.02587,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2025-08-06T00:00:00+00:00",
+                "exit_utc": "2025-08-27T00:00:00+00:00",
+                "holding_days": 21,
+                "funding_pnl": 0.777057,
+                "return_percent": -0.06835,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "ETH",
+                "entry_utc": "2025-08-20T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 10,
+                "funding_pnl": 0.25008,
+                "return_percent": -0.07917,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2025-08-28T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 2,
+                "funding_pnl": 0.089003,
+                "return_percent": -0.08328,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2025-08-29T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 1,
+                "funding_pnl": -0.025428,
+                "return_percent": -0.10321,
                 "reason": "WINDOW_END"
               }
             ]
           },
           "discovery_segments": [
             {
-              "closed_trades": 38,
+              "closed_trades": 39,
               "wins": 21,
-              "losses": 17,
-              "win_rate_percent": 55.26,
-              "net_return_percent": 2.5347,
-              "profit_factor": 3.2789,
-              "average_return_bps": 6.6025,
-              "max_drawdown_percent": 0.5481,
-              "active_days": 301,
-              "time_in_market_percent": 90.94,
+              "losses": 18,
+              "win_rate_percent": 53.85,
+              "net_return_percent": 2.4951,
+              "profit_factor": 3.1679,
+              "average_return_bps": 6.3343,
+              "max_drawdown_percent": 0.5865,
+              "active_days": 310,
+              "time_in_market_percent": 85.87,
               "recent_trades": [
-                {
-                  "symbol": "LTC",
-                  "entry_utc": "2024-02-25T00:00:00+00:00",
-                  "exit_utc": "2024-03-26T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 6.231752,
-                  "return_percent": 0.51833,
-                  "reason": "MAX_HOLD"
-                },
                 {
                   "symbol": "LINK",
                   "entry_utc": "2024-03-15T00:00:00+00:00",
@@ -3316,98 +3388,53 @@
                 {
                   "symbol": "LINK",
                   "entry_utc": "2024-07-12T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 19,
-                  "funding_pnl": 0.634397,
-                  "return_percent": -0.04621,
-                  "reason": "WINDOW_END"
-                },
-                {
-                  "symbol": "DOGE",
-                  "entry_utc": "2024-07-25T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 6,
-                  "funding_pnl": 0.233907,
-                  "return_percent": -0.07946,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2024-08-02T00:00:00+00:00",
+                  "holding_days": 21,
+                  "funding_pnl": 0.6273,
+                  "return_percent": -0.04386,
+                  "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "XRP",
                   "entry_utc": "2024-07-28T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 3,
-                  "funding_pnl": 0.133348,
-                  "return_percent": -0.08445,
-                  "reason": "WINDOW_END"
-                }
-              ]
-            },
-            {
-              "closed_trades": 45,
-              "wins": 12,
-              "losses": 33,
-              "win_rate_percent": 26.67,
-              "net_return_percent": -1.7709,
-              "profit_factor": 0.2702,
-              "average_return_bps": -3.9675,
-              "max_drawdown_percent": 1.8918,
-              "active_days": 254,
-              "time_in_market_percent": 69.78,
-              "recent_trades": [
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2025-03-26T00:00:00+00:00",
-                  "exit_utc": "2025-03-29T00:00:00+00:00",
-                  "holding_days": 3,
-                  "funding_pnl": 0.082582,
-                  "return_percent": -0.08451,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "ADA",
-                  "entry_utc": "2025-03-26T00:00:00+00:00",
-                  "exit_utc": "2025-03-29T00:00:00+00:00",
-                  "holding_days": 3,
-                  "funding_pnl": -0.00097,
-                  "return_percent": -0.09906,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2025-04-10T00:00:00+00:00",
-                  "exit_utc": "2025-04-16T00:00:00+00:00",
-                  "holding_days": 6,
-                  "funding_pnl": 0.126113,
-                  "return_percent": -0.0713,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "XRP",
-                  "entry_utc": "2025-04-24T00:00:00+00:00",
-                  "exit_utc": "2025-04-30T00:00:00+00:00",
-                  "holding_days": 6,
-                  "funding_pnl": 0.117445,
-                  "return_percent": -0.08273,
+                  "exit_utc": "2024-08-05T00:00:00+00:00",
+                  "holding_days": 8,
+                  "funding_pnl": 0.227392,
+                  "return_percent": -0.07047,
                   "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "DOGE",
-                  "entry_utc": "2025-04-24T00:00:00+00:00",
-                  "exit_utc": "2025-05-01T00:00:00+00:00",
-                  "holding_days": 7,
-                  "funding_pnl": 0.115547,
-                  "return_percent": -0.08642,
+                  "entry_utc": "2024-07-25T00:00:00+00:00",
+                  "exit_utc": "2024-08-06T00:00:00+00:00",
+                  "holding_days": 12,
+                  "funding_pnl": 0.30637,
+                  "return_percent": -0.05612,
                   "reason": "FUNDING_DECAY"
                 },
                 {
-                  "symbol": "ADA",
-                  "entry_utc": "2025-04-24T00:00:00+00:00",
-                  "exit_utc": "2025-05-01T00:00:00+00:00",
-                  "holding_days": 7,
-                  "funding_pnl": 0.109395,
-                  "return_percent": -0.08528,
+                  "symbol": "BTC",
+                  "entry_utc": "2024-08-03T00:00:00+00:00",
+                  "exit_utc": "2024-08-08T00:00:00+00:00",
+                  "holding_days": 5,
+                  "funding_pnl": 0.11772,
+                  "return_percent": -0.07824,
                   "reason": "FUNDING_DECAY"
-                },
+                }
+              ]
+            },
+            {
+              "closed_trades": 49,
+              "wins": 13,
+              "losses": 36,
+              "win_rate_percent": 26.53,
+              "net_return_percent": -1.9921,
+              "profit_factor": 0.2585,
+              "average_return_bps": -4.1035,
+              "max_drawdown_percent": 2.2567,
+              "active_days": 277,
+              "time_in_market_percent": 76.1,
+              "recent_trades": [
                 {
                   "symbol": "LINK",
                   "entry_utc": "2025-05-03T00:00:00+00:00",
@@ -3510,28 +3537,82 @@
                 {
                   "symbol": "XRP",
                   "entry_utc": "2025-07-04T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 26,
-                  "funding_pnl": 1.226448,
-                  "return_percent": 0.00681,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2025-08-02T00:00:00+00:00",
+                  "holding_days": 29,
+                  "funding_pnl": 1.270527,
+                  "return_percent": 0.01159,
+                  "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "LINK",
                   "entry_utc": "2025-07-04T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 26,
-                  "funding_pnl": 1.140717,
-                  "return_percent": 0.00386,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2025-08-03T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 1.256182,
+                  "return_percent": 0.02448,
+                  "reason": "MAX_HOLD"
                 },
                 {
                   "symbol": "ADA",
                   "entry_utc": "2025-07-08T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 22,
-                  "funding_pnl": 1.07233,
-                  "return_percent": -0.01241,
+                  "exit_utc": "2025-08-07T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 1.342235,
+                  "return_percent": 0.01432,
+                  "reason": "MAX_HOLD"
+                },
+                {
+                  "symbol": "DOGE",
+                  "entry_utc": "2025-08-08T00:00:00+00:00",
+                  "exit_utc": "2025-08-19T00:00:00+00:00",
+                  "holding_days": 11,
+                  "funding_pnl": 0.369295,
+                  "return_percent": -0.06466,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LTC",
+                  "entry_utc": "2025-08-06T00:00:00+00:00",
+                  "exit_utc": "2025-08-27T00:00:00+00:00",
+                  "holding_days": 21,
+                  "funding_pnl": 0.709198,
+                  "return_percent": -0.02587,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LINK",
+                  "entry_utc": "2025-08-06T00:00:00+00:00",
+                  "exit_utc": "2025-08-27T00:00:00+00:00",
+                  "holding_days": 21,
+                  "funding_pnl": 0.777057,
+                  "return_percent": -0.06835,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "ETH",
+                  "entry_utc": "2025-08-20T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 10,
+                  "funding_pnl": 0.25008,
+                  "return_percent": -0.07917,
+                  "reason": "WINDOW_END"
+                },
+                {
+                  "symbol": "SOL",
+                  "entry_utc": "2025-08-28T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": 0.089003,
+                  "return_percent": -0.08328,
+                  "reason": "WINDOW_END"
+                },
+                {
+                  "symbol": "LINK",
+                  "entry_utc": "2025-08-29T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 1,
+                  "funding_pnl": -0.025428,
+                  "return_percent": -0.10321,
                   "reason": "WINDOW_END"
                 }
               ]
@@ -3541,77 +3622,23 @@
           "discovery_checks": {
             "trades": true,
             "net_positive": true,
-            "profit_factor": true,
+            "profit_factor": false,
             "drawdown": true,
             "segments": false
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 46,
-            "wins": 0,
+            "closed_trades": 47,
+            "wins": 1,
             "losses": 46,
-            "win_rate_percent": 0.0,
-            "net_return_percent": -3.5858,
-            "profit_factor": 0.0,
-            "average_return_bps": -7.935,
-            "max_drawdown_percent": 3.5858,
+            "win_rate_percent": 2.13,
+            "net_return_percent": -3.6419,
+            "profit_factor": 0.0025,
+            "average_return_bps": -7.8899,
+            "max_drawdown_percent": 3.6419,
             "active_days": 179,
             "time_in_market_percent": 49.18,
             "recent_trades": [
-              {
-                "symbol": "LINK",
-                "entry_utc": "2026-04-02T00:00:00+00:00",
-                "exit_utc": "2026-04-03T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.01506,
-                "return_percent": -0.09784,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "ADA",
-                "entry_utc": "2026-04-04T00:00:00+00:00",
-                "exit_utc": "2026-04-08T00:00:00+00:00",
-                "holding_days": 4,
-                "funding_pnl": 0.079443,
-                "return_percent": -0.10216,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "DOGE",
-                "entry_utc": "2026-04-09T00:00:00+00:00",
-                "exit_utc": "2026-04-10T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.007837,
-                "return_percent": -0.10271,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "ADA",
-                "entry_utc": "2026-04-09T00:00:00+00:00",
-                "exit_utc": "2026-04-12T00:00:00+00:00",
-                "holding_days": 3,
-                "funding_pnl": 0.03222,
-                "return_percent": -0.08985,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "SOL",
-                "entry_utc": "2026-04-09T00:00:00+00:00",
-                "exit_utc": "2026-04-13T00:00:00+00:00",
-                "holding_days": 4,
-                "funding_pnl": 0.028057,
-                "return_percent": -0.09243,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "SOL",
-                "entry_utc": "2026-04-15T00:00:00+00:00",
-                "exit_utc": "2026-04-16T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.018738,
-                "return_percent": -0.10674,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "DOGE",
                 "entry_utc": "2026-04-17T00:00:00+00:00",
@@ -3721,21 +3748,75 @@
                 "reason": "FUNDING_DECAY"
               },
               {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-05T00:00:00+00:00",
+                "exit_utc": "2026-08-07T00:00:00+00:00",
+                "holding_days": 2,
+                "funding_pnl": 0.006937,
+                "return_percent": -0.09619,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-10T00:00:00+00:00",
+                "exit_utc": "2026-08-12T00:00:00+00:00",
+                "holding_days": 2,
+                "funding_pnl": 0.028032,
+                "return_percent": -0.10164,
+                "reason": "FUNDING_DECAY"
+              },
+              {
                 "symbol": "LINK",
                 "entry_utc": "2026-07-16T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 16,
-                "funding_pnl": 0.378035,
-                "return_percent": -0.05784,
-                "reason": "WINDOW_END"
+                "exit_utc": "2026-08-15T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 0.872072,
+                "return_percent": -0.01367,
+                "reason": "MAX_HOLD"
               },
               {
                 "symbol": "ADA",
                 "entry_utc": "2026-07-30T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 18,
+                "funding_pnl": 0.562072,
+                "return_percent": -0.02715,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 8,
+                "funding_pnl": 0.293738,
+                "return_percent": -0.06765,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 8,
+                "funding_pnl": 0.30703,
+                "return_percent": -0.07335,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "ETH",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 11,
+                "funding_pnl": 0.370145,
+                "return_percent": -0.06292,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "BTC",
+                "entry_utc": "2026-08-30T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
                 "holding_days": 2,
-                "funding_pnl": 0.081222,
-                "return_percent": -0.08346,
+                "funding_pnl": 0.087687,
+                "return_percent": -0.091,
                 "reason": "WINDOW_END"
               }
             ]
@@ -3800,16 +3881,16 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 8,
+            "closed_trades": 13,
             "wins": 0,
-            "losses": 8,
+            "losses": 13,
             "win_rate_percent": 0.0,
-            "net_return_percent": -0.5885,
+            "net_return_percent": -0.9224,
             "profit_factor": 0.0,
-            "average_return_bps": -7.375,
-            "max_drawdown_percent": 0.5885,
-            "active_days": 32,
-            "time_in_market_percent": 8.79,
+            "average_return_bps": -7.1253,
+            "max_drawdown_percent": 0.9224,
+            "active_days": 63,
+            "time_in_market_percent": 17.31,
             "recent_trades": [
               {
                 "symbol": "ETH",
@@ -3875,12 +3956,57 @@
                 "reason": "FUNDING_DECAY"
               },
               {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-09T00:00:00+00:00",
+                "exit_utc": "2026-08-16T00:00:00+00:00",
+                "holding_days": 7,
+                "funding_pnl": 0.150091,
+                "return_percent": -0.08445,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-10T00:00:00+00:00",
+                "exit_utc": "2026-08-16T00:00:00+00:00",
+                "holding_days": 6,
+                "funding_pnl": 0.150786,
+                "return_percent": -0.08176,
+                "reason": "FUNDING_DECAY"
+              },
+              {
                 "symbol": "ADA",
                 "entry_utc": "2026-07-31T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 2,
-                "funding_pnl": 0.1,
-                "return_percent": -0.08938,
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 17,
+                "funding_pnl": 0.38218,
+                "return_percent": -0.06392,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 8,
+                "funding_pnl": 0.289195,
+                "return_percent": -0.07431,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2026-08-17T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 16,
+                "funding_pnl": 0.535405,
+                "return_percent": -0.05931,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-21T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 12,
+                "funding_pnl": 0.459093,
+                "return_percent": -0.06193,
                 "reason": "WINDOW_END"
               }
             ]
@@ -3904,44 +4030,17 @@
       "venues": {
         "BINANCE": {
           "discovery": {
-            "closed_trades": 68,
-            "wins": 23,
-            "losses": 45,
-            "win_rate_percent": 33.82,
-            "net_return_percent": -0.4755,
-            "profit_factor": 0.8949,
-            "average_return_bps": -0.6847,
-            "max_drawdown_percent": 3.3079,
-            "active_days": 677,
-            "time_in_market_percent": 97.41,
+            "closed_trades": 71,
+            "wins": 24,
+            "losses": 47,
+            "win_rate_percent": 33.8,
+            "net_return_percent": -0.632,
+            "profit_factor": 0.8651,
+            "average_return_bps": -0.8774,
+            "max_drawdown_percent": 3.46,
+            "active_days": 708,
+            "time_in_market_percent": 97.66,
             "recent_trades": [
-              {
-                "symbol": "ADA",
-                "entry_utc": "2025-03-04T00:00:00+00:00",
-                "exit_utc": "2025-03-05T00:00:00+00:00",
-                "holding_days": 1,
-                "funding_pnl": -0.09264,
-                "return_percent": -0.17144,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2025-03-08T00:00:00+00:00",
-                "exit_utc": "2025-03-11T00:00:00+00:00",
-                "holding_days": 3,
-                "funding_pnl": -0.025067,
-                "return_percent": -0.15066,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "DOGE",
-                "entry_utc": "2025-03-15T00:00:00+00:00",
-                "exit_utc": "2025-03-19T00:00:00+00:00",
-                "holding_days": 4,
-                "funding_pnl": 0.01572,
-                "return_percent": -0.145,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "LINK",
                 "entry_utc": "2025-03-20T00:00:00+00:00",
@@ -4078,83 +4177,65 @@
                 "reason": "MAX_HOLD"
               },
               {
+                "symbol": "SOL",
+                "entry_utc": "2025-07-28T00:00:00+00:00",
+                "exit_utc": "2025-08-04T00:00:00+00:00",
+                "holding_days": 7,
+                "funding_pnl": 0.083905,
+                "return_percent": -0.12287,
+                "reason": "FUNDING_DECAY"
+              },
+              {
                 "symbol": "ADA",
                 "entry_utc": "2025-07-09T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 21,
-                "funding_pnl": 1.551717,
-                "return_percent": -0.01114,
+                "exit_utc": "2025-08-08T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 2.031575,
+                "return_percent": 0.02915,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "ADA",
+                "entry_utc": "2025-08-09T00:00:00+00:00",
+                "exit_utc": "2025-08-27T00:00:00+00:00",
+                "holding_days": 18,
+                "funding_pnl": 0.788048,
+                "return_percent": -0.07922,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LTC",
+                "entry_utc": "2025-08-05T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 25,
+                "funding_pnl": 1.31491,
+                "return_percent": -0.00943,
                 "reason": "WINDOW_END"
               },
               {
                 "symbol": "SOL",
-                "entry_utc": "2025-07-28T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
+                "entry_utc": "2025-08-28T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
                 "holding_days": 2,
-                "funding_pnl": 0.08672,
-                "return_percent": -0.13882,
+                "funding_pnl": 0.133505,
+                "return_percent": -0.12492,
                 "reason": "WINDOW_END"
               }
             ]
           },
           "discovery_segments": [
             {
-              "closed_trades": 26,
+              "closed_trades": 31,
               "wins": 15,
-              "losses": 11,
-              "win_rate_percent": 57.69,
-              "net_return_percent": 2.5814,
-              "profit_factor": 3.8172,
-              "average_return_bps": 9.8346,
-              "max_drawdown_percent": 0.5099,
-              "active_days": 326,
-              "time_in_market_percent": 98.49,
+              "losses": 16,
+              "win_rate_percent": 48.39,
+              "net_return_percent": 1.931,
+              "profit_factor": 2.245,
+              "average_return_bps": 6.198,
+              "max_drawdown_percent": 0.9699,
+              "active_days": 356,
+              "time_in_market_percent": 98.61,
               "recent_trades": [
-                {
-                  "symbol": "LTC",
-                  "entry_utc": "2023-10-19T00:00:00+00:00",
-                  "exit_utc": "2023-11-18T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 2.498585,
-                  "return_percent": 0.06793,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "ETH",
-                  "entry_utc": "2023-11-12T00:00:00+00:00",
-                  "exit_utc": "2023-12-12T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 2.73514,
-                  "return_percent": 0.12996,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2023-11-19T00:00:00+00:00",
-                  "exit_utc": "2023-12-19T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 3.003488,
-                  "return_percent": 0.13794,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "DOGE",
-                  "entry_utc": "2023-12-13T00:00:00+00:00",
-                  "exit_utc": "2024-01-12T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 4.891545,
-                  "return_percent": 0.3511,
-                  "reason": "MAX_HOLD"
-                },
-                {
-                  "symbol": "ADA",
-                  "entry_utc": "2023-12-20T00:00:00+00:00",
-                  "exit_utc": "2024-01-19T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 4.245388,
-                  "return_percent": 0.28843,
-                  "reason": "MAX_HOLD"
-                },
                 {
                   "symbol": "XRP",
                   "entry_utc": "2024-01-13T00:00:00+00:00",
@@ -4275,62 +4356,80 @@
                 {
                   "symbol": "XRP",
                   "entry_utc": "2024-07-23T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 8,
-                  "funding_pnl": 0.439295,
-                  "return_percent": -0.10927,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2024-08-05T00:00:00+00:00",
+                  "holding_days": 13,
+                  "funding_pnl": 0.58036,
+                  "return_percent": -0.0874,
+                  "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "DOGE",
                   "entry_utc": "2024-07-23T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 8,
-                  "funding_pnl": 0.50086,
-                  "return_percent": -0.09578,
+                  "exit_utc": "2024-08-07T00:00:00+00:00",
+                  "holding_days": 15,
+                  "funding_pnl": 0.566607,
+                  "return_percent": -0.06703,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "BTC",
+                  "entry_utc": "2024-08-06T00:00:00+00:00",
+                  "exit_utc": "2024-08-12T00:00:00+00:00",
+                  "holding_days": 6,
+                  "funding_pnl": 0.039692,
+                  "return_percent": -0.15123,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "DOGE",
+                  "entry_utc": "2024-08-10T00:00:00+00:00",
+                  "exit_utc": "2024-08-12T00:00:00+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": -0.033645,
+                  "return_percent": -0.1553,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "XRP",
+                  "entry_utc": "2024-08-16T00:00:00+00:00",
+                  "exit_utc": "2024-08-27T00:00:00+00:00",
+                  "holding_days": 11,
+                  "funding_pnl": 0.283243,
+                  "return_percent": -0.13032,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LINK",
+                  "entry_utc": "2024-08-28T00:00:00+00:00",
+                  "exit_utc": "2024-08-30T00:00:00+00:00",
+                  "holding_days": 2,
+                  "funding_pnl": -0.017517,
+                  "return_percent": -0.15017,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LTC",
+                  "entry_utc": "2024-08-13T00:00:00+00:00",
+                  "exit_utc": "2024-08-29T23:59:59.999000+00:00",
+                  "holding_days": 18,
+                  "funding_pnl": 0.522293,
+                  "return_percent": -0.09921,
                   "reason": "WINDOW_END"
                 }
               ]
             },
             {
-              "closed_trades": 43,
-              "wins": 8,
-              "losses": 35,
-              "win_rate_percent": 18.6,
-              "net_return_percent": -3.076,
-              "profit_factor": 0.1384,
-              "average_return_bps": -7.2595,
-              "max_drawdown_percent": 3.076,
-              "active_days": 349,
-              "time_in_market_percent": 95.88,
+              "closed_trades": 40,
+              "wins": 10,
+              "losses": 30,
+              "win_rate_percent": 25.0,
+              "net_return_percent": -2.3302,
+              "profit_factor": 0.239,
+              "average_return_bps": -5.8877,
+              "max_drawdown_percent": 2.5009,
+              "active_days": 346,
+              "time_in_market_percent": 95.05,
               "recent_trades": [
-                {
-                  "symbol": "ADA",
-                  "entry_utc": "2025-03-04T00:00:00+00:00",
-                  "exit_utc": "2025-03-05T00:00:00+00:00",
-                  "holding_days": 1,
-                  "funding_pnl": -0.09264,
-                  "return_percent": -0.17144,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2025-03-08T00:00:00+00:00",
-                  "exit_utc": "2025-03-11T00:00:00+00:00",
-                  "holding_days": 3,
-                  "funding_pnl": -0.025067,
-                  "return_percent": -0.15066,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "DOGE",
-                  "entry_utc": "2025-03-15T00:00:00+00:00",
-                  "exit_utc": "2025-03-19T00:00:00+00:00",
-                  "holding_days": 4,
-                  "funding_pnl": 0.01572,
-                  "return_percent": -0.145,
-                  "reason": "FUNDING_DECAY"
-                },
                 {
                   "symbol": "LINK",
                   "entry_utc": "2025-03-20T00:00:00+00:00",
@@ -4467,21 +4566,48 @@
                   "reason": "MAX_HOLD"
                 },
                 {
+                  "symbol": "SOL",
+                  "entry_utc": "2025-07-28T00:00:00+00:00",
+                  "exit_utc": "2025-08-04T00:00:00+00:00",
+                  "holding_days": 7,
+                  "funding_pnl": 0.083905,
+                  "return_percent": -0.12287,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
                   "symbol": "ADA",
                   "entry_utc": "2025-07-09T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 21,
-                  "funding_pnl": 1.551717,
-                  "return_percent": -0.01114,
+                  "exit_utc": "2025-08-08T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 2.031575,
+                  "return_percent": 0.02915,
+                  "reason": "MAX_HOLD"
+                },
+                {
+                  "symbol": "ADA",
+                  "entry_utc": "2025-08-09T00:00:00+00:00",
+                  "exit_utc": "2025-08-27T00:00:00+00:00",
+                  "holding_days": 18,
+                  "funding_pnl": 0.788048,
+                  "return_percent": -0.07922,
+                  "reason": "FUNDING_DECAY"
+                },
+                {
+                  "symbol": "LTC",
+                  "entry_utc": "2025-08-05T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 25,
+                  "funding_pnl": 1.31491,
+                  "return_percent": -0.00943,
                   "reason": "WINDOW_END"
                 },
                 {
                   "symbol": "SOL",
-                  "entry_utc": "2025-07-28T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
+                  "entry_utc": "2025-08-28T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
                   "holding_days": 2,
-                  "funding_pnl": 0.08672,
-                  "return_percent": -0.13882,
+                  "funding_pnl": 0.133505,
+                  "return_percent": -0.12492,
                   "reason": "WINDOW_END"
                 }
               ]
@@ -4501,31 +4627,13 @@
             "wins": 0,
             "losses": 47,
             "win_rate_percent": 0.0,
-            "net_return_percent": -4.9349,
+            "net_return_percent": -4.8342,
             "profit_factor": 0.0,
-            "average_return_bps": -10.7612,
-            "max_drawdown_percent": 4.9349,
-            "active_days": 323,
-            "time_in_market_percent": 88.74,
+            "average_return_bps": -10.5358,
+            "max_drawdown_percent": 4.8342,
+            "active_days": 324,
+            "time_in_market_percent": 89.01,
             "recent_trades": [
-              {
-                "symbol": "LTC",
-                "entry_utc": "2026-03-14T00:00:00+00:00",
-                "exit_utc": "2026-03-22T00:00:00+00:00",
-                "holding_days": 8,
-                "funding_pnl": 0.176203,
-                "return_percent": -0.12703,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LTC",
-                "entry_utc": "2026-03-26T00:00:00+00:00",
-                "exit_utc": "2026-03-28T00:00:00+00:00",
-                "holding_days": 2,
-                "funding_pnl": -0.023185,
-                "return_percent": -0.15195,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "DOGE",
                 "entry_utc": "2026-03-26T00:00:00+00:00",
@@ -4673,19 +4781,37 @@
               {
                 "symbol": "LINK",
                 "entry_utc": "2026-07-16T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 16,
-                "funding_pnl": 0.567053,
-                "return_percent": -0.08676,
-                "reason": "WINDOW_END"
+                "exit_utc": "2026-08-15T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.308107,
+                "return_percent": -0.02051,
+                "reason": "MAX_HOLD"
               },
               {
                 "symbol": "BTC",
                 "entry_utc": "2026-07-30T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
+                "exit_utc": "2026-08-29T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.463785,
+                "return_percent": -0.01631,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2026-08-16T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 16,
+                "funding_pnl": 0.777423,
+                "return_percent": -0.0758,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "BTC",
+                "entry_utc": "2026-08-30T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
                 "holding_days": 2,
-                "funding_pnl": 0.124595,
-                "return_percent": -0.13507,
+                "funding_pnl": 0.13153,
+                "return_percent": -0.13649,
                 "reason": "WINDOW_END"
               }
             ]
@@ -4750,16 +4876,16 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 10,
+            "closed_trades": 13,
             "wins": 0,
-            "losses": 10,
+            "losses": 13,
             "win_rate_percent": 0.0,
-            "net_return_percent": -1.2051,
+            "net_return_percent": -1.4352,
             "profit_factor": 0.0,
-            "average_return_bps": -12.1162,
-            "max_drawdown_percent": 1.2051,
-            "active_days": 50,
-            "time_in_market_percent": 13.74,
+            "average_return_bps": -11.1127,
+            "max_drawdown_percent": 1.4352,
+            "active_days": 81,
+            "time_in_market_percent": 22.25,
             "recent_trades": [
               {
                 "symbol": "BTC",
@@ -4845,10 +4971,37 @@
               {
                 "symbol": "DOGE",
                 "entry_utc": "2026-07-29T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 4,
-                "funding_pnl": 0.100417,
-                "return_percent": -0.13476,
+                "exit_utc": "2026-08-03T00:00:00+00:00",
+                "holding_days": 5,
+                "funding_pnl": 0.091498,
+                "return_percent": -0.14076,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "ADA",
+                "entry_utc": "2026-08-02T00:00:00+00:00",
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 15,
+                "funding_pnl": 0.42327,
+                "return_percent": -0.10791,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2026-08-04T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 29,
+                "funding_pnl": 1.536562,
+                "return_percent": -0.02902,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "DOGE",
+                "entry_utc": "2026-08-18T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 15,
+                "funding_pnl": 0.721027,
+                "return_percent": -0.0901,
                 "reason": "WINDOW_END"
               }
             ]
@@ -4872,35 +5025,17 @@
       "venues": {
         "BINANCE": {
           "discovery": {
-            "closed_trades": 39,
-            "wins": 21,
+            "closed_trades": 41,
+            "wins": 23,
             "losses": 18,
-            "win_rate_percent": 53.85,
-            "net_return_percent": 3.279,
-            "profit_factor": 3.5405,
-            "average_return_bps": 8.2973,
-            "max_drawdown_percent": 0.9743,
-            "active_days": 537,
-            "time_in_market_percent": 77.27,
+            "win_rate_percent": 56.1,
+            "net_return_percent": 3.2371,
+            "profit_factor": 3.3025,
+            "average_return_bps": 7.7936,
+            "max_drawdown_percent": 1.0145,
+            "active_days": 568,
+            "time_in_market_percent": 78.34,
             "recent_trades": [
-              {
-                "symbol": "ADA",
-                "entry_utc": "2024-09-22T00:00:00+00:00",
-                "exit_utc": "2024-10-05T00:00:00+00:00",
-                "holding_days": 13,
-                "funding_pnl": 0.73961,
-                "return_percent": -0.08124,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2024-09-27T00:00:00+00:00",
-                "exit_utc": "2024-10-27T00:00:00+00:00",
-                "holding_days": 30,
-                "funding_pnl": 1.866435,
-                "return_percent": 0.0586,
-                "reason": "MAX_HOLD"
-              },
               {
                 "symbol": "LTC",
                 "entry_utc": "2024-10-10T00:00:00+00:00",
@@ -5048,19 +5183,37 @@
               {
                 "symbol": "LTC",
                 "entry_utc": "2025-07-11T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 19,
-                "funding_pnl": 1.37788,
-                "return_percent": -0.01364,
-                "reason": "WINDOW_END"
+                "exit_utc": "2025-08-10T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.992087,
+                "return_percent": 0.03307,
+                "reason": "MAX_HOLD"
               },
               {
                 "symbol": "XRP",
                 "entry_utc": "2025-07-13T00:00:00+00:00",
-                "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                "holding_days": 17,
-                "funding_pnl": 1.31931,
-                "return_percent": -0.01409,
+                "exit_utc": "2025-08-12T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.893275,
+                "return_percent": 0.0404,
+                "reason": "MAX_HOLD"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2025-08-11T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 19,
+                "funding_pnl": 0.929628,
+                "return_percent": -0.07034,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "SOL",
+                "entry_utc": "2025-08-15T00:00:00+00:00",
+                "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                "holding_days": 15,
+                "funding_pnl": 0.776543,
+                "return_percent": -0.07139,
                 "reason": "WINDOW_END"
               }
             ]
@@ -5071,12 +5224,12 @@
               "wins": 14,
               "losses": 5,
               "win_rate_percent": 73.68,
-              "net_return_percent": 3.5025,
-              "profit_factor": 13.9297,
-              "average_return_bps": 18.1632,
-              "max_drawdown_percent": 0.207,
-              "active_days": 281,
-              "time_in_market_percent": 84.89,
+              "net_return_percent": 3.5574,
+              "profit_factor": 17.3765,
+              "average_return_bps": 18.4419,
+              "max_drawdown_percent": 0.1541,
+              "active_days": 289,
+              "time_in_market_percent": 80.06,
               "recent_trades": [
                 {
                   "symbol": "ADA",
@@ -5234,53 +5387,35 @@
                 {
                   "symbol": "ADA",
                   "entry_utc": "2024-07-12T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 19,
-                  "funding_pnl": 1.054523,
-                  "return_percent": -0.04612,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2024-08-07T00:00:00+00:00",
+                  "holding_days": 26,
+                  "funding_pnl": 1.17573,
+                  "return_percent": -0.02437,
+                  "reason": "FUNDING_DECAY"
                 },
                 {
                   "symbol": "DOGE",
                   "entry_utc": "2024-07-25T00:00:00+00:00",
-                  "exit_utc": "2024-07-29T23:59:59.999000+00:00",
-                  "holding_days": 6,
-                  "funding_pnl": 0.35086,
-                  "return_percent": -0.11919,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2024-08-07T00:00:00+00:00",
+                  "holding_days": 13,
+                  "funding_pnl": 0.416608,
+                  "return_percent": -0.08799,
+                  "reason": "FUNDING_DECAY"
                 }
               ]
             },
             {
-              "closed_trades": 21,
-              "wins": 7,
-              "losses": 14,
-              "win_rate_percent": 33.33,
-              "net_return_percent": -0.3836,
-              "profit_factor": 0.6739,
-              "average_return_bps": -1.8243,
-              "max_drawdown_percent": 0.9743,
-              "active_days": 254,
-              "time_in_market_percent": 69.78,
+              "closed_trades": 22,
+              "wins": 9,
+              "losses": 13,
+              "win_rate_percent": 40.91,
+              "net_return_percent": -0.3093,
+              "profit_factor": 0.7371,
+              "average_return_bps": -1.4026,
+              "max_drawdown_percent": 1.0145,
+              "active_days": 279,
+              "time_in_market_percent": 76.65,
               "recent_trades": [
-                {
-                  "symbol": "ADA",
-                  "entry_utc": "2024-09-22T00:00:00+00:00",
-                  "exit_utc": "2024-10-05T00:00:00+00:00",
-                  "holding_days": 13,
-                  "funding_pnl": 0.73961,
-                  "return_percent": -0.08124,
-                  "reason": "FUNDING_DECAY"
-                },
-                {
-                  "symbol": "LINK",
-                  "entry_utc": "2024-09-27T00:00:00+00:00",
-                  "exit_utc": "2024-10-27T00:00:00+00:00",
-                  "holding_days": 30,
-                  "funding_pnl": 1.866435,
-                  "return_percent": 0.0586,
-                  "reason": "MAX_HOLD"
-                },
                 {
                   "symbol": "LTC",
                   "entry_utc": "2024-10-10T00:00:00+00:00",
@@ -5428,19 +5563,37 @@
                 {
                   "symbol": "LTC",
                   "entry_utc": "2025-07-11T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 19,
-                  "funding_pnl": 1.37788,
-                  "return_percent": -0.01364,
-                  "reason": "WINDOW_END"
+                  "exit_utc": "2025-08-10T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 1.992087,
+                  "return_percent": 0.03307,
+                  "reason": "MAX_HOLD"
                 },
                 {
                   "symbol": "XRP",
                   "entry_utc": "2025-07-13T00:00:00+00:00",
-                  "exit_utc": "2025-07-28T23:59:59.999000+00:00",
-                  "holding_days": 17,
-                  "funding_pnl": 1.31931,
-                  "return_percent": -0.01409,
+                  "exit_utc": "2025-08-12T00:00:00+00:00",
+                  "holding_days": 30,
+                  "funding_pnl": 1.893275,
+                  "return_percent": 0.0404,
+                  "reason": "MAX_HOLD"
+                },
+                {
+                  "symbol": "LINK",
+                  "entry_utc": "2025-08-11T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 19,
+                  "funding_pnl": 0.929628,
+                  "return_percent": -0.07034,
+                  "reason": "WINDOW_END"
+                },
+                {
+                  "symbol": "SOL",
+                  "entry_utc": "2025-08-15T00:00:00+00:00",
+                  "exit_utc": "2025-08-28T23:59:59.999000+00:00",
+                  "holding_days": 15,
+                  "funding_pnl": 0.776543,
+                  "return_percent": -0.07139,
                   "reason": "WINDOW_END"
                 }
               ]
@@ -5456,44 +5609,17 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 14,
-            "wins": 0,
+            "closed_trades": 15,
+            "wins": 1,
             "losses": 14,
-            "win_rate_percent": 0.0,
-            "net_return_percent": -1.4547,
-            "profit_factor": 0.0,
-            "average_return_bps": -10.4611,
-            "max_drawdown_percent": 1.4547,
-            "active_days": 104,
-            "time_in_market_percent": 28.57,
+            "win_rate_percent": 6.67,
+            "net_return_percent": -1.5621,
+            "profit_factor": 0.0078,
+            "average_return_bps": -10.49,
+            "max_drawdown_percent": 1.5621,
+            "active_days": 110,
+            "time_in_market_percent": 30.22,
             "recent_trades": [
-              {
-                "symbol": "ADA",
-                "entry_utc": "2025-08-09T00:00:00+00:00",
-                "exit_utc": "2025-08-27T00:00:00+00:00",
-                "holding_days": 18,
-                "funding_pnl": 0.788048,
-                "return_percent": -0.07922,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "LINK",
-                "entry_utc": "2025-08-10T00:00:00+00:00",
-                "exit_utc": "2025-08-31T00:00:00+00:00",
-                "holding_days": 21,
-                "funding_pnl": 1.03725,
-                "return_percent": -0.04679,
-                "reason": "FUNDING_DECAY"
-              },
-              {
-                "symbol": "SOL",
-                "entry_utc": "2025-08-29T00:00:00+00:00",
-                "exit_utc": "2025-09-22T00:00:00+00:00",
-                "holding_days": 24,
-                "funding_pnl": 0.830757,
-                "return_percent": -0.07723,
-                "reason": "FUNDING_DECAY"
-              },
               {
                 "symbol": "LINK",
                 "entry_utc": "2025-09-08T00:00:00+00:00",
@@ -5505,12 +5631,12 @@
               },
               {
                 "symbol": "ADA",
-                "entry_utc": "2025-09-28T00:00:00+00:00",
-                "exit_utc": "2025-10-12T00:00:00+00:00",
-                "holding_days": 14,
-                "funding_pnl": 0.702313,
-                "return_percent": -0.05655,
-                "reason": "FUNDING_DECAY"
+                "entry_utc": "2025-09-10T00:00:00+00:00",
+                "exit_utc": "2025-10-10T00:00:00+00:00",
+                "holding_days": 30,
+                "funding_pnl": 1.658513,
+                "return_percent": 0.01235,
+                "reason": "MAX_HOLD"
               },
               {
                 "symbol": "XRP",
@@ -5519,6 +5645,15 @@
                 "holding_days": 8,
                 "funding_pnl": 0.193168,
                 "return_percent": -0.1271,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LTC",
+                "entry_utc": "2025-10-12T00:00:00+00:00",
+                "exit_utc": "2025-10-14T00:00:00+00:00",
+                "holding_days": 2,
+                "funding_pnl": -0.028728,
+                "return_percent": -0.16438,
                 "reason": "FUNDING_DECAY"
               },
               {
@@ -5592,6 +5727,33 @@
                 "funding_pnl": 0.213635,
                 "return_percent": -0.10925,
                 "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "ADA",
+                "entry_utc": "2026-08-02T00:00:00+00:00",
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 15,
+                "funding_pnl": 0.646275,
+                "return_percent": -0.05687,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2026-08-13T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 19,
+                "funding_pnl": 0.97871,
+                "return_percent": -0.06038,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-22T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 10,
+                "funding_pnl": 0.429038,
+                "return_percent": -0.09946,
+                "reason": "WINDOW_END"
               }
             ]
           },
@@ -5655,16 +5817,16 @@
           },
           "discovery_passed": false,
           "holdout": {
-            "closed_trades": 3,
+            "closed_trades": 5,
             "wins": 0,
-            "losses": 3,
+            "losses": 5,
             "win_rate_percent": 0.0,
-            "net_return_percent": -0.3843,
+            "net_return_percent": -0.4935,
             "profit_factor": 0.0,
-            "average_return_bps": -12.8257,
-            "max_drawdown_percent": 0.3843,
-            "active_days": 14,
-            "time_in_market_percent": 3.85,
+            "average_return_bps": -9.8893,
+            "max_drawdown_percent": 0.4935,
+            "active_days": 45,
+            "time_in_market_percent": 12.36,
             "recent_trades": [
               {
                 "symbol": "ADA",
@@ -5687,10 +5849,28 @@
               {
                 "symbol": "ADA",
                 "entry_utc": "2026-08-01T00:00:00+00:00",
-                "exit_utc": "2026-07-31T23:59:59.999000+00:00",
-                "holding_days": 1,
-                "funding_pnl": 0.075,
-                "return_percent": -0.12761,
+                "exit_utc": "2026-08-17T00:00:00+00:00",
+                "holding_days": 16,
+                "funding_pnl": 0.49827,
+                "return_percent": -0.08887,
+                "reason": "FUNDING_DECAY"
+              },
+              {
+                "symbol": "LINK",
+                "entry_utc": "2026-08-13T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 20,
+                "funding_pnl": 1.095674,
+                "return_percent": -0.06573,
+                "reason": "WINDOW_END"
+              },
+              {
+                "symbol": "XRP",
+                "entry_utc": "2026-08-22T00:00:00+00:00",
+                "exit_utc": "2026-08-31T23:59:59.999000+00:00",
+                "holding_days": 11,
+                "funding_pnl": 0.613639,
+                "return_percent": -0.08271,
                 "reason": "WINDOW_END"
               }
             ]
