@@ -1,12 +1,12 @@
 {
   "schema": "TRADINGCORE_FAST_PAPER_CLOUD_V1",
-  "updated_at_utc": "2026-09-09T19:44:04.244619+00:00",
+  "updated_at_utc": "2026-09-09T22:30:20.024451+00:00",
   "mode": "EXPERIMENTAL_FAST_PAPER_ONLY",
   "protocol_version": "FAST_PAPER_LAB_V1",
   "protocol_fingerprint": "72c1807b38e5d5b9e1dbcecdc36a5041cecfd746354e89b970a1cf234b8725b6",
   "forward_freeze_utc": "2026-08-15T11:15:00+00:00",
   "lane_count": 36,
-  "total_closed_trade_observations_across_independent_lanes": 23,
+  "total_closed_trade_observations_across_independent_lanes": 24,
   "lanes_with_30_or_more": 0,
   "locked_lane_decisions": 0,
   "promising_lanes": [],
@@ -945,7 +945,7 @@
       "symbol": "SOLUSDT",
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 1,
+      "signals": 2,
       "closed_trades": 1,
       "stats": {
         "closed_trades": 1,
@@ -971,7 +971,15 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 101.53,
+        "stop": 100.25,
+        "target": 104.74,
+        "quantity": 0.7812499999999993,
+        "risk_amount": 1.0,
+        "entry_index": 3116,
+        "entry_utc": "2026-09-09T22:30:00+00:00"
+      },
       "trades": [
         {
           "entry_utc": "2026-08-23T15:00:00+00:00",
@@ -1202,7 +1210,7 @@
       "symbol": "BCHUSDT",
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 3,
+      "signals": 4,
       "closed_trades": 3,
       "stats": {
         "closed_trades": 3,
@@ -1230,7 +1238,15 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 250.7,
+        "stop": 247.33,
+        "target": 259.13,
+        "quantity": 0.29673590504451247,
+        "risk_amount": 1.0,
+        "entry_index": 3116,
+        "entry_utc": "2026-09-09T22:30:00+00:00"
+      },
       "trades": [
         {
           "entry_utc": "2026-08-19T16:15:00+00:00",
@@ -1348,26 +1364,27 @@
       "timeframe": "30m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
       "signals": 4,
-      "closed_trades": 3,
+      "closed_trades": 4,
       "stats": {
-        "closed_trades": 3,
+        "closed_trades": 4,
         "wins": 2,
-        "losses": 1,
-        "win_rate_percent": 66.67,
-        "net_pnl": 3.38502096,
-        "profit_factor": 3.77,
-        "expectancy_r": 1.1283,
-        "average_r": 1.1283,
+        "losses": 2,
+        "win_rate_percent": 50.0,
+        "net_pnl": 2.21548064,
+        "profit_factor": 1.926,
+        "expectancy_r": 0.5539,
+        "average_r": 0.5539,
         "max_drawdown_r": 1.2221,
         "max_loss_streak": 1,
         "rolling_window": 20,
-        "rolling_trades": 3,
+        "rolling_trades": 4,
         "rolling_expectancy_r": null,
-        "trading_days": 3,
+        "trading_days": 4,
         "trading_day_list": [
           "2026-08-20",
           "2026-08-24",
-          "2026-09-03"
+          "2026-09-03",
+          "2026-09-09"
         ],
         "regimes_observed": [
           "BCHUSDT"
@@ -1375,15 +1392,7 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": {
-        "entry": 257.7,
-        "stop": 253.18,
-        "target": 268.99,
-        "quantity": 0.22123893805309824,
-        "risk_amount": 1.0,
-        "entry_index": 1544,
-        "entry_utc": "2026-09-09T16:00:00+00:00"
-      },
+      "open_position": null,
       "trades": [
         {
           "entry_utc": "2026-08-19T16:30:00+00:00",
@@ -1413,6 +1422,16 @@
           "exit_reason": "TAKE_PROFIT",
           "net_pnl": 2.26467421,
           "r_multiple": 2.26467421,
+          "real_order_sent": false
+        },
+        {
+          "entry_utc": "2026-09-09T16:00:00+00:00",
+          "closed_utc": "2026-09-09T22:00:00+00:00",
+          "entry": 257.7,
+          "exit": 253.18,
+          "exit_reason": "STOP_LOSS",
+          "net_pnl": -1.16954032,
+          "r_multiple": -1.16954032,
           "real_order_sent": false
         }
       ],
