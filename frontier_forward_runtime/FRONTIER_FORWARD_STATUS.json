@@ -1,21 +1,21 @@
 {
   "schema": "TRADINGCORE_FRONTIER_FORWARD_PAPER_V1_1",
-  "updated_at_utc": "2026-09-11T13:42:04.195821+00:00",
+  "updated_at_utc": "2026-09-11T17:14:31.905166+00:00",
   "forward_freeze_utc": "2026-08-18T18:45:00+00:00",
   "lane_count": 36,
-  "total_closed_trade_observations_across_lanes": 1068,
+  "total_closed_trade_observations_across_lanes": 1089,
   "lanes_with_10_or_more": 33,
   "promising_early": [
     "BTCUSDT:1h:DONCHIAN_48H",
     "ETHUSDT:1h:DONCHIAN_48H",
     "BTCUSDT:1h:TSMOM_VOL_24H",
-    "ETHUSDT:1h:TSMOM_VOL_24H",
     "BTCUSDT:1h:TSMOM_DUAL_24H_7D",
-    "SOLUSDT:30m:DONCHIAN_48H",
+    "ETHUSDT:1h:TSMOM_VOL_24H",
     "SOLUSDT:1h:DONCHIAN_48H",
     "ETHUSDT:30m:TSMOM_VOL_24H",
-    "SOLUSDT:15m:DONCHIAN_48H",
-    "SOLUSDT:1h:TSMOM_VOL_24H"
+    "SOLUSDT:1h:TSMOM_VOL_24H",
+    "SOLUSDT:30m:DONCHIAN_48H",
+    "BTCUSDT:30m:DONCHIAN_48H"
   ],
   "top_promising": [
     {
@@ -100,19 +100,19 @@
       "family": "DONCHIAN_48H",
       "symbol": "ETHUSDT",
       "timeframe": "1h",
-      "signals": 7,
-      "closed_trades": 7,
+      "signals": 8,
+      "closed_trades": 8,
       "stats": {
-        "closed_trades": 7,
+        "closed_trades": 8,
         "wins": 1,
-        "losses": 6,
-        "win_rate_percent": 14.29,
-        "net_r": 28.2756,
-        "profit_factor": 4.863,
-        "expectancy_r": 4.0394,
-        "max_drawdown_r": 7.3195
+        "losses": 7,
+        "win_rate_percent": 12.5,
+        "net_r": 27.0955,
+        "profit_factor": 4.1878,
+        "expectancy_r": 3.3869,
+        "max_drawdown_r": 8.4996
       },
-      "segment_robustness": null,
+      "segment_robustness": 0.25,
       "open_position": false,
       "recent_trades": [
         {
@@ -176,6 +176,15 @@
           "exit": 2497.3553736913173,
           "r": -1.33635,
           "net_pnl": -1.33634704,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:00:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 2629.62,
+          "exit": 2586.1736591598024,
+          "r": -1.18008,
+          "net_pnl": -1.18007759,
           "reason": "TRAIL"
         }
       ],
@@ -295,119 +304,6 @@
       "promising_early": true
     },
     {
-      "lane_id": "ETHUSDT:1h:TSMOM_VOL_24H",
-      "family": "TSMOM_VOL_24H",
-      "symbol": "ETHUSDT",
-      "timeframe": "1h",
-      "signals": 16,
-      "closed_trades": 16,
-      "stats": {
-        "closed_trades": 16,
-        "wins": 5,
-        "losses": 11,
-        "win_rate_percent": 31.25,
-        "net_r": 31.1263,
-        "profit_factor": 4.0359,
-        "expectancy_r": 1.9454,
-        "max_drawdown_r": 8.7009
-      },
-      "segment_robustness": 0.25,
-      "open_position": false,
-      "recent_trades": [
-        {
-          "entry_utc": "2026-08-27T14:00:00+00:00",
-          "exit_utc": "2026-08-27T19:00:00+00:00",
-          "entry": 2517.44,
-          "exit": 2498.21,
-          "r": -0.75243,
-          "net_pnl": -0.75243231,
-          "reason": "EMA_EXIT"
-        },
-        {
-          "entry_utc": "2026-08-30T14:00:00+00:00",
-          "exit_utc": "2026-08-30T17:00:00+00:00",
-          "entry": 2477.12,
-          "exit": 2504.240811773394,
-          "r": 1.46005,
-          "net_pnl": 1.46005353,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-30T17:00:00+00:00",
-          "exit_utc": "2026-08-30T21:00:00+00:00",
-          "entry": 2505.73,
-          "exit": 2484.5505653421847,
-          "r": -1.35343,
-          "net_pnl": -1.35342924,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-31T23:00:00+00:00",
-          "exit_utc": "2026-09-01T01:00:00+00:00",
-          "entry": 2467.65,
-          "exit": 2462.86,
-          "r": -0.45439,
-          "net_pnl": -0.45439234,
-          "reason": "EMA_EXIT"
-        },
-        {
-          "entry_utc": "2026-09-01T02:00:00+00:00",
-          "exit_utc": "2026-09-01T08:00:00+00:00",
-          "entry": 2465.08,
-          "exit": 2451.2288773768496,
-          "r": -0.83135,
-          "net_pnl": -0.83135049,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-09-03T15:00:00+00:00",
-          "exit_utc": "2026-09-04T12:00:00+00:00",
-          "entry": 2516.58,
-          "exit": 2488.94446804245,
-          "r": -1.06695,
-          "net_pnl": -1.06695039,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-09-05T17:00:00+00:00",
-          "exit_utc": "2026-09-06T07:00:00+00:00",
-          "entry": 2481.01,
-          "exit": 2489.460789077318,
-          "r": 0.06638,
-          "net_pnl": 0.06637846,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-09-06T07:00:00+00:00",
-          "exit_utc": "2026-09-06T14:00:00+00:00",
-          "entry": 2496.79,
-          "exit": 2479.3695226990744,
-          "r": -1.29051,
-          "net_pnl": -1.29051199,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-09-06T22:00:00+00:00",
-          "exit_utc": "2026-09-07T03:00:00+00:00",
-          "entry": 2508.32,
-          "exit": 2497.43,
-          "r": -0.93912,
-          "net_pnl": -0.93912284,
-          "reason": "EMA_EXIT"
-        },
-        {
-          "entry_utc": "2026-09-09T08:00:00+00:00",
-          "exit_utc": "2026-09-09T09:00:00+00:00",
-          "entry": 2519.73,
-          "exit": 2497.3553736913173,
-          "r": -1.33635,
-          "net_pnl": -1.33634704,
-          "reason": "TRAIL"
-        }
-      ],
-      "promising_early": true
-    },
-    {
       "lane_id": "BTCUSDT:1h:TSMOM_DUAL_24H_7D",
       "family": "TSMOM_DUAL_24H_7D",
       "symbol": "BTCUSDT",
@@ -521,113 +417,113 @@
       "promising_early": true
     },
     {
-      "lane_id": "SOLUSDT:30m:DONCHIAN_48H",
-      "family": "DONCHIAN_48H",
-      "symbol": "SOLUSDT",
-      "timeframe": "30m",
-      "signals": 11,
-      "closed_trades": 11,
+      "lane_id": "ETHUSDT:1h:TSMOM_VOL_24H",
+      "family": "TSMOM_VOL_24H",
+      "symbol": "ETHUSDT",
+      "timeframe": "1h",
+      "signals": 18,
+      "closed_trades": 17,
       "stats": {
-        "closed_trades": 11,
-        "wins": 6,
-        "losses": 5,
-        "win_rate_percent": 54.55,
-        "net_r": 16.1659,
-        "profit_factor": 4.248,
-        "expectancy_r": 1.4696,
-        "max_drawdown_r": 1.5306
+        "closed_trades": 17,
+        "wins": 5,
+        "losses": 12,
+        "win_rate_percent": 29.41,
+        "net_r": 29.9463,
+        "profit_factor": 3.6193,
+        "expectancy_r": 1.7615,
+        "max_drawdown_r": 9.881
       },
-      "segment_robustness": 1.0,
-      "open_position": false,
+      "segment_robustness": 0.25,
+      "open_position": true,
       "recent_trades": [
         {
-          "entry_utc": "2026-08-19T12:30:00+00:00",
-          "exit_utc": "2026-08-19T22:30:00+00:00",
-          "entry": 78.41,
-          "exit": 85.24983818441203,
-          "r": 13.9299,
-          "net_pnl": 13.92990364,
+          "entry_utc": "2026-08-30T14:00:00+00:00",
+          "exit_utc": "2026-08-30T17:00:00+00:00",
+          "entry": 2477.12,
+          "exit": 2504.240811773394,
+          "r": 1.46005,
+          "net_pnl": 1.46005353,
           "reason": "TRAIL"
         },
         {
-          "entry_utc": "2026-08-20T08:00:00+00:00",
-          "exit_utc": "2026-08-20T12:30:00+00:00",
-          "entry": 87.53,
-          "exit": 86.52383088017707,
-          "r": -1.25948,
-          "net_pnl": -1.25948048,
+          "entry_utc": "2026-08-30T17:00:00+00:00",
+          "exit_utc": "2026-08-30T21:00:00+00:00",
+          "entry": 2505.73,
+          "exit": 2484.5505653421847,
+          "r": -1.35343,
+          "net_pnl": -1.35342924,
           "reason": "TRAIL"
         },
         {
-          "entry_utc": "2026-08-21T00:00:00+00:00",
-          "exit_utc": "2026-08-21T09:00:00+00:00",
-          "entry": 88.41,
-          "exit": 91.45206099793945,
-          "r": 3.18751,
-          "net_pnl": 3.18751171,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-21T21:30:00+00:00",
-          "exit_utc": "2026-08-22T05:00:00+00:00",
-          "entry": 93.74,
-          "exit": 96.42309064249125,
-          "r": 1.8104,
-          "net_pnl": 1.8103981,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-24T15:00:00+00:00",
-          "exit_utc": "2026-08-24T17:00:00+00:00",
-          "entry": 97.32,
-          "exit": 95.79331252462704,
-          "r": -1.18974,
-          "net_pnl": -1.18973807,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-24T23:30:00+00:00",
-          "exit_utc": "2026-08-25T07:30:00+00:00",
-          "entry": 98.97,
-          "exit": 100.03620483561183,
-          "r": 0.52384,
-          "net_pnl": 0.52383691,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-27T08:00:00+00:00",
-          "exit_utc": "2026-08-27T10:00:00+00:00",
-          "entry": 104.17,
-          "exit": 103.29221782621653,
-          "r": -0.8174,
-          "net_pnl": -0.81740168,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-27T13:30:00+00:00",
-          "exit_utc": "2026-08-28T01:30:00+00:00",
-          "entry": 106.06,
-          "exit": 107.85,
-          "r": 0.90265,
-          "net_pnl": 0.90264956,
+          "entry_utc": "2026-08-31T23:00:00+00:00",
+          "exit_utc": "2026-09-01T01:00:00+00:00",
+          "entry": 2467.65,
+          "exit": 2462.86,
+          "r": -0.45439,
+          "net_pnl": -0.45439234,
           "reason": "EMA_EXIT"
         },
         {
-          "entry_utc": "2026-09-03T14:00:00+00:00",
-          "exit_utc": "2026-09-03T22:30:00+00:00",
-          "entry": 102.68,
-          "exit": 103.79520431232505,
-          "r": 0.78887,
-          "net_pnl": 0.78886593,
+          "entry_utc": "2026-09-01T02:00:00+00:00",
+          "exit_utc": "2026-09-01T08:00:00+00:00",
+          "entry": 2465.08,
+          "exit": 2451.2288773768496,
+          "r": -0.83135,
+          "net_pnl": -0.83135049,
           "reason": "TRAIL"
         },
         {
-          "entry_utc": "2026-09-06T03:00:00+00:00",
+          "entry_utc": "2026-09-03T15:00:00+00:00",
+          "exit_utc": "2026-09-04T12:00:00+00:00",
+          "entry": 2516.58,
+          "exit": 2488.94446804245,
+          "r": -1.06695,
+          "net_pnl": -1.06695039,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-05T17:00:00+00:00",
           "exit_utc": "2026-09-06T07:00:00+00:00",
-          "entry": 105.0,
-          "exit": 105.1889508742095,
-          "r": -0.18005,
-          "net_pnl": -0.18005246,
+          "entry": 2481.01,
+          "exit": 2489.460789077318,
+          "r": 0.06638,
+          "net_pnl": 0.06637846,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-06T07:00:00+00:00",
+          "exit_utc": "2026-09-06T14:00:00+00:00",
+          "entry": 2496.79,
+          "exit": 2479.3695226990744,
+          "r": -1.29051,
+          "net_pnl": -1.29051199,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-06T22:00:00+00:00",
+          "exit_utc": "2026-09-07T03:00:00+00:00",
+          "entry": 2508.32,
+          "exit": 2497.43,
+          "r": -0.93912,
+          "net_pnl": -0.93912284,
+          "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-09-09T08:00:00+00:00",
+          "exit_utc": "2026-09-09T09:00:00+00:00",
+          "entry": 2519.73,
+          "exit": 2497.3553736913173,
+          "r": -1.33635,
+          "net_pnl": -1.33634704,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:00:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 2629.62,
+          "exit": 2586.1736591598024,
+          "r": -1.18008,
+          "net_pnl": -1.18007759,
           "reason": "TRAIL"
         }
       ],
@@ -724,30 +620,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "ETHUSDT",
       "timeframe": "30m",
-      "signals": 26,
-      "closed_trades": 25,
+      "signals": 27,
+      "closed_trades": 26,
       "stats": {
-        "closed_trades": 25,
-        "wins": 7,
+        "closed_trades": 26,
+        "wins": 8,
         "losses": 18,
-        "win_rate_percent": 28.0,
-        "net_r": 34.0334,
-        "profit_factor": 2.6601,
-        "expectancy_r": 1.3613,
+        "win_rate_percent": 30.77,
+        "net_r": 36.6759,
+        "profit_factor": 2.789,
+        "expectancy_r": 1.4106,
         "max_drawdown_r": 12.8061
       },
       "segment_robustness": 0.25,
       "open_position": true,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-30T17:00:00+00:00",
-          "exit_utc": "2026-08-30T20:30:00+00:00",
-          "entry": 2498.07,
-          "exit": 2486.6424751516306,
-          "r": -1.04032,
-          "net_pnl": -1.04031536,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-09-01T00:00:00+00:00",
           "exit_utc": "2026-09-01T01:00:00+00:00",
@@ -828,118 +715,14 @@
           "r": -1.47807,
           "net_pnl": -1.47806594,
           "reason": "TRAIL"
-        }
-      ],
-      "promising_early": true
-    },
-    {
-      "lane_id": "SOLUSDT:15m:DONCHIAN_48H",
-      "family": "DONCHIAN_48H",
-      "symbol": "SOLUSDT",
-      "timeframe": "15m",
-      "signals": 14,
-      "closed_trades": 14,
-      "stats": {
-        "closed_trades": 14,
-        "wins": 9,
-        "losses": 5,
-        "win_rate_percent": 64.29,
-        "net_r": 17.7614,
-        "profit_factor": 3.654,
-        "expectancy_r": 1.2687,
-        "max_drawdown_r": 2.5939
-      },
-      "segment_robustness": 0.75,
-      "open_position": false,
-      "recent_trades": [
-        {
-          "entry_utc": "2026-08-21T00:15:00+00:00",
-          "exit_utc": "2026-08-21T00:30:00+00:00",
-          "entry": 88.41,
-          "exit": 87.81842394999597,
-          "r": -1.44685,
-          "net_pnl": -1.44684522,
-          "reason": "TRAIL"
         },
         {
-          "entry_utc": "2026-08-21T05:45:00+00:00",
-          "exit_utc": "2026-08-21T09:00:00+00:00",
-          "entry": 90.46,
-          "exit": 91.89345066609283,
-          "r": 1.43283,
-          "net_pnl": 1.43282707,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-21T21:45:00+00:00",
-          "exit_utc": "2026-08-22T00:00:00+00:00",
-          "entry": 93.74,
-          "exit": 93.07504515912191,
-          "r": -1.08056,
-          "net_pnl": -1.08055557,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-22T02:30:00+00:00",
-          "exit_utc": "2026-08-22T04:45:00+00:00",
-          "entry": 95.68,
-          "exit": 99.94438441812903,
-          "r": 3.64166,
-          "net_pnl": 3.64166252,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-24T15:15:00+00:00",
-          "exit_utc": "2026-08-24T16:45:00+00:00",
-          "entry": 97.32,
-          "exit": 96.13526243029068,
-          "r": -1.24493,
-          "net_pnl": -1.24493482,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-24T23:45:00+00:00",
-          "exit_utc": "2026-08-25T06:30:00+00:00",
-          "entry": 98.97,
-          "exit": 101.14,
-          "r": 1.80781,
-          "net_pnl": 1.80780851,
-          "reason": "EMA_EXIT"
-        },
-        {
-          "entry_utc": "2026-08-27T08:00:00+00:00",
-          "exit_utc": "2026-08-27T10:15:00+00:00",
-          "entry": 103.0,
-          "exit": 103.7580384737863,
-          "r": 0.42908,
-          "net_pnl": 0.42908065,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-08-27T13:45:00+00:00",
-          "exit_utc": "2026-08-27T18:00:00+00:00",
-          "entry": 106.06,
-          "exit": 107.38531679569985,
-          "r": 0.85032,
-          "net_pnl": 0.8503217,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-09-03T14:15:00+00:00",
-          "exit_utc": "2026-09-03T22:00:00+00:00",
-          "entry": 102.68,
-          "exit": 104.85,
-          "r": 2.38324,
-          "net_pnl": 2.3832405,
-          "reason": "EMA_EXIT"
-        },
-        {
-          "entry_utc": "2026-09-06T03:15:00+00:00",
-          "exit_utc": "2026-09-06T05:00:00+00:00",
-          "entry": 105.0,
-          "exit": 105.52487381308168,
-          "r": 0.40486,
-          "net_pnl": 0.40485535,
+          "entry_utc": "2026-09-11T12:30:00+00:00",
+          "exit_utc": "2026-09-11T15:30:00+00:00",
+          "entry": 2511.22,
+          "exit": 2578.810477389798,
+          "r": 2.64251,
+          "net_pnl": 2.64251192,
           "reason": "TRAIL"
         }
       ],
@@ -1057,6 +840,232 @@
         }
       ],
       "promising_early": true
+    },
+    {
+      "lane_id": "SOLUSDT:30m:DONCHIAN_48H",
+      "family": "DONCHIAN_48H",
+      "symbol": "SOLUSDT",
+      "timeframe": "30m",
+      "signals": 12,
+      "closed_trades": 12,
+      "stats": {
+        "closed_trades": 12,
+        "wins": 6,
+        "losses": 6,
+        "win_rate_percent": 50.0,
+        "net_r": 14.9604,
+        "profit_factor": 3.4197,
+        "expectancy_r": 1.2467,
+        "max_drawdown_r": 1.5306
+      },
+      "segment_robustness": 0.75,
+      "open_position": false,
+      "recent_trades": [
+        {
+          "entry_utc": "2026-08-20T08:00:00+00:00",
+          "exit_utc": "2026-08-20T12:30:00+00:00",
+          "entry": 87.53,
+          "exit": 86.52383088017707,
+          "r": -1.25948,
+          "net_pnl": -1.25948048,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-21T00:00:00+00:00",
+          "exit_utc": "2026-08-21T09:00:00+00:00",
+          "entry": 88.41,
+          "exit": 91.45206099793945,
+          "r": 3.18751,
+          "net_pnl": 3.18751171,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-21T21:30:00+00:00",
+          "exit_utc": "2026-08-22T05:00:00+00:00",
+          "entry": 93.74,
+          "exit": 96.42309064249125,
+          "r": 1.8104,
+          "net_pnl": 1.8103981,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-24T15:00:00+00:00",
+          "exit_utc": "2026-08-24T17:00:00+00:00",
+          "entry": 97.32,
+          "exit": 95.79331252462704,
+          "r": -1.18974,
+          "net_pnl": -1.18973807,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-24T23:30:00+00:00",
+          "exit_utc": "2026-08-25T07:30:00+00:00",
+          "entry": 98.97,
+          "exit": 100.03620483561183,
+          "r": 0.52384,
+          "net_pnl": 0.52383691,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-27T08:00:00+00:00",
+          "exit_utc": "2026-08-27T10:00:00+00:00",
+          "entry": 104.17,
+          "exit": 103.29221782621653,
+          "r": -0.8174,
+          "net_pnl": -0.81740168,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-27T13:30:00+00:00",
+          "exit_utc": "2026-08-28T01:30:00+00:00",
+          "entry": 106.06,
+          "exit": 107.85,
+          "r": 0.90265,
+          "net_pnl": 0.90264956,
+          "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-09-03T14:00:00+00:00",
+          "exit_utc": "2026-09-03T22:30:00+00:00",
+          "entry": 102.68,
+          "exit": 103.79520431232505,
+          "r": 0.78887,
+          "net_pnl": 0.78886593,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-06T03:00:00+00:00",
+          "exit_utc": "2026-09-06T07:00:00+00:00",
+          "entry": 105.0,
+          "exit": 105.1889508742095,
+          "r": -0.18005,
+          "net_pnl": -0.18005246,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T14:30:00+00:00",
+          "entry": 104.88,
+          "exit": 103.35996070685023,
+          "r": -1.2055,
+          "net_pnl": -1.20549515,
+          "reason": "TRAIL"
+        }
+      ],
+      "promising_early": true
+    },
+    {
+      "lane_id": "BTCUSDT:30m:DONCHIAN_48H",
+      "family": "DONCHIAN_48H",
+      "symbol": "BTCUSDT",
+      "timeframe": "30m",
+      "signals": 11,
+      "closed_trades": 11,
+      "stats": {
+        "closed_trades": 11,
+        "wins": 3,
+        "losses": 8,
+        "win_rate_percent": 27.27,
+        "net_r": 12.6878,
+        "profit_factor": 2.2073,
+        "expectancy_r": 1.1534,
+        "max_drawdown_r": 8.8683
+      },
+      "segment_robustness": 0.25,
+      "open_position": false,
+      "recent_trades": [
+        {
+          "entry_utc": "2026-08-19T21:00:00+00:00",
+          "exit_utc": "2026-08-21T09:00:00+00:00",
+          "entry": 69639.28,
+          "exit": 77798.69158320497,
+          "r": 10.1854,
+          "net_pnl": 10.18540366,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-24T11:30:00+00:00",
+          "exit_utc": "2026-08-24T13:30:00+00:00",
+          "entry": 78443.65,
+          "exit": 78258.73226676293,
+          "r": -0.69467,
+          "net_pnl": -0.69467009,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-24T15:00:00+00:00",
+          "exit_utc": "2026-08-24T15:30:00+00:00",
+          "entry": 79895.88,
+          "exit": 79061.38817099071,
+          "r": -1.28573,
+          "net_pnl": -1.28572637,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-25T02:00:00+00:00",
+          "exit_utc": "2026-08-25T04:30:00+00:00",
+          "entry": 81010.01,
+          "exit": 80216.72316894839,
+          "r": -1.30486,
+          "net_pnl": -1.30485883,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-27T09:00:00+00:00",
+          "exit_utc": "2026-08-27T09:30:00+00:00",
+          "entry": 80493.86,
+          "exit": 79997.178106125,
+          "r": -1.48469,
+          "net_pnl": -1.48469012,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-27T15:00:00+00:00",
+          "exit_utc": "2026-08-27T18:00:00+00:00",
+          "entry": 80600.0,
+          "exit": 79973.89458829402,
+          "r": -1.3847,
+          "net_pnl": -1.38469745,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-28T01:00:00+00:00",
+          "exit_utc": "2026-08-28T01:30:00+00:00",
+          "entry": 81130.98,
+          "exit": 80628.56783825935,
+          "r": -1.48295,
+          "net_pnl": -1.48294924,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-08-30T16:00:00+00:00",
+          "exit_utc": "2026-08-30T17:00:00+00:00",
+          "entry": 79043.77,
+          "exit": 78913.25152486062,
+          "r": -1.23068,
+          "net_pnl": -1.23068351,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-03T12:30:00+00:00",
+          "exit_utc": "2026-09-03T22:30:00+00:00",
+          "entry": 78652.38,
+          "exit": 80941.45749602756,
+          "r": 4.2942,
+          "net_pnl": 4.29419695,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-09T08:00:00+00:00",
+          "exit_utc": "2026-09-09T09:30:00+00:00",
+          "entry": 79683.38,
+          "exit": 79311.44114107775,
+          "r": -1.64121,
+          "net_pnl": -1.64121404,
+          "reason": "TRAIL"
+        }
+      ],
+      "promising_early": true
     }
   ],
   "lanes": [
@@ -1065,39 +1074,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "BTCUSDT",
       "timeframe": "15m",
-      "signals": 61,
-      "closed_trades": 61,
+      "signals": 63,
+      "closed_trades": 63,
       "stats": {
-        "closed_trades": 61,
+        "closed_trades": 63,
         "wins": 13,
-        "losses": 48,
-        "win_rate_percent": 21.31,
-        "net_r": -12.1947,
-        "profit_factor": 0.7906,
-        "expectancy_r": -0.1999,
-        "max_drawdown_r": 39.8524
+        "losses": 50,
+        "win_rate_percent": 20.63,
+        "net_r": -14.9246,
+        "profit_factor": 0.7553,
+        "expectancy_r": -0.2369,
+        "max_drawdown_r": 42.5823
       },
       "segment_robustness": 0.25,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-09-04T10:30:00+00:00",
-          "exit_utc": "2026-09-04T12:30:00+00:00",
-          "entry": 81069.83,
-          "exit": 80949.75472649091,
-          "r": -1.16727,
-          "net_pnl": -1.16727348,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-09-05T14:30:00+00:00",
-          "exit_utc": "2026-09-05T18:45:00+00:00",
-          "entry": 79707.3,
-          "exit": 79935.35592881578,
-          "r": -0.10264,
-          "net_pnl": -0.10264362,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-09-06T01:45:00+00:00",
           "exit_utc": "2026-09-06T02:30:00+00:00",
@@ -1168,6 +1159,24 @@
           "exit": 77583.68392118289,
           "r": -1.51952,
           "net_pnl": -1.51952388,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:45:00+00:00",
+          "exit_utc": "2026-09-11T14:30:00+00:00",
+          "entry": 79242.56,
+          "exit": 78600.69785045044,
+          "r": -1.36887,
+          "net_pnl": -1.36887236,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T15:15:00+00:00",
+          "exit_utc": "2026-09-11T15:45:00+00:00",
+          "entry": 78720.76,
+          "exit": 78069.4485858139,
+          "r": -1.3611,
+          "net_pnl": -1.36109553,
           "reason": "TRAIL"
         }
       ],
@@ -1517,30 +1526,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "BTCUSDT",
       "timeframe": "30m",
-      "signals": 33,
-      "closed_trades": 33,
+      "signals": 34,
+      "closed_trades": 34,
       "stats": {
-        "closed_trades": 33,
+        "closed_trades": 34,
         "wins": 6,
-        "losses": 27,
-        "win_rate_percent": 18.18,
-        "net_r": 3.1112,
-        "profit_factor": 1.0951,
-        "expectancy_r": 0.0943,
-        "max_drawdown_r": 22.86
+        "losses": 28,
+        "win_rate_percent": 17.65,
+        "net_r": 1.7959,
+        "profit_factor": 1.0528,
+        "expectancy_r": 0.0528,
+        "max_drawdown_r": 24.1753
       },
       "segment_robustness": 0.5,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-09-03T22:30:00+00:00",
-          "exit_utc": "2026-09-04T01:00:00+00:00",
-          "entry": 81140.0,
-          "exit": 80827.07,
-          "r": -0.84036,
-          "net_pnl": -0.8403576,
-          "reason": "EMA_EXIT"
-        },
         {
           "entry_utc": "2026-09-04T01:30:00+00:00",
           "exit_utc": "2026-09-04T02:00:00+00:00",
@@ -1620,6 +1620,15 @@
           "exit": 79201.41996111015,
           "r": -1.58858,
           "net_pnl": -1.58858351,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 79242.56,
+          "exit": 78492.21256397193,
+          "r": -1.31532,
+          "net_pnl": -1.31532397,
           "reason": "TRAIL"
         }
       ],
@@ -2385,30 +2394,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "ETHUSDT",
       "timeframe": "15m",
-      "signals": 69,
-      "closed_trades": 68,
+      "signals": 70,
+      "closed_trades": 69,
       "stats": {
-        "closed_trades": 68,
-        "wins": 11,
+        "closed_trades": 69,
+        "wins": 12,
         "losses": 57,
-        "win_rate_percent": 16.18,
-        "net_r": -3.4472,
-        "profit_factor": 0.9448,
-        "expectancy_r": -0.0507,
+        "win_rate_percent": 17.39,
+        "net_r": 1.1182,
+        "profit_factor": 1.0179,
+        "expectancy_r": 0.0162,
         "max_drawdown_r": 42.4519
       },
       "segment_robustness": 0.25,
       "open_position": true,
       "recent_trades": [
-        {
-          "entry_utc": "2026-09-05T22:15:00+00:00",
-          "exit_utc": "2026-09-05T23:00:00+00:00",
-          "entry": 2480.83,
-          "exit": 2478.84,
-          "r": -1.12196,
-          "net_pnl": -1.12196002,
-          "reason": "EMA_EXIT"
-        },
         {
           "entry_utc": "2026-09-05T23:15:00+00:00",
           "exit_utc": "2026-09-06T04:15:00+00:00",
@@ -2489,39 +2489,39 @@
           "r": -0.79036,
           "net_pnl": -0.79036035,
           "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-09-11T12:30:00+00:00",
+          "exit_utc": "2026-09-11T15:45:00+00:00",
+          "entry": 2493.97,
+          "exit": 2584.117456828886,
+          "r": 4.56541,
+          "net_pnl": 4.5654105,
+          "reason": "TRAIL"
         }
       ],
-      "promising_early": false
+      "promising_early": true
     },
     {
       "lane_id": "ETHUSDT:15m:TSMOM_DUAL_24H_7D",
       "family": "TSMOM_DUAL_24H_7D",
       "symbol": "ETHUSDT",
       "timeframe": "15m",
-      "signals": 55,
-      "closed_trades": 55,
+      "signals": 57,
+      "closed_trades": 56,
       "stats": {
-        "closed_trades": 55,
-        "wins": 11,
+        "closed_trades": 56,
+        "wins": 12,
         "losses": 44,
-        "win_rate_percent": 20.0,
-        "net_r": -1.2326,
-        "profit_factor": 0.9665,
-        "expectancy_r": -0.0224,
+        "win_rate_percent": 21.43,
+        "net_r": 1.15,
+        "profit_factor": 1.0312,
+        "expectancy_r": 0.0205,
         "max_drawdown_r": 24.9749
       },
       "segment_robustness": 0.25,
-      "open_position": false,
+      "open_position": true,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-27T10:00:00+00:00",
-          "exit_utc": "2026-08-27T10:15:00+00:00",
-          "entry": 2529.95,
-          "exit": 2510.679041742664,
-          "r": -1.39235,
-          "net_pnl": -1.39234962,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-08-27T14:15:00+00:00",
           "exit_utc": "2026-08-27T17:45:00+00:00",
@@ -2602,39 +2602,39 @@
           "r": -1.3347,
           "net_pnl": -1.33470413,
           "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T15:45:00+00:00",
+          "entry": 2524.23,
+          "exit": 2584.117456828886,
+          "r": 2.3826,
+          "net_pnl": 2.38259517,
+          "reason": "TRAIL"
         }
       ],
-      "promising_early": false
+      "promising_early": true
     },
     {
       "lane_id": "ETHUSDT:15m:DONCHIAN_48H",
       "family": "DONCHIAN_48H",
       "symbol": "ETHUSDT",
       "timeframe": "15m",
-      "signals": 14,
-      "closed_trades": 14,
+      "signals": 15,
+      "closed_trades": 15,
       "stats": {
-        "closed_trades": 14,
-        "wins": 3,
+        "closed_trades": 15,
+        "wins": 4,
         "losses": 11,
-        "win_rate_percent": 21.43,
-        "net_r": 10.4332,
-        "profit_factor": 1.7636,
-        "expectancy_r": 0.7452,
+        "win_rate_percent": 26.67,
+        "net_r": 12.8158,
+        "profit_factor": 1.938,
+        "expectancy_r": 0.8544,
         "max_drawdown_r": 7.9626
       },
       "segment_robustness": 0.25,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-21T07:00:00+00:00",
-          "exit_utc": "2026-08-21T07:45:00+00:00",
-          "entry": 2386.47,
-          "exit": 2366.6795257025365,
-          "r": -1.36026,
-          "net_pnl": -1.36026091,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-08-21T08:30:00+00:00",
           "exit_utc": "2026-08-21T09:00:00+00:00",
@@ -2715,6 +2715,15 @@
           "r": -1.71145,
           "net_pnl": -1.7114483,
           "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T15:45:00+00:00",
+          "entry": 2524.23,
+          "exit": 2584.117456828886,
+          "r": 2.3826,
+          "net_pnl": 2.38259517,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -2724,7 +2733,7 @@
       "family": "TSMOM_PULLBACK_RESUME",
       "symbol": "ETHUSDT",
       "timeframe": "15m",
-      "signals": 71,
+      "signals": 72,
       "closed_trades": 71,
       "stats": {
         "closed_trades": 71,
@@ -2737,7 +2746,7 @@
         "max_drawdown_r": 40.1034
       },
       "segment_robustness": 0.25,
-      "open_position": false,
+      "open_position": true,
       "recent_trades": [
         {
           "entry_utc": "2026-09-07T02:15:00+00:00",
@@ -2837,30 +2846,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "ETHUSDT",
       "timeframe": "30m",
-      "signals": 26,
-      "closed_trades": 25,
+      "signals": 27,
+      "closed_trades": 26,
       "stats": {
-        "closed_trades": 25,
-        "wins": 7,
+        "closed_trades": 26,
+        "wins": 8,
         "losses": 18,
-        "win_rate_percent": 28.0,
-        "net_r": 34.0334,
-        "profit_factor": 2.6601,
-        "expectancy_r": 1.3613,
+        "win_rate_percent": 30.77,
+        "net_r": 36.6759,
+        "profit_factor": 2.789,
+        "expectancy_r": 1.4106,
         "max_drawdown_r": 12.8061
       },
       "segment_robustness": 0.25,
       "open_position": true,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-30T17:00:00+00:00",
-          "exit_utc": "2026-08-30T20:30:00+00:00",
-          "entry": 2498.07,
-          "exit": 2486.6424751516306,
-          "r": -1.04032,
-          "net_pnl": -1.04031536,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-09-01T00:00:00+00:00",
           "exit_utc": "2026-09-01T01:00:00+00:00",
@@ -2941,6 +2941,15 @@
           "r": -1.47807,
           "net_pnl": -1.47806594,
           "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T12:30:00+00:00",
+          "exit_utc": "2026-09-11T15:30:00+00:00",
+          "entry": 2511.22,
+          "exit": 2578.810477389798,
+          "r": 2.64251,
+          "net_pnl": 2.64251192,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -2950,39 +2959,21 @@
       "family": "TSMOM_DUAL_24H_7D",
       "symbol": "ETHUSDT",
       "timeframe": "30m",
-      "signals": 26,
-      "closed_trades": 26,
+      "signals": 29,
+      "closed_trades": 28,
       "stats": {
-        "closed_trades": 26,
+        "closed_trades": 28,
         "wins": 6,
-        "losses": 20,
-        "win_rate_percent": 23.08,
-        "net_r": 11.8875,
-        "profit_factor": 1.7004,
-        "expectancy_r": 0.4572,
-        "max_drawdown_r": 13.9286
+        "losses": 22,
+        "win_rate_percent": 21.43,
+        "net_r": 9.5003,
+        "profit_factor": 1.4907,
+        "expectancy_r": 0.3393,
+        "max_drawdown_r": 16.3159
       },
       "segment_robustness": 0.25,
-      "open_position": false,
+      "open_position": true,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-27T10:00:00+00:00",
-          "exit_utc": "2026-08-27T10:30:00+00:00",
-          "entry": 2510.91,
-          "exit": 2503.6,
-          "r": -0.52514,
-          "net_pnl": -0.52514104,
-          "reason": "EMA_EXIT"
-        },
-        {
-          "entry_utc": "2026-08-27T12:00:00+00:00",
-          "exit_utc": "2026-08-27T12:30:00+00:00",
-          "entry": 2505.88,
-          "exit": 2494.9,
-          "r": -0.72529,
-          "net_pnl": -0.72529065,
-          "reason": "EMA_EXIT"
-        },
         {
           "entry_utc": "2026-08-27T14:00:00+00:00",
           "exit_utc": "2026-08-27T18:00:00+00:00",
@@ -3054,6 +3045,24 @@
           "r": -0.5558,
           "net_pnl": -0.55580031,
           "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 2629.62,
+          "exit": 2591.5128580423484,
+          "r": -1.20552,
+          "net_pnl": -1.20551839,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T15:00:00+00:00",
+          "exit_utc": "2026-09-11T15:30:00+00:00",
+          "entry": 2611.43,
+          "exit": 2568.682470524431,
+          "r": -1.18177,
+          "net_pnl": -1.18176934,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -3063,30 +3072,21 @@
       "family": "DONCHIAN_48H",
       "symbol": "ETHUSDT",
       "timeframe": "30m",
-      "signals": 10,
-      "closed_trades": 10,
+      "signals": 11,
+      "closed_trades": 11,
       "stats": {
-        "closed_trades": 10,
+        "closed_trades": 11,
         "wins": 2,
-        "losses": 8,
-        "win_rate_percent": 20.0,
-        "net_r": 12.3443,
-        "profit_factor": 2.4965,
-        "expectancy_r": 1.2344,
-        "max_drawdown_r": 6.2304
+        "losses": 9,
+        "win_rate_percent": 18.18,
+        "net_r": 11.1388,
+        "profit_factor": 2.1782,
+        "expectancy_r": 1.0126,
+        "max_drawdown_r": 7.4359
       },
       "segment_robustness": 0.25,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-19T12:30:00+00:00",
-          "exit_utc": "2026-08-19T13:30:00+00:00",
-          "entry": 1937.21,
-          "exit": 1928.7109871400667,
-          "r": -1.6823,
-          "net_pnl": -1.68230109,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-08-19T14:30:00+00:00",
           "exit_utc": "2026-08-20T13:30:00+00:00",
@@ -3166,6 +3166,15 @@
           "exit": 2500.3786721989127,
           "r": -1.43747,
           "net_pnl": -1.43746797,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 2629.62,
+          "exit": 2591.5128580423484,
+          "r": -1.20552,
+          "net_pnl": -1.20551839,
           "reason": "TRAIL"
         }
       ],
@@ -3289,30 +3298,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "ETHUSDT",
       "timeframe": "1h",
-      "signals": 16,
-      "closed_trades": 16,
+      "signals": 18,
+      "closed_trades": 17,
       "stats": {
-        "closed_trades": 16,
+        "closed_trades": 17,
         "wins": 5,
-        "losses": 11,
-        "win_rate_percent": 31.25,
-        "net_r": 31.1263,
-        "profit_factor": 4.0359,
-        "expectancy_r": 1.9454,
-        "max_drawdown_r": 8.7009
+        "losses": 12,
+        "win_rate_percent": 29.41,
+        "net_r": 29.9463,
+        "profit_factor": 3.6193,
+        "expectancy_r": 1.7615,
+        "max_drawdown_r": 9.881
       },
       "segment_robustness": 0.25,
-      "open_position": false,
+      "open_position": true,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-27T14:00:00+00:00",
-          "exit_utc": "2026-08-27T19:00:00+00:00",
-          "entry": 2517.44,
-          "exit": 2498.21,
-          "r": -0.75243,
-          "net_pnl": -0.75243231,
-          "reason": "EMA_EXIT"
-        },
         {
           "entry_utc": "2026-08-30T14:00:00+00:00",
           "exit_utc": "2026-08-30T17:00:00+00:00",
@@ -3393,6 +3393,15 @@
           "r": -1.33635,
           "net_pnl": -1.33634704,
           "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:00:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 2629.62,
+          "exit": 2586.1736591598024,
+          "r": -1.18008,
+          "net_pnl": -1.18007759,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -3402,30 +3411,21 @@
       "family": "TSMOM_DUAL_24H_7D",
       "symbol": "ETHUSDT",
       "timeframe": "1h",
-      "signals": 15,
-      "closed_trades": 15,
+      "signals": 17,
+      "closed_trades": 16,
       "stats": {
-        "closed_trades": 15,
+        "closed_trades": 16,
         "wins": 3,
-        "losses": 12,
-        "win_rate_percent": 20.0,
-        "net_r": 15.6275,
-        "profit_factor": 2.7342,
-        "expectancy_r": 1.0418,
-        "max_drawdown_r": 8.986
+        "losses": 13,
+        "win_rate_percent": 18.75,
+        "net_r": 14.4474,
+        "profit_factor": 2.4176,
+        "expectancy_r": 0.903,
+        "max_drawdown_r": 10.1661
       },
       "segment_robustness": 0.25,
-      "open_position": false,
+      "open_position": true,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-24T02:00:00+00:00",
-          "exit_utc": "2026-08-24T03:00:00+00:00",
-          "entry": 2443.78,
-          "exit": 2430.64,
-          "r": -0.51087,
-          "net_pnl": -0.51087339,
-          "reason": "EMA_EXIT"
-        },
         {
           "entry_utc": "2026-08-24T05:00:00+00:00",
           "exit_utc": "2026-08-24T17:00:00+00:00",
@@ -3506,6 +3506,15 @@
           "r": -1.19257,
           "net_pnl": -1.19257076,
           "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:00:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 2629.62,
+          "exit": 2586.1736591598024,
+          "r": -1.18008,
+          "net_pnl": -1.18007759,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -3515,19 +3524,19 @@
       "family": "DONCHIAN_48H",
       "symbol": "ETHUSDT",
       "timeframe": "1h",
-      "signals": 7,
-      "closed_trades": 7,
+      "signals": 8,
+      "closed_trades": 8,
       "stats": {
-        "closed_trades": 7,
+        "closed_trades": 8,
         "wins": 1,
-        "losses": 6,
-        "win_rate_percent": 14.29,
-        "net_r": 28.2756,
-        "profit_factor": 4.863,
-        "expectancy_r": 4.0394,
-        "max_drawdown_r": 7.3195
+        "losses": 7,
+        "win_rate_percent": 12.5,
+        "net_r": 27.0955,
+        "profit_factor": 4.1878,
+        "expectancy_r": 3.3869,
+        "max_drawdown_r": 8.4996
       },
-      "segment_robustness": null,
+      "segment_robustness": 0.25,
       "open_position": false,
       "recent_trades": [
         {
@@ -3591,6 +3600,15 @@
           "exit": 2497.3553736913173,
           "r": -1.33635,
           "net_pnl": -1.33634704,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:00:00+00:00",
+          "exit_utc": "2026-09-11T15:00:00+00:00",
+          "entry": 2629.62,
+          "exit": 2586.1736591598024,
+          "r": -1.18008,
+          "net_pnl": -1.18007759,
           "reason": "TRAIL"
         }
       ],
@@ -3714,48 +3732,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "SOLUSDT",
       "timeframe": "15m",
-      "signals": 68,
-      "closed_trades": 67,
+      "signals": 70,
+      "closed_trades": 70,
       "stats": {
-        "closed_trades": 67,
+        "closed_trades": 70,
         "wins": 17,
-        "losses": 50,
-        "win_rate_percent": 25.37,
-        "net_r": 4.6969,
-        "profit_factor": 1.0969,
-        "expectancy_r": 0.0701,
-        "max_drawdown_r": 20.3769
+        "losses": 53,
+        "win_rate_percent": 24.29,
+        "net_r": 0.9152,
+        "profit_factor": 1.0175,
+        "expectancy_r": 0.0131,
+        "max_drawdown_r": 24.1586
       },
       "segment_robustness": 0.5,
-      "open_position": true,
+      "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-09-06T05:00:00+00:00",
-          "exit_utc": "2026-09-06T06:30:00+00:00",
-          "entry": 105.56,
-          "exit": 105.3710189950988,
-          "r": -0.66092,
-          "net_pnl": -0.66092404,
-          "reason": "TRAIL"
-        },
-        {
-          "entry_utc": "2026-09-06T06:30:00+00:00",
-          "exit_utc": "2026-09-06T06:45:00+00:00",
-          "entry": 105.57,
-          "exit": 105.37,
-          "r": -0.66924,
-          "net_pnl": -0.66923762,
-          "reason": "EMA_EXIT"
-        },
-        {
-          "entry_utc": "2026-09-06T09:00:00+00:00",
-          "exit_utc": "2026-09-06T13:15:00+00:00",
-          "entry": 105.79,
-          "exit": 106.15,
-          "r": 0.06181,
-          "net_pnl": 0.06181202,
-          "reason": "EMA_EXIT"
-        },
         {
           "entry_utc": "2026-09-06T13:30:00+00:00",
           "exit_utc": "2026-09-06T14:00:00+00:00",
@@ -3818,6 +3809,33 @@
           "r": -1.10696,
           "net_pnl": -1.106961,
           "reason": "EMA_EXIT"
+        },
+        {
+          "entry_utc": "2026-09-11T12:45:00+00:00",
+          "exit_utc": "2026-09-11T13:30:00+00:00",
+          "entry": 101.69,
+          "exit": 100.7393316107611,
+          "r": -1.3194,
+          "net_pnl": -1.31940104,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:45:00+00:00",
+          "exit_utc": "2026-09-11T14:15:00+00:00",
+          "entry": 104.88,
+          "exit": 103.5859641851038,
+          "r": -1.24165,
+          "net_pnl": -1.24164678,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T14:15:00+00:00",
+          "exit_utc": "2026-09-11T15:45:00+00:00",
+          "entry": 103.93,
+          "exit": 102.52662218001298,
+          "r": -1.22067,
+          "net_pnl": -1.2206716,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -3827,30 +3845,21 @@
       "family": "TSMOM_DUAL_24H_7D",
       "symbol": "SOLUSDT",
       "timeframe": "15m",
-      "signals": 61,
-      "closed_trades": 61,
+      "signals": 62,
+      "closed_trades": 62,
       "stats": {
-        "closed_trades": 61,
+        "closed_trades": 62,
         "wins": 13,
-        "losses": 48,
-        "win_rate_percent": 21.31,
-        "net_r": 2.4123,
-        "profit_factor": 1.0605,
-        "expectancy_r": 0.0395,
-        "max_drawdown_r": 19.1932
+        "losses": 49,
+        "win_rate_percent": 20.97,
+        "net_r": 1.1706,
+        "profit_factor": 1.0285,
+        "expectancy_r": 0.0189,
+        "max_drawdown_r": 20.4349
       },
       "segment_robustness": 0.5,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-30T15:15:00+00:00",
-          "exit_utc": "2026-08-30T17:15:00+00:00",
-          "entry": 106.41,
-          "exit": 106.07437993007352,
-          "r": -0.99323,
-          "net_pnl": -0.99323187,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-08-30T17:45:00+00:00",
           "exit_utc": "2026-08-30T18:00:00+00:00",
@@ -3931,6 +3940,15 @@
           "r": -1.08458,
           "net_pnl": -1.08457841,
           "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:45:00+00:00",
+          "exit_utc": "2026-09-11T14:15:00+00:00",
+          "entry": 104.88,
+          "exit": 103.5859641851038,
+          "r": -1.24165,
+          "net_pnl": -1.24164678,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -3940,30 +3958,21 @@
       "family": "DONCHIAN_48H",
       "symbol": "SOLUSDT",
       "timeframe": "15m",
-      "signals": 14,
-      "closed_trades": 14,
+      "signals": 15,
+      "closed_trades": 15,
       "stats": {
-        "closed_trades": 14,
+        "closed_trades": 15,
         "wins": 9,
-        "losses": 5,
-        "win_rate_percent": 64.29,
-        "net_r": 17.7614,
-        "profit_factor": 3.654,
-        "expectancy_r": 1.2687,
+        "losses": 6,
+        "win_rate_percent": 60.0,
+        "net_r": 16.5198,
+        "profit_factor": 3.0821,
+        "expectancy_r": 1.1013,
         "max_drawdown_r": 2.5939
       },
       "segment_robustness": 0.75,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-21T00:15:00+00:00",
-          "exit_utc": "2026-08-21T00:30:00+00:00",
-          "entry": 88.41,
-          "exit": 87.81842394999597,
-          "r": -1.44685,
-          "net_pnl": -1.44684522,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-08-21T05:45:00+00:00",
           "exit_utc": "2026-08-21T09:00:00+00:00",
@@ -4043,6 +4052,15 @@
           "exit": 105.52487381308168,
           "r": 0.40486,
           "net_pnl": 0.40485535,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:45:00+00:00",
+          "exit_utc": "2026-09-11T14:15:00+00:00",
+          "entry": 104.88,
+          "exit": 103.5859641851038,
+          "r": -1.24165,
+          "net_pnl": -1.24164678,
           "reason": "TRAIL"
         }
       ],
@@ -4166,30 +4184,21 @@
       "family": "TSMOM_VOL_24H",
       "symbol": "SOLUSDT",
       "timeframe": "30m",
-      "signals": 37,
-      "closed_trades": 37,
+      "signals": 38,
+      "closed_trades": 38,
       "stats": {
-        "closed_trades": 37,
+        "closed_trades": 38,
         "wins": 12,
-        "losses": 25,
-        "win_rate_percent": 32.43,
-        "net_r": 18.9151,
-        "profit_factor": 1.9028,
-        "expectancy_r": 0.5112,
-        "max_drawdown_r": 6.5325
+        "losses": 26,
+        "win_rate_percent": 31.58,
+        "net_r": 17.7096,
+        "profit_factor": 1.7992,
+        "expectancy_r": 0.466,
+        "max_drawdown_r": 7.738
       },
       "segment_robustness": 0.5,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-09-05T12:30:00+00:00",
-          "exit_utc": "2026-09-05T13:30:00+00:00",
-          "entry": 103.23,
-          "exit": 102.72600925800886,
-          "r": -1.61298,
-          "net_pnl": -1.61297607,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-09-05T14:00:00+00:00",
           "exit_utc": "2026-09-05T19:30:00+00:00",
@@ -4270,6 +4279,15 @@
           "r": -1.19147,
           "net_pnl": -1.19147238,
           "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T14:30:00+00:00",
+          "entry": 104.88,
+          "exit": 103.35996070685023,
+          "r": -1.2055,
+          "net_pnl": -1.20549515,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -4279,30 +4297,21 @@
       "family": "TSMOM_DUAL_24H_7D",
       "symbol": "SOLUSDT",
       "timeframe": "30m",
-      "signals": 33,
-      "closed_trades": 33,
+      "signals": 34,
+      "closed_trades": 34,
       "stats": {
-        "closed_trades": 33,
+        "closed_trades": 34,
         "wins": 8,
-        "losses": 25,
-        "win_rate_percent": 24.24,
-        "net_r": 11.2409,
-        "profit_factor": 1.6201,
-        "expectancy_r": 0.3406,
-        "max_drawdown_r": 7.8302
+        "losses": 26,
+        "win_rate_percent": 23.53,
+        "net_r": 10.0354,
+        "profit_factor": 1.5191,
+        "expectancy_r": 0.2952,
+        "max_drawdown_r": 9.0357
       },
       "segment_robustness": 0.25,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-26T22:00:00+00:00",
-          "exit_utc": "2026-08-27T10:00:00+00:00",
-          "entry": 100.02,
-          "exit": 103.29221782621653,
-          "r": 2.24759,
-          "net_pnl": 2.24758792,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-08-27T10:00:00+00:00",
           "exit_utc": "2026-08-28T01:30:00+00:00",
@@ -4383,6 +4392,15 @@
           "r": -1.15578,
           "net_pnl": -1.15577662,
           "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T14:30:00+00:00",
+          "entry": 104.88,
+          "exit": 103.35996070685023,
+          "r": -1.2055,
+          "net_pnl": -1.20549515,
+          "reason": "TRAIL"
         }
       ],
       "promising_early": true
@@ -4392,30 +4410,21 @@
       "family": "DONCHIAN_48H",
       "symbol": "SOLUSDT",
       "timeframe": "30m",
-      "signals": 11,
-      "closed_trades": 11,
+      "signals": 12,
+      "closed_trades": 12,
       "stats": {
-        "closed_trades": 11,
+        "closed_trades": 12,
         "wins": 6,
-        "losses": 5,
-        "win_rate_percent": 54.55,
-        "net_r": 16.1659,
-        "profit_factor": 4.248,
-        "expectancy_r": 1.4696,
+        "losses": 6,
+        "win_rate_percent": 50.0,
+        "net_r": 14.9604,
+        "profit_factor": 3.4197,
+        "expectancy_r": 1.2467,
         "max_drawdown_r": 1.5306
       },
-      "segment_robustness": 1.0,
+      "segment_robustness": 0.75,
       "open_position": false,
       "recent_trades": [
-        {
-          "entry_utc": "2026-08-19T12:30:00+00:00",
-          "exit_utc": "2026-08-19T22:30:00+00:00",
-          "entry": 78.41,
-          "exit": 85.24983818441203,
-          "r": 13.9299,
-          "net_pnl": 13.92990364,
-          "reason": "TRAIL"
-        },
         {
           "entry_utc": "2026-08-20T08:00:00+00:00",
           "exit_utc": "2026-08-20T12:30:00+00:00",
@@ -4495,6 +4504,15 @@
           "exit": 105.1889508742095,
           "r": -0.18005,
           "net_pnl": -0.18005246,
+          "reason": "TRAIL"
+        },
+        {
+          "entry_utc": "2026-09-11T13:30:00+00:00",
+          "exit_utc": "2026-09-11T14:30:00+00:00",
+          "entry": 104.88,
+          "exit": 103.35996070685023,
+          "r": -1.2055,
+          "net_pnl": -1.20549515,
           "reason": "TRAIL"
         }
       ],
