@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-09-19T01:16:42.219430+00:00",
+  "updated_at_utc": "2026-09-19T06:01:17.405049+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 708,
-  "snapshot_count_after_freeze": 528,
+  "snapshot_count_total": 710,
+  "snapshot_count_after_freeze": 530,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [
@@ -16,7 +16,7 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_HIGH_CONTINUATION",
       "horizon": 6,
-      "signal_count": 35,
+      "signal_count": 36,
       "stats": {
         "closed_trades": 35,
         "wins": 11,
@@ -598,18 +598,18 @@
       "symbol": "ETH",
       "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
       "horizon": 3,
-      "signal_count": 57,
+      "signal_count": 58,
       "stats": {
-        "closed_trades": 56,
+        "closed_trades": 57,
         "wins": 23,
-        "losses": 33,
-        "win_rate_percent": 41.07,
-        "net_bps": 308.177,
-        "average_net_bps": 5.5032,
-        "profit_factor": 1.2251,
+        "losses": 34,
+        "win_rate_percent": 40.35,
+        "net_bps": 274.4419,
+        "average_net_bps": 4.8148,
+        "profit_factor": 1.1956,
         "max_drawdown_bps": 518.578
       },
-      "positive_time_segments": 3,
+      "positive_time_segments": 2,
       "early_checks": {
         "trades": true,
         "average_net_bps": true,
@@ -621,18 +621,10 @@
         "average_net_bps": true,
         "profit_factor": false,
         "drawdown": false,
-        "time_segments": true
+        "time_segments": false
       },
       "champion_passed": false,
       "recent_trades": [
-        {
-          "signal_utc": "2026-09-05T00:08:02.782256+00:00",
-          "entry_utc": "2026-09-05T04:22:36.913456+00:00",
-          "exit_utc": "2026-09-05T08:32:11.336303+00:00",
-          "entry_ask": 2452.08,
-          "exit_bid": 2454.78,
-          "net_bps": -19.00545
-        },
         {
           "signal_utc": "2026-09-06T00:50:15.979349+00:00",
           "entry_utc": "2026-09-06T04:34:09.673603+00:00",
@@ -784,6 +776,14 @@
           "entry_ask": 2506.88,
           "exit_bid": 2596.55,
           "net_bps": 327.15926
+        },
+        {
+          "signal_utc": "2026-09-18T21:01:48.344210+00:00",
+          "entry_utc": "2026-09-18T23:14:30.950030+00:00",
+          "exit_utc": "2026-09-19T04:34:30.634112+00:00",
+          "entry_ask": 2619.86,
+          "exit_bid": 2618.88,
+          "net_bps": -33.73505
         }
       ]
     },
@@ -792,7 +792,7 @@
       "symbol": "BTC",
       "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
       "horizon": 3,
-      "signal_count": 50,
+      "signal_count": 51,
       "stats": {
         "closed_trades": 50,
         "wins": 18,
