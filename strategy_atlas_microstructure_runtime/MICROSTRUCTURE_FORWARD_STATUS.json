@@ -1,14 +1,12 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-10-06T23:02:15.509482+00:00",
+  "updated_at_utc": "2026-10-07T02:18:05.796329+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 869,
-  "snapshot_count_after_freeze": 689,
+  "snapshot_count_total": 870,
+  "snapshot_count_after_freeze": 690,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
-  "promising_early": [
-    "ETH:CROSS_FLOW_SELL_REVERSION_LONG:H3"
-  ],
+  "promising_early": [],
   "champions": [],
   "lanes": [
     {
@@ -16,7 +14,7 @@
       "symbol": "BTC",
       "signal": "CROSS_DEPTH_HIGH_CONTINUATION",
       "horizon": 6,
-      "signal_count": 46,
+      "signal_count": 47,
       "stats": {
         "closed_trades": 46,
         "wins": 15,
@@ -598,24 +596,24 @@
       "symbol": "ETH",
       "signal": "CROSS_FLOW_SELL_REVERSION_LONG",
       "horizon": 3,
-      "signal_count": 72,
+      "signal_count": 71,
       "stats": {
-        "closed_trades": 70,
+        "closed_trades": 71,
         "wins": 28,
-        "losses": 42,
-        "win_rate_percent": 40.0,
-        "net_bps": 3.49,
-        "average_net_bps": 0.0499,
-        "profit_factor": 1.0016,
-        "max_drawdown_bps": 634.047
+        "losses": 43,
+        "win_rate_percent": 39.44,
+        "net_bps": -296.5264,
+        "average_net_bps": -4.1764,
+        "profit_factor": 0.8828,
+        "max_drawdown_bps": 934.0634
       },
       "positive_time_segments": 2,
       "early_checks": {
         "trades": true,
-        "average_net_bps": true,
-        "profit_factor": true
+        "average_net_bps": false,
+        "profit_factor": false
       },
-      "promising_early": true,
+      "promising_early": false,
       "champion_checks": {
         "trades": true,
         "average_net_bps": false,
@@ -625,14 +623,6 @@
       },
       "champion_passed": false,
       "recent_trades": [
-        {
-          "signal_utc": "2026-09-14T14:05:57.349231+00:00",
-          "entry_utc": "2026-09-14T19:19:50.342748+00:00",
-          "exit_utc": "2026-09-14T22:36:36.977414+00:00",
-          "entry_ask": 2543.75,
-          "exit_bid": 2540.76,
-          "net_bps": -41.73667
-        },
         {
           "signal_utc": "2026-09-15T00:54:33.052511+00:00",
           "entry_utc": "2026-09-15T04:50:55.757462+00:00",
@@ -784,6 +774,14 @@
           "entry_ask": 2711.11,
           "exit_bid": 2692.23,
           "net_bps": -99.53495
+        },
+        {
+          "signal_utc": "2026-10-06T18:20:05.471457+00:00",
+          "entry_utc": "2026-10-06T19:05:49.139590+00:00",
+          "exit_utc": "2026-10-07T02:17:56.411681+00:00",
+          "entry_ask": 2690.98,
+          "exit_bid": 2618.21,
+          "net_bps": -300.01643
         }
       ]
     },
