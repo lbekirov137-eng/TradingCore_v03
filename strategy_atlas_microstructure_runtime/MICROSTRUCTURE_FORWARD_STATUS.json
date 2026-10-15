@@ -1,9 +1,9 @@
 {
   "schema": "TRADINGCORE_MICROSTRUCTURE_FORWARD_EXECUTION_V2_DUAL_VENUE",
-  "updated_at_utc": "2026-10-15T14:32:12.394054+00:00",
+  "updated_at_utc": "2026-10-15T18:36:51.941440+00:00",
   "freeze_utc": "2026-08-19T17:05:00+00:00",
-  "snapshot_count_total": 935,
-  "snapshot_count_after_freeze": 755,
+  "snapshot_count_total": 937,
+  "snapshot_count_after_freeze": 757,
   "execution_model": "signal snapshot -> next-snapshot ask entry -> future-snapshot bid exit; observed spread plus conservative TradingCore fees/slippage",
   "lane_count": 7,
   "promising_early": [],
@@ -16,13 +16,13 @@
       "horizon": 6,
       "signal_count": 50,
       "stats": {
-        "closed_trades": 49,
-        "wins": 15,
+        "closed_trades": 50,
+        "wins": 16,
         "losses": 34,
-        "win_rate_percent": 30.61,
-        "net_bps": -772.0098,
-        "average_net_bps": -15.7553,
-        "profit_factor": 0.6061,
+        "win_rate_percent": 32.0,
+        "net_bps": -717.8281,
+        "average_net_bps": -14.3566,
+        "profit_factor": 0.6338,
         "max_drawdown_bps": 1092.056
       },
       "positive_time_segments": 1,
@@ -33,7 +33,7 @@
       },
       "promising_early": false,
       "champion_checks": {
-        "trades": false,
+        "trades": true,
         "average_net_bps": false,
         "profit_factor": false,
         "drawdown": false,
@@ -41,14 +41,6 @@
       },
       "champion_passed": false,
       "recent_trades": [
-        {
-          "signal_utc": "2026-09-07T22:06:29.117801+00:00",
-          "entry_utc": "2026-09-08T00:23:39.132786+00:00",
-          "exit_utc": "2026-09-08T13:50:32.639770+00:00",
-          "entry_ask": 78999.6,
-          "exit_bid": 77838.4,
-          "net_bps": -176.76768
-        },
         {
           "signal_utc": "2026-09-09T16:36:37.445589+00:00",
           "entry_utc": "2026-09-09T17:55:55.839781+00:00",
@@ -200,6 +192,14 @@
           "entry_ask": 82999.9,
           "exit_bid": 83077.0,
           "net_bps": -20.72476
+        },
+        {
+          "signal_utc": "2026-10-15T04:32:35.671064+00:00",
+          "entry_utc": "2026-10-15T05:03:45.448584+00:00",
+          "exit_utc": "2026-10-15T18:36:39.930651+00:00",
+          "entry_ask": 81569.8,
+          "exit_bid": 82257.5,
+          "net_bps": 54.18174
         }
       ]
     },
@@ -598,13 +598,13 @@
       "horizon": 3,
       "signal_count": 81,
       "stats": {
-        "closed_trades": 80,
-        "wins": 31,
+        "closed_trades": 81,
+        "wins": 32,
         "losses": 49,
-        "win_rate_percent": 38.75,
-        "net_bps": -775.8084,
-        "average_net_bps": -9.6976,
-        "profit_factor": 0.7503,
+        "win_rate_percent": 39.51,
+        "net_bps": -474.0257,
+        "average_net_bps": -5.8522,
+        "profit_factor": 0.8474,
         "max_drawdown_bps": 1413.3454
       },
       "positive_time_segments": 2,
@@ -623,14 +623,6 @@
       },
       "champion_passed": false,
       "recent_trades": [
-        {
-          "signal_utc": "2026-09-22T04:50:44.268093+00:00",
-          "entry_utc": "2026-09-22T05:59:58.091055+00:00",
-          "exit_utc": "2026-09-22T11:33:37.142069+00:00",
-          "entry_ask": 2733.43,
-          "exit_bid": 2740.57,
-          "net_bps": -3.91814
-        },
         {
           "signal_utc": "2026-09-22T21:16:25.053491+00:00",
           "entry_utc": "2026-09-22T22:12:51.278916+00:00",
@@ -782,6 +774,14 @@
           "entry_ask": 2420.91,
           "exit_bid": 2382.96,
           "net_bps": -186.52417
+        },
+        {
+          "signal_utc": "2026-10-15T11:22:49.585384+00:00",
+          "entry_utc": "2026-10-15T14:32:04.342469+00:00",
+          "exit_utc": "2026-10-15T18:36:39.930651+00:00",
+          "entry_ask": 2366.07,
+          "exit_bid": 2444.69,
+          "net_bps": 301.7827
         }
       ]
     },
@@ -984,7 +984,7 @@
       "symbol": "SOL",
       "signal": "CROSS_FLOW_BUY_CONTINUATION",
       "horizon": 3,
-      "signal_count": 77,
+      "signal_count": 78,
       "stats": {
         "closed_trades": 77,
         "wins": 22,
