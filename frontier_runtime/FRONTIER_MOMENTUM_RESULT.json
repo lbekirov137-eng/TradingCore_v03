@@ -1,6 +1,6 @@
 {
   "schema": "TRADINGCORE_FRONTIER_MOMENTUM_V1_1",
-  "generated_at_utc": "2026-11-03T00:56:29.742467+00:00",
+  "generated_at_utc": "2026-11-03T14:05:27.377182+00:00",
   "state": "NO_FRONTIER_CHAMPION_YET",
   "lane_count": 36,
   "passing_lane_count": 0,
@@ -113,10 +113,10 @@
         "wins": 53,
         "losses": 333,
         "win_rate_percent": 13.73,
-        "net_r": -414.3451,
+        "net_r": -414.345,
         "profit_factor": 0.2176,
         "expectancy_r": -1.0734,
-        "max_drawdown_r": 414.3451
+        "max_drawdown_r": 414.345
       },
       "first_half": {
         "closed_trades": 193,
@@ -301,7 +301,7 @@
         "wins": 57,
         "losses": 295,
         "win_rate_percent": 16.19,
-        "net_r": -165.5235,
+        "net_r": -165.5237,
         "profit_factor": 0.4525,
         "expectancy_r": -0.4702,
         "max_drawdown_r": 169.3466
@@ -311,7 +311,7 @@
         "wins": 26,
         "losses": 150,
         "win_rate_percent": 14.77,
-        "net_r": -103.3859,
+        "net_r": -103.3862,
         "profit_factor": 0.2939,
         "expectancy_r": -0.5874,
         "max_drawdown_r": 107.209
@@ -386,6 +386,53 @@
       "passed": false
     },
     {
+      "family": "DONCHIAN_48H",
+      "symbol": "SOLUSDT",
+      "timeframe": "30m",
+      "signals": 61,
+      "full": {
+        "closed_trades": 61,
+        "wins": 15,
+        "losses": 46,
+        "win_rate_percent": 24.59,
+        "net_r": -6.9317,
+        "profit_factor": 0.8709,
+        "expectancy_r": -0.1136,
+        "max_drawdown_r": 23.9367
+      },
+      "first_half": {
+        "closed_trades": 30,
+        "wins": 5,
+        "losses": 25,
+        "win_rate_percent": 16.67,
+        "net_r": -19.3735,
+        "profit_factor": 0.3351,
+        "expectancy_r": -0.6458,
+        "max_drawdown_r": 19.3735
+      },
+      "second_half": {
+        "closed_trades": 31,
+        "wins": 10,
+        "losses": 21,
+        "win_rate_percent": 32.26,
+        "net_r": 12.4418,
+        "profit_factor": 1.5066,
+        "expectancy_r": 0.4013,
+        "max_drawdown_r": 10.6249
+      },
+      "segment_robustness": 0.25,
+      "checks": {
+        "trades": true,
+        "pf": false,
+        "exp": false,
+        "dd": false,
+        "first_positive": false,
+        "second_positive": true,
+        "robust": false
+      },
+      "passed": false
+    },
+    {
       "family": "TSMOM_PULLBACK_RESUME",
       "symbol": "BTCUSDT",
       "timeframe": "30m",
@@ -434,100 +481,6 @@
     },
     {
       "family": "DONCHIAN_48H",
-      "symbol": "SOLUSDT",
-      "timeframe": "30m",
-      "signals": 62,
-      "full": {
-        "closed_trades": 62,
-        "wins": 15,
-        "losses": 47,
-        "win_rate_percent": 24.19,
-        "net_r": -7.6141,
-        "profit_factor": 0.86,
-        "expectancy_r": -0.1228,
-        "max_drawdown_r": 24.6191
-      },
-      "first_half": {
-        "closed_trades": 31,
-        "wins": 5,
-        "losses": 26,
-        "win_rate_percent": 16.13,
-        "net_r": -20.0559,
-        "profit_factor": 0.3274,
-        "expectancy_r": -0.647,
-        "max_drawdown_r": 20.0559
-      },
-      "second_half": {
-        "closed_trades": 31,
-        "wins": 10,
-        "losses": 21,
-        "win_rate_percent": 32.26,
-        "net_r": 12.4418,
-        "profit_factor": 1.5066,
-        "expectancy_r": 0.4013,
-        "max_drawdown_r": 10.6249
-      },
-      "segment_robustness": 0.25,
-      "checks": {
-        "trades": true,
-        "pf": false,
-        "exp": false,
-        "dd": false,
-        "first_positive": false,
-        "second_positive": true,
-        "robust": false
-      },
-      "passed": false
-    },
-    {
-      "family": "TSMOM_VOL_24H",
-      "symbol": "BTCUSDT",
-      "timeframe": "1h",
-      "signals": 196,
-      "full": {
-        "closed_trades": 196,
-        "wins": 48,
-        "losses": 148,
-        "win_rate_percent": 24.49,
-        "net_r": -46.1169,
-        "profit_factor": 0.6907,
-        "expectancy_r": -0.2353,
-        "max_drawdown_r": 81.1623
-      },
-      "first_half": {
-        "closed_trades": 98,
-        "wins": 26,
-        "losses": 72,
-        "win_rate_percent": 26.53,
-        "net_r": -41.347,
-        "profit_factor": 0.3925,
-        "expectancy_r": -0.4219,
-        "max_drawdown_r": 42.7806
-      },
-      "second_half": {
-        "closed_trades": 98,
-        "wins": 22,
-        "losses": 76,
-        "win_rate_percent": 22.45,
-        "net_r": -4.7699,
-        "profit_factor": 0.9412,
-        "expectancy_r": -0.0487,
-        "max_drawdown_r": 38.7678
-      },
-      "segment_robustness": 0.25,
-      "checks": {
-        "trades": true,
-        "pf": false,
-        "exp": false,
-        "dd": false,
-        "first_positive": false,
-        "second_positive": false,
-        "robust": false
-      },
-      "passed": false
-    },
-    {
-      "family": "DONCHIAN_48H",
       "symbol": "BTCUSDT",
       "timeframe": "15m",
       "signals": 97,
@@ -562,6 +515,53 @@
         "max_drawdown_r": 31.7869
       },
       "segment_robustness": 0.0,
+      "checks": {
+        "trades": true,
+        "pf": false,
+        "exp": false,
+        "dd": false,
+        "first_positive": false,
+        "second_positive": false,
+        "robust": false
+      },
+      "passed": false
+    },
+    {
+      "family": "TSMOM_VOL_24H",
+      "symbol": "BTCUSDT",
+      "timeframe": "1h",
+      "signals": 197,
+      "full": {
+        "closed_trades": 197,
+        "wins": 48,
+        "losses": 149,
+        "win_rate_percent": 24.37,
+        "net_r": -47.0745,
+        "profit_factor": 0.6863,
+        "expectancy_r": -0.239,
+        "max_drawdown_r": 81.1623
+      },
+      "first_half": {
+        "closed_trades": 98,
+        "wins": 26,
+        "losses": 72,
+        "win_rate_percent": 26.53,
+        "net_r": -41.618,
+        "profit_factor": 0.3909,
+        "expectancy_r": -0.4247,
+        "max_drawdown_r": 42.0941
+      },
+      "second_half": {
+        "closed_trades": 99,
+        "wins": 22,
+        "losses": 77,
+        "win_rate_percent": 22.22,
+        "net_r": -5.4565,
+        "profit_factor": 0.9333,
+        "expectancy_r": -0.0551,
+        "max_drawdown_r": 39.0682
+      },
+      "segment_robustness": 0.25,
       "checks": {
         "trades": true,
         "pf": false,
@@ -630,20 +630,20 @@
         "wins": 32,
         "losses": 175,
         "win_rate_percent": 15.46,
-        "net_r": -136.2699,
+        "net_r": -136.2679,
         "profit_factor": 0.3991,
         "expectancy_r": -0.6583,
-        "max_drawdown_r": 136.2699
+        "max_drawdown_r": 136.2679
       },
       "first_half": {
         "closed_trades": 103,
         "wins": 16,
         "losses": 87,
         "win_rate_percent": 15.53,
-        "net_r": -80.8317,
+        "net_r": -80.8297,
         "profit_factor": 0.2039,
         "expectancy_r": -0.7848,
-        "max_drawdown_r": 80.8317
+        "max_drawdown_r": 80.8297
       },
       "second_half": {
         "closed_trades": 104,
@@ -724,9 +724,9 @@
         "wins": 42,
         "losses": 146,
         "win_rate_percent": 22.34,
-        "net_r": -26.5687,
-        "profit_factor": 0.7977,
-        "expectancy_r": -0.1413,
+        "net_r": -26.6844,
+        "profit_factor": 0.797,
+        "expectancy_r": -0.1419,
         "max_drawdown_r": 48.7936
       },
       "first_half": {
@@ -734,9 +734,9 @@
         "wins": 25,
         "losses": 69,
         "win_rate_percent": 26.6,
-        "net_r": -24.7901,
-        "profit_factor": 0.5708,
-        "expectancy_r": -0.2637,
+        "net_r": -24.9058,
+        "profit_factor": 0.5697,
+        "expectancy_r": -0.265,
         "max_drawdown_r": 29.0986
       },
       "second_half": {
