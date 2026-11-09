@@ -1,6 +1,6 @@
 {
   "schema": "TRADINGCORE_XRP_REGIME_GATE_V1",
-  "generated_at_utc": "2026-11-08T09:30:36.800593+00:00",
+  "generated_at_utc": "2026-11-09T10:24:09.305173+00:00",
   "state": "NO_XRP_REGIME_CANDIDATE",
   "history_years": 5,
   "holdout_days": 365,
@@ -19,12 +19,12 @@
   "selection_rule": "Select once using discovery only; evaluate selected gate once on final-year holdout across Binance and OKX.",
   "execution_model": "next-bar-open; conservative TradingCore costs; adverse stop first; spot long-only; 1x capital cap",
   "discovery_window_utc": {
-    "start": "2021-11-08T04:00:00+00:00",
-    "end": "2025-11-06T03:59:59.999000+00:00"
+    "start": "2021-11-09T04:00:00+00:00",
+    "end": "2025-11-07T03:59:59.999000+00:00"
   },
   "holdout_window_utc": {
-    "start": "2025-11-10T04:00:00+00:00",
-    "end": "2026-11-08T04:00:00+00:00"
+    "start": "2025-11-11T04:00:00+00:00",
+    "end": "2026-11-09T04:00:00+00:00"
   },
   "selected_gate": null,
   "selected_holdout_passed_both_venues": false,
@@ -125,30 +125,18 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 20,
+              "signals": 22,
               "stats": {
-                "closed_trades": 20,
+                "closed_trades": 22,
                 "wins": 11,
-                "losses": 9,
-                "win_rate_percent": 55.0,
-                "net_r": 1.4633,
-                "profit_factor": 1.2456,
-                "expectancy_r": 0.0732,
-                "max_drawdown_r": 3.558
+                "losses": 11,
+                "win_rate_percent": 50.0,
+                "net_r": -0.6426,
+                "profit_factor": 0.9203,
+                "expectancy_r": -0.0292,
+                "max_drawdown_r": 5.6639
               },
               "recent_trades": [
-                {
-                  "signal_utc": "2022-04-25T08:00:00+00:00",
-                  "exit_utc": "2022-04-26T00:00:00+00:00",
-                  "r": 1.88943,
-                  "reason": "TARGET"
-                },
-                {
-                  "signal_utc": "2022-05-10T00:00:00+00:00",
-                  "exit_utc": "2022-05-11T04:00:00+00:00",
-                  "r": -0.01381,
-                  "reason": "TIME"
-                },
                 {
                   "signal_utc": "2022-05-11T20:00:00+00:00",
                   "exit_utc": "2022-05-12T04:00:00+00:00",
@@ -208,23 +196,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 12,
-              "stats": {
-                "closed_trades": 12,
-                "wins": 4,
-                "losses": 8,
-                "win_rate_percent": 33.33,
-                "net_r": -1.4738,
-                "profit_factor": 0.6519,
-                "expectancy_r": -0.1228,
-                "max_drawdown_r": 2.265
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -236,7 +208,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 10,
+              "stats": {
+                "closed_trades": 10,
+                "wins": 4,
+                "losses": 6,
+                "win_rate_percent": 40.0,
+                "net_r": 0.6322,
+                "profit_factor": 1.297,
+                "expectancy_r": 0.0632,
+                "max_drawdown_r": 1.9005
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2022-11-10T00:00:00+00:00",
                   "exit_utc": "2022-11-11T04:00:00+00:00",
@@ -626,30 +614,18 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 19,
+              "signals": 21,
               "stats": {
-                "closed_trades": 19,
+                "closed_trades": 21,
                 "wins": 12,
-                "losses": 7,
-                "win_rate_percent": 63.16,
-                "net_r": 1.0945,
-                "profit_factor": 1.1702,
-                "expectancy_r": 0.0576,
-                "max_drawdown_r": 3.1555
+                "losses": 9,
+                "win_rate_percent": 57.14,
+                "net_r": -1.0111,
+                "profit_factor": 0.8816,
+                "expectancy_r": -0.0481,
+                "max_drawdown_r": 5.261
               },
               "recent_trades": [
-                {
-                  "signal_utc": "2022-04-12T00:00:00+00:00",
-                  "exit_utc": "2022-04-13T04:00:00+00:00",
-                  "r": 0.57943,
-                  "reason": "TIME"
-                },
-                {
-                  "signal_utc": "2022-04-25T08:00:00+00:00",
-                  "exit_utc": "2022-04-26T00:00:00+00:00",
-                  "r": 1.88944,
-                  "reason": "TARGET"
-                },
                 {
                   "signal_utc": "2022-05-10T00:00:00+00:00",
                   "exit_utc": "2022-05-11T04:00:00+00:00",
@@ -709,23 +685,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 12,
-              "stats": {
-                "closed_trades": 12,
-                "wins": 6,
-                "losses": 6,
-                "win_rate_percent": 50.0,
-                "net_r": -0.8918,
-                "profit_factor": 0.7787,
-                "expectancy_r": -0.0743,
-                "max_drawdown_r": 2.1055
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -737,7 +697,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 10,
+              "stats": {
+                "closed_trades": 10,
+                "wins": 6,
+                "losses": 4,
+                "win_rate_percent": 60.0,
+                "net_r": 1.2138,
+                "profit_factor": 1.6311,
+                "expectancy_r": 0.1214,
+                "max_drawdown_r": 1.8245
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2022-11-10T00:00:00+00:00",
                   "exit_utc": "2022-11-11T04:00:00+00:00",
@@ -1133,16 +1109,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 7,
+              "signals": 9,
               "stats": {
-                "closed_trades": 7,
+                "closed_trades": 9,
                 "wins": 4,
-                "losses": 3,
-                "win_rate_percent": 57.14,
-                "net_r": 0.2967,
-                "profit_factor": 1.1171,
-                "expectancy_r": 0.0424,
-                "max_drawdown_r": 2.3456
+                "losses": 5,
+                "win_rate_percent": 44.44,
+                "net_r": -1.8092,
+                "profit_factor": 0.61,
+                "expectancy_r": -0.201,
+                "max_drawdown_r": 4.4516
               },
               "recent_trades": [
                 {
@@ -1186,23 +1162,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 7,
-              "stats": {
-                "closed_trades": 7,
-                "wins": 2,
-                "losses": 5,
-                "win_rate_percent": 28.57,
-                "net_r": -1.78,
-                "profit_factor": 0.3916,
-                "expectancy_r": -0.2543,
-                "max_drawdown_r": 2.1059
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -1214,7 +1174,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 5,
+              "stats": {
+                "closed_trades": 5,
+                "wins": 2,
+                "losses": 3,
+                "win_rate_percent": 40.0,
+                "net_r": 0.3259,
+                "profit_factor": 1.3974,
+                "expectancy_r": 0.0652,
+                "max_drawdown_r": 0.699
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -1478,16 +1454,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 6,
+              "signals": 8,
               "stats": {
-                "closed_trades": 6,
+                "closed_trades": 8,
                 "wins": 4,
-                "losses": 2,
-                "win_rate_percent": 66.67,
-                "net_r": 0.708,
-                "profit_factor": 1.3302,
-                "expectancy_r": 0.118,
-                "max_drawdown_r": 1.9532
+                "losses": 4,
+                "win_rate_percent": 50.0,
+                "net_r": -1.3975,
+                "profit_factor": 0.6712,
+                "expectancy_r": -0.1747,
+                "max_drawdown_r": 4.0588
               },
               "recent_trades": [
                 {
@@ -1525,23 +1501,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 7,
-              "stats": {
-                "closed_trades": 7,
-                "wins": 3,
-                "losses": 4,
-                "win_rate_percent": 42.86,
-                "net_r": -1.3007,
-                "profit_factor": 0.5371,
-                "expectancy_r": -0.1858,
-                "max_drawdown_r": 2.1055
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -1553,7 +1513,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 5,
+              "stats": {
+                "closed_trades": 5,
+                "wins": 3,
+                "losses": 2,
+                "win_rate_percent": 60.0,
+                "net_r": 0.8048,
+                "profit_factor": 2.1427,
+                "expectancy_r": 0.161,
+                "max_drawdown_r": 0.7044
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -2339,16 +2315,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 4,
+              "signals": 6,
               "stats": {
-                "closed_trades": 4,
+                "closed_trades": 6,
                 "wins": 2,
-                "losses": 2,
-                "win_rate_percent": 50.0,
-                "net_r": 0.1063,
-                "profit_factor": 1.0715,
-                "expectancy_r": 0.0266,
-                "max_drawdown_r": 1.4869
+                "losses": 4,
+                "win_rate_percent": 33.33,
+                "net_r": -1.9996,
+                "profit_factor": 0.4434,
+                "expectancy_r": -0.3333,
+                "max_drawdown_r": 3.5928
               },
               "recent_trades": [
                 {
@@ -2374,23 +2350,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 6,
-              "stats": {
-                "closed_trades": 6,
-                "wins": 2,
-                "losses": 4,
-                "win_rate_percent": 33.33,
-                "net_r": -2.536,
-                "profit_factor": 0.3112,
-                "expectancy_r": -0.4227,
-                "max_drawdown_r": 2.6807
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -2402,7 +2362,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 4,
+              "stats": {
+                "closed_trades": 4,
+                "wins": 2,
+                "losses": 2,
+                "win_rate_percent": 50.0,
+                "net_r": -0.4301,
+                "profit_factor": 0.7271,
+                "expectancy_r": -0.1075,
+                "max_drawdown_r": 1.576
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -2564,7 +2540,7 @@
               ]
             }
           ],
-          "positive_discovery_segments": 1,
+          "positive_discovery_segments": 0,
           "discovery_checks": {
             "trades": true,
             "profit_factor": false,
@@ -2696,16 +2672,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 3,
+              "signals": 5,
               "stats": {
-                "closed_trades": 3,
+                "closed_trades": 5,
                 "wins": 2,
-                "losses": 1,
-                "win_rate_percent": 66.67,
-                "net_r": 0.5155,
-                "profit_factor": 1.4696,
-                "expectancy_r": 0.1718,
-                "max_drawdown_r": 1.0977
+                "losses": 3,
+                "win_rate_percent": 40.0,
+                "net_r": -1.5901,
+                "profit_factor": 0.5036,
+                "expectancy_r": -0.318,
+                "max_drawdown_r": 3.2032
               },
               "recent_trades": [
                 {
@@ -2725,23 +2701,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 6,
-              "stats": {
-                "closed_trades": 6,
-                "wins": 2,
-                "losses": 4,
-                "win_rate_percent": 33.33,
-                "net_r": -2.5255,
-                "profit_factor": 0.3135,
-                "expectancy_r": -0.4209,
-                "max_drawdown_r": 2.6594
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -2753,7 +2713,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 4,
+              "stats": {
+                "closed_trades": 4,
+                "wins": 2,
+                "losses": 2,
+                "win_rate_percent": 50.0,
+                "net_r": -0.42,
+                "profit_factor": 0.7331,
+                "expectancy_r": -0.105,
+                "max_drawdown_r": 1.5734
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -2915,7 +2891,7 @@
               ]
             }
           ],
-          "positive_discovery_segments": 1,
+          "positive_discovery_segments": 0,
           "discovery_checks": {
             "trades": true,
             "profit_factor": false,
@@ -3053,16 +3029,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 4,
+              "signals": 6,
               "stats": {
-                "closed_trades": 4,
+                "closed_trades": 6,
                 "wins": 2,
-                "losses": 2,
-                "win_rate_percent": 50.0,
-                "net_r": 0.1063,
-                "profit_factor": 1.0715,
-                "expectancy_r": 0.0266,
-                "max_drawdown_r": 1.4869
+                "losses": 4,
+                "win_rate_percent": 33.33,
+                "net_r": -1.9996,
+                "profit_factor": 0.4434,
+                "expectancy_r": -0.3333,
+                "max_drawdown_r": 3.5928
               },
               "recent_trades": [
                 {
@@ -3088,23 +3064,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 5,
-              "stats": {
-                "closed_trades": 5,
-                "wins": 2,
-                "losses": 3,
-                "win_rate_percent": 40.0,
-                "net_r": -1.4114,
-                "profit_factor": 0.4481,
-                "expectancy_r": -0.2823,
-                "max_drawdown_r": 2.1059
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -3116,7 +3076,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 3,
+              "stats": {
+                "closed_trades": 3,
+                "wins": 2,
+                "losses": 1,
+                "win_rate_percent": 66.67,
+                "net_r": 0.6946,
+                "profit_factor": 2.5388,
+                "expectancy_r": 0.2315,
+                "max_drawdown_r": 0.4514
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -3368,16 +3344,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 3,
+              "signals": 5,
               "stats": {
-                "closed_trades": 3,
+                "closed_trades": 5,
                 "wins": 2,
-                "losses": 1,
-                "win_rate_percent": 66.67,
-                "net_r": 0.5155,
-                "profit_factor": 1.4696,
-                "expectancy_r": 0.1718,
-                "max_drawdown_r": 1.0977
+                "losses": 3,
+                "win_rate_percent": 40.0,
+                "net_r": -1.5901,
+                "profit_factor": 0.5036,
+                "expectancy_r": -0.318,
+                "max_drawdown_r": 3.2032
               },
               "recent_trades": [
                 {
@@ -3397,23 +3373,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 5,
-              "stats": {
-                "closed_trades": 5,
-                "wins": 2,
-                "losses": 3,
-                "win_rate_percent": 40.0,
-                "net_r": -1.4054,
-                "profit_factor": 0.4508,
-                "expectancy_r": -0.2811,
-                "max_drawdown_r": 2.1055
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -3425,7 +3385,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 3,
+              "stats": {
+                "closed_trades": 3,
+                "wins": 2,
+                "losses": 1,
+                "win_rate_percent": 66.67,
+                "net_r": 0.7002,
+                "profit_factor": 2.5449,
+                "expectancy_r": 0.2334,
+                "max_drawdown_r": 0.4532
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -3683,30 +3659,18 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 12,
+              "signals": 14,
               "stats": {
-                "closed_trades": 12,
+                "closed_trades": 14,
                 "wins": 6,
-                "losses": 6,
-                "win_rate_percent": 50.0,
-                "net_r": 0.1848,
-                "profit_factor": 1.0492,
-                "expectancy_r": 0.0154,
-                "max_drawdown_r": 3.1217
+                "losses": 8,
+                "win_rate_percent": 42.86,
+                "net_r": -1.9211,
+                "profit_factor": 0.6723,
+                "expectancy_r": -0.1372,
+                "max_drawdown_r": 5.2276
               },
               "recent_trades": [
-                {
-                  "signal_utc": "2022-01-06T04:00:00+00:00",
-                  "exit_utc": "2022-01-07T08:00:00+00:00",
-                  "r": -0.17615,
-                  "reason": "TIME"
-                },
-                {
-                  "signal_utc": "2022-02-12T00:00:00+00:00",
-                  "exit_utc": "2022-02-13T04:00:00+00:00",
-                  "r": 1.13249,
-                  "reason": "TIME"
-                },
                 {
                   "signal_utc": "2022-04-07T00:00:00+00:00",
                   "exit_utc": "2022-04-08T04:00:00+00:00",
@@ -3766,23 +3730,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 10,
-              "stats": {
-                "closed_trades": 10,
-                "wins": 5,
-                "losses": 5,
-                "win_rate_percent": 50.0,
-                "net_r": -1.4253,
-                "profit_factor": 0.6373,
-                "expectancy_r": -0.1425,
-                "max_drawdown_r": 2.1059
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -3794,7 +3742,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 8,
+              "stats": {
+                "closed_trades": 8,
+                "wins": 5,
+                "losses": 3,
+                "win_rate_percent": 62.5,
+                "net_r": 0.6806,
+                "profit_factor": 1.3732,
+                "expectancy_r": 0.0851,
+                "max_drawdown_r": 1.8236
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2022-11-10T00:00:00+00:00",
                   "exit_utc": "2022-11-11T04:00:00+00:00",
@@ -4142,24 +4106,18 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 11,
+              "signals": 13,
               "stats": {
-                "closed_trades": 11,
+                "closed_trades": 13,
                 "wins": 7,
-                "losses": 4,
-                "win_rate_percent": 63.64,
-                "net_r": -0.2946,
-                "profit_factor": 0.9306,
-                "expectancy_r": -0.0268,
-                "max_drawdown_r": 2.7318
+                "losses": 6,
+                "win_rate_percent": 53.85,
+                "net_r": -2.4001,
+                "profit_factor": 0.6222,
+                "expectancy_r": -0.1846,
+                "max_drawdown_r": 4.8373
               },
               "recent_trades": [
-                {
-                  "signal_utc": "2022-01-06T04:00:00+00:00",
-                  "exit_utc": "2022-01-07T04:00:00+00:00",
-                  "r": -1.06947,
-                  "reason": "STOP"
-                },
                 {
                   "signal_utc": "2022-02-12T00:00:00+00:00",
                   "exit_utc": "2022-02-13T04:00:00+00:00",
@@ -4219,23 +4177,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 12,
-              "stats": {
-                "closed_trades": 12,
-                "wins": 6,
-                "losses": 6,
-                "win_rate_percent": 50.0,
-                "net_r": -1.2986,
-                "profit_factor": 0.6868,
-                "expectancy_r": -0.1082,
-                "max_drawdown_r": 2.3081
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -4247,7 +4189,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 10,
+              "stats": {
+                "closed_trades": 10,
+                "wins": 6,
+                "losses": 4,
+                "win_rate_percent": 60.0,
+                "net_r": 0.807,
+                "profit_factor": 1.3954,
+                "expectancy_r": 0.0807,
+                "max_drawdown_r": 1.8245
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2022-11-10T00:00:00+00:00",
                   "exit_utc": "2022-11-11T04:00:00+00:00",
@@ -4457,7 +4415,7 @@
               ]
             }
           ],
-          "positive_discovery_segments": 1,
+          "positive_discovery_segments": 2,
           "discovery_checks": {
             "trades": true,
             "profit_factor": false,
@@ -4613,16 +4571,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 5,
+              "signals": 7,
               "stats": {
-                "closed_trades": 5,
+                "closed_trades": 7,
                 "wins": 3,
-                "losses": 2,
-                "win_rate_percent": 60.0,
-                "net_r": 0.294,
-                "profit_factor": 1.1977,
-                "expectancy_r": 0.0588,
-                "max_drawdown_r": 1.2992
+                "losses": 4,
+                "win_rate_percent": 42.86,
+                "net_r": -1.8119,
+                "profit_factor": 0.4957,
+                "expectancy_r": -0.2588,
+                "max_drawdown_r": 3.4051
               },
               "recent_trades": [
                 {
@@ -4654,23 +4612,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 6,
-              "stats": {
-                "closed_trades": 6,
-                "wins": 2,
-                "losses": 4,
-                "win_rate_percent": 33.33,
-                "net_r": -1.6589,
-                "profit_factor": 0.4086,
-                "expectancy_r": -0.2765,
-                "max_drawdown_r": 2.1059
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -4682,7 +4624,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 4,
+              "stats": {
+                "closed_trades": 4,
+                "wins": 2,
+                "losses": 2,
+                "win_rate_percent": 50.0,
+                "net_r": 0.447,
+                "profit_factor": 1.6395,
+                "expectancy_r": 0.1118,
+                "max_drawdown_r": 0.699
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -4903,16 +4861,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 4,
+              "signals": 6,
               "stats": {
-                "closed_trades": 4,
+                "closed_trades": 6,
                 "wins": 3,
-                "losses": 1,
-                "win_rate_percent": 75.0,
-                "net_r": 0.7067,
-                "profit_factor": 1.6438,
-                "expectancy_r": 0.1767,
-                "max_drawdown_r": 1.0977
+                "losses": 3,
+                "win_rate_percent": 50.0,
+                "net_r": -1.3988,
+                "profit_factor": 0.5633,
+                "expectancy_r": -0.2331,
+                "max_drawdown_r": 3.2032
               },
               "recent_trades": [
                 {
@@ -4938,23 +4896,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 7,
-              "stats": {
-                "closed_trades": 7,
-                "wins": 3,
-                "losses": 4,
-                "win_rate_percent": 42.86,
-                "net_r": -1.3007,
-                "profit_factor": 0.5371,
-                "expectancy_r": -0.1858,
-                "max_drawdown_r": 2.1055
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -4966,7 +4908,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 5,
+              "stats": {
+                "closed_trades": 5,
+                "wins": 3,
+                "losses": 2,
+                "win_rate_percent": 60.0,
+                "net_r": 0.8048,
+                "profit_factor": 2.1427,
+                "expectancy_r": 0.161,
+                "max_drawdown_r": 0.7044
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -5205,16 +5163,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 4,
+              "signals": 6,
               "stats": {
-                "closed_trades": 4,
+                "closed_trades": 6,
                 "wins": 2,
-                "losses": 2,
-                "win_rate_percent": 50.0,
-                "net_r": 0.1063,
-                "profit_factor": 1.0715,
-                "expectancy_r": 0.0266,
-                "max_drawdown_r": 1.4869
+                "losses": 4,
+                "win_rate_percent": 33.33,
+                "net_r": -1.9996,
+                "profit_factor": 0.4434,
+                "expectancy_r": -0.3333,
+                "max_drawdown_r": 3.5928
               },
               "recent_trades": [
                 {
@@ -5240,23 +5198,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 6,
-              "stats": {
-                "closed_trades": 6,
-                "wins": 2,
-                "losses": 4,
-                "win_rate_percent": 33.33,
-                "net_r": -2.536,
-                "profit_factor": 0.3112,
-                "expectancy_r": -0.4227,
-                "max_drawdown_r": 2.6807
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -5268,7 +5210,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 4,
+              "stats": {
+                "closed_trades": 4,
+                "wins": 2,
+                "losses": 2,
+                "win_rate_percent": 50.0,
+                "net_r": -0.4301,
+                "profit_factor": 0.7271,
+                "expectancy_r": -0.1075,
+                "max_drawdown_r": 1.576
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -5388,7 +5346,7 @@
               ]
             }
           ],
-          "positive_discovery_segments": 2,
+          "positive_discovery_segments": 1,
           "discovery_checks": {
             "trades": true,
             "profit_factor": false,
@@ -5513,16 +5471,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 3,
+              "signals": 5,
               "stats": {
-                "closed_trades": 3,
+                "closed_trades": 5,
                 "wins": 2,
-                "losses": 1,
-                "win_rate_percent": 66.67,
-                "net_r": 0.5155,
-                "profit_factor": 1.4696,
-                "expectancy_r": 0.1718,
-                "max_drawdown_r": 1.0977
+                "losses": 3,
+                "win_rate_percent": 40.0,
+                "net_r": -1.5901,
+                "profit_factor": 0.5036,
+                "expectancy_r": -0.318,
+                "max_drawdown_r": 3.2032
               },
               "recent_trades": [
                 {
@@ -5542,23 +5500,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 6,
-              "stats": {
-                "closed_trades": 6,
-                "wins": 2,
-                "losses": 4,
-                "win_rate_percent": 33.33,
-                "net_r": -2.5255,
-                "profit_factor": 0.3135,
-                "expectancy_r": -0.4209,
-                "max_drawdown_r": 2.6594
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -5570,7 +5512,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 4,
+              "stats": {
+                "closed_trades": 4,
+                "wins": 2,
+                "losses": 2,
+                "win_rate_percent": 50.0,
+                "net_r": -0.42,
+                "profit_factor": 0.7331,
+                "expectancy_r": -0.105,
+                "max_drawdown_r": 1.5734
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -5696,7 +5654,7 @@
               ]
             }
           ],
-          "positive_discovery_segments": 1,
+          "positive_discovery_segments": 0,
           "discovery_checks": {
             "trades": true,
             "profit_factor": false,
@@ -5827,16 +5785,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 4,
+              "signals": 6,
               "stats": {
-                "closed_trades": 4,
+                "closed_trades": 6,
                 "wins": 2,
-                "losses": 2,
-                "win_rate_percent": 50.0,
-                "net_r": 0.1063,
-                "profit_factor": 1.0715,
-                "expectancy_r": 0.0266,
-                "max_drawdown_r": 1.4869
+                "losses": 4,
+                "win_rate_percent": 33.33,
+                "net_r": -1.9996,
+                "profit_factor": 0.4434,
+                "expectancy_r": -0.3333,
+                "max_drawdown_r": 3.5928
               },
               "recent_trades": [
                 {
@@ -5862,23 +5820,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09739,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 5,
-              "stats": {
-                "closed_trades": 5,
-                "wins": 2,
-                "losses": 3,
-                "win_rate_percent": 40.0,
-                "net_r": -1.4114,
-                "profit_factor": 0.4481,
-                "expectancy_r": -0.2823,
-                "max_drawdown_r": 2.1059
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -5890,7 +5832,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03451,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 3,
+              "stats": {
+                "closed_trades": 3,
+                "wins": 2,
+                "losses": 1,
+                "win_rate_percent": 66.67,
+                "net_r": 0.6946,
+                "profit_factor": 2.5388,
+                "expectancy_r": 0.2315,
+                "max_drawdown_r": 0.4514
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
@@ -6105,16 +6063,16 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 3,
+              "signals": 5,
               "stats": {
-                "closed_trades": 3,
+                "closed_trades": 5,
                 "wins": 2,
-                "losses": 1,
-                "win_rate_percent": 66.67,
-                "net_r": 0.5155,
-                "profit_factor": 1.4696,
-                "expectancy_r": 0.1718,
-                "max_drawdown_r": 1.0977
+                "losses": 3,
+                "win_rate_percent": 40.0,
+                "net_r": -1.5901,
+                "profit_factor": 0.5036,
+                "expectancy_r": -0.318,
+                "max_drawdown_r": 3.2032
               },
               "recent_trades": [
                 {
@@ -6134,23 +6092,7 @@
                   "exit_utc": "2022-11-08T00:00:00+00:00",
                   "r": -1.09766,
                   "reason": "STOP"
-                }
-              ]
-            },
-            {
-              "window": "DISCOVERY_SEGMENT_2",
-              "signals": 5,
-              "stats": {
-                "closed_trades": 5,
-                "wins": 2,
-                "losses": 3,
-                "win_rate_percent": 40.0,
-                "net_r": -1.4054,
-                "profit_factor": 0.4508,
-                "expectancy_r": -0.2811,
-                "max_drawdown_r": 2.1055
-              },
-              "recent_trades": [
+                },
                 {
                   "signal_utc": "2022-11-08T04:00:00+00:00",
                   "exit_utc": "2022-11-08T16:00:00+00:00",
@@ -6162,7 +6104,23 @@
                   "exit_utc": "2022-11-09T08:00:00+00:00",
                   "r": -1.03425,
                   "reason": "STOP"
-                },
+                }
+              ]
+            },
+            {
+              "window": "DISCOVERY_SEGMENT_2",
+              "signals": 3,
+              "stats": {
+                "closed_trades": 3,
+                "wins": 2,
+                "losses": 1,
+                "win_rate_percent": 66.67,
+                "net_r": 0.7002,
+                "profit_factor": 2.5449,
+                "expectancy_r": 0.2334,
+                "max_drawdown_r": 0.4532
+              },
+              "recent_trades": [
                 {
                   "signal_utc": "2023-04-21T20:00:00+00:00",
                   "exit_utc": "2023-04-23T00:00:00+00:00",
