@@ -1,6 +1,6 @@
 {
   "schema": "TRADINGCORE_XRP_REGIME_GATE_V1",
-  "generated_at_utc": "2026-11-23T11:19:10.039370+00:00",
+  "generated_at_utc": "2026-11-24T12:59:13.338231+00:00",
   "state": "NO_XRP_REGIME_CANDIDATE",
   "history_years": 5,
   "holdout_days": 365,
@@ -19,12 +19,12 @@
   "selection_rule": "Select once using discovery only; evaluate selected gate once on final-year holdout across Binance and OKX.",
   "execution_model": "next-bar-open; conservative TradingCore costs; adverse stop first; spot long-only; 1x capital cap",
   "discovery_window_utc": {
-    "start": "2021-11-23T04:00:00+00:00",
-    "end": "2025-11-21T03:59:59.999000+00:00"
+    "start": "2021-11-24T08:00:00+00:00",
+    "end": "2025-11-22T07:59:59.999000+00:00"
   },
   "holdout_window_utc": {
-    "start": "2025-11-25T04:00:00+00:00",
-    "end": "2026-11-23T04:00:00+00:00"
+    "start": "2025-11-26T08:00:00+00:00",
+    "end": "2026-11-24T08:00:00+00:00"
   },
   "selected_gate": null,
   "selected_holdout_passed_both_venues": false,
@@ -1008,15 +1008,15 @@
         "BINANCE": {
           "discovery": {
             "window": "DISCOVERY",
-            "signals": 25,
+            "signals": 26,
             "stats": {
-              "closed_trades": 25,
-              "wins": 10,
+              "closed_trades": 26,
+              "wins": 11,
               "losses": 15,
-              "win_rate_percent": 40.0,
-              "net_r": -4.5084,
-              "profit_factor": 0.623,
-              "expectancy_r": -0.1803,
+              "win_rate_percent": 42.31,
+              "net_r": -4.2046,
+              "profit_factor": 0.6484,
+              "expectancy_r": -0.1617,
               "max_drawdown_r": 9.7728
             },
             "recent_trades": [
@@ -1097,18 +1097,24 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 9,
+              "signals": 10,
               "stats": {
-                "closed_trades": 9,
-                "wins": 4,
+                "closed_trades": 10,
+                "wins": 5,
                 "losses": 5,
-                "win_rate_percent": 44.44,
-                "net_r": -1.8092,
-                "profit_factor": 0.61,
-                "expectancy_r": -0.201,
+                "win_rate_percent": 50.0,
+                "net_r": -1.5054,
+                "profit_factor": 0.6755,
+                "expectancy_r": -0.1505,
                 "max_drawdown_r": 4.4516
               },
               "recent_trades": [
+                {
+                  "signal_utc": "2021-12-30T00:00:00+00:00",
+                  "exit_utc": "2021-12-31T04:00:00+00:00",
+                  "r": 0.30382,
+                  "reason": "TIME"
+                },
                 {
                   "signal_utc": "2022-02-12T00:00:00+00:00",
                   "exit_utc": "2022-02-13T04:00:00+00:00",
@@ -1353,15 +1359,15 @@
         "OKX": {
           "discovery": {
             "window": "DISCOVERY",
-            "signals": 24,
+            "signals": 25,
             "stats": {
-              "closed_trades": 24,
-              "wins": 11,
+              "closed_trades": 25,
+              "wins": 12,
               "losses": 13,
-              "win_rate_percent": 45.83,
-              "net_r": -3.5845,
-              "profit_factor": 0.6858,
-              "expectancy_r": -0.1494,
+              "win_rate_percent": 48.0,
+              "net_r": -3.2753,
+              "profit_factor": 0.7129,
+              "expectancy_r": -0.131,
               "max_drawdown_r": 8.8453
             },
             "recent_trades": [
@@ -1442,18 +1448,24 @@
           "discovery_segments": [
             {
               "window": "DISCOVERY_SEGMENT_1",
-              "signals": 8,
+              "signals": 9,
               "stats": {
-                "closed_trades": 8,
-                "wins": 4,
+                "closed_trades": 9,
+                "wins": 5,
                 "losses": 4,
-                "win_rate_percent": 50.0,
-                "net_r": -1.3975,
-                "profit_factor": 0.6712,
-                "expectancy_r": -0.1747,
+                "win_rate_percent": 55.56,
+                "net_r": -1.0883,
+                "profit_factor": 0.7439,
+                "expectancy_r": -0.1209,
                 "max_drawdown_r": 4.0588
               },
               "recent_trades": [
+                {
+                  "signal_utc": "2021-12-30T00:00:00+00:00",
+                  "exit_utc": "2021-12-31T04:00:00+00:00",
+                  "r": 0.30919,
+                  "reason": "TIME"
+                },
                 {
                   "signal_utc": "2022-02-12T00:00:00+00:00",
                   "exit_utc": "2022-02-13T04:00:00+00:00",
