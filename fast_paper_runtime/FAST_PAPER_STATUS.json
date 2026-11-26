@@ -1,12 +1,12 @@
 {
   "schema": "TRADINGCORE_FAST_PAPER_CLOUD_V1",
-  "updated_at_utc": "2026-11-25T22:28:37.102062+00:00",
+  "updated_at_utc": "2026-11-26T04:59:08.703758+00:00",
   "mode": "EXPERIMENTAL_FAST_PAPER_ONLY",
   "protocol_version": "FAST_PAPER_LAB_V1",
   "protocol_fingerprint": "72c1807b38e5d5b9e1dbcecdc36a5041cecfd746354e89b970a1cf234b8725b6",
   "forward_freeze_utc": "2026-08-15T11:15:00+00:00",
   "lane_count": 36,
-  "total_closed_trade_observations_across_independent_lanes": 82,
+  "total_closed_trade_observations_across_independent_lanes": 85,
   "lanes_with_30_or_more": 0,
   "locked_lane_decisions": 0,
   "promising_lanes": [],
@@ -49,24 +49,25 @@
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
       "signals": 2,
-      "closed_trades": 1,
+      "closed_trades": 2,
       "stats": {
-        "closed_trades": 1,
-        "wins": 0,
+        "closed_trades": 2,
+        "wins": 1,
         "losses": 1,
-        "win_rate_percent": 0.0,
-        "net_pnl": -1.20842547,
-        "profit_factor": 0.0,
-        "expectancy_r": -1.2084,
-        "average_r": -1.2084,
+        "win_rate_percent": 50.0,
+        "net_pnl": 1.11259735,
+        "profit_factor": 1.921,
+        "expectancy_r": 0.5563,
+        "average_r": 0.5563,
         "max_drawdown_r": 1.2084,
         "max_loss_streak": 1,
         "rolling_window": 20,
-        "rolling_trades": 1,
+        "rolling_trades": 2,
         "rolling_expectancy_r": null,
-        "trading_days": 1,
+        "trading_days": 2,
         "trading_day_list": [
-          "2026-10-15"
+          "2026-10-15",
+          "2026-11-26"
         ],
         "regimes_observed": [
           "BTCUSDT"
@@ -74,15 +75,7 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": {
-        "entry": 58237.93,
-        "stop": 57240.81,
-        "target": 60730.72,
-        "quantity": 0.0010028883183568651,
-        "risk_amount": 1.0,
-        "entry_index": 10478,
-        "entry_utc": "2026-11-25T15:00:00+00:00"
-      },
+      "open_position": null,
       "trades": [
         {
           "entry_utc": "2026-10-15T02:45:00+00:00",
@@ -92,6 +85,16 @@
           "exit_reason": "STOP_LOSS",
           "net_pnl": -1.20842547,
           "r_multiple": -1.20842547,
+          "real_order_sent": false
+        },
+        {
+          "entry_utc": "2026-11-25T15:00:00+00:00",
+          "closed_utc": "2026-11-26T00:15:00+00:00",
+          "entry": 58237.93,
+          "exit": 60730.72,
+          "exit_reason": "TAKE_PROFIT",
+          "net_pnl": 2.32102282,
+          "r_multiple": 2.32102282,
           "real_order_sent": false
         }
       ],
@@ -585,24 +588,25 @@
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
       "signals": 2,
-      "closed_trades": 1,
+      "closed_trades": 2,
       "stats": {
-        "closed_trades": 1,
-        "wins": 1,
+        "closed_trades": 2,
+        "wins": 2,
         "losses": 0,
         "win_rate_percent": 100.0,
-        "net_pnl": 0.57221283,
+        "net_pnl": 2.90597061,
         "profit_factor": null,
-        "expectancy_r": 0.5722,
-        "average_r": 0.5722,
+        "expectancy_r": 1.453,
+        "average_r": 1.453,
         "max_drawdown_r": 0.0,
         "max_loss_streak": 0,
         "rolling_window": 20,
-        "rolling_trades": 1,
+        "rolling_trades": 2,
         "rolling_expectancy_r": null,
-        "trading_days": 1,
+        "trading_days": 2,
         "trading_day_list": [
-          "2026-10-16"
+          "2026-10-16",
+          "2026-11-26"
         ],
         "regimes_observed": [
           "BNBUSDT"
@@ -610,15 +614,7 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": {
-        "entry": 536.15,
-        "stop": 526.19,
-        "target": 561.04,
-        "quantity": 0.10040160642570359,
-        "risk_amount": 1.0,
-        "entry_index": 10478,
-        "entry_utc": "2026-11-25T15:00:00+00:00"
-      },
+      "open_position": null,
       "trades": [
         {
           "entry_utc": "2026-10-15T02:45:00+00:00",
@@ -628,6 +624,16 @@
           "exit_reason": "TIME_STOP",
           "net_pnl": 0.57221283,
           "r_multiple": 0.57221283,
+          "real_order_sent": false
+        },
+        {
+          "entry_utc": "2026-11-25T15:00:00+00:00",
+          "closed_utc": "2026-11-26T00:30:00+00:00",
+          "entry": 536.15,
+          "exit": 561.04,
+          "exit_reason": "TAKE_PROFIT",
+          "net_pnl": 2.33375778,
+          "r_multiple": 2.33375778,
           "real_order_sent": false
         }
       ],
@@ -1220,27 +1226,28 @@
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
       "signals": 5,
-      "closed_trades": 4,
+      "closed_trades": 5,
       "stats": {
-        "closed_trades": 4,
-        "wins": 1,
+        "closed_trades": 5,
+        "wins": 2,
         "losses": 3,
-        "win_rate_percent": 25.0,
-        "net_pnl": -3.02891896,
-        "profit_factor": 0.159,
-        "expectancy_r": -0.7572,
-        "average_r": -0.7572,
+        "win_rate_percent": 40.0,
+        "net_pnl": -0.65449301,
+        "profit_factor": 0.818,
+        "expectancy_r": -0.1309,
+        "average_r": -0.1309,
         "max_drawdown_r": 3.6025,
         "max_loss_streak": 3,
         "rolling_window": 20,
-        "rolling_trades": 4,
+        "rolling_trades": 5,
         "rolling_expectancy_r": null,
-        "trading_days": 4,
+        "trading_days": 5,
         "trading_day_list": [
           "2026-08-24",
           "2026-09-10",
           "2026-09-24",
-          "2026-10-16"
+          "2026-10-16",
+          "2026-11-26"
         ],
         "regimes_observed": [
           "SOLUSDT"
@@ -1248,15 +1255,7 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": {
-        "entry": 67.41,
-        "stop": 65.75,
-        "target": 71.56,
-        "quantity": 0.6024096385542181,
-        "risk_amount": 1.0,
-        "entry_index": 10478,
-        "entry_utc": "2026-11-25T15:00:00+00:00"
-      },
+      "open_position": null,
       "trades": [
         {
           "entry_utc": "2026-08-23T15:00:00+00:00",
@@ -1296,6 +1295,16 @@
           "exit_reason": "TIME_STOP",
           "net_pnl": 0.57355848,
           "r_multiple": 0.57355848,
+          "real_order_sent": false
+        },
+        {
+          "entry_utc": "2026-11-25T15:00:00+00:00",
+          "closed_utc": "2026-11-26T00:30:00+00:00",
+          "entry": 67.41,
+          "exit": 71.56,
+          "exit_reason": "TAKE_PROFIT",
+          "net_pnl": 2.37442595,
+          "r_multiple": 2.37442595,
           "real_order_sent": false
         }
       ],
