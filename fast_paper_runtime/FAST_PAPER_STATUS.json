@@ -1,12 +1,12 @@
 {
   "schema": "TRADINGCORE_FAST_PAPER_CLOUD_V1",
-  "updated_at_utc": "2026-11-27T08:15:26.575293+00:00",
+  "updated_at_utc": "2026-11-27T18:54:47.908470+00:00",
   "mode": "EXPERIMENTAL_FAST_PAPER_ONLY",
   "protocol_version": "FAST_PAPER_LAB_V1",
   "protocol_fingerprint": "72c1807b38e5d5b9e1dbcecdc36a5041cecfd746354e89b970a1cf234b8725b6",
   "forward_freeze_utc": "2026-08-15T11:15:00+00:00",
   "lane_count": 36,
-  "total_closed_trade_observations_across_independent_lanes": 87,
+  "total_closed_trade_observations_across_independent_lanes": 88,
   "lanes_with_30_or_more": 0,
   "locked_lane_decisions": 0,
   "promising_lanes": [],
@@ -255,7 +255,7 @@
       "symbol": "ETHUSDT",
       "timeframe": "15m",
       "hypothesis": "MR_VWAP_OVERSHOOT_RECLAIM",
-      "signals": 0,
+      "signals": 1,
       "closed_trades": 0,
       "stats": {
         "closed_trades": 0,
@@ -277,7 +277,15 @@
         "regime_count": 0
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 1660.51,
+        "stop": 1632.7,
+        "target": 1717.96,
+        "quantity": 0.03595828838547292,
+        "risk_amount": 1.0,
+        "entry_index": 10671,
+        "entry_utc": "2026-11-27T15:15:00+00:00"
+      },
       "trades": [],
       "decision": null
     },
@@ -439,28 +447,29 @@
       "timeframe": "30m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
       "signals": 6,
-      "closed_trades": 5,
+      "closed_trades": 6,
       "stats": {
-        "closed_trades": 5,
+        "closed_trades": 6,
         "wins": 1,
-        "losses": 4,
-        "win_rate_percent": 20.0,
-        "net_pnl": -4.70393729,
-        "profit_factor": 0.007,
-        "expectancy_r": -0.9408,
-        "average_r": -0.9408,
-        "max_drawdown_r": 4.7039,
-        "max_loss_streak": 3,
+        "losses": 5,
+        "win_rate_percent": 16.67,
+        "net_pnl": -5.89765578,
+        "profit_factor": 0.006,
+        "expectancy_r": -0.9829,
+        "average_r": -0.9829,
+        "max_drawdown_r": 5.8977,
+        "max_loss_streak": 4,
         "rolling_window": 20,
-        "rolling_trades": 5,
+        "rolling_trades": 6,
         "rolling_expectancy_r": null,
-        "trading_days": 5,
+        "trading_days": 6,
         "trading_day_list": [
           "2026-08-25",
           "2026-08-29",
           "2026-10-23",
           "2026-10-30",
-          "2026-11-14"
+          "2026-11-14",
+          "2026-11-27"
         ],
         "regimes_observed": [
           "ETHUSDT"
@@ -468,15 +477,7 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": {
-        "entry": 1692.54,
-        "stop": 1666.53,
-        "target": 1757.57,
-        "quantity": 0.03844675124951943,
-        "risk_amount": 1.0,
-        "entry_index": 5288,
-        "entry_utc": "2026-11-26T16:00:00+00:00"
-      },
+      "open_position": null,
       "trades": [
         {
           "entry_utc": "2026-08-25T08:30:00+00:00",
@@ -526,6 +527,16 @@
           "exit_reason": "STOP_LOSS",
           "net_pnl": -1.15588898,
           "r_multiple": -1.15588898,
+          "real_order_sent": false
+        },
+        {
+          "entry_utc": "2026-11-26T16:00:00+00:00",
+          "closed_utc": "2026-11-27T15:00:00+00:00",
+          "entry": 1692.54,
+          "exit": 1666.53,
+          "exit_reason": "STOP_LOSS",
+          "net_pnl": -1.19371849,
+          "r_multiple": -1.19371849,
           "real_order_sent": false
         }
       ],
@@ -598,7 +609,7 @@
       "symbol": "BNBUSDT",
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 2,
+      "signals": 3,
       "closed_trades": 2,
       "stats": {
         "closed_trades": 2,
@@ -625,7 +636,15 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 550.62,
+        "stop": 542.36,
+        "target": 571.27,
+        "quantity": 0.12106537530266358,
+        "risk_amount": 1.0,
+        "entry_index": 10671,
+        "entry_utc": "2026-11-27T15:15:00+00:00"
+      },
       "trades": [
         {
           "entry_utc": "2026-10-15T02:45:00+00:00",
@@ -862,7 +881,7 @@
       "symbol": "LTCUSDT",
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 8,
+      "signals": 9,
       "closed_trades": 8,
       "stats": {
         "closed_trades": 8,
@@ -895,7 +914,15 @@
         "regime_count": 1
       },
       "segment_robustness": 0.75,
-      "open_position": null,
+      "open_position": {
+        "entry": 43.54,
+        "stop": 42.92,
+        "target": 45.1,
+        "quantity": 1.6129032258064582,
+        "risk_amount": 1.0,
+        "entry_index": 10671,
+        "entry_utc": "2026-11-27T15:15:00+00:00"
+      },
       "trades": [
         {
           "entry_utc": "2026-08-28T14:30:00+00:00",
@@ -1236,7 +1263,7 @@
       "symbol": "SOLUSDT",
       "timeframe": "15m",
       "hypothesis": "MR_ATR_FLUSH_REVERSAL",
-      "signals": 6,
+      "signals": 7,
       "closed_trades": 6,
       "stats": {
         "closed_trades": 6,
@@ -1267,7 +1294,15 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 71.41,
+        "stop": 70.04,
+        "target": 74.84,
+        "quantity": 0.7299270072992752,
+        "risk_amount": 1.0,
+        "entry_index": 10671,
+        "entry_utc": "2026-11-27T15:15:00+00:00"
+      },
       "trades": [
         {
           "entry_utc": "2026-08-23T15:00:00+00:00",
@@ -1866,7 +1901,7 @@
       "symbol": "BCHUSDT",
       "timeframe": "30m",
       "hypothesis": "MR_VWAP_OVERSHOOT_RECLAIM",
-      "signals": 1,
+      "signals": 2,
       "closed_trades": 1,
       "stats": {
         "closed_trades": 1,
@@ -1892,7 +1927,15 @@
         "regime_count": 1
       },
       "segment_robustness": null,
-      "open_position": null,
+      "open_position": {
+        "entry": 204.5,
+        "stop": 201.65,
+        "target": 212.74,
+        "quantity": 0.35087719298245684,
+        "risk_amount": 1.0,
+        "entry_index": 5335,
+        "entry_utc": "2026-11-27T15:30:00+00:00"
+      },
       "trades": [
         {
           "entry_utc": "2026-08-22T12:30:00+00:00",
